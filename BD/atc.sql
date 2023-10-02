@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 02 2023 г., 06:51
+-- Время создания: Окт 02 2023 г., 07:41
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -82,8 +83,8 @@ INSERT INTO `gender` (`gender_id`, `name`) VALUES
 --
 
 CREATE TABLE `grades` (
-  `id` int NOT NULL,
-  `student_id` bigint NOT NULL,
+  `grade_id` int NOT NULL,
+  `user_id` bigint NOT NULL,
   `subject_id` int NOT NULL,
   `grade` int DEFAULT NULL,
   `date` date NOT NULL
@@ -108,7 +109,8 @@ CREATE TABLE `gruppa` (
 --
 
 INSERT INTO `gruppa` (`gruppa_id`, `name`, `special_id`, `date_begin`, `date_end`) VALUES
-(1, 'test', 3, '2022-11-06', '2022-11-16');
+(1, 'test', 3, '2022-11-06', '2022-11-16'),
+(2, '7А', 3, '2023-10-01', '2023-10-31');
 
 -- --------------------------------------------------------
 
@@ -221,7 +223,11 @@ CREATE TABLE `special` (
 --
 
 INSERT INTO `special` (`special_id`, `name`, `otdel_id`, `active`) VALUES
-(3, 'Информационные системы', 1, 1);
+(3, 'А', 1, 1),
+(10, 'Б', 1, 1),
+(11, 'В', 1, 1),
+(12, 'Г', 2, 1),
+(13, 'Д', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -234,6 +240,13 @@ CREATE TABLE `student` (
   `gruppa_id` int NOT NULL,
   `num_zach` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `student`
+--
+
+INSERT INTO `student` (`user_id`, `gruppa_id`, `num_zach`) VALUES
+(7, 2, '0');
 
 -- --------------------------------------------------------
 
@@ -248,6 +261,16 @@ CREATE TABLE `subject` (
   `hours` smallint NOT NULL,
   `active` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `subject`
+--
+
+INSERT INTO `subject` (`subject_id`, `name`, `otdel_id`, `hours`, `active`) VALUES
+(1, 'Геометрия', 1, 40, 1),
+(2, 'Алгебра', 1, 40, 1),
+(3, 'Литература', 2, 40, 1),
+(4, 'Физика', 1, 40, 1);
 
 -- --------------------------------------------------------
 
@@ -292,7 +315,8 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `pass`, `gender_id`, `birthday`, `role_id`, `active`) VALUES
 (2, 'Смит', 'Джон', 'Тимофеевич', 'admin', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, NULL, 2, 1),
-(6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '2000-03-12', 4, 1);
+(6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '2000-03-12', 4, 1),
+(7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -320,7 +344,8 @@ ALTER TABLE `gender`
 -- Индексы таблицы `grades`
 --
 ALTER TABLE `grades`
-  ADD KEY `student_id` (`student_id`),
+  ADD PRIMARY KEY (`grade_id`),
+  ADD KEY `student_id` (`user_id`),
   ADD KEY `subject_id` (`subject_id`);
 
 --
@@ -426,10 +451,16 @@ ALTER TABLE `gender`
   MODIFY `gender_id` tinyint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT для таблицы `grades`
+--
+ALTER TABLE `grades`
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT для таблицы `gruppa`
 --
 ALTER TABLE `gruppa`
-  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `lesson_num`
@@ -465,19 +496,19 @@ ALTER TABLE `schedule`
 -- AUTO_INCREMENT для таблицы `special`
 --
 ALTER TABLE `special`
-  MODIFY `special_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `special_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `subject_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -487,7 +518,7 @@ ALTER TABLE `user`
 -- Ограничения внешнего ключа таблицы `grades`
 --
 ALTER TABLE `grades`
-  ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`student_id`) REFERENCES `student` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `student` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `grades_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
