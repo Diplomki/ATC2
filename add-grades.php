@@ -58,23 +58,43 @@ fa-dashboard"></i> Главная</a></li>
                         <tbody>
                             <?php
                             foreach ($student as $student) {
+                                ?>
+                                <form method="POST">
+                                <?php
                                 echo '<tr>';
                                 if (Helper::can('manager') || Helper::can('teacher'))
                                     echo '<td><p>' . $student->fio . '</p> ' . '<a href="add-student.php?id=' . $student->user_id . '"></a></td>';
                                 ?>
                                 <td>
-                                    <select name="" id="">
+                                    <select name="subject_id" id="">
                                         <?= Helper::printSelectOptions($student->gruppa_id, (new SubjectMap())->arrSubjects()); ?>
                                     </select>
                                 </td>
                                 <td>
-                                    <input type="text">
+                                    <input type="text" name="grade_id">
                                 </td>
+
                                 <?php
                                 echo '</tr>';
-
+                                if(isset($_POST['formSubmit'])){
+                                    $subject_id = $_POST['subject_id'];
+                                    $grade_id = $_POST['grade_id'];
+                                    $mysqli = new mysqli("ATC2", "root", "root", "atc");
+                                    if($mysqli->connect_errno){
+                                        echo "Ошибка";
+                                        exit;
+                                    }
+                                    $query = "INSERT INTO grades (user_id, subject_id, grade, date) VALUES ($student->user_id, $subject_id, $grade_id, NOW())";
+                                    $result = $mysqli->query($query);
+                                    if($result){
+                                        print('Успешно !'. '<br>');
+                                    }
+                                    $mysqli->close();
+                                }
                             }
                             ?>
+                                <input class="btn btn-success" type="submit" name="formSubmit">
+                                </form>
                         </tbody>
                     </table>
                 <?php } else {
@@ -85,6 +105,9 @@ fa-dashboard"></i> Главная</a></li>
                 <?php Helper::paginator($count, $page, $size); ?>
             </div>
             <!-- /.box-body -->
+            <?php
+
+            ?>
         </div>
     </div>
 </div>
