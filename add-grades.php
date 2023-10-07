@@ -101,9 +101,7 @@ if (isset($_POST['formSubmit'])) {
                     echo 'Ни одного студента не найдено';
                 } ?>
             </div>
-            <div class="box-body">
-                <?php Helper::paginator($count, $page, $size); ?>
-            </div>
+
         </div>
     </div>
 </div>
