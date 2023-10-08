@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 03 2023 г., 13:10
+-- Время создания: Окт 08 2023 г., 06:34
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -89,13 +90,42 @@ CREATE TABLE `grades` (
   `date` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+-- --------------------------------------------------------
+
 --
--- Дамп данных таблицы `grades`
+-- Структура таблицы `grade_accept`
 --
 
-INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`) VALUES
-(16, 7, 2, 90, '2023-10-03'),
-(17, 8, 2, 90, '2023-10-03');
+CREATE TABLE `grade_accept` (
+  `id` int NOT NULL,
+  `user_id` bigint NOT NULL,
+  `subject_id` int NOT NULL,
+  `grade` int DEFAULT NULL,
+  `date` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `grade_accept`
+--
+
+INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`) VALUES
+(39, 8, 1, 90, '2023-10-07'),
+(40, 8, 3, 90, '2023-10-08'),
+(41, 8, 1, 40, '2023-10-07'),
+(42, 8, 1, 60, '2023-10-07'),
+(43, 8, 1, 60, '2023-10-07'),
+(44, 7, 1, 50, '2023-10-07'),
+(45, 7, 1, 50, '2023-10-07'),
+(46, 7, 2, 90, '2023-10-08'),
+(47, 8, 3, 50, '2023-10-08'),
+(48, 7, 4, 50, '2023-10-08'),
+(49, 8, 3, 60, '2023-10-08'),
+(50, 7, 1, 90, '2023-10-08'),
+(51, 8, 1, 50, '2023-10-08'),
+(52, 7, 1, 40, '2023-10-08'),
+(53, 8, 1, 90, '2023-10-08'),
+(54, 7, 1, 50, '2023-10-08'),
+(55, 8, 1, 80, '2023-10-08');
 
 -- --------------------------------------------------------
 
@@ -116,7 +146,7 @@ CREATE TABLE `gruppa` (
 --
 
 INSERT INTO `gruppa` (`gruppa_id`, `name`, `special_id`, `date_begin`, `date_end`) VALUES
-(1, 'test', 3, '2022-11-06', '2022-11-16'),
+(1, '7Б', 11, '2022-11-06', '2022-11-16'),
 (2, '7А', 3, '2023-10-01', '2023-10-31');
 
 -- --------------------------------------------------------
@@ -254,7 +284,8 @@ CREATE TABLE `student` (
 
 INSERT INTO `student` (`user_id`, `gruppa_id`, `num_zach`) VALUES
 (7, 2, '0'),
-(8, 2, '0');
+(8, 2, '0'),
+(9, 1, '0');
 
 -- --------------------------------------------------------
 
@@ -325,7 +356,8 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (2, 'Смит', 'Джон', 'Тимофеевич', 'admin', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, NULL, 2, 1),
 (6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '2000-03-12', 4, 1),
 (7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 1),
-(8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 1);
+(8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 1),
+(9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$1CXSVkGu79u5hCP0xK7pAeAt/dcFZzeQXq.S52aXoF.57.MiY6B4S', 2, '2003-02-20', 5, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -356,6 +388,14 @@ ALTER TABLE `grades`
   ADD PRIMARY KEY (`grade_id`),
   ADD KEY `student_id` (`user_id`),
   ADD KEY `subject_id` (`subject_id`);
+
+--
+-- Индексы таблицы `grade_accept`
+--
+ALTER TABLE `grade_accept`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Индексы таблицы `gruppa`
@@ -463,7 +503,13 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+
+--
+-- AUTO_INCREMENT для таблицы `grade_accept`
+--
+ALTER TABLE `grade_accept`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
@@ -517,7 +563,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -529,6 +575,13 @@ ALTER TABLE `user`
 ALTER TABLE `grades`
   ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `student` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `grades_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Ограничения внешнего ключа таблицы `grade_accept`
+--
+ALTER TABLE `grade_accept`
+  ADD CONSTRAINT `grade_accept_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `grade_accept_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `gruppa`
