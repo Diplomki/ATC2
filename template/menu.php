@@ -8,7 +8,7 @@
                 <a href="index.php"><i class="fa fa-calendar"></i><span>Главная</span></a>
 
             </li>
-            <?php if (!Helper::can('teacher') && !Helper::can('admin')) { ?>
+            <?php if (!Helper::can('teacher') && !Helper::can('admin') && !Helper::can('parent')) { ?>
                 <li class="header">Пользователи</li>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/list-teacher.php') ? 'class="active"' : ''; ?>>
@@ -107,6 +107,18 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-grades.php') ? 'class="active"' : ''; ?>>
 
                     <a href="check-grades.php"><i class="fa fa-address-book"></i><span>Журнал</span></a>
+                <?php } ?>
+
+                <?php if (Helper::can('parent')) { ?>
+
+                <li class="header">Справочники</li>
+
+                <li <?= ($_SERVER['PHP_SELF'] == '/check-performance.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="check-performance.php"><i class="fa fa-address-book"></i><span>Успеваемоть</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '/check-payment.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="check-payment.php"><i class="fa fa-usd"></i><span>Оплата</span></a>
                 <?php } ?>
         </ul>
     </section>
