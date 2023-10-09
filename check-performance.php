@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 
-if (!Helper::can('parent')) {
+if (!Helper::can('procreator')) {
     header('Location: 404.php');
     exit();
 }
@@ -24,6 +24,8 @@ $studentMap = new StudentMap();
 $count = $studentMap->count();
 $students = $studentMap->findStudentsFromGroup($id, $page * $size - $size, $size);
 $header = 'Студент';
+$userMap = new UserMap();
+$user = $userMap->auth($login, $password);
 require_once 'template/header.php';
 
 ?>
@@ -61,9 +63,12 @@ require_once 'template/header.php';
                                     echo "Ошибка";
                                     exit;
                                 }
-                                $sql = "SELECT grades.grade_id as id, user.user_id AS user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.subject_id AS subject_id, subject.name AS subject, grades.grade AS grade, grades.date AS date FROM user
-                                INNER JOIN grades ON user.user_id = grades.user_id
-                                INNER JOIN subject on subject.subject_id=grades.subject_id";
+                                $sql = "SELECT parent.child_id as child_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.name as subject, grade_accept.grade as grade, grade_accept.date as date
+                                FROM parent
+                                INNER JOIN user ON user.user_id = parent.child_id
+                                INNER JOIN grade_accept ON grade_accept.user_id = parent.child_id
+                                INNER JOIN subject ON subject.subject_id = grade_accept.subject_id
+                                WHERE parent.user_id = {$_SESSION['id']}";
                                 $result = $mysqli->query($sql);
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
@@ -115,5 +120,4 @@ if ($conn->connect_error) {
 // Закрытие соединения с базой данных
 $conn->close();
 require_once 'template/footer.php';
-
 ?>
