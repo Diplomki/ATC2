@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 08 2023 г., 06:34
+-- Время создания: Окт 08 2023 г., 06:58
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -208,6 +208,24 @@ INSERT INTO `otdel` (`otdel_id`, `name`, `active`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `parent`
+--
+
+CREATE TABLE `parent` (
+  `user_id` bigint NOT NULL,
+  `child_id` bigint NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `parent`
+--
+
+INSERT INTO `parent` (`user_id`, `child_id`) VALUES
+(10, 7);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `role`
 --
 
@@ -226,7 +244,8 @@ INSERT INTO `role` (`role_id`, `sys_name`, `name`, `active`) VALUES
 (2, 'admin', 'Администратор', 1),
 (3, 'manager', 'Менеджер', 1),
 (4, 'teacher', 'Преподаватель', 1),
-(5, 'student', 'Студент', 1);
+(5, 'student', 'Студент', 1),
+(6, 'parent', 'Родитель', 1);
 
 -- --------------------------------------------------------
 
@@ -357,7 +376,8 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '2000-03-12', 4, 1),
 (7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 1),
 (8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 1),
-(9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$1CXSVkGu79u5hCP0xK7pAeAt/dcFZzeQXq.S52aXoF.57.MiY6B4S', 2, '2003-02-20', 5, 1);
+(9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$1CXSVkGu79u5hCP0xK7pAeAt/dcFZzeQXq.S52aXoF.57.MiY6B4S', 2, '2003-02-20', 5, 1),
+(10, 'Беспалов ', 'Агафон ', 'Даниилович', 'bespalov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '1980-12-12', 6, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -424,6 +444,13 @@ ALTER TABLE `lesson_plan`
 --
 ALTER TABLE `otdel`
   ADD PRIMARY KEY (`otdel_id`);
+
+--
+-- Индексы таблицы `parent`
+--
+ALTER TABLE `parent`
+  ADD PRIMARY KEY (`user_id`),
+  ADD KEY `child_id` (`child_id`);
 
 --
 -- Индексы таблицы `role`
@@ -536,10 +563,16 @@ ALTER TABLE `otdel`
   MODIFY `otdel_id` smallint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT для таблицы `parent`
+--
+ALTER TABLE `parent`
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT для таблицы `role`
 --
 ALTER TABLE `role`
-  MODIFY `role_id` tinyint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `role_id` tinyint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `schedule`
@@ -563,7 +596,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -596,6 +629,13 @@ ALTER TABLE `lesson_plan`
   ADD CONSTRAINT `lesson_plan_ibfk_1` FOREIGN KEY (`gruppa_id`) REFERENCES `gruppa` (`gruppa_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `lesson_plan_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `lesson_plan_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `teacher` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Ограничения внешнего ключа таблицы `parent`
+--
+ALTER TABLE `parent`
+  ADD CONSTRAINT `parent_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `parent_ibfk_2` FOREIGN KEY (`child_id`) REFERENCES `student` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `schedule`
