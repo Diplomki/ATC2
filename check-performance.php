@@ -23,7 +23,7 @@ if (isset($_GET['id'])) {
 $studentMap = new StudentMap();
 $count = $studentMap->count();
 $students = $studentMap->findStudentsFromGroup($id, $page * $size - $size, $size);
-$header = 'Список студентов';
+$header = 'Студент';
 require_once 'template/header.php';
 
 ?>
@@ -32,10 +32,10 @@ require_once 'template/header.php';
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h1>Список студентов</h1>
+                <h1>Студент</h1>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
-                    <li class="active">Список студентов</li>
+                    <li><i class="fa fa-dashboard"></i> Главная</li>
+                    <li class="active">Студент</li>
                 </ol>
             </section>
             <div class="box-body">
@@ -48,7 +48,6 @@ require_once 'template/header.php';
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Ф.И.О</th>
                                     <th>Предмет</th>
                                     <th>Оценка</th>
@@ -69,7 +68,6 @@ require_once 'template/header.php';
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
                                         echo "<tr>";
-                                        echo "<td>" . $row['id'] . "</td>";
                                         echo "<td>" . $row['fio'] . "</td>";
                                         echo "<td>" . $row['subject'] . "</td>";
                                         echo "<td>" . $row['grade'] . "</td>";
@@ -80,7 +78,6 @@ require_once 'template/header.php';
                                                         <input type="hidden" name="subject_id" value="' . $row['subject_id'] . '">
                                                         <input type="hidden" name="grade" value="' . $row['grade'] . '">
                                                         <input type="hidden" name="date" value="' . $row['date'] . '">
-                                                        <input class="btn btn-success" type="submit" name="gradeSubmit" value="Подтвердить">
                                                         </form>' . "</td>";
                                         echo "</tr>";
                                     }
@@ -113,29 +110,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
 // Проверка подключения
 if ($conn->connect_error) {
     die("Ошибка подключения: " . $conn->connect_error);
-}
-
-// Проверка, был ли запрос отправлен
-if (isset($_POST['gradeSubmit'])) {
-
-    $grade_delete = $_POST['grade_id'];
-    $user_id = $_POST['user_id'];
-    $subject_id = $_POST['subject_id'];
-    $grade_id = $_POST['grade'];
-    $date = $_POST['date'];
-
-    // SQL-запрос на вставку данных в таблицу "grade_accept"
-    $sql = "INSERT INTO grade_accept (user_id, subject_id, grade, date) VALUES ('$user_id', '$subject_id', '$grade_id', '$date')";
-    $sql2 = "DELETE FROM grades WHERE grade_id = '$grade_delete'";
-    if ($conn->query($sql) && $conn->query($sql2)) {
-        echo '<script type="text/javascript">
-                    setTimeout(function () {
-                    window.location.href = window.location.href;
-                    }, 0);
-            </script>';
-    } else {
-        echo "Ошибка при добавлении данных: " . $conn->error;
-    }
 }
 
 // Закрытие соединения с базой данных

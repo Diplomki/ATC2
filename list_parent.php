@@ -1,6 +1,6 @@
 <?php
 require_once 'secure.php';
-if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
+if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher') && !Helper::can('parent')) {
     header('Location: 404.php');
     exit();
 }
@@ -14,24 +14,24 @@ if (isset($_GET['page'])) {
 $teacherMap = new TeacherMap();
 $count = $teacherMap->count();
 $teachers = $teacherMap->findAll($page * $size - $size, $size);
-$header = 'Список преподавателей';
+$header = 'Список родителей';
 require_once 'template/header.php';
 ?>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h1>Список преподавателей</h1>
+                <h1>Список родителей</h1>
                 <ol class="breadcrumb">
                     <li><a href="/index.php"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список
-                        преподавателей</li>
+                        родителей</li>
                 </ol>
             </section>
             <div class="box-body">
                 <?php if (Helper::can('admin') || Helper::can('manager')) { ?>
-                    <a class="btn btn-success" href="add-teacher.php">Добавить преподавателя</a>
+                    <a class="btn btn-success" href="add-parent.php">Добавить родителя</a>
                 <?php } ?>
 
             </div>
@@ -48,7 +48,6 @@ fa-dashboard"></i> Главная</a></li>
                                 <th>Ф.И.О</th>
                                 <th>Пол</th>
                                 <th>Дата рождения</th>
-                                <th>Отделение</th>
                                 <th>Роль</th>
                             </tr>
                         </thead>
@@ -71,7 +70,7 @@ fa-dashboard"></i> Главная</a></li>
                         </tbody>
                     </table>
                 <?php } else {
-                    echo 'Ни одного преподавателя не найдено';
+                    echo 'Ни одного родителя не найдено';
                 } ?>
             </div>
             <div class="box-body">
