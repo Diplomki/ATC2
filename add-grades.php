@@ -42,6 +42,7 @@ if (isset($_POST['formSubmit'])) {
             echo "Ошибка при добавлении оценки для студента $user_id";
         }
     }
+
     $mysqli->close();
 }
 ?>
@@ -85,7 +86,31 @@ if (isset($_POST['formSubmit'])) {
                                         </td>
                                         <td>
                                             <select name="subject_id[<?php echo $student->user_id; ?>]" id="">
-                                                <?= Helper::printSelectOptions($student->gruppa_id, (new SubjectMap())->arrSubjects()); ?>
+                                                <?php
+
+                                                if ($_SESSION['role'] == 'teacher') {
+
+
+
+                                                    $mysqli = new mysqli("ATC2", "root", "root", "atc");
+                                                    if ($mysqli->connect_errno) {
+                                                        echo "Ошибка";
+                                                        exit;
+                                                    }
+                                                    $sql = "SELECT teacher.otdel_id as otdel FROM teacher WHERE teacher.user_id = {$_SESSION['id']}";
+                                                    $result = $mysqli->query($sql);
+                                                    if ($result->num_rows > 0) {
+                                                        $row = $result->fetch_assoc();
+                                                        $fieldValue = $row['otdel'];
+                                                    }
+                                                }
+                                                $sql2 = "SELECT subject.subject_id as id, subject.name as name FROM subject WHERE subject.otdel_id = $fieldValue";
+                                                $result2 = $mysqli->query($sql2);
+                                                if ($result2->num_rows > 0) {
+                                                    while ($row = $result2->fetch_assoc()) {
+                                                        echo "<option value='" . $row["id"] . "'>" . $row["name"] . "</option>";
+                                                    }
+                                                } ?>
                                             </select>
                                         </td>
                                         <td>
@@ -108,4 +133,5 @@ if (isset($_POST['formSubmit'])) {
 
 <?php
 require_once 'template/footer.php';
+
 ?>
