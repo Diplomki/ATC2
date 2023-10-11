@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 08 2023 г., 06:58
+-- Время создания: Окт 11 2023 г., 09:31
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -87,8 +86,16 @@ CREATE TABLE `grades` (
   `user_id` bigint NOT NULL,
   `subject_id` int NOT NULL,
   `grade` int DEFAULT NULL,
-  `date` date DEFAULT NULL
+  `date` date DEFAULT NULL,
+  `attend` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `grades`
+--
+
+INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `attend`) VALUES
+(89, 8, 1, 86, '2023-10-11', NULL);
 
 -- --------------------------------------------------------
 
@@ -101,31 +108,17 @@ CREATE TABLE `grade_accept` (
   `user_id` bigint NOT NULL,
   `subject_id` int NOT NULL,
   `grade` int DEFAULT NULL,
-  `date` date DEFAULT NULL
+  `date` date DEFAULT NULL,
+  `attend` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `grade_accept`
 --
 
-INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`) VALUES
-(39, 8, 1, 90, '2023-10-07'),
-(40, 8, 3, 90, '2023-10-08'),
-(41, 8, 1, 40, '2023-10-07'),
-(42, 8, 1, 60, '2023-10-07'),
-(43, 8, 1, 60, '2023-10-07'),
-(44, 7, 1, 50, '2023-10-07'),
-(45, 7, 1, 50, '2023-10-07'),
-(46, 7, 2, 90, '2023-10-08'),
-(47, 8, 3, 50, '2023-10-08'),
-(48, 7, 4, 50, '2023-10-08'),
-(49, 8, 3, 60, '2023-10-08'),
-(50, 7, 1, 90, '2023-10-08'),
-(51, 8, 1, 50, '2023-10-08'),
-(52, 7, 1, 40, '2023-10-08'),
-(53, 8, 1, 90, '2023-10-08'),
-(54, 7, 1, 50, '2023-10-08'),
-(55, 8, 1, 80, '2023-10-08');
+INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `attend`) VALUES
+(88, 7, 1, 75, '2023-10-11', NULL),
+(89, 9, 2, 98, '2023-10-11', NULL);
 
 -- --------------------------------------------------------
 
@@ -203,7 +196,8 @@ CREATE TABLE `otdel` (
 
 INSERT INTO `otdel` (`otdel_id`, `name`, `active`) VALUES
 (1, 'Математический', 1),
-(2, 'Гуманитарный', 1);
+(2, 'Гуманитарный', 1),
+(4, 'Естественные науки', 1);
 
 -- --------------------------------------------------------
 
@@ -212,6 +206,7 @@ INSERT INTO `otdel` (`otdel_id`, `name`, `active`) VALUES
 --
 
 CREATE TABLE `parent` (
+  `id` bigint NOT NULL,
   `user_id` bigint NOT NULL,
   `child_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -220,8 +215,10 @@ CREATE TABLE `parent` (
 -- Дамп данных таблицы `parent`
 --
 
-INSERT INTO `parent` (`user_id`, `child_id`) VALUES
-(10, 7);
+INSERT INTO `parent` (`id`, `user_id`, `child_id`) VALUES
+(1, 10, 7),
+(2, 10, 9),
+(3, 11, 8);
 
 -- --------------------------------------------------------
 
@@ -245,7 +242,7 @@ INSERT INTO `role` (`role_id`, `sys_name`, `name`, `active`) VALUES
 (3, 'manager', 'Менеджер', 1),
 (4, 'teacher', 'Преподаватель', 1),
 (5, 'student', 'Студент', 1),
-(6, 'parent', 'Родитель', 1);
+(6, 'procreator', 'Родитель', 1);
 
 -- --------------------------------------------------------
 
@@ -328,7 +325,9 @@ INSERT INTO `subject` (`subject_id`, `name`, `otdel_id`, `hours`, `active`) VALU
 (1, 'Геометрия', 1, 40, 1),
 (2, 'Алгебра', 1, 40, 1),
 (3, 'Литература', 2, 40, 1),
-(4, 'Физика', 1, 40, 1);
+(4, 'Физика', 1, 40, 1),
+(5, 'География', 4, 50, 1),
+(6, 'Биология', 4, 60, 1);
 
 -- --------------------------------------------------------
 
@@ -346,7 +345,9 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`user_id`, `otdel_id`) VALUES
-(6, 1);
+(6, 1),
+(12, 2),
+(14, 4);
 
 -- --------------------------------------------------------
 
@@ -377,7 +378,10 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 1),
 (8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 1),
 (9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$1CXSVkGu79u5hCP0xK7pAeAt/dcFZzeQXq.S52aXoF.57.MiY6B4S', 2, '2003-02-20', 5, 1),
-(10, 'Беспалов ', 'Агафон ', 'Даниилович', 'bespalov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '1980-12-12', 6, 1);
+(10, 'Беспалов ', 'Агафон ', 'Даниилович', 'bespalov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '1980-12-12', 6, 1),
+(11, 'Карпов ', 'Антон ', 'Онисимович', 'karpov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '1980-11-12', 6, 1),
+(12, 'Гришин', 'Мечеслав', 'Христофорович', 'grishin', '$2y$10$HiUHq9eyUODAWKKvKb072eJFP2mmX993WlE2yvSHlx0X6JqMftKEe', 1, '2002-12-20', 4, 1),
+(14, 'Макаров', 'Михаил', 'Робертович', 'makarov', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1977-06-05', 4, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -449,7 +453,8 @@ ALTER TABLE `otdel`
 -- Индексы таблицы `parent`
 --
 ALTER TABLE `parent`
-  ADD PRIMARY KEY (`user_id`),
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
   ADD KEY `child_id` (`child_id`);
 
 --
@@ -530,13 +535,13 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=51;
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
 
 --
 -- AUTO_INCREMENT для таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
@@ -560,13 +565,13 @@ ALTER TABLE `lesson_plan`
 -- AUTO_INCREMENT для таблицы `otdel`
 --
 ALTER TABLE `otdel`
-  MODIFY `otdel_id` smallint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `otdel_id` smallint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `parent`
 --
 ALTER TABLE `parent`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `role`
@@ -590,13 +595,13 @@ ALTER TABLE `special`
 -- AUTO_INCREMENT для таблицы `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `subject_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

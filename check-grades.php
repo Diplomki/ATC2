@@ -48,7 +48,6 @@ require_once 'template/header.php';
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
                                     <th>Ф.И.О</th>
                                     <th>Предмет</th>
                                     <th>Оценка</th>
@@ -69,7 +68,6 @@ require_once 'template/header.php';
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
                                         echo "<tr>";
-                                        echo "<td>" . $row['id'] . "</td>";
                                         echo "<td>" . $row['fio'] . "</td>";
                                         echo "<td>" . $row['subject'] . "</td>";
                                         echo "<td>" . $row['grade'] . "</td>";
@@ -81,7 +79,9 @@ require_once 'template/header.php';
                                                         <input type="hidden" name="grade" value="' . $row['grade'] . '">
                                                         <input type="hidden" name="date" value="' . $row['date'] . '">
                                                         <input class="btn btn-success" type="submit" name="gradeSubmit" value="Подтвердить">
+                                                        <input class="btn btn-danger" type="submit" name="gradeDelete" value="Отклонить">
                                                         </form>' . "</td>";
+
                                         echo "</tr>";
                                     }
                                 } else {
@@ -135,6 +135,20 @@ if (isset($_POST['gradeSubmit'])) {
             </script>';
     } else {
         echo "Ошибка при добавлении данных: " . $conn->error;
+    }
+}
+
+if (isset($_POST['gradeDelete'])){
+    $grade_delete = $_POST['grade_id'];
+    $sql = "DELETE FROM grades WHERE grade_id = '$grade_delete'";
+    if ($conn->query($sql)) {
+        echo '<script type="text/javascript">
+                    setTimeout(function () {
+                    window.location.href = window.location.href;
+                    }, 0);
+            </script>';
+    } else {
+        echo "Ошибка при удалении данных: " . $conn->error;
     }
 }
 
