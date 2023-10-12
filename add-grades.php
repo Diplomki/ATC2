@@ -35,14 +35,24 @@ if (isset($_POST['formSubmit'])) {
 
     foreach ($_POST['grade_id'] as $user_id => $grade) {
         $subject_id = $_POST['subject_id'][$user_id];
+        $student_id = $student->user_id;
+
         $grade = $mysqli->real_escape_string($grade);
-        $query = "INSERT INTO grades (user_id, subject_id, grade, date) VALUES ('$user_id', '$subject_id', '$grade', NOW())";
+
+        if (isset($_POST["grade_id"][$user_id]) && $_POST["grade_id"][$user_id] !== "") {
+            $grade = $_POST["grade_id"][$user_id];
+        } else {
+            $grade = "NULL";
+        }
+
+        $query = "INSERT INTO grades (user_id, subject_id, grade, date) VALUES ('$user_id', '$subject_id', $grade, NOW())";
         $result = $mysqli->query($query);
+
+
         if (!$result) {
-            echo "Ошибка при добавлении оценки для студента $user_id";
+            echo $query;
         }
     }
-
     $mysqli->close();
 }
 ?>
@@ -116,6 +126,7 @@ if (isset($_POST['formSubmit'])) {
                                         <td>
                                             <input type="text" name="grade_id[<?php echo $student->user_id; ?>]">
                                         </td>
+
                                     </tr>
                                 <?php } ?>
                             </tbody>
