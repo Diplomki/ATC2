@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 11 2023 г., 09:31
+-- Время создания: Окт 13 2023 г., 06:26
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -20,6 +21,25 @@ SET time_zone = "+00:00";
 --
 -- База данных: `atc`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `attend`
+--
+
+CREATE TABLE `attend` (
+  `id` tinyint NOT NULL,
+  `attend` varchar(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `attend`
+--
+
+INSERT INTO `attend` (`id`, `attend`) VALUES
+(0, 'Н'),
+(1, 'Б');
 
 -- --------------------------------------------------------
 
@@ -87,15 +107,8 @@ CREATE TABLE `grades` (
   `subject_id` int NOT NULL,
   `grade` int DEFAULT NULL,
   `date` date DEFAULT NULL,
-  `attend` int DEFAULT NULL
+  `attend` tinyint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Дамп данных таблицы `grades`
---
-
-INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `attend`) VALUES
-(89, 8, 1, 86, '2023-10-11', NULL);
 
 -- --------------------------------------------------------
 
@@ -109,7 +122,7 @@ CREATE TABLE `grade_accept` (
   `subject_id` int NOT NULL,
   `grade` int DEFAULT NULL,
   `date` date DEFAULT NULL,
-  `attend` int DEFAULT NULL
+  `attend` tinyint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -117,8 +130,9 @@ CREATE TABLE `grade_accept` (
 --
 
 INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `attend`) VALUES
-(88, 7, 1, 75, '2023-10-11', NULL),
-(89, 9, 2, 98, '2023-10-11', NULL);
+(83, 7, 1, 90, '2023-10-13', 1),
+(84, 7, 1, NULL, '2023-10-13', 0),
+(85, 7, 2, NULL, '2023-10-13', 1);
 
 -- --------------------------------------------------------
 
@@ -388,6 +402,12 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 --
 
 --
+-- Индексы таблицы `attend`
+--
+ALTER TABLE `attend`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Индексы таблицы `classroom`
 --
 ALTER TABLE `classroom`
@@ -411,7 +431,8 @@ ALTER TABLE `gender`
 ALTER TABLE `grades`
   ADD PRIMARY KEY (`grade_id`),
   ADD KEY `student_id` (`user_id`),
-  ADD KEY `subject_id` (`subject_id`);
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `attend` (`attend`);
 
 --
 -- Индексы таблицы `grade_accept`
@@ -419,7 +440,8 @@ ALTER TABLE `grades`
 ALTER TABLE `grade_accept`
   ADD PRIMARY KEY (`id`),
   ADD KEY `subject_id` (`subject_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `attend` (`attend`);
 
 --
 -- Индексы таблицы `gruppa`
@@ -535,13 +557,13 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=91;
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
 
 --
 -- AUTO_INCREMENT для таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=90;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
@@ -612,14 +634,16 @@ ALTER TABLE `user`
 --
 ALTER TABLE `grades`
   ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `student` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `grades_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `grades_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `grades_ibfk_3` FOREIGN KEY (`attend`) REFERENCES `attend` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
   ADD CONSTRAINT `grade_accept_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `grade_accept_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `grade_accept_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `grade_accept_ibfk_3` FOREIGN KEY (`attend`) REFERENCES `attend` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `gruppa`
