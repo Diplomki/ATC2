@@ -53,6 +53,7 @@ require_once 'template/header.php';
                                     <th>Ф.И.О</th>
                                     <th>Предмет</th>
                                     <th>Оценка</th>
+                                    <th>Посещаемость</th>
                                     <th>Дата</th>
                                 </tr>
                             </thead>
@@ -63,11 +64,12 @@ require_once 'template/header.php';
                                     echo "Ошибка";
                                     exit;
                                 }
-                                $sql = "SELECT parent.child_id as child_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.name as subject, grade_accept.grade as grade, grade_accept.date as date
+                                $sql = "SELECT parent.child_id as child_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.name as subject, grade_accept.grade as grade, grade_accept.date as date, attend.attend as attend
                                 FROM parent
                                 INNER JOIN user ON user.user_id = parent.child_id
                                 INNER JOIN grade_accept ON grade_accept.user_id = parent.child_id
                                 INNER JOIN subject ON subject.subject_id = grade_accept.subject_id
+                                INNER JOIN attend ON attend.id = grade_accept.attend
                                 WHERE parent.user_id = {$_SESSION['id']}";
                                 $result = $mysqli->query($sql);
                                 if ($result->num_rows > 0) {
@@ -76,14 +78,9 @@ require_once 'template/header.php';
                                         echo "<td>" . $row['fio'] . "</td>";
                                         echo "<td>" . $row['subject'] . "</td>";
                                         echo "<td>" . $row['grade'] . "</td>";
+                                        echo "<td>" . $row['attend'] . "</td>";
                                         echo "<td>" . $row['date'] . "</td>";
-                                        echo "<td>" . '<form method="post">
-                                                        <input type="hidden" name="grade_id" value="' . $row['id'] . '">
-                                                        <input type="hidden" name="user_id" value="' . $row['user_id'] . '">
-                                                        <input type="hidden" name="subject_id" value="' . $row['subject_id'] . '">
-                                                        <input type="hidden" name="grade" value="' . $row['grade'] . '">
-                                                        <input type="hidden" name="date" value="' . $row['date'] . '">
-                                                        </form>' . "</td>";
+
                                         echo "</tr>";
                                     }
                                 } else {

@@ -36,7 +36,7 @@ if (isset($_POST['formSubmit'])) {
     foreach ($_POST['grade_id'] as $user_id => $grade) {
         $subject_id = $_POST['subject_id'][$user_id];
         $student_id = $student->user_id;
-
+        $attend = $_POST['attend'][$user_id];
         $grade = $mysqli->real_escape_string($grade);
 
         if (isset($_POST["grade_id"][$user_id]) && $_POST["grade_id"][$user_id] !== "") {
@@ -45,7 +45,7 @@ if (isset($_POST['formSubmit'])) {
             $grade = "NULL";
         }
 
-        $query = "INSERT INTO grades (user_id, subject_id, grade, date) VALUES ('$user_id', '$subject_id', $grade, NOW())";
+        $query = "INSERT INTO grades (user_id, subject_id, grade, date, attend) VALUES ('$user_id', '$subject_id', $grade, NOW(), $attend)";
         $result = $mysqli->query($query);
 
 
@@ -82,6 +82,7 @@ if (isset($_POST['formSubmit'])) {
                                     <th>Ф.И.О</th>
                                     <th>Предмет</th>
                                     <th>Оценка</th>
+                                    <th>Посещаемость</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -95,7 +96,7 @@ if (isset($_POST['formSubmit'])) {
                                             ?>
                                         </td>
                                         <td>
-                                            <select name="subject_id[<?php echo $student->user_id; ?>]" id="">
+                                            <select name="subject_id[<?php echo $student->user_id; ?>]">
                                                 <?php
 
                                                 if ($_SESSION['role'] == 'teacher') {
@@ -126,7 +127,25 @@ if (isset($_POST['formSubmit'])) {
                                         <td>
                                             <input type="text" name="grade_id[<?php echo $student->user_id; ?>]">
                                         </td>
+                                        <td>
+                                            <select name="attend[<?php echo $student->user_id; ?>]">
+                                                <?php
 
+                                                $mysqli = new mysqli("ATC2", "root", "root", "atc");
+                                                if ($mysqli->connect_errno) {
+                                                    echo "Ошибка";
+                                                    exit;
+                                                }
+                                                $sql = "SELECT * FROM attend";
+                                                $result = $mysqli->query($sql);
+                                                if ($result->num_rows > 0) {
+                                                    while ($row = $result->fetch_assoc()) {
+                                                        echo "<option value='" . $row["id"] . "'>" . $row["attend"] . "</option>";
+                                                    }
+                                                }
+                                                ?>
+                                            </select>
+                                        </td>
                                     </tr>
                                 <?php } ?>
                             </tbody>

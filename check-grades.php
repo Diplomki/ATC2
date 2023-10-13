@@ -52,6 +52,7 @@ require_once 'template/header.php';
                                     <th>Предмет</th>
                                     <th>Оценка</th>
                                     <th>Дата</th>
+                                    <th>Посещаемость</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -61,9 +62,10 @@ require_once 'template/header.php';
                                     echo "Ошибка";
                                     exit;
                                 }
-                                $sql = "SELECT grades.grade_id as id, user.user_id AS user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.subject_id AS subject_id, subject.name AS subject, grades.grade AS grade, grades.date AS date FROM user
+                                $sql = "SELECT grades.grade_id as id, user.user_id AS user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.subject_id AS subject_id, subject.name AS subject, grades.grade AS grade, grades.date AS date, attend.attend as attend, attend.id as attend_id FROM user
                                 INNER JOIN grades ON user.user_id = grades.user_id
-                                INNER JOIN subject on subject.subject_id=grades.subject_id";
+                                INNER JOIN subject on subject.subject_id=grades.subject_id
+                                INNER JOIN attend on attend.id = grades.attend";
                                 $result = $mysqli->query($sql);
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
@@ -72,12 +74,14 @@ require_once 'template/header.php';
                                         echo "<td>" . $row['subject'] . "</td>";
                                         echo "<td>" . $row['grade'] . "</td>";
                                         echo "<td>" . $row['date'] . "</td>";
+                                        echo "<td>" . $row['attend'] . "</td>";
                                         echo "<td>" . '<form method="post">
                                                         <input type="hidden" name="grade_id" value="' . $row['id'] . '">
                                                         <input type="hidden" name="user_id" value="' . $row['user_id'] . '">
                                                         <input type="hidden" name="subject_id" value="' . $row['subject_id'] . '">
                                                         <input type="hidden" name="grade" value="' . $row['grade'] . '">
                                                         <input type="hidden" name="date" value="' . $row['date'] . '">
+                                                        <input type="hidden" name="attend" value="' . $row['attend_id'] . '">
                                                         <input class="btn btn-success" type="submit" name="gradeSubmit" value="Подтвердить">
                                                         <input class="btn btn-danger" type="submit" name="gradeDelete" value="Отклонить">
                                                         </form>' . "</td>";
@@ -117,15 +121,21 @@ if ($conn->connect_error) {
 
 // Проверка, был ли запрос отправлен
 if (isset($_POST['gradeSubmit'])) {
-
     $grade_delete = $_POST['grade_id'];
     $user_id = $_POST['user_id'];
     $subject_id = $_POST['subject_id'];
-    $grade_id = $_POST['grade'];
+    $grade = $mysqli->real_escape_string($grade);
+
+    if (isset($_POST["grade_id"][$user_id]) && $_POST["grade_id"][$user_id] !== "") {
+        $grade = $_POST["grade_id"][$user_id];
+    } else {
+        $grade = "NULL";
+    }
     $date = $_POST['date'];
+    $attend = $_POST['attend'];
 
     // SQL-запрос на вставку данных в таблицу "grade_accept"
-    $sql = "INSERT INTO grade_accept (user_id, subject_id, grade, date) VALUES ('$user_id', '$subject_id', '$grade_id', '$date')";
+    $sql = "INSERT INTO grade_accept (user_id, subject_id, grade, date, attend) VALUES ('$user_id', '$subject_id', $grade, '$date', '$attend')";
     $sql2 = "DELETE FROM grades WHERE grade_id = '$grade_delete'";
     if ($conn->query($sql) && $conn->query($sql2)) {
         echo '<script type="text/javascript">
@@ -134,11 +144,17 @@ if (isset($_POST['gradeSubmit'])) {
                     }, 0);
             </script>';
     } else {
-        echo "Ошибка при добавлении данных: " . $conn->error;
+        echo $sql;
     }
 }
 
-if (isset($_POST['gradeDelete'])){
+
+
+
+
+
+
+if (isset($_POST['gradeDelete'])) {
     $grade_delete = $_POST['grade_id'];
     $sql = "DELETE FROM grades WHERE grade_id = '$grade_delete'";
     if ($conn->query($sql)) {
