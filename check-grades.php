@@ -124,35 +124,31 @@ if (isset($_POST['gradeSubmit'])) {
     $grade_delete = $_POST['grade_id'];
     $user_id = $_POST['user_id'];
     $subject_id = $_POST['subject_id'];
+    $grade = $_POST['grade'];
     $grade = $mysqli->real_escape_string($grade);
 
-    if (isset($_POST["grade_id"][$user_id]) && $_POST["grade_id"][$user_id] !== "") {
-        $grade = $_POST["grade_id"][$user_id];
+    if (isset($grade) && $grade !== "") {
+        $grade = $_POST['grade'];
     } else {
         $grade = "NULL";
     }
     $date = $_POST['date'];
     $attend = $_POST['attend'];
 
-    // SQL-запрос на вставку данных в таблицу "grade_accept"
-    $sql = "INSERT INTO grade_accept (user_id, subject_id, grade, date, attend) VALUES ('$user_id', '$subject_id', $grade, '$date', '$attend')";
+    $sql = "INSERT INTO grade_accept (user_id, subject_id, grade, date, attend) VALUES ('$user_id', '$subject_id', $grade, NOW(), $attend)";
     $sql2 = "DELETE FROM grades WHERE grade_id = '$grade_delete'";
+
     if ($conn->query($sql) && $conn->query($sql2)) {
         echo '<script type="text/javascript">
-                    setTimeout(function () {
-                    window.location.href = window.location.href;
-                    }, 0);
+                setTimeout(function () {
+                window.location.href = window.location.href;
+                }, 0);
             </script>';
+
     } else {
-        echo $sql;
+
     }
 }
-
-
-
-
-
-
 
 if (isset($_POST['gradeDelete'])) {
     $grade_delete = $_POST['grade_id'];
