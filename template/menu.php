@@ -121,7 +121,7 @@
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-performance.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="check-performance.php"><i class="fa fa-address-book"></i><span>Успеваемость</span></a>
+                    <a href="check-performance.php"><i class="fa fa-address-book"></i><span>Журнал</span></a>
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-payment.php') ? 'class="active"' : ''; ?>>
 
                     <a href="check-payment.php"><i class="fa fa-usd"></i><span>Оплата</span></a>

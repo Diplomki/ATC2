@@ -34,7 +34,7 @@ require_once 'template/header.php';
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h1>Оценки</h1>
+                <h1>Посещаемость</h1>
                 <ol class="breadcrumb">
                     <li><i class="fa fa-dashboard"></i> Главная</li>
                 </ol>
@@ -51,7 +51,7 @@ require_once 'template/header.php';
                                 <tr>
                                     <th>Ф.И.О</th>
                                     <th>Предмет</th>
-                                    <th>Оценка</th>
+                                    <th>Посещаемость</th>
                                     <th>Дата</th>
                                 </tr>
                             </thead>
@@ -62,19 +62,20 @@ require_once 'template/header.php';
                                     echo "Ошибка";
                                     exit;
                                 }
-                                $sql = "SELECT parent.child_id as child_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.name as subject, grade_accept.grade as grade, grade_accept.date as date
+                                $sql = "SELECT parent.child_id as child_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.name as subject, grade_accept.date as date, attend.attend as attend
                                 FROM parent
                                 INNER JOIN user ON user.user_id = parent.child_id
                                 INNER JOIN grade_accept ON grade_accept.user_id = parent.child_id
                                 INNER JOIN subject ON subject.subject_id = grade_accept.subject_id
-                                WHERE parent.user_id = {$_SESSION['id']} and grade_accept.grade is not null";
+                                INNER JOIN attend ON attend.id = grade_accept.attend
+                                WHERE parent.user_id = {$_SESSION['id']} and grade_accept.grade is null";
                                 $result = $mysqli->query($sql);
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {
                                         echo "<tr>";
                                         echo "<td>" . $row['fio'] . "</td>";
                                         echo "<td>" . $row['subject'] . "</td>";
-                                        echo "<td>" . $row['grade'] . "</td>";
+                                        echo "<td>" . $row['attend'] . "</td>";
                                         echo "<td>" . $row['date'] . "</td>";
 
                                         echo "</tr>";
