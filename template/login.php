@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -25,49 +26,52 @@
   <![endif]-->
 
   <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
+
 <body class="hold-transition login-page">
-<div class="login-box">
-  <div class="login-logo">
-    <a href="../../index2.html"><b>Расписание занятий</b></a>
-  </div>
-  <!-- /.login-logo -->
-  <div class="login-box-body">
-    <p class="login-box-msg"><?=$message;?></p>
+  <div class="login-box">
+    <div class="login-logo">
+      <a href="../../index2.html"><b>Расписание занятий</b></a>
+    </div>
+    <!-- /.login-logo -->
+    <div style="text-align:center;" class="login-box-body">
+      <p class="login-box-msg">
+        <?= $message; ?>
+      </p>
 
-    <form action="auth.php" method="post">
-      <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Логин" name="login">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Пароль" name="password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-      </div>
-      <div class="row">
-        
-        <!-- /.col -->
-        <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Войти</button>
+      <form action="auth.php" method="post">
+        <div class="form-group has-feedback">
+          <input type="text" class="form-control" placeholder="Логин" name="login">
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
         </div>
-        <!-- /.col -->
-      </div>
-    </form>
+        <div class="form-group has-feedback">
+          <input type="password" class="form-control" placeholder="Пароль" name="password">
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        </div>
+        <div class="row">
 
-    <!-- /.social-auth-links -->
+          <!-- /.col -->
+          <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Войти</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
 
-  <!-- /.login-box-body -->
-</div>
-<!-- /.login-box -->
+      <!-- /.social-auth-links -->
 
-<!-- jQuery 3 -->
-<script src="template/js/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="template/js/bootstrap.min.js"></script>
+      <!-- /.login-box-body -->
+    </div>
+    <!-- /.login-box -->
 
-</script>
+    <!-- jQuery 3 -->
+    <script src="template/js/jquery.min.js"></script>
+    <!-- Bootstrap 3.3.7 -->
+    <script src="template/js/bootstrap.min.js"></script>
+
+    </script>
 </body>
+
 </html>
-
-

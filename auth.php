@@ -18,6 +18,7 @@ if (isset($_SESSION['role'])) {
         $_SESSION['role'] = $user->sys_name;
         $_SESSION['roleName'] = $user->name;
         $_SESSION['fio'] = $user->fio;
+        $_SESSION['branch'] = $user->branch;
         header('Location: index.php');
         exit;
     } else {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 13 2023 г., 06:26
+-- Время создания: Окт 17 2023 г., 06:18
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -40,6 +40,26 @@ CREATE TABLE `attend` (
 INSERT INTO `attend` (`id`, `attend`) VALUES
 (0, 'Н'),
 (1, 'Б');
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `branch`
+--
+
+CREATE TABLE `branch` (
+  `id` int NOT NULL,
+  `branch` varchar(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `branch`
+--
+
+INSERT INTO `branch` (`id`, `branch`) VALUES
+(1, 'Филиал 1'),
+(2, 'Филиал 2'),
+(3, 'Филиал 3');
 
 -- --------------------------------------------------------
 
@@ -130,9 +150,16 @@ CREATE TABLE `grade_accept` (
 --
 
 INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `attend`) VALUES
-(83, 7, 1, 90, '2023-10-13', 1),
-(84, 7, 1, NULL, '2023-10-13', 0),
-(85, 7, 2, NULL, '2023-10-13', 1);
+(102, 8, 2, NULL, '2023-10-15', 0),
+(103, 8, 1, 90, '2023-10-15', 1),
+(104, 7, 2, 76, '2023-10-15', 1),
+(105, 7, 4, 85, '2023-10-15', 1),
+(106, 8, 4, 70, '2023-10-15', 1),
+(107, 8, 1, NULL, '2023-10-15', 0),
+(108, 7, 1, 90, '2023-10-15', 1),
+(109, 9, 4, 80, '2023-10-15', 1),
+(110, 7, 2, NULL, '2023-10-15', 0),
+(111, 8, 2, NULL, '2023-10-15', 0);
 
 -- --------------------------------------------------------
 
@@ -379,6 +406,7 @@ CREATE TABLE `user` (
   `gender_id` tinyint NOT NULL,
   `birthday` date DEFAULT NULL,
   `role_id` tinyint NOT NULL,
+  `branch_id` int DEFAULT NULL,
   `active` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -386,16 +414,17 @@ CREATE TABLE `user` (
 -- Дамп данных таблицы `user`
 --
 
-INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `pass`, `gender_id`, `birthday`, `role_id`, `active`) VALUES
-(2, 'Смит', 'Джон', 'Тимофеевич', 'admin', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, NULL, 2, 1),
-(6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '2000-03-12', 4, 1),
-(7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 1),
-(8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 1),
-(9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$1CXSVkGu79u5hCP0xK7pAeAt/dcFZzeQXq.S52aXoF.57.MiY6B4S', 2, '2003-02-20', 5, 1),
-(10, 'Беспалов ', 'Агафон ', 'Даниилович', 'bespalov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '1980-12-12', 6, 1),
-(11, 'Карпов ', 'Антон ', 'Онисимович', 'karpov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '1980-11-12', 6, 1),
-(12, 'Гришин', 'Мечеслав', 'Христофорович', 'grishin', '$2y$10$HiUHq9eyUODAWKKvKb072eJFP2mmX993WlE2yvSHlx0X6JqMftKEe', 1, '2002-12-20', 4, 1),
-(14, 'Макаров', 'Михаил', 'Робертович', 'makarov', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1977-06-05', 4, 1);
+INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `pass`, `gender_id`, `birthday`, `role_id`, `branch_id`, `active`) VALUES
+(2, 'Смит', 'Джон', 'Тимофеевич', 'admin', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, NULL, 2, 1, 1),
+(6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '2000-03-12', 4, 1, 1),
+(7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 2, 1),
+(8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 1, 1),
+(9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$1CXSVkGu79u5hCP0xK7pAeAt/dcFZzeQXq.S52aXoF.57.MiY6B4S', 2, '2003-02-20', 5, 2, 1),
+(10, 'Беспалов ', 'Агафон ', 'Даниилович', 'bespalov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '1980-12-12', 6, 1, 1),
+(11, 'Карпов ', 'Антон ', 'Онисимович', 'karpov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '1980-11-12', 6, 1, 1),
+(12, 'Гришин', 'Мечеслав', 'Христофорович', 'grishin', '$2y$10$HiUHq9eyUODAWKKvKb072eJFP2mmX993WlE2yvSHlx0X6JqMftKEe', 1, '2002-12-20', 4, 2, 1),
+(14, 'Макаров', 'Михаил', 'Робертович', 'makarov', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1977-06-05', 4, 1, 1),
+(15, 'Андреев ', 'Венедикт ', 'Святославович', 'admin2', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1975-08-03', 2, 2, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -405,6 +434,12 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 -- Индексы таблицы `attend`
 --
 ALTER TABLE `attend`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Индексы таблицы `branch`
+--
+ALTER TABLE `branch`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -529,11 +564,18 @@ ALTER TABLE `teacher`
 ALTER TABLE `user`
   ADD PRIMARY KEY (`user_id`),
   ADD KEY `user_ibfk_1` (`gender_id`),
-  ADD KEY `role_id` (`role_id`);
+  ADD KEY `role_id` (`role_id`),
+  ADD KEY `branch_id` (`branch_id`);
 
 --
 -- AUTO_INCREMENT для сохранённых таблиц
 --
+
+--
+-- AUTO_INCREMENT для таблицы `branch`
+--
+ALTER TABLE `branch`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `classroom`
@@ -557,13 +599,13 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=190;
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
 
 --
 -- AUTO_INCREMENT для таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=86;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
@@ -623,7 +665,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -706,7 +748,8 @@ ALTER TABLE `teacher`
 --
 ALTER TABLE `user`
   ADD CONSTRAINT `user_ibfk_1` FOREIGN KEY (`gender_id`) REFERENCES `gender` (`gender_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `user_ibfk_2` FOREIGN KEY (`role_id`) REFERENCES `role` (`role_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `user_ibfk_3` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
