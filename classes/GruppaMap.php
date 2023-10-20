@@ -10,9 +10,7 @@ class GruppaMap extends BaseMap
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT gruppa_id, name,
-        special_id, date_begin, date_end "
-                . "FROM gruppa WHERE gruppa_id = $id");
+            $res = $this->db->query("SELECT gruppa_id, name, special_id, date_begin, date_end, branch FROM gruppa WHERE gruppa_id = $id and branch = {$_SESSION['branch']}");
             return $res->fetchObject("Gruppa");
         }
         return new Gruppa();
@@ -59,11 +57,10 @@ class GruppaMap extends BaseMap
     }
     public function findAll($ofset = 0, $limit = 30)
     {
-        $res = $this->db->query("SELECT gruppa.gruppa_id,
-        gruppa.name, special.name AS special, gruppa.date_begin,
-        gruppa.date_end"
-            . " FROM gruppa INNER JOIN special ON
-        gruppa.special_id=special.special_id LIMIT $ofset,
+        $res = $this->db->query("SELECT gruppa.gruppa_id, gruppa.name, special.name AS special, gruppa.date_begin, gruppa.date_end, branch.id FROM gruppa 
+        INNER JOIN special ON gruppa.special_id=special.special_id 
+        INNER JOIN branch ON gruppa.branch=branch.id 
+        WHERE branch.id = {$_SESSION['branch']} LIMIT $ofset,
         $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }

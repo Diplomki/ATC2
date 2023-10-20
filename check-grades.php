@@ -22,7 +22,7 @@ if (isset($_GET['id'])) {
 
 $studentMap = new StudentMap();
 $count = $studentMap->count();
-$students = $studentMap->findStudentsFromGroup($id, $page * $size - $size, $size);
+$students = $studentMap->findStudentsFromGrades($id, $page * $size - $size, $size);
 $header = 'Список студентов';
 require_once 'template/header.php';
 
@@ -36,6 +36,7 @@ require_once 'template/header.php';
                 <ol class="breadcrumb">
                     <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список студентов</li>
+
                 </ol>
             </section>
             <div class="box-body">
@@ -44,6 +45,7 @@ require_once 'template/header.php';
             <!-- /.box-header -->
             <div class="box-body">
                 <?php if ($students) { ?>
+
                     <form method="POST">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
@@ -57,15 +59,19 @@ require_once 'template/header.php';
                             </thead>
                             <tbody>
                                 <?php
+
                                 $mysqli = new mysqli("ATC2", "root", "root", "atc");
                                 if ($mysqli->connect_errno) {
                                     echo "Ошибка";
                                     exit;
                                 }
-                                $sql = "SELECT grades.grade_id as id, user.user_id AS user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.subject_id AS subject_id, subject.name AS subject, grades.grade AS grade, grades.date AS date, attend.attend as attend, attend.id as attend_id FROM user
+                                $sql = "SELECT grades.grade_id as id, user.user_id AS user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.subject_id AS subject_id, subject.name AS subject, grades.grade AS grade, grades.date AS date, attend.attend as attend, attend.id as attend_id, branch.id AS branch FROM user
                                 INNER JOIN grades ON user.user_id = grades.user_id
                                 INNER JOIN subject on subject.subject_id=grades.subject_id
-                                INNER JOIN attend on attend.id = grades.attend";
+                                INNER JOIN attend on attend.id = grades.attend
+                                INNER JOIN branch on branch.id = user.branch_id
+                                WHERE branch.id = {$_SESSION['branch']}
+                                ";
                                 $result = $mysqli->query($sql);
                                 if ($result->num_rows > 0) {
                                     while ($row = $result->fetch_assoc()) {

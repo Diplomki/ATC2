@@ -52,7 +52,7 @@ class StudentMap extends BaseMap
         INNER JOIN gender ON user.gender_id=gender.gender_id 
         INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
         INNER JOIN role ON user.role_id=role.role_id
-        INNER JOIN branch ON branch.id=user.branch_id
+        INNER JOIN branch ON user.branch_id = branch.id
         WHERE branch.id = {$_SESSION['branch']}
         LIMIT $ofset, $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
@@ -60,22 +60,37 @@ class StudentMap extends BaseMap
     public function findStudentsFromGroup($id = null, $ofset = 0, $limit = 30)
     {
         if ($id) {
-            $res = $this->db->query("SELECT user.user_id,
-        CONCAT(user.lastname,' ', user.firstname, ' ',
-        user.patronymic) AS fio, user.birthday, "
-                . " gender.name AS gender, gruppa.name AS gruppa,
-        role.name AS role FROM user INNER JOIN student ON
-        user.user_id=student.user_id "
-                . "INNER JOIN gender ON
-        user.gender_id=gender.gender_id INNER JOIN gruppa ON
-        student.gruppa_id=gruppa.gruppa_id"
-                . " INNER JOIN role ON user.role_id=role.role_id WHERE gruppa.gruppa_id = $id LIMIT $ofset, $limit");
+            $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, 
+            role.name AS role, branch.id as branch FROM user 
+            INNER JOIN student ON user.user_id=student.user_id 
+            INNER JOIN gender ON user.gender_id=gender.gender_id 
+            INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
+            INNER JOIN role ON user.role_id=role.role_id 
+            INNER JOIN branch ON user.branch_id = branch.id 
+            WHERE gruppa.gruppa_id = $id AND branch.id = {$_SESSION['branch']} LIMIT $ofset, $limit");
             return $res->fetchAll(PDO::FETCH_OBJ);
         }
     }
+
+    public function findStudentsFromGrades($id = null, $ofset = 0, $limit = 30)
+    {
+        if ($id) {
+            $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio,  
+            branch.id as branch FROM user 
+            INNER JOIN student ON user.user_id=student.user_id 
+            INNER JOIN branch ON user.branch_id = branch.id 
+            WHERE branch.id = {$_SESSION['branch']} LIMIT $ofset, $limit");
+            return $res->fetchAll(PDO::FETCH_OBJ);
+        }
+    }
+
+
     public function count()
     {
-        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM student");
+        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM student
+        INNER JOIN user ON user.user_id = student.user_id
+        INNER JOIN branch ON  user.branch_id = branch.id
+        WHERE branch.id = {$_SESSION['branch']}");
         return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
     public function findProfileById($id = null)

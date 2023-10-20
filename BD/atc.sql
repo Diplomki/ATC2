@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 17 2023 г., 06:18
+-- Время создания: Окт 20 2023 г., 04:41
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -130,6 +130,17 @@ CREATE TABLE `grades` (
   `attend` tinyint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
+--
+-- Дамп данных таблицы `grades`
+--
+
+INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `attend`) VALUES
+(229, 9, 2, 90, '2023-10-20', 1),
+(230, 9, 4, 80, '2023-10-20', 1),
+(231, 9, 1, 70, '2023-10-20', 1),
+(235, 7, 3, 70, '2023-10-20', 1),
+(236, 8, 3, 60, '2023-10-20', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -159,7 +170,20 @@ INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `att
 (108, 7, 1, 90, '2023-10-15', 1),
 (109, 9, 4, 80, '2023-10-15', 1),
 (110, 7, 2, NULL, '2023-10-15', 0),
-(111, 8, 2, NULL, '2023-10-15', 0);
+(111, 8, 2, NULL, '2023-10-15', 0),
+(112, 8, 2, 90, '2023-10-17', 1),
+(113, 9, 3, 90, '2023-10-18', 1),
+(114, 7, 3, 80, '2023-10-18', 1),
+(115, 8, 6, 80, '2023-10-18', 1),
+(116, 7, 3, 90, '2023-10-18', 1),
+(117, 7, 3, NULL, '2023-10-18', 0),
+(118, 9, 1, NULL, '2023-10-18', 0),
+(119, 9, 2, NULL, '2023-10-20', 0),
+(120, 7, 3, NULL, '2023-10-20', 0),
+(121, 8, 3, 90, '2023-10-20', 1),
+(122, 7, 3, 90, '2023-10-20', 1),
+(123, 8, 3, 80, '2023-10-20', 1),
+(124, 8, 3, NULL, '2023-10-20', 0);
 
 -- --------------------------------------------------------
 
@@ -172,16 +196,17 @@ CREATE TABLE `gruppa` (
   `name` varchar(10) NOT NULL,
   `special_id` int NOT NULL,
   `date_begin` date NOT NULL,
-  `date_end` date DEFAULT NULL
+  `date_end` date DEFAULT NULL,
+  `branch` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `gruppa`
 --
 
-INSERT INTO `gruppa` (`gruppa_id`, `name`, `special_id`, `date_begin`, `date_end`) VALUES
-(1, '7Б', 11, '2022-11-06', '2022-11-16'),
-(2, '7А', 3, '2023-10-01', '2023-10-31');
+INSERT INTO `gruppa` (`gruppa_id`, `name`, `special_id`, `date_begin`, `date_end`, `branch`) VALUES
+(1, '7Б', 11, '2022-11-06', '2022-11-16', 1),
+(2, '7А', 3, '2023-10-01', '2023-10-31', 2);
 
 -- --------------------------------------------------------
 
@@ -417,14 +442,15 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `pass`, `gender_id`, `birthday`, `role_id`, `branch_id`, `active`) VALUES
 (2, 'Смит', 'Джон', 'Тимофеевич', 'admin', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, NULL, 2, 1, 1),
 (6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '2000-03-12', 4, 1, 1),
-(7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 2, 1),
-(8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 1, 1),
-(9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$1CXSVkGu79u5hCP0xK7pAeAt/dcFZzeQXq.S52aXoF.57.MiY6B4S', 2, '2003-02-20', 5, 2, 1),
+(7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 1, 1),
+(8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 2, 1),
+(9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$1CXSVkGu79u5hCP0xK7pAeAt/dcFZzeQXq.S52aXoF.57.MiY6B4S', 2, '2003-02-20', 5, 1, 1),
 (10, 'Беспалов ', 'Агафон ', 'Даниилович', 'bespalov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '1980-12-12', 6, 1, 1),
-(11, 'Карпов ', 'Антон ', 'Онисимович', 'karpov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '1980-11-12', 6, 1, 1),
+(11, 'Карпов ', 'Антон ', 'Онисимович', 'karpov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '1980-11-12', 6, 2, 1),
 (12, 'Гришин', 'Мечеслав', 'Христофорович', 'grishin', '$2y$10$HiUHq9eyUODAWKKvKb072eJFP2mmX993WlE2yvSHlx0X6JqMftKEe', 1, '2002-12-20', 4, 2, 1),
 (14, 'Макаров', 'Михаил', 'Робертович', 'makarov', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1977-06-05', 4, 1, 1),
-(15, 'Андреев ', 'Венедикт ', 'Святославович', 'admin2', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1975-08-03', 2, 2, 1);
+(15, 'Андреев ', 'Венедикт ', 'Святославович', 'admin2', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1975-08-03', 2, 2, 1),
+(16, 'Лебедев', 'Альфред ', 'Викторович', 'admin3', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1997-07-12', 2, 3, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -483,7 +509,8 @@ ALTER TABLE `grade_accept`
 --
 ALTER TABLE `gruppa`
   ADD PRIMARY KEY (`gruppa_id`),
-  ADD KEY `special_id` (`special_id`);
+  ADD KEY `special_id` (`special_id`),
+  ADD KEY `branch` (`branch`);
 
 --
 -- Индексы таблицы `lesson_num`
@@ -599,13 +626,13 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=221;
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=239;
 
 --
 -- AUTO_INCREMENT для таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
@@ -665,7 +692,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -691,7 +718,8 @@ ALTER TABLE `grade_accept`
 -- Ограничения внешнего ключа таблицы `gruppa`
 --
 ALTER TABLE `gruppa`
-  ADD CONSTRAINT `gruppa_ibfk_1` FOREIGN KEY (`special_id`) REFERENCES `special` (`special_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `gruppa_ibfk_1` FOREIGN KEY (`special_id`) REFERENCES `special` (`special_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `gruppa_ibfk_2` FOREIGN KEY (`branch`) REFERENCES `branch` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `lesson_plan`

@@ -122,4 +122,6 @@ require_once 'template/header.php';
 </div>
 <?php
 require_once 'template/footer.php';
+
+
 ?>

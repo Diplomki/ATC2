@@ -78,9 +78,7 @@
 
                     <a href="list-student.php"><i class="fa fa-users"></i><span>Студенты</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-parent.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-parent.php"><i class="fa fa-users"></i><span>Родители</span></a>
 
                 <li class="header">Справочники</li>
 
