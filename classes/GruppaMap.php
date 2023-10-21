@@ -3,8 +3,9 @@ class GruppaMap extends BaseMap
 {
     public function arrGruppas()
     {
-        $res = $this->db->query("SELECT gruppa_id AS id, name AS
-        value FROM gruppa");
+        $res = $this->db->query("SELECT gruppa_id AS id, name AS value, branch.id AS branch FROM gruppa
+        INNER JOIN branch ON branch.id = gruppa.gruppa_id
+        WHERE branch.id = {$_SESSION['branch']}");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
     public function findById($id = null)
@@ -33,8 +34,8 @@ class GruppaMap extends BaseMap
         $date_end = $this->db->quote($gruppa->date_end);
         if (
             $this->db->exec("INSERT INTO gruppa(name, special_id,
-        date_begin, date_end)"
-                . " VALUES($name, $gruppa->special_id, $date_begin, $date_end)") == 1
+        date_begin, date_end, branch)"
+                . " VALUES($name, $gruppa->special_id, $date_begin, $date_end, {$_SESSION['branch']})") == 1
         ) {
             $gruppa->gruppa_id = $this->db->lastInsertId();
             return true;
