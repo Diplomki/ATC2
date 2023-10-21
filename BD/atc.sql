@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 20 2023 г., 04:41
+-- Время создания: Окт 21 2023 г., 06:22
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -70,8 +70,17 @@ INSERT INTO `branch` (`id`, `branch`) VALUES
 CREATE TABLE `classroom` (
   `classroom_id` int NOT NULL,
   `name` varchar(20) NOT NULL,
+  `branch` int DEFAULT NULL,
   `active` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `classroom`
+--
+
+INSERT INTO `classroom` (`classroom_id`, `name`, `branch`, `active`) VALUES
+(1, '3/510', 1, 1),
+(2, '3/511', 2, 1);
 
 -- --------------------------------------------------------
 
@@ -138,8 +147,7 @@ INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `att
 (229, 9, 2, 90, '2023-10-20', 1),
 (230, 9, 4, 80, '2023-10-20', 1),
 (231, 9, 1, 70, '2023-10-20', 1),
-(235, 7, 3, 70, '2023-10-20', 1),
-(236, 8, 3, 60, '2023-10-20', 1);
+(235, 7, 3, 70, '2023-10-20', 1);
 
 -- --------------------------------------------------------
 
@@ -183,7 +191,8 @@ INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `att
 (121, 8, 3, 90, '2023-10-20', 1),
 (122, 7, 3, 90, '2023-10-20', 1),
 (123, 8, 3, 80, '2023-10-20', 1),
-(124, 8, 3, NULL, '2023-10-20', 0);
+(124, 8, 3, NULL, '2023-10-20', 0),
+(125, 8, 3, 60, '2023-10-21', 1);
 
 -- --------------------------------------------------------
 
@@ -206,7 +215,8 @@ CREATE TABLE `gruppa` (
 
 INSERT INTO `gruppa` (`gruppa_id`, `name`, `special_id`, `date_begin`, `date_end`, `branch`) VALUES
 (1, '7Б', 11, '2022-11-06', '2022-11-16', 1),
-(2, '7А', 3, '2023-10-01', '2023-10-31', 2);
+(2, '7А', 3, '2023-10-01', '2023-10-31', 2),
+(3, '8', 11, '2023-09-01', '2025-06-10', 1);
 
 -- --------------------------------------------------------
 
@@ -243,6 +253,13 @@ CREATE TABLE `lesson_plan` (
   `subject_id` int NOT NULL,
   `user_id` bigint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `lesson_plan`
+--
+
+INSERT INTO `lesson_plan` (`lesson_plan_id`, `gruppa_id`, `subject_id`, `user_id`) VALUES
+(1, 1, 2, 6);
 
 -- --------------------------------------------------------
 
@@ -367,7 +384,8 @@ CREATE TABLE `student` (
 INSERT INTO `student` (`user_id`, `gruppa_id`, `num_zach`) VALUES
 (7, 2, '0'),
 (8, 2, '0'),
-(9, 1, '0');
+(9, 1, '0'),
+(18, 1, '0');
 
 -- --------------------------------------------------------
 
@@ -412,6 +430,7 @@ CREATE TABLE `teacher` (
 
 INSERT INTO `teacher` (`user_id`, `otdel_id`) VALUES
 (6, 1),
+(17, 1),
 (12, 2),
 (14, 4);
 
@@ -450,7 +469,9 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (12, 'Гришин', 'Мечеслав', 'Христофорович', 'grishin', '$2y$10$HiUHq9eyUODAWKKvKb072eJFP2mmX993WlE2yvSHlx0X6JqMftKEe', 1, '2002-12-20', 4, 2, 1),
 (14, 'Макаров', 'Михаил', 'Робертович', 'makarov', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1977-06-05', 4, 1, 1),
 (15, 'Андреев ', 'Венедикт ', 'Святославович', 'admin2', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1975-08-03', 2, 2, 1),
-(16, 'Лебедев', 'Альфред ', 'Викторович', 'admin3', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1997-07-12', 2, 3, 1);
+(16, 'Лебедев', 'Альфред ', 'Викторович', 'admin3', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1997-07-12', 2, 3, 1),
+(17, 'Соловьёв', 'Бронислав', 'Федотович', 'soloviev', '$2y$10$hwoeqR.h7cOSrs8mPHnbm.bmDXUd/2i4Xg968skfMTFQ.gQystHdC', 1, '1999-05-14', 4, 2, 1),
+(18, 'Кошелев', 'Эрнест', 'Лаврентьевич', 'koshelev', '$2y$10$mlU3F7DiiEWPXzdfjPiHseYtchL0YITkhg9XOGz72xF.klefiTgnO', 1, '2005-12-15', 5, 1, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -472,7 +493,8 @@ ALTER TABLE `branch`
 -- Индексы таблицы `classroom`
 --
 ALTER TABLE `classroom`
-  ADD PRIMARY KEY (`classroom_id`);
+  ADD PRIMARY KEY (`classroom_id`),
+  ADD KEY `branch` (`branch`);
 
 --
 -- Индексы таблицы `day`
@@ -608,7 +630,7 @@ ALTER TABLE `branch`
 -- AUTO_INCREMENT для таблицы `classroom`
 --
 ALTER TABLE `classroom`
-  MODIFY `classroom_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `classroom_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT для таблицы `day`
@@ -632,13 +654,13 @@ ALTER TABLE `grades`
 -- AUTO_INCREMENT для таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=125;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
 --
 ALTER TABLE `gruppa`
-  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `lesson_num`
@@ -650,7 +672,7 @@ ALTER TABLE `lesson_num`
 -- AUTO_INCREMENT для таблицы `lesson_plan`
 --
 ALTER TABLE `lesson_plan`
-  MODIFY `lesson_plan_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `lesson_plan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `otdel`
@@ -692,11 +714,17 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
+
+--
+-- Ограничения внешнего ключа таблицы `classroom`
+--
+ALTER TABLE `classroom`
+  ADD CONSTRAINT `classroom_ibfk_1` FOREIGN KEY (`branch`) REFERENCES `branch` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `grades`
