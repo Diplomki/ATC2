@@ -79,7 +79,6 @@
                     <a href="list-student.php"><i class="fa fa-users"></i><span>Студенты</span></a>
 
 
-
                 <li class="header">Справочники</li>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/list-gruppa.php') ? 'class="active"' : ''; ?>>
@@ -119,7 +118,7 @@
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-performance.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="check-performance.php"><i class="fa fa-address-book"></i><span>Журнал</span></a>
+                    <a href="check-performance.php"><i class="fa fa-address-book"></i><span>Успеваемоть</span></a>
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-payment.php') ? 'class="active"' : ''; ?>>
 
                     <a href="check-payment.php"><i class="fa fa-usd"></i><span>Оплата</span></a>
