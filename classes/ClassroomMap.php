@@ -27,8 +27,8 @@ class ClassroomMap extends BaseMap
         $name = $this->db->quote($classroom->name);
         $active = $this->db->quote($classroom->active);
         if (
-            $this->db->exec("INSERT INTO classroom(name, active)"
-                . " VALUES($name, $active)") == 1
+            $this->db->exec("INSERT INTO classroom(name, branch, active)"
+                . " VALUES($name, {$_SESSION['branch']} ,$active)") == 1
         ) {
             $classroom->classroom_id = $this->db->lastInsertId();
             return true;
@@ -47,11 +47,19 @@ class ClassroomMap extends BaseMap
 
     public function findAll($ofset = 0, $limit = 30)
     {
-        $res = $this->db->query("SELECT classroom.classroom_id, classroom.name, branch.id FROM classroom
-        INNER JOIN branch ON branch.id = classroom.classroom_id
-        WHERE branch.id = {$_SESSION['branch']} LIMIT $ofset,
-        $limit");
-        return $res->fetchAll(PDO::FETCH_OBJ);
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT classroom.classroom_id, classroom.name, branch.id FROM classroom
+            INNER JOIN branch ON branch.id = classroom.branch
+            WHERE branch.id = {$_SESSION['branch']} LIMIT $ofset,
+            $limit");
+            return $res->fetchAll(PDO::FETCH_OBJ);
+        } else {
+            $res = $this->db->query("SELECT classroom.classroom_id, classroom.name, branch.id FROM classroom
+            INNER JOIN branch ON branch.id = classroom.branch
+            LIMIT $ofset,
+            $limit");
+            return $res->fetchAll(PDO::FETCH_OBJ);
+        }
     }
 
     public function count()

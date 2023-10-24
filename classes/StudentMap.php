@@ -47,15 +47,27 @@ class StudentMap extends BaseMap
     }
     public function findAll($ofset = 0, $limit = 30)
     {
-        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, role.name AS role, branch.id AS branch FROM user 
-        INNER JOIN student ON user.user_id=student.user_id 
-        INNER JOIN gender ON user.gender_id=gender.gender_id 
-        INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
-        INNER JOIN role ON user.role_id=role.role_id
-        INNER JOIN branch ON user.branch_id = branch.id
-        WHERE branch.id = {$_SESSION['branch']}
-        LIMIT $ofset, $limit");
-        return $res->fetchAll(PDO::FETCH_OBJ);
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, role.name AS role, branch.id AS branch FROM user 
+            INNER JOIN student ON user.user_id=student.user_id 
+            INNER JOIN gender ON user.gender_id=gender.gender_id 
+            INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
+            INNER JOIN role ON user.role_id=role.role_id
+            INNER JOIN branch ON user.branch_id = branch.id
+            WHERE branch.id = {$_SESSION['branch']}
+            LIMIT $ofset, $limit");
+            return $res->fetchAll(PDO::FETCH_OBJ);
+        } else {
+            $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, role.name AS role, branch.id AS branch FROM user 
+            INNER JOIN student ON user.user_id=student.user_id 
+            INNER JOIN gender ON user.gender_id=gender.gender_id 
+            INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
+            INNER JOIN role ON user.role_id=role.role_id
+            INNER JOIN branch ON user.branch_id = branch.id
+            LIMIT $ofset, $limit");
+            return $res->fetchAll(PDO::FETCH_OBJ);
+        }
+
     }
     public function findStudentsFromGroup($id = null, $ofset = 0, $limit = 30)
     {

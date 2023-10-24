@@ -58,12 +58,21 @@ class GruppaMap extends BaseMap
     }
     public function findAll($ofset = 0, $limit = 30)
     {
-        $res = $this->db->query("SELECT gruppa.gruppa_id, gruppa.name, special.name AS special, gruppa.date_begin, gruppa.date_end, branch.id FROM gruppa 
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT gruppa.gruppa_id, gruppa.name, special.name AS special, gruppa.date_begin, gruppa.date_end, branch.id FROM gruppa 
         INNER JOIN special ON gruppa.special_id=special.special_id 
         INNER JOIN branch ON gruppa.branch=branch.id 
         WHERE branch.id = {$_SESSION['branch']} LIMIT $ofset,
         $limit");
-        return $res->fetchAll(PDO::FETCH_OBJ);
+            return $res->fetchAll(PDO::FETCH_OBJ);
+        } else {
+            $res = $this->db->query("SELECT gruppa.gruppa_id, gruppa.name, special.name AS special, gruppa.date_begin, gruppa.date_end, branch.id FROM gruppa 
+            INNER JOIN special ON gruppa.special_id=special.special_id 
+            INNER JOIN branch ON gruppa.branch=branch.id 
+            LIMIT $ofset,
+            $limit");
+            return $res->fetchAll(PDO::FETCH_OBJ);
+        }
     }
     public function count()
     {

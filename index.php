@@ -53,8 +53,14 @@ require_once 'template/header.php';
                     if ($conn->connect_error) {
                         die("Ошибка подключения: " . $conn->connect_error);
                     }
-
-                    $sql1 = "SELECT COUNT(*) as count FROM teacher";
+                    if ($_SESSION['branch'] != 999) {
+                        $sql1 = "SELECT COUNT(*) as count FROM teacher
+                    INNER JOIN user ON teacher.user_id = user.user_id
+                    WHERE user.branch_id = {$_SESSION['branch']}";
+                    } else {
+                        $sql1 = "SELECT COUNT(*) as count FROM teacher
+                        ";
+                    }
                     $total_count1 = 0;
 
                     $result1 = mysqli_query($conn, $sql1);
@@ -87,7 +93,14 @@ require_once 'template/header.php';
                         die("Ошибка подключения: " . $conn->connect_error);
                     }
 
-                    $sql1 = "SELECT COUNT(*) as count FROM student";
+                    if ($_SESSION['branch'] != 999) {
+                        $sql1 = "SELECT COUNT(*) as count FROM student
+                    INNER JOIN user ON student.user_id = user.user_id
+                    WHERE user.branch_id = {$_SESSION['branch']}";
+                    } else {
+                        $sql1 = "SELECT COUNT(*) as count FROM student
+                        ";
+                    }
                     $result1 = $conn->query($sql1);
 
                     if ($result1 === false) {
