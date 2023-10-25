@@ -4,11 +4,15 @@ if ($user) {
     ?>
     <tr>
         <th>Ф.И.О.</th>
-        <td><?= $user->fio; ?></td>
+        <td>
+            <?= $user->fio; ?>
+        </td>
     </tr>
     <tr>
         <th>Пол</th>
-        <td><?= $user->gender; ?></td>
+        <td>
+            <?= $user->gender; ?>
+        </td>
     </tr>
     <tr>
         <th>Дата рождения</th>
@@ -18,11 +22,15 @@ if ($user) {
     </tr>
     <tr>
         <th>Логин</th>
-        <td><?= $user->login; ?></td>
+        <td>
+            <?= $user->login; ?>
+        </td>
     </tr>
     <tr>
         <th>Роль</th>
-        <td><?= $user->role; ?></td>
+        <td>
+            <?= $user->role; ?>
+        </td>
     </tr>
 
 <?php } ?>

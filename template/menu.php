@@ -11,6 +11,10 @@
             <?php if (!Helper::can('teacher') && !Helper::can('admin') && !Helper::can('procreator')) { ?>
                 <li class="header">Пользователи</li>
 
+                <li <?= ($_SERVER['PHP_SELF'] == '/list-admin.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="list-admin.php"><i class="fa fa-users"></i><span>Администраторы</span></a>
+
                 <li <?= ($_SERVER['PHP_SELF'] == '/list-teacher.php') ? 'class="active"' : ''; ?>>
 
                     <a href="list-teacher.php"><i class="fa fa-users"></i><span>Преподаватели</span></a>

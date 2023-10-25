@@ -18,7 +18,9 @@ if (isset($_POST['user_id'])) {
     );
     $user->gender_id = Helper::clearInt($_POST['gender_id']);
     $user->role_id = Helper::clearInt($_POST['role_id']);
+    $user->branch = Helper::clearInt($_POST['branch']);
     $user->active = Helper::clearInt($_POST['active']);
+
     if (isset($_POST['saveTeacher'])) {
         $teacher = new Teacher();
         $teacher->otdel_id = Helper::clearInt($_POST['otdel_id']);
@@ -54,6 +56,25 @@ if (isset($_POST['user_id'])) {
 
             } else {
                 header('Location: add-student.php');
+            }
+        }
+        exit();
+    }
+
+    if (isset($_POST['saveAdmin'])) {
+        $admin = new Student();
+        $admin->user_id = $user->user_id;
+        if ((new AdminMap())->save($user, $admin)) {
+
+            header('Location: profile-admin.php?id=' . $admin->user_id);
+
+        } else {
+            if ($admin->user_id) {
+
+                header('Location: add-admin.php?id=' . $student->user_id);
+
+            } else {
+                header('Location: add-admin.php');
             }
         }
         exit();

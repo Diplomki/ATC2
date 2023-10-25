@@ -4,6 +4,7 @@ class UserMap extends BaseMap
     const USER = 'user';
     const TEACHER = 'teacher';
     const STUDENT = 'student';
+    const ADMIN = 'admin';
     function auth($login, $password)
     {
         $login = $this->db->quote($login);
@@ -23,10 +24,7 @@ class UserMap extends BaseMap
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT user_id, lastname,
-            firstname, patronymic, login, pass, gender_id, birthday,
-            role_id, active "
-                . "FROM user WHERE user_id = $id");
+            $res = $this->db->query("SELECT user_id, lastname, firstname, patronymic, login, pass, gender_id, birthday, role_id, branch_id, active FROM user WHERE user_id = $id");
             $user = $res->fetchObject("User");
             if ($user) {
                 return $user;
@@ -45,6 +43,13 @@ class UserMap extends BaseMap
     {
         $res = $this->db->query("SELECT role_id AS id, name AS
         value FROM role");
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function arrBranchs()
+    {
+        $res = $this->db->query("SELECT id AS id, branch AS
+        value FROM branch");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -68,17 +73,32 @@ class UserMap extends BaseMap
         $login = $this->db->quote($user->login);
         $pass = $this->db->quote($user->pass);
         $birthday = $this->db->quote($user->birthday);
-        if (
-            $this->db->exec("INSERT INTO user(lastname,
-        firstname, patronymic, login, pass, gender_id, birthday,
-        role_id, branch_id, active) VALUES($lastname, $firstname, $patronymic, $login,
-        $pass, $user->gender_id, $birthday, $user->role_id, {$_SESSION['branch']},
-        $user->active)") == 1
-        ) {
-            $user->user_id = $this->db->lastInsertId();
-            return true;
+        if ($_SESSION['branch'] != 999) {
+            if (
+                $this->db->exec("INSERT INTO user(lastname,
+            firstname, patronymic, login, pass, gender_id, birthday,
+            role_id, branch_id, active) VALUES($lastname, $firstname, $patronymic, $login,
+            $pass, $user->gender_id, $birthday, $user->role_id, {$_SESSION['branch']},
+            $user->active)") == 1
+            ) {
+                $user->user_id = $this->db->lastInsertId();
+                return true;
+            }
+            return false;
+        } else {
+            if (
+                $this->db->exec("INSERT INTO user(lastname,
+            firstname, patronymic, login, pass, gender_id, birthday,
+            role_id, branch_id, active) VALUES($lastname, $firstname, $patronymic, $login,
+            $pass, $user->gender_id, $birthday, $user->role_id, $user->branch_id,
+            $user->active)") == 1
+            ) {
+                $user->user_id = $this->db->lastInsertId();
+                return true;
+            }
+            return false;
         }
-        return false;
+
     }
 
     private function update($user = User)
@@ -146,6 +166,9 @@ class UserMap extends BaseMap
     {
         if ((new TeacherMap())->findById($id)->validate()) {
             return self::TEACHER;
+        }
+        if ((new AdminMap())->findById($id)->validate()) {
+            return self::ADMIN;
         }
         if ((new StudentMap())->findById($id)->validate()) {
             return self::STUDENT;
