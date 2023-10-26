@@ -5,7 +5,7 @@ class AdminMap extends BaseMap
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT user_id
+            $res = $this->db->query("SELECT user_id, branch_id
         FROM admin WHERE user_id = $id");
             $admin = $res->fetchObject("Admin");
             if ($admin) {
@@ -31,7 +31,7 @@ class AdminMap extends BaseMap
     private function insert($admin = Admin)
     {
         if (
-            $this->db->exec("INSERT INTO admin(user_id) VALUES($admin->user_id)") == 1
+            $this->db->exec("INSERT INTO admin(user_id, branch_id) VALUES($admin->user_id, $admin->branch_id)") == 1
         ) {
             return true;
         }

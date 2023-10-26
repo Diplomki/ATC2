@@ -10,7 +10,7 @@ class UserMap extends BaseMap
         $login = $this->db->quote($login);
         $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.pass, role.sys_name, role.name, branch.id AS branch FROM user 
         INNER JOIN role ON user.role_id=role.role_id 
-        INNER JOIN branch ON branch.id=user.branch_id 
+        INNER JOIN branch ON user.branch_id = branch.id 
         WHERE user.login = $login AND user.active = 1");
         $user = $res->fetch(PDO::FETCH_OBJ);
         if ($user) {
@@ -67,6 +67,7 @@ class UserMap extends BaseMap
 
     private function insert($user = User)
     {
+        $admin = new Admin();
         $lastname = $this->db->quote($user->lastname);
         $firstname = $this->db->quote($user->firstname);
         $patronymic = $this->db->quote($user->patronymic);
@@ -78,7 +79,7 @@ class UserMap extends BaseMap
                 $this->db->exec("INSERT INTO user(lastname,
             firstname, patronymic, login, pass, gender_id, birthday,
             role_id, branch_id, active) VALUES($lastname, $firstname, $patronymic, $login,
-            $pass, $user->gender_id, $birthday, $user->role_id, {$_SESSION['branch']},
+            $pass, $user->gender_id, $birthday, $user->role_id, $user->branch_id,
             $user->active)") == 1
             ) {
                 $user->user_id = $this->db->lastInsertId();

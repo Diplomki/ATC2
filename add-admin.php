@@ -23,7 +23,7 @@ require_once 'template/header.php';
 dashboard"></i> Главная</a></li>
 
         <li><a href="list-
-teacher.php">Администраторы</a></li>
+admin.php">Администраторы</a></li>
 
         <li class="active">
             <?= $header; ?>
