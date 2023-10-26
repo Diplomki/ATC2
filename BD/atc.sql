@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 21 2023 г., 06:22
+-- Время создания: Окт 26 2023 г., 05:04
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -21,6 +21,30 @@ SET time_zone = "+00:00";
 --
 -- База данных: `atc`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `admin`
+--
+
+CREATE TABLE `admin` (
+  `user_id` bigint NOT NULL,
+  `branch_id` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `admin`
+--
+
+INSERT INTO `admin` (`user_id`, `branch_id`) VALUES
+(2, 1),
+(15, 2),
+(16, 3),
+(26, 1),
+(29, 1),
+(30, 2),
+(34, 2);
 
 -- --------------------------------------------------------
 
@@ -59,7 +83,8 @@ CREATE TABLE `branch` (
 INSERT INTO `branch` (`id`, `branch`) VALUES
 (1, 'Филиал 1'),
 (2, 'Филиал 2'),
-(3, 'Филиал 3');
+(3, 'Филиал 3'),
+(999, 'Для менеджера');
 
 -- --------------------------------------------------------
 
@@ -80,7 +105,10 @@ CREATE TABLE `classroom` (
 
 INSERT INTO `classroom` (`classroom_id`, `name`, `branch`, `active`) VALUES
 (1, '3/510', 1, 1),
-(2, '3/511', 2, 1);
+(2, '3/515', 2, 1),
+(3, '3/520', 2, 1),
+(4, '3/519', 2, 1),
+(5, '3/511', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -216,7 +244,8 @@ CREATE TABLE `gruppa` (
 INSERT INTO `gruppa` (`gruppa_id`, `name`, `special_id`, `date_begin`, `date_end`, `branch`) VALUES
 (1, '7Б', 11, '2022-11-06', '2022-11-16', 1),
 (2, '7А', 3, '2023-10-01', '2023-10-31', 2),
-(3, '8', 11, '2023-09-01', '2025-06-10', 1);
+(3, '8', 11, '2023-09-01', '2025-06-10', 1),
+(4, '7', 13, '2020-01-31', '2026-10-24', 2);
 
 -- --------------------------------------------------------
 
@@ -385,7 +414,8 @@ INSERT INTO `student` (`user_id`, `gruppa_id`, `num_zach`) VALUES
 (7, 2, '0'),
 (8, 2, '0'),
 (9, 1, '0'),
-(18, 1, '0');
+(18, 1, '0'),
+(36, 1, '0');
 
 -- --------------------------------------------------------
 
@@ -431,8 +461,15 @@ CREATE TABLE `teacher` (
 INSERT INTO `teacher` (`user_id`, `otdel_id`) VALUES
 (6, 1),
 (17, 1),
+(22, 1),
+(25, 1),
+(35, 1),
 (12, 2),
-(14, 4);
+(20, 2),
+(21, 2),
+(24, 2),
+(14, 4),
+(23, 4);
 
 -- --------------------------------------------------------
 
@@ -471,11 +508,31 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (15, 'Андреев ', 'Венедикт ', 'Святославович', 'admin2', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1975-08-03', 2, 2, 1),
 (16, 'Лебедев', 'Альфред ', 'Викторович', 'admin3', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1997-07-12', 2, 3, 1),
 (17, 'Соловьёв', 'Бронислав', 'Федотович', 'soloviev', '$2y$10$hwoeqR.h7cOSrs8mPHnbm.bmDXUd/2i4Xg968skfMTFQ.gQystHdC', 1, '1999-05-14', 4, 2, 1),
-(18, 'Кошелев', 'Эрнест', 'Лаврентьевич', 'koshelev', '$2y$10$mlU3F7DiiEWPXzdfjPiHseYtchL0YITkhg9XOGz72xF.klefiTgnO', 1, '2005-12-15', 5, 1, 1);
+(18, 'Кошелев', 'Эрнест', 'Лаврентьевич', 'koshelev', '$2y$10$mlU3F7DiiEWPXzdfjPiHseYtchL0YITkhg9XOGz72xF.klefiTgnO', 1, '2005-12-15', 5, 1, 1),
+(19, 'Дроздов ', 'Арсений', 'Михайлович', 'manager', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1997-07-12', 3, 999, 1),
+(20, 'test', 'test', 'test', 'test', '$2y$10$8VNwaVmf3Qugb5/QJv4hSOXs6XuhD4nHopV5B.fdjXTZL/J3Rbvwe', 1, '2023-10-12', 4, 999, 1),
+(21, 'test3', 'test3', 'test3', 'test3', '$2y$10$bEOqHFGJnaFy77NBS3G3Q.fvnNynYZmrZY8yrJFHDLa22TZ/urmkW', 1, '2023-10-08', 4, 999, 1),
+(22, 'test5', 'test5', 'test5', 'test5', '$2y$10$zOOolJzQXcQGZCxdSkxmAu5YmB/G.3fn2yS2SoaglY3WhWF4diLuy', 1, '2023-10-01', 4, 1, 1),
+(23, 'sadsa', 'dsadsad', 'sad', 'sadsad', '$2y$10$Z4NTm7wDVyEZfAfnyEcGHOjAcYQQ7MJ2xVZQmXRFNzT4tHkIgihSi', 1, '2023-10-01', 4, 1, 1),
+(24, 'asdasdsadsad', 'sadsadsadsadasdsad', 'asdasdsadsadasdsad', 'sadsadasdsa', '$2y$10$E2zAWezAHtLAy7qub3QWtu2hSNm7zWG0wk/yH4kFyRNN.gjngCQEq', 1, '2023-10-01', 4, 1, 1),
+(25, 'sadasdsad', 'sadasdasdsa', 'asdsadsadasd', 'sadsadsadsa', '$2y$10$Hr8pSDER6abkerPBpvWeIe149If29a3IegAlH8jyLgrZD8zXPjWVq', 1, '2023-10-01', 4, 1, 1),
+(26, 'asdsadasdsa', 'dasdsadsadsads', 'sadasdasdasdsa', 'asdsadas', '$2y$10$xxM40XaboRFFkXUqlbSFhe6iZx77YPm.ZIPzMc5cvyNTCdZd3iT9a', 1, '2023-10-01', 2, 1, 1),
+(29, 'sadsadsa', 'dsadsadsa', 'sadsadsad', 'asdsad', '$2y$10$TH0GMxelG/VcT6gWxo3bkOvRvPf/PxRetrXA78a/4R1feEuo6/Squ', 1, '2023-10-01', 2, 1, 1),
+(30, 'asdsadsadasd', 'sad', 'sad', 'aasdsa', '$2y$10$tZdWeVOCO76aiVmQfjXM9ucUUM9V6BjkboW3EUZWh4CqdUnpmh.w6', 1, '2023-10-01', 2, 1, 1),
+(34, 'asdsadsa', 'dsadsadsa', 'dsadsad', 'asdsadsa', '$2y$10$0TnNC1QIpD/jgLmAbdyNmuTbQvi3nYO891YGJfeSoMyTCobVWtb8e', 1, '2023-10-01', 2, 2, 1),
+(35, 'asdsadas', 'dsadsad', 'asdsadsad', 'sadsadsa', '$2y$10$sJOcjW0v769NldOBBNwZAeH275yobLaU6I.iQg5k5xZvFErnWc67a', 1, '2023-10-01', 4, 1, 1),
+(36, 'ыфвфывфыв', 'фывsdaasd', 'sadasd', 'sadasdsad', '$2y$10$OblhgVQAZ4RxwoCT5nD7oOysDLpNYF5ahlOj5ECHke6qXnThEJ6gK', 1, '2023-10-11', 5, 1, 1);
 
 --
 -- Индексы сохранённых таблиц
 --
+
+--
+-- Индексы таблицы `admin`
+--
+ALTER TABLE `admin`
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `branch_id` (`branch_id`);
 
 --
 -- Индексы таблицы `attend`
@@ -624,13 +681,13 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `branch`
 --
 ALTER TABLE `branch`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1000;
 
 --
 -- AUTO_INCREMENT для таблицы `classroom`
 --
 ALTER TABLE `classroom`
-  MODIFY `classroom_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `classroom_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `day`
@@ -660,7 +717,7 @@ ALTER TABLE `grade_accept`
 -- AUTO_INCREMENT для таблицы `gruppa`
 --
 ALTER TABLE `gruppa`
-  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `lesson_num`
@@ -714,11 +771,18 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
 --
+
+--
+-- Ограничения внешнего ключа таблицы `admin`
+--
+ALTER TABLE `admin`
+  ADD CONSTRAINT `admin_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `admin_ibfk_2` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `classroom`
