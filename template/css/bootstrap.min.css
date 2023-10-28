@@ -2017,6 +2017,13 @@ pre code {
     }
 }
 
+@media (max-width: 767px) {
+    .container-fluid {
+        padding: 10px;
+
+    }
+}
+
 .container-fluid {
     padding-right: 15px;
     padding-left: 15px;
@@ -4788,6 +4795,13 @@ tbody.collapse.in {
     position: absolute;
     clip: rect(0, 0, 0, 0);
     pointer-events: none
+}
+
+@media screen and (max-width: 768px) {
+    .btn {
+        padding: 5px 3px;
+        font-size: 10px;
+    }
 }
 
 .input-group {

@@ -1117,7 +1117,7 @@ a:focus {
     text-align: center
 }
 
-@media (max-width:991px) {
+@media (max-width:768px) {
 
     .navbar-nav>.notifications-menu>.dropdown-menu>li.footer>a,
     .navbar-nav>.messages-menu>.dropdown-menu>li.footer>a,
@@ -1293,7 +1293,7 @@ a:focus {
     color: #444 !important
 }
 
-@media (max-width:991px) {
+@media (max-width:768px) {
     .navbar-nav>.user-menu>.dropdown-menu>.user-body a {
         background: #fff !important;
         color: #444 !important
@@ -1319,7 +1319,7 @@ a:focus {
     color: #666666
 }
 
-@media (max-width:991px) {
+@media (max-width:768px) {
     .navbar-nav>.user-menu>.dropdown-menu>.user-footer .btn-default:hover {
         background-color: #f9f9f9
     }
@@ -4776,6 +4776,26 @@ table.text-center th {
     background-image: none
 }
 
+@media (max-width: 768px) {
+
+    /* Ваш стиль для маленьких экранов здесь */
+    .dropdown-toggle {
+        /* Например, скрываем текст внутри .dropdown-toggle */
+        font-size: 0;
+        /* Скрыть текст */
+    }
+
+    .dropdown-toggle::after {
+        content: '\f107';
+        /* Добавить иконку для показа, например, стрелку вниз */
+        font-family: FontAwesome;
+        /* Замените на вашу шрифт-иконку */
+        font-size: 16px;
+        margin-left: 5px;
+        /* Добавьте отступ для иконки */
+    }
+}
+
 .btn-yahoo .badge {
     color: #720e9e;
     background-color: #fff
@@ -5802,5 +5822,13 @@ table.text-center th {
     margin: 0;
     /* Убирает отступы по умолчанию */
     overflow: hidden;
-    /* Предотвращает появление полос прокрутки */
+    /*
+     Предотвращает появление полос прокрутки */
+}
+
+@media (max-width: 767px) {
+    .content {
+        padding: 10px;
+        /* Пример: добавляем внутренние отступы для мобильных устройств */
+    }
 }
