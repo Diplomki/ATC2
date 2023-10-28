@@ -4,8 +4,7 @@ class ClassroomMap extends BaseMap
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT classroom_id, name "
-                . "FROM classroom WHERE classroom_id = $id");
+            $res = $this->db->query("SELECT classroom_id, name FROM classroom WHERE classroom_id = $id");
             return $res->fetchObject("Classroom");
         }
         return new Classroom();

@@ -8,7 +8,6 @@ class User extends Table
     public $login = '';
     public $pass = '';
     public $birthday = date;
-
     public $role_id = 0;
     public $branch_id = 0;
     public $active = 1;

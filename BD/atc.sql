@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 26 2023 г., 05:04
+-- Время создания: Окт 28 2023 г., 07:29
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -104,11 +104,11 @@ CREATE TABLE `classroom` (
 --
 
 INSERT INTO `classroom` (`classroom_id`, `name`, `branch`, `active`) VALUES
-(1, '3/510', 1, 1),
+(1, '3/515', 1, 1),
 (2, '3/515', 2, 1),
 (3, '3/520', 2, 1),
 (4, '3/519', 2, 1),
-(5, '3/511', 1, 1);
+(5, '3/516', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -439,7 +439,7 @@ INSERT INTO `subject` (`subject_id`, `name`, `otdel_id`, `hours`, `active`) VALU
 (1, 'Геометрия', 1, 40, 1),
 (2, 'Алгебра', 1, 40, 1),
 (3, 'Литература', 2, 40, 1),
-(4, 'Физика', 1, 40, 1),
+(4, 'Физик', 1, 45, 1),
 (5, 'География', 4, 50, 1),
 (6, 'Биология', 4, 60, 1);
 
@@ -459,17 +459,17 @@ CREATE TABLE `teacher` (
 --
 
 INSERT INTO `teacher` (`user_id`, `otdel_id`) VALUES
-(6, 1),
 (17, 1),
-(22, 1),
-(25, 1),
-(35, 1),
+(23, 1),
 (12, 2),
 (20, 2),
 (21, 2),
+(22, 2),
 (24, 2),
-(14, 4),
-(23, 4);
+(25, 2),
+(35, 2),
+(6, 4),
+(14, 4);
 
 -- --------------------------------------------------------
 
@@ -512,15 +512,15 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (19, 'Дроздов ', 'Арсений', 'Михайлович', 'manager', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1997-07-12', 3, 999, 1),
 (20, 'test', 'test', 'test', 'test', '$2y$10$8VNwaVmf3Qugb5/QJv4hSOXs6XuhD4nHopV5B.fdjXTZL/J3Rbvwe', 1, '2023-10-12', 4, 999, 1),
 (21, 'test3', 'test3', 'test3', 'test3', '$2y$10$bEOqHFGJnaFy77NBS3G3Q.fvnNynYZmrZY8yrJFHDLa22TZ/urmkW', 1, '2023-10-08', 4, 999, 1),
-(22, 'test5', 'test5', 'test5', 'test5', '$2y$10$zOOolJzQXcQGZCxdSkxmAu5YmB/G.3fn2yS2SoaglY3WhWF4diLuy', 1, '2023-10-01', 4, 1, 1),
-(23, 'sadsa', 'dsadsad', 'sad', 'sadsad', '$2y$10$Z4NTm7wDVyEZfAfnyEcGHOjAcYQQ7MJ2xVZQmXRFNzT4tHkIgihSi', 1, '2023-10-01', 4, 1, 1),
+(22, 'Гурьев', 'Артем', 'Протасьевич', 'gurev', '$2y$10$Z4NTm7wDVyEZfAfnyEcGHOjAcYQQ7MJ2xVZQmXRFNzT4tHkIgihSi', 1, '2023-10-01', 4, 1, 1),
+(23, 'Петухова', 'Руслана', 'Якуновна', 'sadsad', '$2y$10$qP199g5QGg0NKEkrHt9VIuSEZigFxlkvBPaUqxZ4cLxJcUZit1E/q', 2, '1997-02-04', 4, 1, 1),
 (24, 'asdasdsadsad', 'sadsadsadsadasdsad', 'asdasdsadsadasdsad', 'sadsadasdsa', '$2y$10$E2zAWezAHtLAy7qub3QWtu2hSNm7zWG0wk/yH4kFyRNN.gjngCQEq', 1, '2023-10-01', 4, 1, 1),
-(25, 'sadasdsad', 'sadasdasdsa', 'asdsadsadasd', 'sadsadsadsa', '$2y$10$Hr8pSDER6abkerPBpvWeIe149If29a3IegAlH8jyLgrZD8zXPjWVq', 1, '2023-10-01', 4, 1, 1),
+(25, 'Буров', 'Георгий', 'Матвеевич', 'burov', '$2y$10$7yGUP8SL7XyoEtvd5MPE1O9FBSiNSJ0NMp08qReKOAoySnAGPye6G', 1, '1999-05-15', 4, 1, 1),
 (26, 'asdsadasdsa', 'dasdsadsadsads', 'sadasdasdasdsa', 'asdsadas', '$2y$10$xxM40XaboRFFkXUqlbSFhe6iZx77YPm.ZIPzMc5cvyNTCdZd3iT9a', 1, '2023-10-01', 2, 1, 1),
 (29, 'sadsadsa', 'dsadsadsa', 'sadsadsad', 'asdsad', '$2y$10$TH0GMxelG/VcT6gWxo3bkOvRvPf/PxRetrXA78a/4R1feEuo6/Squ', 1, '2023-10-01', 2, 1, 1),
 (30, 'asdsadsadasd', 'sad', 'sad', 'aasdsa', '$2y$10$tZdWeVOCO76aiVmQfjXM9ucUUM9V6BjkboW3EUZWh4CqdUnpmh.w6', 1, '2023-10-01', 2, 1, 1),
 (34, 'asdsadsa', 'dsadsadsa', 'dsadsad', 'asdsadsa', '$2y$10$0TnNC1QIpD/jgLmAbdyNmuTbQvi3nYO891YGJfeSoMyTCobVWtb8e', 1, '2023-10-01', 2, 2, 1),
-(35, 'asdsadas', 'dsadsad', 'asdsadsad', 'sadsadsa', '$2y$10$sJOcjW0v769NldOBBNwZAeH275yobLaU6I.iQg5k5xZvFErnWc67a', 1, '2023-10-01', 4, 1, 1),
+(35, 'Тарасов', 'Вилли', 'Феликсович', 'sadsadsa', '$2y$10$vQQgNeYh5FSpD4lEYqO25.fvJ1lJ5Z6BoIiIsMiJ6XQZ0aDtx55fS', 1, '2023-10-01', 4, 1, 1),
 (36, 'ыфвфывфыв', 'фывsdaasd', 'sadasd', 'sadasdsad', '$2y$10$OblhgVQAZ4RxwoCT5nD7oOysDLpNYF5ahlOj5ECHke6qXnThEJ6gK', 1, '2023-10-11', 5, 1, 1);
 
 --
