@@ -59,7 +59,7 @@ class TeacherMap extends BaseMap
         LIMIT $ofset, $limit");
             return $res->fetchAll(PDO::FETCH_OBJ);
         } else {
-            $res = $this->db->query("SELECT user.user_id,  CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, otdel.name AS otdel, role.name AS role, branch.id AS branch FROM user 
+            $res = $this->db->query("SELECT user.user_id,  CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, otdel.name AS otdel, role.name AS role, branch.id AS branch, branch.branch AS branch_name FROM user 
             INNER JOIN teacher ON user.user_id=teacher.user_id 
             INNER JOIN gender ON user.gender_id=gender.gender_id 
             INNER JOIN otdel ON teacher.otdel_id=otdel.otdel_id
@@ -77,10 +77,10 @@ class TeacherMap extends BaseMap
     public function findProfileById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT teacher.user_id,
-        otdel.name AS otdel FROM teacher "
-                . "INNER JOIN otdel ON
-        teacher.otdel_id=otdel.otdel_id WHERE teacher.user_id = $id");
+            $res = $this->db->query("SELECT teacher.user_id, otdel.name AS otdel, user.user_id, branch.branch FROM teacher 
+            INNER JOIN user ON user.user_id=teacher.user_id 
+            INNER JOIN branch ON branch.id=user.branch_id
+            INNER JOIN otdel ON teacher.otdel_id=otdel.otdel_id WHERE teacher.user_id = $id");
             return $res->fetch(PDO::FETCH_OBJ);
         }
         return false;

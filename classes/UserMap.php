@@ -55,14 +55,11 @@ class UserMap extends BaseMap
 
     public function save($user = User)
     {
-        if ($this->existsLogin($user->login)) {
-            if ($user->user_id == 0) {
-                return $this->insert($user);
-            } else {
-                return $this->update($user);
-            }
+        if ($user->user_id == 0) {
+            return $this->insert($user);
+        } else {
+            return $this->update($user);
         }
-        return false;
     }
 
     private function insert($user = User)
@@ -92,7 +89,7 @@ class UserMap extends BaseMap
             firstname, patronymic, login, pass, gender_id, birthday,
             role_id, branch_id, active) VALUES($lastname, $firstname, $patronymic, $login,
             $pass, $user->gender_id, $birthday, $user->role_id, $user->branch_id,
-            $user->active)") == 1
+            1)") == 1
             ) {
                 $user->user_id = $this->db->lastInsertId();
                 return true;

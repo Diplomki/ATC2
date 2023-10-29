@@ -30,7 +30,7 @@ fa-dashboard"></i> Главная</a></li>
                 </ol>
             </section>
             <div class="box-body">
-                <?php if (Helper::can('admin') || Helper::can('manager')) { ?>
+                <?php if (Helper::can('admin')) { ?>
                     <a class="btn btn-success" href="add-teacher.php">Добавить преподавателя</a>
                 <?php } ?>
 
@@ -49,21 +49,27 @@ fa-dashboard"></i> Главная</a></li>
                                 <th>Пол</th>
                                 <th>Дата рождения</th>
                                 <th>Отделение</th>
-                                <th>Роль</th>
+                                <?php if (Helper::can('manager')) { ?>
+                                    <th>Филиал</th>
+                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             foreach ($teachers as $teacher) {
                                 echo '<tr>';
-                                if (Helper::can('manager') || Helper::can('admin'))
+                                if (Helper::can('admin')) {
                                     echo '<td><a href="profile-teacher.php?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="add-teacher.php?id=' . $teacher->user_id . '"><i class="fa fa-pencil"></i></a></td>';
-                                else
-                                    echo '<td><p>' . $teacher->fio . '</p> ' . '<a href="add-teacher.php?id=' . $teacher->user_id . '"></a></td>';
+                                } elseif (Helper::can('manager')) {
+                                    echo '<td><a href="profile-teacher.php?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="add-teacher.php?id=' . $teacher->user_id . '"></a></td>';
+                                } else {
+                                    echo '<td><p>' . $teacher->fio . '</p> ';
+                                }
                                 echo '<td>' . $teacher->gender . '</td>';
                                 echo '<td>' . $teacher->birthday . '</td>';
                                 echo '<td>' . $teacher->otdel . '</td>';
-                                echo '<td>' . $teacher->role . '</td>';
+                                if (Helper::can('manager'))
+                                    echo '<td>' . $teacher->branch_name . '</td>';
                                 echo '</tr>';
 
                             }

@@ -50,7 +50,9 @@ fa-dashboard"></i> Главная</a></li>
                                 <th>Специальность</th>
                                 <th>Дата образования</th>
                                 <th>Дата окончания</th>
-
+                                <?php if (Helper::can('manager')) { ?>
+                                    <th>Филиал</th>
+                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -71,6 +73,8 @@ fa-dashboard"></i> Главная</a></li>
                                     "d.m.Y",
                                     strtotime($gruppa->date_end)
                                 ) . '</td>';
+                                if (Helper::can('manager'))
+                                    echo '<td>' . $gruppa->branch . '</td>';
                                 echo '</tr>';
                             }
                             ?>

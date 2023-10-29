@@ -58,7 +58,7 @@ class StudentMap extends BaseMap
             LIMIT $ofset, $limit");
             return $res->fetchAll(PDO::FETCH_OBJ);
         } else {
-            $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, role.name AS role, branch.id AS branch FROM user 
+            $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, role.name AS role, branch.id AS branch, branch.branch AS branch_name FROM user 
             INNER JOIN student ON user.user_id=student.user_id 
             INNER JOIN gender ON user.gender_id=gender.gender_id 
             INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
@@ -108,10 +108,10 @@ class StudentMap extends BaseMap
     public function findProfileById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT student.user_id,
-        gruppa.name AS gruppa FROM student "
-                . "INNER JOIN gruppa ON
-        student.gruppa_id=gruppa.gruppa_id WHERE student.user_id = $id");
+            $res = $this->db->query("SELECT student.user_id, gruppa.name AS gruppa, user.user_id, branch.branch FROM student 
+            INNER JOIN user ON user.user_id=student.user_id 
+            INNER JOIN branch ON branch.id=user.branch_id 
+            INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id WHERE student.user_id = $id");
             return $res->fetch(PDO::FETCH_OBJ);
         }
         return false;

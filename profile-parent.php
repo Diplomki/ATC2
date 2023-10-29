@@ -37,14 +37,7 @@ require_once 'template/header.php';
 hover">
 
                     <?php require_once '_profile.php'; ?>
-                    <tr>
 
-                        <th>Заблокирован</th>
-
-                        <td>
-                            <?= ($user->active) ? 'Нет' : 'Да'; ?>
-                        </td>
-                    </tr>
                 </table>
             </div>
         </div>

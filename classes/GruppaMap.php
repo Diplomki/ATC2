@@ -66,7 +66,7 @@ class GruppaMap extends BaseMap
         $limit");
             return $res->fetchAll(PDO::FETCH_OBJ);
         } else {
-            $res = $this->db->query("SELECT gruppa.gruppa_id, gruppa.name, special.name AS special, gruppa.date_begin, gruppa.date_end, branch.id FROM gruppa 
+            $res = $this->db->query("SELECT gruppa.gruppa_id, gruppa.name, special.name AS special, gruppa.date_begin, gruppa.date_end, branch.id, branch.branch FROM gruppa 
             INNER JOIN special ON gruppa.special_id=special.special_id 
             INNER JOIN branch ON gruppa.branch=branch.id 
             LIMIT $ofset,
@@ -83,12 +83,9 @@ class GruppaMap extends BaseMap
     public function findViewById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT gruppa.gruppa_id,
-        gruppa.name, special.name AS special, gruppa.date_begin,
-        gruppa.date_end"
-                . " FROM gruppa INNER JOIN special ON
-        gruppa.special_id=special.special_id WHERE gruppa_id =
-        $id");
+            $res = $this->db->query("SELECT gruppa.gruppa_id, gruppa.name, special.name AS special, gruppa.date_begin, gruppa.date_end, branch.branch FROM gruppa 
+            INNER JOIN special ON gruppa.special_id=special.special_id
+            INNER JOIN branch ON branch.id=gruppa.branch WHERE gruppa_id = $id");
             return $res->fetch(PDO::FETCH_OBJ);
         }
         return false;

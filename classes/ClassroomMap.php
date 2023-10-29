@@ -53,7 +53,7 @@ class ClassroomMap extends BaseMap
             $limit");
             return $res->fetchAll(PDO::FETCH_OBJ);
         } else {
-            $res = $this->db->query("SELECT classroom.classroom_id, classroom.name, branch.id FROM classroom
+            $res = $this->db->query("SELECT classroom.classroom_id, classroom.name, branch.id, branch.branch FROM classroom
             INNER JOIN branch ON branch.id = classroom.branch
             LIMIT $ofset,
             $limit");
@@ -70,7 +70,8 @@ class ClassroomMap extends BaseMap
     public function findViewById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT classroom.classroom_id, classroom.name FROM classroom WHERE classroom_id = $id");
+            $res = $this->db->query("SELECT classroom.classroom_id, classroom.name, branch.branch FROM classroom 
+            INNER JOIN branch ON branch.id = classroom.branch WHERE classroom_id = $id");
             return $res->fetch(PDO::FETCH_OBJ);
         }
         return false;

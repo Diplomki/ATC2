@@ -30,8 +30,8 @@ fa-dashboard"></i> Главная</a></li>
                 </ol>
             </section>
             <div class="box-body">
-            <?php if (Helper::can('admin') || Helper::can('manager')) { ?>
-                <a class="btn btn-success" href="add-student.php">Добавить студента</a>
+                <?php if (Helper::can('admin')) { ?>
+                    <a class="btn btn-success" href="add-student.php">Добавить студента</a>
                 <?php } ?>
 
             </div>
@@ -49,21 +49,27 @@ fa-dashboard"></i> Главная</a></li>
                                 <th>Пол</th>
                                 <th>Дата рождения</th>
                                 <th>Группа</th>
-                                <th>Роль</th>
+                                <?php if (Helper::can('manager')) { ?>
+                                    <th>Филиал</th>
+                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
                             foreach ($student as $student) {
                                 echo '<tr>';
-                                if (Helper::can('manager') || Helper::can('admin'))
-                                echo '<td><a href="profile-student.php?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="add-student.php?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a></td>';
-                                else
-                                echo '<td><p>' . $student->fio . '</p> ' . '<a href="add-student.php?id=' . $student->user_id . '"></a></td>';
+                                if (Helper::can('admin')) {
+                                    echo '<td><a href="profile-student.php?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="add-student.php?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                } elseif (Helper::can('manager')) {
+                                    echo '<td><a href="profile-student.php?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="add-student.php?id=' . $student->user_id . '"></a></td>';
+                                } else {
+                                    echo '<td><p>' . $student->fio . '</p> ';
+                                }
                                 echo '<td>' . $student->gender . '</td>';
                                 echo '<td>' . $student->birthday . '</td>';
                                 echo '<td>' . $student->gruppa . '</td>';
-                                echo '<td>' . $student->role . '</td>';
+                                if (Helper::can('manager'))
+                                    echo '<td>' . $student->branch_name . '</td>';
                                 echo '</tr>';
 
                             }

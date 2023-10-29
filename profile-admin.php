@@ -1,6 +1,6 @@
 <?php
 require_once 'secure.php';
-if (!Helper::can('admin') && !Helper::can('manager')) {
+if (!Helper::can('manager')) {
     header('Location: 404.php');
     exit();
 }
@@ -9,27 +9,27 @@ if (isset($_GET['id'])) {
 } else {
     header('Location: 404.php');
 }
-$header = 'Профиль преподавателя';
-$teacher = (new TeacherMap())->findProfileById($id);
+$header = 'Профиль студента';
+$admin = (new AdminMap())->findProfileById($id);
 require_once 'template/header.php';
 ?>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h1>Профиль преподавателя</h1>
+                <h1>Профиль студента</h1>
                 <ol class="breadcrumb">
                     <li><a href="index.php"><i class="fa
 fa-dashboard"></i> Главная</a></li>
 
-                    <li><a href="list-teacher.php">Преподаватели</a></li>
+                    <li><a href="list-student.php">Студенты</a></li>
 
                     <li class="active">Профиль</li>
                 </ol>
             </section>
             <div class="box-body">
-                <?php if (Helper::can('admin')) { ?>
-                    <a class="btn btn-success" href="add-teacher.php?id=<?= $id; ?>">Изменить</a>
+                <?php if (Helper::can('manager')) { ?>
+                    <a class="btn btn-success" href="add-student.php?id=<?= $id; ?>">Изменить</a>
                 <?php } ?>
 
             </div>
@@ -42,24 +42,13 @@ hover">
 
                     <tr>
 
-                        <th>Отделение</th>
+                        <th>Филиал</th>
 
                         <td>
-                            <?= $teacher->otdel; ?>
+                            <?= $admin->branch ?>
                         </td>
 
                     </tr>
-                    <?php if (Helper::can('manager')) { ?>
-                        <tr>
-
-                            <th>Филиал</th>
-
-                            <td>
-                                <?= $teacher->branch; ?>
-                            </td>
-
-                        </tr>
-                    <?php } ?>
 
                 </table>
             </div>
@@ -68,5 +57,4 @@ hover">
 </div>
 <?php
 require_once 'template/footer.php';
-echo $teacher->otdel;
 ?>

@@ -47,7 +47,9 @@ fa-dashboard"></i> Главная</a></li>
                                 <th>Ф.И.О</th>
                                 <th>Пол</th>
                                 <th>Дата рождения</th>
-                                <th>Роль</th>
+                                <?php if (Helper::can('manager')) { ?>
+                                    <th>Филиал</th>
+                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -55,12 +57,13 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($admins as $admin) {
                                 echo '<tr>';
                                 if (Helper::can('manager') || Helper::can('admin'))
-                                    echo '<td><a href="profile-teacher.php?id=' . $admin->user_id . '">' . $admin->fio . '</a> ' . '<a href="add-teacher.php?id=' . $admin->user_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                    echo '<td><a href="profile-admin.php?id=' . $admin->user_id . '">' . $admin->fio . '</a> ' . '<a href="add-admin.php?id=' . $admin->user_id . '"><i class="fa fa-pencil"></i></a></td>';
                                 else
-                                    echo '<td><p>' . $admin->fio . '</p> ' . '<a href="add-teacher.php?id=' . $admin->user_id . '"></a></td>';
+                                    echo '<td><p>' . $admin->fio . '</p> ' . '<a href="add-admin.php?id=' . $admin->user_id . '"></a></td>';
                                 echo '<td>' . $admin->gender . '</td>';
                                 echo '<td>' . $admin->birthday . '</td>';
-                                echo '<td>' . $admin->role . '</td>';
+                                if (Helper::can('manager'))
+                                    echo '<td>' . $admin->branch_name . '</td>';
                                 echo '</tr>';
 
                             }

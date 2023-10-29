@@ -41,6 +41,9 @@ require_once 'template/header.php';
                         <thead>
                             <tr>
                                 <th>Название</th>
+                                <?php if (Helper::can('manager')) { ?>
+                                    <th>Филиал</th>
+                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>
@@ -49,6 +52,9 @@ require_once 'template/header.php';
                                 echo '<tr>';
                                 echo '<td><a href="view-classroom.php?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
                                     . '<a href="add-classroom.php?id=' . $classroom->classroom_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                if (Helper::can('manager'))
+                                    echo '<td>' . $classroom->branch . '</td>';
+
                             }
                             ?>
                         </tbody>
