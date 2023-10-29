@@ -35,6 +35,7 @@ require_once 'template/header.php';
 
 
 <body>
+
     <section class="content">
         <div class="col-md-3 col-sm-6 col-xs-12">
             <div class="info-box">
@@ -72,6 +73,7 @@ require_once 'template/header.php';
                         <?php echo $total_count1; ?>
                     </span>
                 </div>
+
             </div>
         </div>
 
@@ -117,11 +119,7 @@ require_once 'template/header.php';
                 </div>
             </div>
         </div>
-
-
-
     </section>
-
 
 </html>
 </body>
