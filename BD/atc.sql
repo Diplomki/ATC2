@@ -1,14 +1,13 @@
 -- phpMyAdmin SQL Dump
--- version 4.9.7
+-- version 5.0.4
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 28 2023 г., 07:29
+-- Время создания: Окт 29 2023 г., 08:12
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -40,11 +39,7 @@ CREATE TABLE `admin` (
 INSERT INTO `admin` (`user_id`, `branch_id`) VALUES
 (2, 1),
 (15, 2),
-(16, 3),
-(26, 1),
-(29, 1),
-(30, 2),
-(34, 2);
+(16, 3);
 
 -- --------------------------------------------------------
 
@@ -414,8 +409,7 @@ INSERT INTO `student` (`user_id`, `gruppa_id`, `num_zach`) VALUES
 (7, 2, '0'),
 (8, 2, '0'),
 (9, 1, '0'),
-(18, 1, '0'),
-(36, 1, '0');
+(18, 1, '0');
 
 -- --------------------------------------------------------
 
@@ -460,14 +454,9 @@ CREATE TABLE `teacher` (
 
 INSERT INTO `teacher` (`user_id`, `otdel_id`) VALUES
 (17, 1),
-(23, 1),
 (12, 2),
-(20, 2),
-(21, 2),
 (22, 2),
-(24, 2),
 (25, 2),
-(35, 2),
 (6, 4),
 (14, 4);
 
@@ -510,18 +499,8 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (17, 'Соловьёв', 'Бронислав', 'Федотович', 'soloviev', '$2y$10$hwoeqR.h7cOSrs8mPHnbm.bmDXUd/2i4Xg968skfMTFQ.gQystHdC', 1, '1999-05-14', 4, 2, 1),
 (18, 'Кошелев', 'Эрнест', 'Лаврентьевич', 'koshelev', '$2y$10$mlU3F7DiiEWPXzdfjPiHseYtchL0YITkhg9XOGz72xF.klefiTgnO', 1, '2005-12-15', 5, 1, 1),
 (19, 'Дроздов ', 'Арсений', 'Михайлович', 'manager', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1997-07-12', 3, 999, 1),
-(20, 'test', 'test', 'test', 'test', '$2y$10$8VNwaVmf3Qugb5/QJv4hSOXs6XuhD4nHopV5B.fdjXTZL/J3Rbvwe', 1, '2023-10-12', 4, 999, 1),
-(21, 'test3', 'test3', 'test3', 'test3', '$2y$10$bEOqHFGJnaFy77NBS3G3Q.fvnNynYZmrZY8yrJFHDLa22TZ/urmkW', 1, '2023-10-08', 4, 999, 1),
 (22, 'Гурьев', 'Артем', 'Протасьевич', 'gurev', '$2y$10$Z4NTm7wDVyEZfAfnyEcGHOjAcYQQ7MJ2xVZQmXRFNzT4tHkIgihSi', 1, '2023-10-01', 4, 1, 1),
-(23, 'Петухова', 'Руслана', 'Якуновна', 'sadsad', '$2y$10$qP199g5QGg0NKEkrHt9VIuSEZigFxlkvBPaUqxZ4cLxJcUZit1E/q', 2, '1997-02-04', 4, 1, 1),
-(24, 'asdasdsadsad', 'sadsadsadsadasdsad', 'asdasdsadsadasdsad', 'sadsadasdsa', '$2y$10$E2zAWezAHtLAy7qub3QWtu2hSNm7zWG0wk/yH4kFyRNN.gjngCQEq', 1, '2023-10-01', 4, 1, 1),
-(25, 'Буров', 'Георгий', 'Матвеевич', 'burov', '$2y$10$7yGUP8SL7XyoEtvd5MPE1O9FBSiNSJ0NMp08qReKOAoySnAGPye6G', 1, '1999-05-15', 4, 1, 1),
-(26, 'asdsadasdsa', 'dasdsadsadsads', 'sadasdasdasdsa', 'asdsadas', '$2y$10$xxM40XaboRFFkXUqlbSFhe6iZx77YPm.ZIPzMc5cvyNTCdZd3iT9a', 1, '2023-10-01', 2, 1, 1),
-(29, 'sadsadsa', 'dsadsadsa', 'sadsadsad', 'asdsad', '$2y$10$TH0GMxelG/VcT6gWxo3bkOvRvPf/PxRetrXA78a/4R1feEuo6/Squ', 1, '2023-10-01', 2, 1, 1),
-(30, 'asdsadsadasd', 'sad', 'sad', 'aasdsa', '$2y$10$tZdWeVOCO76aiVmQfjXM9ucUUM9V6BjkboW3EUZWh4CqdUnpmh.w6', 1, '2023-10-01', 2, 1, 1),
-(34, 'asdsadsa', 'dsadsadsa', 'dsadsad', 'asdsadsa', '$2y$10$0TnNC1QIpD/jgLmAbdyNmuTbQvi3nYO891YGJfeSoMyTCobVWtb8e', 1, '2023-10-01', 2, 2, 1),
-(35, 'Тарасов', 'Вилли', 'Феликсович', 'sadsadsa', '$2y$10$vQQgNeYh5FSpD4lEYqO25.fvJ1lJ5Z6BoIiIsMiJ6XQZ0aDtx55fS', 1, '2023-10-01', 4, 1, 1),
-(36, 'ыфвфывфыв', 'фывsdaasd', 'sadasd', 'sadasdsad', '$2y$10$OblhgVQAZ4RxwoCT5nD7oOysDLpNYF5ahlOj5ECHke6qXnThEJ6gK', 1, '2023-10-11', 5, 1, 1);
+(25, 'Буров', 'Георгий', 'Матвеевич', 'burov', '$2y$10$7yGUP8SL7XyoEtvd5MPE1O9FBSiNSJ0NMp08qReKOAoySnAGPye6G', 1, '1999-05-15', 4, 1, 1);
 
 --
 -- Индексы сохранённых таблиц
