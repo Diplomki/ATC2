@@ -35,97 +35,98 @@ require_once 'template/header.php';
 
 
 <body>
+    <?php if (!Helper::can('procreator') && !Helper::can('teacher')) { ?>
+        <section class="content">
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-aqua"><i class="ion ion-stats-bars"></i></span>
 
-    <section class="content">
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-aqua"><i class="ion ion-stats-bars"></i></span>
+                    <div class="info-box-content">
+                        <span class="info-box-text">Кол-во учителей</span>
+                        <?php
+                        $servername = "ATC2";
+                        $username = "root";
+                        $password = "root";
+                        $dbname = "atc";
 
-                <div class="info-box-content">
-                    <span class="info-box-text">Кол-во учителей</span>
-                    <?php
-                    $servername = "ATC2";
-                    $username = "root";
-                    $password = "root";
-                    $dbname = "atc";
+                        $conn = new mysqli($servername, $username, $password, $dbname);
 
-                    $conn = new mysqli($servername, $username, $password, $dbname);
-
-                    if ($conn->connect_error) {
-                        die("Ошибка подключения: " . $conn->connect_error);
-                    }
-                    if ($_SESSION['branch'] != 999) {
-                        $sql1 = "SELECT COUNT(*) as count FROM teacher
+                        if ($conn->connect_error) {
+                            die("Ошибка подключения: " . $conn->connect_error);
+                        }
+                        if ($_SESSION['branch'] != 999) {
+                            $sql1 = "SELECT COUNT(*) as count FROM teacher
                     INNER JOIN user ON teacher.user_id = user.user_id
                     WHERE user.branch_id = {$_SESSION['branch']}";
-                    } else {
-                        $sql1 = "SELECT COUNT(*) as count FROM teacher
+                        } else {
+                            $sql1 = "SELECT COUNT(*) as count FROM teacher
                         ";
-                    }
-                    $total_count1 = 0;
+                        }
+                        $total_count1 = 0;
 
-                    $result1 = mysqli_query($conn, $sql1);
-                    $row1 = mysqli_fetch_assoc($result1);
-                    $total_count1 = $row1['count'];
+                        $result1 = mysqli_query($conn, $sql1);
+                        $row1 = mysqli_fetch_assoc($result1);
+                        $total_count1 = $row1['count'];
 
-                    ?>
-                    <span class="info-box-number">
-                        <?php echo $total_count1; ?>
-                    </span>
+                        ?>
+                        <span class="info-box-number">
+                            <?php echo $total_count1; ?>
+                        </span>
+                    </div>
+
                 </div>
-
             </div>
-        </div>
 
-        <div class="col-md-3 col-sm-6 col-xs-12">
-            <div class="info-box">
-                <span class="info-box-icon bg-red"><i class="ion ion-person-add"></i></span>
+            <div class="col-md-3 col-sm-6 col-xs-12">
+                <div class="info-box">
+                    <span class="info-box-icon bg-red"><i class="ion ion-person-add"></i></span>
 
-                <div class="info-box-content">
-                    <span class="info-box-text">Кол-во студентов</span>
-                    <?php
-                    $servername = "ATC2";
-                    $username = "root";
-                    $password = "root";
-                    $dbname = "atc";
+                    <div class="info-box-content">
+                        <span class="info-box-text">Кол-во студентов</span>
+                        <?php
+                        $servername = "ATC2";
+                        $username = "root";
+                        $password = "root";
+                        $dbname = "atc";
 
-                    $conn = new mysqli($servername, $username, $password, $dbname);
+                        $conn = new mysqli($servername, $username, $password, $dbname);
 
-                    if ($conn->connect_error) {
-                        die("Ошибка подключения: " . $conn->connect_error);
-                    }
+                        if ($conn->connect_error) {
+                            die("Ошибка подключения: " . $conn->connect_error);
+                        }
 
-                    if ($_SESSION['branch'] != 999) {
-                        $sql1 = "SELECT COUNT(*) as count FROM student
+                        if ($_SESSION['branch'] != 999) {
+                            $sql1 = "SELECT COUNT(*) as count FROM student
                     INNER JOIN user ON student.user_id = user.user_id
                     WHERE user.branch_id = {$_SESSION['branch']}";
-                    } else {
-                        $sql1 = "SELECT COUNT(*) as count FROM student
+                        } else {
+                            $sql1 = "SELECT COUNT(*) as count FROM student
                         ";
-                    }
-                    $result1 = $conn->query($sql1);
+                        }
+                        $result1 = $conn->query($sql1);
 
-                    if ($result1 === false) {
-                        die("Ошибка выполнения запроса: " . $conn->error);
-                    }
+                        if ($result1 === false) {
+                            die("Ошибка выполнения запроса: " . $conn->error);
+                        }
 
-                    $row1 = $result1->fetch_assoc();
-                    $total_count1 = $row1['count'];
-                    $conn->close();
-                    ?>
-                    <span class="info-box-number">
-                        <?php echo $total_count1; ?>
-                    </span>
+                        $row1 = $result1->fetch_assoc();
+                        $total_count1 = $row1['count'];
+                        $conn->close();
+                        ?>
+                        <span class="info-box-number">
+                            <?php echo $total_count1; ?>
+                        </span>
+                    </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    <?php } ?>
 
 </html>
 </body>
 <?php
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    $header = 'Главная: Ваше расписание занятий.';
+    $header = 'Главная: расписание занятий.';
 
     $userIdentity = (new UserMap())->identity($_SESSION['id']);
     if ($userIdentity == UserMap::TEACHER) {

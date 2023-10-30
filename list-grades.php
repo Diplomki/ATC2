@@ -24,8 +24,7 @@ require_once 'template/header.php';
                     <?= $header; ?>
                 </h1>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa
-fa-dashboard"></i> Главная</a></li>
+                    <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
                     <li class="active">
                         <?= $header; ?>
                     </li>

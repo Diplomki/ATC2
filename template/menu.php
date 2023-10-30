@@ -118,10 +118,10 @@
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-performance.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="check-performance.php"><i class="fa fa-address-book"></i><span>Успеваемоть</span></a>
+                    <a href="check-child.php"><i class="fa fa-address-book"></i><span>Успеваемоcть</span></a>
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-payment.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="check-payment.php"><i class="fa fa-usd"></i><span>Оплата</span></a>
+                    <a href="check-child.php"><i class="fa fa-usd"></i><span>Оплата</span></a>
                 <?php } ?>
         </ul>
     </section>

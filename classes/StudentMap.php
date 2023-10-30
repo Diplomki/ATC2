@@ -96,6 +96,15 @@ class StudentMap extends BaseMap
         }
     }
 
+    public function findStudentsFromParent($ofset = 0, $limit = 30)
+    {
+        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio FROM parent
+        INNER JOIN user ON user.user_id = parent.child_id
+        WHERE parent.user_id = {$_SESSION['id']}
+        LIMIT $ofset, $limit");
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
+
 
     public function count()
     {
@@ -112,6 +121,17 @@ class StudentMap extends BaseMap
             INNER JOIN user ON user.user_id=student.user_id 
             INNER JOIN branch ON branch.id=user.branch_id 
             INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id WHERE student.user_id = $id");
+            return $res->fetch(PDO::FETCH_OBJ);
+        }
+        return false;
+    }
+
+    public function findStudentById($id = null)
+    {
+        if ($id) {
+            $res = $this->db->query("SELECT student.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio FROM student 
+            INNER JOIN user ON user.user_id=student.user_id
+            WHERE student.user_id = $id");
             return $res->fetch(PDO::FETCH_OBJ);
         }
         return false;
