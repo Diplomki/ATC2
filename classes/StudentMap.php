@@ -26,6 +26,22 @@ class StudentMap extends BaseMap
         }
         return false;
     }
+    public function savePayment($student = Student)
+    {
+
+        return $this->insertPayment($student);
+    }
+
+    private function insertPayment($student = Student)
+    {
+        if (
+            $this->db->exec("INSERT INTO payment(parent_id, child_id, subject_id, count, price) VALUES({$_SESSION['id']}, $student->user_id, 
+            $student->subject_id, $student->subject_count, $student->subject_price)") == 1
+        ) {
+            return true;
+        }
+        return false;
+    }
 
     private function insert($student = Student)
     {

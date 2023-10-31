@@ -23,35 +23,6 @@ $students = $studentMap->findStudentById($id);
 $header = 'Список студентов';
 require_once 'template/header.php';
 
-if (isset($_POST['formSubmit'])) {
-    $mysqli = new mysqli("ATC2", "root", "root", "atc");
-    if ($mysqli->connect_errno) {
-        echo "Ошибка";
-        exit;
-    }
-
-    foreach ($_POST['grade_id'] as $user_id => $grade) {
-        $subject_id = $_POST['subject_id'][$user_id];
-        $student_id = $student->user_id;
-        $attend = $_POST['attend'][$user_id];
-        $grade = $mysqli->real_escape_string($grade);
-
-        if (isset($_POST["grade_id"][$user_id]) && $_POST["grade_id"][$user_id] !== "") {
-            $grade = $_POST["grade_id"][$user_id];
-        } else {
-            $grade = "NULL";
-        }
-
-        $query = "INSERT INTO grades (user_id, subject_id, grade, date, attend) VALUES ('$user_id', '$subject_id', $grade, NOW(), $attend)";
-        $result = $mysqli->query($query);
-
-
-        if (!$result) {
-            echo $query;
-        }
-    }
-    $mysqli->close();
-}
 ?>
 
 <div class="row">
@@ -65,97 +36,76 @@ if (isset($_POST['formSubmit'])) {
                 </ol>
             </section>
             <div class="box-body">
-                <?php if (Helper::can('admin') || Helper::can('manager')) { ?>
-                    <a class="btn btn-success" href="add-student.php">Добавить студента</a>
-                <?php } ?>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
                 <?php if ($students) { ?>
-                    <form method="POST">
+                    <form action="save-payment.php" method="POST">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>Ф.И.О</th>
                                     <th>Предмет</th>
-                                    <th>Оценка</th>
-                                    <th>Посещаемость</th>
+
+                                    <th>Количество уроков</th>
+                                    <th>Сумма</th>
+                                    <th>Подтвеждение</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php foreach ($students as $student) { ?>
-                                    <tr>
-                                        <td>
-                                            <?php
-                                            echo '<p>' . $student->fio . '</p> ' . '<a href="add-student.php?id=' . $student->user_id . '"></a>';
-                                            ?>
-                                        </td>
-                                        <td>
-                                            <select name="subject_id[<?php echo $student->user_id; ?>]">
-                                                <?php
-
-                                                if ($_SESSION['role'] == 'teacher') {
-
-
-
-                                                    $mysqli = new mysqli("ATC2", "root", "root", "atc");
-                                                    if ($mysqli->connect_errno) {
-                                                        echo "Ошибка";
-                                                        exit;
-                                                    }
-                                                    $sql = "SELECT teacher.otdel_id as otdel FROM teacher WHERE teacher.user_id = {$_SESSION['id']}";
-                                                    $result = $mysqli->query($sql);
-                                                    if ($result->num_rows > 0) {
-                                                        $row = $result->fetch_assoc();
-                                                        $fieldValue = $row['otdel'];
-                                                    }
-                                                }
-                                                $sql2 = "SELECT subject.subject_id as id, subject.name as name FROM subject WHERE subject.otdel_id = $fieldValue";
-                                                $result2 = $mysqli->query($sql2);
-                                                if ($result2->num_rows > 0) {
-                                                    while ($row = $result2->fetch_assoc()) {
-                                                        echo "<option value='" . $row["id"] . "'>" . $row["name"] . "</option>";
-                                                    }
-                                                } ?>
-                                            </select>
-                                        </td>
-                                        <td>
-                                            <input type="text" name="grade_id[<?php echo $student->user_id; ?>]">
-                                        </td>
-                                        <td>
-                                            <select name="attend[<?php echo $student->user_id; ?>]">
-                                                <?php
-
-                                                $mysqli = new mysqli("ATC2", "root", "root", "atc");
-                                                if ($mysqli->connect_errno) {
-                                                    echo "Ошибка";
-                                                    exit;
-                                                }
-                                                $sql = "SELECT * FROM attend";
-                                                $result = $mysqli->query($sql);
-                                                if ($result->num_rows > 0) {
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        echo "<option value='" . $row["id"] . "'>" . $row["attend"] . "</option>";
-                                                    }
-                                                }
-                                                ?>
-                                            </select>
-                                        </td>
-                                    </tr>
-                                <?php } ?>
+                                <tr>
+                                    <td>
+                                        <?php
+                                        echo '<p>' . $students->fio . '</p>';
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <select class="form-control" name="subject_id">
+                                            <?= Helper::printSelectOptions($students->subject_id, (new SubjectMap())->arrSubjects()); ?>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo '<input type="number" name="subject_count" id="input1" oninput="calculateSum()">';
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo '<input type="hidden" name="subject_price">';
+                                        echo '<span id="sum"></span>';
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <button type="submit" name="savePayment" class="btn btn-primary">Сохранить</button>
+                                    </td>
+                                </tr>
                             </tbody>
                         </table>
-                        <input class="btn btn-success" type="submit" name="formSubmit">
+                        <input type="hidden" name="user_id" value="<?= $id; ?>" />
                     </form>
                 <?php } else {
-                    echo 'Ни одного студента не найдено';
+                    echo 'Cтудент не найден';
                 } ?>
             </div>
 
         </div>
     </div>
 </div>
+<script>
+    function calculateSum() {
+        var input1 = parseFloat(document.getElementById("input1").value);
 
+        if (isNaN(input1) || input1 < 0) {
+            document.getElementsByName("subject_price")[0].value = 0;
+            document.getElementById("sum").textContent = 0 + "₸";
+        }
+        else if (sum != 0) {
+            var sum = input1 * 5000;
+            document.getElementsByName("subject_price")[0].value = sum;
+            document.getElementById("sum").textContent = sum + "₸";
+        }
+    }
+</script>
 <?php
 require_once 'template/footer.php';
 

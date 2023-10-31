@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 29 2023 г., 08:12
+-- Время создания: Окт 31 2023 г., 13:48
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -330,6 +330,36 @@ INSERT INTO `parent` (`id`, `user_id`, `child_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `payment`
+--
+
+CREATE TABLE `payment` (
+  `id` int NOT NULL,
+  `parent_id` bigint NOT NULL,
+  `child_id` bigint NOT NULL,
+  `subject_id` int DEFAULT NULL,
+  `count` int NOT NULL,
+  `price` int NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Дамп данных таблицы `payment`
+--
+
+INSERT INTO `payment` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `price`) VALUES
+(1, 10, 9, 4, 8, 20000),
+(2, 10, 9, 2, 2, 10000),
+(19, 10, 7, 1, 123, 0),
+(20, 10, 7, 1, 12, 0),
+(21, 10, 7, 1, 3, 15000),
+(22, 10, 7, 1, 5, 25000),
+(23, 10, 7, 1, 45, 225000),
+(24, 10, 9, 3, 10, 50000),
+(25, 10, 9, 1, 3, 15000);
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `role`
 --
 
@@ -409,7 +439,8 @@ INSERT INTO `student` (`user_id`, `gruppa_id`, `num_zach`) VALUES
 (7, 2, '0'),
 (8, 2, '0'),
 (9, 1, '0'),
-(18, 1, '0');
+(18, 1, '0'),
+(37, 1, '0');
 
 -- --------------------------------------------------------
 
@@ -433,7 +464,7 @@ INSERT INTO `subject` (`subject_id`, `name`, `otdel_id`, `hours`, `active`) VALU
 (1, 'Геометрия', 1, 40, 1),
 (2, 'Алгебра', 1, 40, 1),
 (3, 'Литература', 2, 40, 1),
-(4, 'Физик', 1, 45, 1),
+(4, 'Физика', 1, 45, 1),
 (5, 'География', 4, 50, 1),
 (6, 'Биология', 4, 60, 1);
 
@@ -500,7 +531,8 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (18, 'Кошелев', 'Эрнест', 'Лаврентьевич', 'koshelev', '$2y$10$mlU3F7DiiEWPXzdfjPiHseYtchL0YITkhg9XOGz72xF.klefiTgnO', 1, '2005-12-15', 5, 1, 1),
 (19, 'Дроздов ', 'Арсений', 'Михайлович', 'manager', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1997-07-12', 3, 999, 1),
 (22, 'Гурьев', 'Артем', 'Протасьевич', 'gurev', '$2y$10$Z4NTm7wDVyEZfAfnyEcGHOjAcYQQ7MJ2xVZQmXRFNzT4tHkIgihSi', 1, '2023-10-01', 4, 1, 1),
-(25, 'Буров', 'Георгий', 'Матвеевич', 'burov', '$2y$10$7yGUP8SL7XyoEtvd5MPE1O9FBSiNSJ0NMp08qReKOAoySnAGPye6G', 1, '1999-05-15', 4, 1, 1);
+(25, 'Буров', 'Георгий', 'Матвеевич', 'burov', '$2y$10$7yGUP8SL7XyoEtvd5MPE1O9FBSiNSJ0NMp08qReKOAoySnAGPye6G', 1, '1999-05-15', 4, 1, 1),
+(37, 'test', 'tetts', 'tets', 'test', '$2y$10$.GQe8tsL7EClMECH36Ca/.o1FwxJYFoCZug3AveegUUWN3KIjKk8i', 2, '2023-10-01', 5, 1, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -598,6 +630,15 @@ ALTER TABLE `parent`
   ADD PRIMARY KEY (`id`),
   ADD KEY `user_id` (`user_id`),
   ADD KEY `child_id` (`child_id`);
+
+--
+-- Индексы таблицы `payment`
+--
+ALTER TABLE `payment`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `child_id` (`child_id`),
+  ADD KEY `parent_id` (`parent_id`),
+  ADD KEY `subject_id` (`subject_id`);
 
 --
 -- Индексы таблицы `role`
@@ -723,6 +764,12 @@ ALTER TABLE `parent`
   MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT для таблицы `payment`
+--
+ALTER TABLE `payment`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
 -- AUTO_INCREMENT для таблицы `role`
 --
 ALTER TABLE `role`
@@ -750,7 +797,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -806,6 +853,14 @@ ALTER TABLE `lesson_plan`
 ALTER TABLE `parent`
   ADD CONSTRAINT `parent_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `parent_ibfk_2` FOREIGN KEY (`child_id`) REFERENCES `student` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Ограничения внешнего ключа таблицы `payment`
+--
+ALTER TABLE `payment`
+  ADD CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`child_id`) REFERENCES `parent` (`child_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `payment_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `payment_ibfk_4` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `schedule`
