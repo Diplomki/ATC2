@@ -40,13 +40,12 @@ require_once 'template/header.php';
             <!-- /.box-header -->
             <div class="box-body">
                 <?php if ($students) { ?>
-                    <form action="save-payment.php" method="POST">
+                    <form action="save-payment.php" method="POST" enctype="multipart/form-data">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
                                     <th>Ф.И.О</th>
                                     <th>Предмет</th>
-
                                     <th>Количество уроков</th>
                                     <th>Сумма</th>
                                     <th>Подтвеждение</th>
@@ -73,6 +72,11 @@ require_once 'template/header.php';
                                         <?php
                                         echo '<input type="hidden" name="subject_price">';
                                         echo '<span id="sum"></span>';
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        echo '<input  type="file" name="fileToUpload">';
                                         ?>
                                     </td>
                                     <td>

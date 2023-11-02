@@ -63,4 +63,5 @@ fa-dashboard"></i> Главная</a></li>
 </div>
 <?php
 require_once 'template/footer.php';
+echo $_SESSION['test'];
 ?>

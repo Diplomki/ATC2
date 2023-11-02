@@ -6,6 +6,8 @@ class Student extends Table
     public $subject_id = 0;
     public $subject_count = 0;
     public $subject_price = 0;
+    public $tab = '';
+
     public $num_zach = 0;
     function validate()
     {

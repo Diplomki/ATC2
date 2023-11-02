@@ -10,6 +10,11 @@ if (isset($_POST['savePayment'])) {
     $student->subject_id = Helper::clearInt($_POST['subject_id']);
     $student->subject_count = Helper::clearInt($_POST['subject_count']);
     $student->subject_price = Helper::clearInt($_POST['subject_price']);
+    $student->tab = Helper::clearString($_FILES["fileToUpload"]["name"]);
+    $fileTmpName = Helper::clearString($_FILES["fileToUpload"]["tmp_name"]);
+
+    move_uploaded_file($fileTmpName, "uploads/" . time() . $student->tab);
+
     if ((new StudentMap())->savePayment($student)) {
         header('Location: check-child.php');
     } else {
@@ -22,5 +27,3 @@ if (isset($_POST['savePayment'])) {
         }
     }
 }
-
-echo $student->subject_count;
