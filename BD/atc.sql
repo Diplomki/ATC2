@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Окт 31 2023 г., 13:48
+-- Время создания: Ноя 03 2023 г., 06:14
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -339,6 +340,7 @@ CREATE TABLE `payment` (
   `child_id` bigint NOT NULL,
   `subject_id` int DEFAULT NULL,
   `count` int NOT NULL,
+  `tab` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `price` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -346,16 +348,13 @@ CREATE TABLE `payment` (
 -- Дамп данных таблицы `payment`
 --
 
-INSERT INTO `payment` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `price`) VALUES
-(1, 10, 9, 4, 8, 20000),
-(2, 10, 9, 2, 2, 10000),
-(19, 10, 7, 1, 123, 0),
-(20, 10, 7, 1, 12, 0),
-(21, 10, 7, 1, 3, 15000),
-(22, 10, 7, 1, 5, 25000),
-(23, 10, 7, 1, 45, 225000),
-(24, 10, 9, 3, 10, 50000),
-(25, 10, 9, 1, 3, 15000);
+INSERT INTO `payment` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `tab`, `price`) VALUES
+(39, 10, 7, 1, 10, 'google-pixel-7a-128gb-charcoal.jpeg', 50000),
+(41, 11, 8, 5, 10, 'google-pixel-7a-128gb-charcoal.jpeg', 50000),
+(43, 11, 8, 6, 10, 'google-pixel-7a-128gb-charcoal.jpeg', 50000),
+(44, 11, 8, 4, 10, 'google-pixel-7a-128gb-charcoal.jpeg', 50000),
+(45, 11, 8, 2, 5, 'google-pixel-7a-128gb-charcoal.jpeg', 25000),
+(46, 11, 8, 1, 5, 'google-pixel-7a-128gb-charcoal.jpeg', 25000);
 
 -- --------------------------------------------------------
 
@@ -767,7 +766,7 @@ ALTER TABLE `parent`
 -- AUTO_INCREMENT для таблицы `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT для таблицы `role`

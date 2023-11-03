@@ -44,7 +44,9 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/list-classroom.php') ? 'class="active"' : ''; ?>>
 
                     <a href="list-classroom.php"><i class="fa fa-graduation-cap"></i><span>Аудитории</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '/check-payment.php') ? 'class="active"' : ''; ?>>
 
+                    <a href="check-payment.php"><i class="fa fa-dollar"></i><span>Оплата</span></a>
 
                 </li>
             <?php } ?>
@@ -110,6 +112,8 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-grades.php') ? 'class="active"' : ''; ?>>
 
                     <a href="check-grades.php"><i class="fa fa-address-book"></i><span>Журнал</span></a>
+
+
                 <?php } ?>
 
                 <?php if (Helper::can('procreator')) { ?>
