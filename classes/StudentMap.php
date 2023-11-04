@@ -53,6 +53,21 @@ class StudentMap extends BaseMap
         return false;
     }
 
+    public function savePaymentArchive($student = Student)
+    {
+        return $this->insertPaymentArchive($student);
+    }
+
+    private function insertPaymentArchive($student = Student)
+    {
+        if (
+            $this->db->exec("INSERT INTO payment_archive (parent_id, child_id, subject_id, count, tab, price, attend) 
+            VALUES($student->parent_id, $student->user_id, $student->subject_id, $student->count, '$student->tab', $student->price, $student->attend)") == 1
+        ) {
+            return true;
+        }
+        return false;
+    }
     private function update($student = Student)
     {
         if ($this->db->exec("UPDATE student SET gruppa_id = $student->gruppa_id WHERE user_id=" . $student->user_id) == 1) {
@@ -145,10 +160,12 @@ class StudentMap extends BaseMap
     public function Payment()
     {
         $res = $this->db->query("SELECT 
+        payment.id as id, 
         payment.parent_id, 
-        payment.child_id, 
+        payment.child_id as user_id, 
         CONCAT(parent.lastname,' ', parent.firstname, ' ', parent.patronymic) AS parent_fio, 
         CONCAT(child.lastname,' ', child.firstname, ' ', child.patronymic) AS child_fio, 
+        subject.subject_id as subject_id,
         subject.name as subject, 
         payment.count as count, 
         payment.tab as tab, 

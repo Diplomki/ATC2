@@ -104,9 +104,9 @@ require_once 'template/header.php';
                     </form>
                 <?php } else {
                     echo 'Ни одного студента не найдено';
-                } ?>
+                }
+                ?>
             </div>
-
         </div>
     </div>
 </div>
@@ -132,7 +132,6 @@ if (isset($_POST['gradeSubmit'])) {
     $subject_id = $_POST['subject_id'];
     $grade = $_POST['grade'];
     $grade = $mysqli->real_escape_string($grade);
-
     if (isset($grade) && $grade !== "") {
         $grade = $_POST['grade'];
     } else {

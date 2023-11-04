@@ -45,7 +45,6 @@ require_once 'template/header.php';
             <!-- /.box-header -->
             <div class="box-body">
                 <?php if ($students) { ?>
-
                     <form method="POST">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
@@ -69,22 +68,29 @@ require_once 'template/header.php';
                                     echo '<td>' . $student->count . '</td>';
                                     echo '<td>' . '<a href="uploads/' . $student->tab . '">' . $student->tab . '</a>' . '</td>';
                                     echo '<td>' . $student->price . '</td>';
+                                    echo "<td>" . '<form action="save-paymentArchive.php" method="post">
+                                        <input type="hidden" name="id" value="' . $student->id . '">
+                                        <input type="hidden" name="parent_id" value="' . $student->parent_id . '">
+                                        <input type="hidden" name="child_id" value="' . $student->user_id . '">
+                                        <input type="hidden" name="subject_id" value="' . $student->subject_id . '">
+                                        <input type="hidden" name="count" value="' . $student->count . '">
+                                        <input type="hidden" name="tab" value="' . $student->tab . '">
+                                        <input type="hidden" name="price" value="' . $student->price . '">
+                                        <input class="btn btn-success" type="submit" name="paymentSubmit" value="Подтвердить">
+                                        <input class="btn btn-danger" type="submit" name="paymentDelete" value="Отклонить">
+                                        </form>' . "</td>";
                                     echo '</tr>';
                                 }
                                 ?>
                             </tbody>
                         </table>
                     </form>
-                <?php } else {
-                    echo 'Ни одного студента не найдено';
-                } ?>
+                <?php } ?>
             </div>
-
         </div>
     </div>
 </div>
 
 <?php
 require_once 'template/footer.php';
-
 ?>
