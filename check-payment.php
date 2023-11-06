@@ -45,30 +45,29 @@ require_once 'template/header.php';
             <!-- /.box-header -->
             <div class="box-body">
                 <?php if ($students) { ?>
-                    <form method="POST">
-                        <table id="example2" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Ф.И.О Родителя</th>
-                                    <th>Ф.И.О Ученика</th>
-                                    <th>Предмет</th>
-                                    <th>Кол-во уроков</th>
-                                    <th>Чек</th>
-                                    <th>Цена</th>
-                                    <th>Подтверждение</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                foreach ($students as $student) {
-                                    echo '<tr>';
-                                    echo '<td>' . $student->parent_fio . '</td>';
-                                    echo '<td>' . $student->child_fio . '</td>';
-                                    echo '<td>' . $student->subject . '</td>';
-                                    echo '<td>' . $student->count . '</td>';
-                                    echo '<td>' . '<a href="uploads/' . $student->tab . '">' . $student->tab . '</a>' . '</td>';
-                                    echo '<td>' . $student->price . '</td>';
-                                    echo "<td>" . '<form action="save-paymentArchive.php" method="post">
+                    <table id="example2" class="table table-bordered table-hover">
+                        <thead>
+                            <tr>
+                                <th>Ф.И.О Родителя</th>
+                                <th>Ф.И.О Ученика</th>
+                                <th>Предмет</th>
+                                <th>Кол-во уроков</th>
+                                <th>Чек</th>
+                                <th>Цена</th>
+                                <th>Подтверждение</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                            foreach ($students as $student) {
+                                echo '<tr>';
+                                echo '<td>' . $student->parent_fio . '</td>';
+                                echo '<td>' . $student->child_fio . '</td>';
+                                echo '<td>' . $student->subject . '</td>';
+                                echo '<td>' . $student->count . '</td>';
+                                echo '<td>' . '<a href="uploads/' . $student->tab . '">' . $student->tab . '</a>' . '</td>';
+                                echo '<td>' . $student->price . '</td>';
+                                echo "<td>" . '<form action="save-paymentArchive.php" method="post">
                                         <input type="hidden" name="id" value="' . $student->id . '">
                                         <input type="hidden" name="parent_id" value="' . $student->parent_id . '">
                                         <input type="hidden" name="child_id" value="' . $student->user_id . '">
@@ -79,13 +78,15 @@ require_once 'template/header.php';
                                         <input class="btn btn-success" type="submit" name="paymentSubmit" value="Подтвердить">
                                         <input class="btn btn-danger" type="submit" name="paymentDelete" value="Отклонить">
                                         </form>' . "</td>";
-                                    echo '</tr>';
-                                }
-                                ?>
-                            </tbody>
-                        </table>
-                    </form>
-                <?php } ?>
+                                echo '</tr>';
+                            }
+                            ?>
+                        </tbody>
+                    </table>
+                <?php } else {
+                    echo 'Ни одного студента не найдено';
+                }
+                ?>
             </div>
         </div>
     </div>

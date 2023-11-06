@@ -23,6 +23,10 @@
 
                     <a href="list-student.php"><i class="fa fa-users"></i><span>Студенты</span></a>
 
+                <li <?= ($_SERVER['PHP_SELF'] == '/list-parent.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="list-parent.php"><i class="fa fa-users"></i><span>Родители</span></a>
+
                 <li class="header">Справочники</li>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/list-gruppa.php') ? 'class="active"' : ''; ?>>
@@ -79,6 +83,9 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/list-student.php') ? 'class="active"' : ''; ?>>
 
                     <a href="list-student.php"><i class="fa fa-users"></i><span>Студенты</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '/list-parent.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="list-parent.php"><i class="fa fa-users"></i><span>Родители</span></a>
 
 
                 <li class="header">Справочники</li>

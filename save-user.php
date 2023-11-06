@@ -45,6 +45,25 @@ if (isset($_POST['user_id'])) {
         exit();
     }
 
+    if (isset($_POST['saveParent'])) {
+        $parent = new Procreator();
+        $parent->user_id = $user->user_id;
+        if ((new ProcreatorMap())->save($user, $parent)) {
+
+            header('Location: profile-parent.php?id=' . $parent->user_id);
+
+        } else {
+            if ($parent->user_id) {
+
+                header('Location: add-parent.php?id=' . $parent->user_id);
+
+            } else {
+                header('Location: add-parent.php');
+            }
+        }
+        exit();
+    }
+
     if (isset($_POST['saveStudent'])) {
         $student = new Student();
         $student->gruppa_id = Helper::clearInt($_POST['gruppa_id']);

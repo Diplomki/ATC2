@@ -8,7 +8,7 @@ $id = 0;
 if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 }
-$teacher = (new TeacherMap())->findById($id);
+$parent = (new ProcreatorMap())->findById($id);
 $header = (($id) ? 'Редактировать данные' : 'Добавить') . '
 родителя';
 require_once 'template/header.php';
@@ -51,7 +51,7 @@ teacher.php">Родители</a></li>
             </div>
         </div>
         <div class="form-group">
-            <button type="submit" name="saveTeacher" class="btn btn-primary">Сохранить</button>
+            <button type="submit" name="saveParent" class="btn btn-primary">Сохранить</button>
         </div>
     </form>
 </div>

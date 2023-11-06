@@ -35,19 +35,6 @@ class ClassroomMap extends BaseMap
         return false;
     }
 
-    private function insertPayment($student = Student)
-    {
-        $name = $this->db->quote($student->name);
-        $active = $this->db->quote($student->active);
-        if (
-            $this->db->exec("INSERT INTO classroom(name, branch, active)"
-                . " VALUES($name, {$_SESSION['branch']} ,$active)") == 1
-        ) {
-            $classroom->classroom_id = $this->db->lastInsertId();
-            return true;
-        }
-        return false;
-    }
 
     private function update($classroom = Classroom)
     {

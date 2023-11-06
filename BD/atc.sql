@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 03 2023 г., 06:14
+-- Время создания: Ноя 06 2023 г., 07:21
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -168,7 +168,6 @@ CREATE TABLE `grades` (
 --
 
 INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `attend`) VALUES
-(229, 9, 2, 90, '2023-10-20', 1),
 (230, 9, 4, 80, '2023-10-20', 1),
 (231, 9, 1, 70, '2023-10-20', 1),
 (235, 7, 3, 70, '2023-10-20', 1);
@@ -216,7 +215,8 @@ INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `att
 (122, 7, 3, 90, '2023-10-20', 1),
 (123, 8, 3, 80, '2023-10-20', 1),
 (124, 8, 3, NULL, '2023-10-20', 0),
-(125, 8, 3, 60, '2023-10-21', 1);
+(125, 8, 3, 60, '2023-10-21', 1),
+(126, 9, 2, 90, '2023-11-04', 1);
 
 -- --------------------------------------------------------
 
@@ -316,7 +316,7 @@ INSERT INTO `otdel` (`otdel_id`, `name`, `active`) VALUES
 CREATE TABLE `parent` (
   `id` bigint NOT NULL,
   `user_id` bigint NOT NULL,
-  `child_id` bigint NOT NULL
+  `child_id` bigint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -326,7 +326,12 @@ CREATE TABLE `parent` (
 INSERT INTO `parent` (`id`, `user_id`, `child_id`) VALUES
 (1, 10, 7),
 (2, 10, 9),
-(3, 11, 8);
+(3, 11, 8),
+(4, 38, 9),
+(9, 10, 7),
+(10, 39, NULL),
+(11, 39, 8),
+(12, 38, 7);
 
 -- --------------------------------------------------------
 
@@ -336,25 +341,46 @@ INSERT INTO `parent` (`id`, `user_id`, `child_id`) VALUES
 
 CREATE TABLE `payment` (
   `id` int NOT NULL,
+  `parent_id` bigint DEFAULT NULL,
+  `child_id` bigint DEFAULT NULL,
+  `subject_id` int DEFAULT NULL,
+  `count` int DEFAULT NULL,
+  `tab` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `price` int DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Структура таблицы `payment_archive`
+--
+
+CREATE TABLE `payment_archive` (
+  `id` int NOT NULL,
   `parent_id` bigint NOT NULL,
   `child_id` bigint NOT NULL,
   `subject_id` int DEFAULT NULL,
   `count` int NOT NULL,
-  `tab` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
-  `price` int NOT NULL
+  `tab` varchar(64) DEFAULT NULL,
+  `price` int DEFAULT NULL,
+  `attend` tinyint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
--- Дамп данных таблицы `payment`
+-- Дамп данных таблицы `payment_archive`
 --
 
-INSERT INTO `payment` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `tab`, `price`) VALUES
-(39, 10, 7, 1, 10, 'google-pixel-7a-128gb-charcoal.jpeg', 50000),
-(41, 11, 8, 5, 10, 'google-pixel-7a-128gb-charcoal.jpeg', 50000),
-(43, 11, 8, 6, 10, 'google-pixel-7a-128gb-charcoal.jpeg', 50000),
-(44, 11, 8, 4, 10, 'google-pixel-7a-128gb-charcoal.jpeg', 50000),
-(45, 11, 8, 2, 5, 'google-pixel-7a-128gb-charcoal.jpeg', 25000),
-(46, 11, 8, 1, 5, 'google-pixel-7a-128gb-charcoal.jpeg', 25000);
+INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `tab`, `price`, `attend`) VALUES
+(25, 11, 8, 1, 5, '1699011265Без названия.png', 25000, 1),
+(26, 10, 9, 5, 5, '1699064569Поручиков М.А. Анализ данных.pdf', 25000, 1),
+(27, 10, 9, 1, 3, '1699067265Поручиков М.А. Анализ данных.pdf', 15000, 0),
+(28, 10, 7, 1, 50, '1699067259Поручиков М.А. Анализ данных.pdf', 250000, 1),
+(29, 10, 7, 4, 5, '1699068783Поручиков М.А. Анализ данных.pdf', 25000, 1),
+(31, 10, 7, 1, 10, '1699150572Поручиков М.А. Анализ данных.pdf', 50000, 1),
+(32, 10, 9, 4, 5, '1699150577Поручиков М.А. Анализ данных.pdf', 25000, 1),
+(33, 10, 7, 1, 10, '1699150652Поручиков М.А. Анализ данных.pdf', 50000, 1),
+(34, 10, 9, 4, 5, '1699150658Поручиков М.А. Анализ данных.pdf', 25000, 1),
+(35, 10, 7, 1, 5, '1699150727Поручиков М.А. Анализ данных.pdf', 25000, 0);
 
 -- --------------------------------------------------------
 
@@ -521,7 +547,7 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 2, 1),
 (9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$1CXSVkGu79u5hCP0xK7pAeAt/dcFZzeQXq.S52aXoF.57.MiY6B4S', 2, '2003-02-20', 5, 1, 1),
 (10, 'Беспалов ', 'Агафон ', 'Даниилович', 'bespalov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '1980-12-12', 6, 1, 1),
-(11, 'Карпов ', 'Антон ', 'Онисимович', 'karpov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '1980-11-12', 6, 2, 1),
+(11, 'Карпов', 'Антон', 'Онисимович', 'karpov', '$2y$10$yOW62BB4F8KYnC/Zs95xGeI7HnlX2Rxpdu9qkVInJDRV0igjzbZpq', 1, '1980-11-12', 6, 2, 1),
 (12, 'Гришин', 'Мечеслав', 'Христофорович', 'grishin', '$2y$10$HiUHq9eyUODAWKKvKb072eJFP2mmX993WlE2yvSHlx0X6JqMftKEe', 1, '2002-12-20', 4, 2, 1),
 (14, 'Макаров', 'Михаил', 'Робертович', 'makarov', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1977-06-05', 4, 1, 1),
 (15, 'Андреев ', 'Венедикт ', 'Святославович', 'admin2', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1975-08-03', 2, 2, 1),
@@ -531,7 +557,9 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (19, 'Дроздов ', 'Арсений', 'Михайлович', 'manager', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1997-07-12', 3, 999, 1),
 (22, 'Гурьев', 'Артем', 'Протасьевич', 'gurev', '$2y$10$Z4NTm7wDVyEZfAfnyEcGHOjAcYQQ7MJ2xVZQmXRFNzT4tHkIgihSi', 1, '2023-10-01', 4, 1, 1),
 (25, 'Буров', 'Георгий', 'Матвеевич', 'burov', '$2y$10$7yGUP8SL7XyoEtvd5MPE1O9FBSiNSJ0NMp08qReKOAoySnAGPye6G', 1, '1999-05-15', 4, 1, 1),
-(37, 'test', 'tetts', 'tets', 'test', '$2y$10$.GQe8tsL7EClMECH36Ca/.o1FwxJYFoCZug3AveegUUWN3KIjKk8i', 2, '2023-10-01', 5, 1, 1);
+(37, 'Жукова', 'Адельфина', 'Артемовна', 'jykova', '$2y$10$LpJ3CgZk6cmh9B.9juW0vuZBxmcVlG.JMqyJKkc5/8QtfkqRpP0fa', 2, '2003-05-28', 5, 1, 1),
+(38, 'Соловьёва', 'Лея', 'Георгьевна', 'solovieva', '$2y$10$iH5wNehSfohUxfUTwKSNB.F01vhtYuddPbxUNZADQqgf5weDX7is2', 2, '2000-05-18', 6, 1, 1),
+(39, 'Шестаков', 'Бенедикт', 'Русланович', 'shestakov', '$2y$10$sSfncxp1TVq5wkKWWy/F4.6g1XKTimJXz2QfKQmNcGFW.Nkib5guq', 1, '2002-10-02', 6, 2, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -640,6 +668,15 @@ ALTER TABLE `payment`
   ADD KEY `subject_id` (`subject_id`);
 
 --
+-- Индексы таблицы `payment_archive`
+--
+ALTER TABLE `payment_archive`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `child_id` (`child_id`),
+  ADD KEY `parent_id` (`parent_id`),
+  ADD KEY `subject_id` (`subject_id`);
+
+--
 -- Индексы таблицы `role`
 --
 ALTER TABLE `role`
@@ -730,7 +767,7 @@ ALTER TABLE `grades`
 -- AUTO_INCREMENT для таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=126;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
@@ -760,13 +797,19 @@ ALTER TABLE `otdel`
 -- AUTO_INCREMENT для таблицы `parent`
 --
 ALTER TABLE `parent`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT для таблицы `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
+
+--
+-- AUTO_INCREMENT для таблицы `payment_archive`
+--
+ALTER TABLE `payment_archive`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
 
 --
 -- AUTO_INCREMENT для таблицы `role`
@@ -796,7 +839,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -860,6 +903,14 @@ ALTER TABLE `payment`
   ADD CONSTRAINT `payment_ibfk_2` FOREIGN KEY (`child_id`) REFERENCES `parent` (`child_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `payment_ibfk_3` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `payment_ibfk_4` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Ограничения внешнего ключа таблицы `payment_archive`
+--
+ALTER TABLE `payment_archive`
+  ADD CONSTRAINT `payment_archive_ibfk_1` FOREIGN KEY (`child_id`) REFERENCES `parent` (`child_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `payment_archive_ibfk_2` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `payment_archive_ibfk_3` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `schedule`
