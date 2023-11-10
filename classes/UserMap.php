@@ -5,6 +5,7 @@ class UserMap extends BaseMap
     const TEACHER = 'teacher';
     const STUDENT = 'student';
     const ADMIN = 'admin';
+    const PARENT = 'procreator';
     function auth($login, $password)
     {
         $login = $this->db->quote($login);
@@ -170,6 +171,9 @@ class UserMap extends BaseMap
         }
         if ((new StudentMap())->findById($id)->validate()) {
             return self::STUDENT;
+        }
+        if ((new ProcreatorMap())->findById($id)->validate()) {
+            return self::PARENT;
         }
         if ($this->findById($id)->validate()) {
             return self::USER;

@@ -133,6 +133,9 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-payment.php') ? 'class="active"' : ''; ?>>
 
                     <a href="check-child.php"><i class="fa fa-usd"></i><span>Оплата</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '/check-control.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="check-control.php"><i class="fa fa-usd"></i><span>Контроль оплаты</span></a>
                 <?php } ?>
         </ul>
     </section>

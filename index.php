@@ -250,5 +250,4 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
     <?php
 }
 require_once 'template/footer.php';
-echo $user->role_id;
 ?>
