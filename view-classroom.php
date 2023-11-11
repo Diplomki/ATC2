@@ -27,8 +27,10 @@ if (isset($_GET['id'])) {
                     </ol>
                 </section>
                 <div class="box-body">
-
-                    <a class="btn btn-success" href="add-classroom.php?id=<?= $id; ?>">Изменить</a>
+                    <?php if (Helper::can('admin')) { ?>
+                        <a class="btn btn-success" href="add-classroom.php?id=<?= $id; ?>">Изменить</a>
+                    <?php }
+                    ; ?>
                 </div>
                 <div class="box-body">
                     <table class="table table-bordered table-hover">

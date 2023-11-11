@@ -30,9 +30,10 @@ gruppa.php">Группы</a></li>
                     </ol>
                 </section>
                 <div class="box-body">
-
-                    <a class="btn btn-success" href="add-gruppa.php?id=<?= $id; ?>">Изменить</a>
-
+                    <?php if (Helper::can('admin')) { ?>
+                        <a class="btn btn-success" href="add-gruppa.php?id=<?= $id; ?>">Изменить</a>
+                    <?php }
+                    ; ?>
                 </div>
                 <div class="box-body">
 

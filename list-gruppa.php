@@ -32,7 +32,7 @@ fa-dashboard"></i> Главная</a></li>
                 </ol>
             </section>
             <div class="box-body">
-                <?php if (Helper::can('admin') || Helper::can('manager')) { ?>
+                <?php if (Helper::can('admin')) { ?>
                     <a class="btn btn-success" href="add-gruppa.php">Добавить группу</a>
                 <?php }
                 ; ?>
@@ -59,9 +59,11 @@ fa-dashboard"></i> Главная</a></li>
                             <?php
                             foreach ($gruppas as $gruppa) {
                                 echo '<tr>';
-                                if (Helper::can('admin') || Helper::can('manager'))
+                                if (Helper::can('admin')) {
                                     echo '<td><a href="view-gruppa.php?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</a> ' . '<a href="add-gruppa.php?id=' . $gruppa->gruppa_id . '"><i class="fa fa-pencil"></i></a></td>';
-                                else
+                                } elseif (Helper::can('manager')) {
+                                    echo '<td><a href="view-gruppa.php?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</a> ' . '<a href="add-gruppa.php?id=' . $gruppa->gruppa_id . '"></a></td>';
+                                } else
                                     echo '<td><p>' . $gruppa->name . '</p> ' . '<a href="add-gruppa.php?id=' . $gruppa->gruppa_id . '"></a></td>';
                                 echo '<td>' . $gruppa->special . '</td>';
 
@@ -73,10 +75,14 @@ fa-dashboard"></i> Главная</a></li>
                                     "d.m.Y",
                                     strtotime($gruppa->date_end)
                                 ) . '</td>';
-                                if (Helper::can('manager'))
+                                if (Helper::can('manager')) {
                                     echo '<td>' . $gruppa->branch . '</td>';
-                                echo '</tr>';
+                                    echo '</tr>';
+                                }
+
                             }
+
+
                             ?>
                         </tbody>
                     </table>

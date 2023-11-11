@@ -30,9 +30,10 @@ subject.php">Предметы</a></li>
                     </ol>
                 </section>
                 <div class="box-body">
-
-                    <a class="btn btn-success" href="add-subject.php?id=<?= $id; ?>">Изменить</a>
-
+                    <?php if (Helper::can('admin')) { ?>
+                        <a class="btn btn-success" href="add-subject.php?id=<?= $id; ?>">Изменить</a>
+                    <?php }
+                    ; ?>
                 </div>
                 <div class="box-body">
 
@@ -42,19 +43,25 @@ hover">
                         <tr>
                             <th>Название</th>
 
-                            <td><?= $subject->name; ?></td>
+                            <td>
+                                <?= $subject->name; ?>
+                            </td>
 
                         </tr>
                         <tr>
 
                             <th>Предмет</th>
 
-                            <td><?= $subject->otdel; ?></td>
+                            <td>
+                                <?= $subject->otdel; ?>
+                            </td>
 
                         </tr>
                         <tr>
                             <th>Часы</th>
-                            <td><?= $subject->hours; ?></td>
+                            <td>
+                                <?= $subject->hours; ?>
+                            </td>
                         </tr>
                     </table>
                 </div>

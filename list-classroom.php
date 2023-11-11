@@ -31,7 +31,10 @@ require_once 'template/header.php';
                 </ol>
             </section>
             <div class="box-body">
-                <a class="btn btn-success" href="add-classroom.php">Добавить аудиторию</a>
+                <?php if (Helper::can('admin')) { ?>
+                    <a class="btn btn-success" href="add-classroom.php">Добавить аудиторию</a>
+                <?php }
+                ; ?>
             </div>
             <div class="box-body">
                 <?php
@@ -50,10 +53,15 @@ require_once 'template/header.php';
                             <?php
                             foreach ($arrClassrooms as $classroom) {
                                 echo '<tr>';
-                                echo '<td><a href="view-classroom.php?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
-                                    . '<a href="add-classroom.php?id=' . $classroom->classroom_id . '"><i class="fa fa-pencil"></i></a></td>';
-                                if (Helper::can('manager'))
+                                if (Helper::can('admin')) {
+                                    echo '<td><a href="view-classroom.php?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
+                                        . '<a href="add-classroom.php?id=' . $classroom->classroom_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                } elseif (Helper::can('manager')) {
                                     echo '<td>' . $classroom->branch . '</td>';
+                                    echo '<td><a href="view-classroom.php?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
+                                        . '<a href="add-classroom.php?id=' . $classroom->classroom_id . '"></a></td>';
+                                }
+
 
                             }
                             ?>

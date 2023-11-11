@@ -32,9 +32,10 @@ fa-dashboard"></i> Главная</a></li>
                 </ol>
             </section>
             <div class="box-body">
-
-                <a class="btn btn-success" href="add-subject.php">Добавить предмет</a>
-
+                <?php if (Helper::can('admin')) { ?>
+                    <a class="btn btn-success" href="add-subject.php">Добавить предмет</a>
+                <?php }
+                ; ?>
             </div>
             <div class="box-body">
                 <?php
@@ -56,13 +57,20 @@ fa-dashboard"></i> Главная</a></li>
                             <?php
                             foreach ($subjects as $subject) {
                                 echo '<tr>';
+                                if (Helper::can('admin')) {
+                                    echo '<td><a href="view-subject.php?id=' . $subject->subject_id . '">' . $subject->name . '</a> '
 
-                                echo '<td><a href="view-subject.php?id=' . $subject->subject_id . '">' . $subject->name . '</a> '
+                                        . '<a href="add-subject.php?id=' . $subject->subject_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                } elseif (Helper::can('manager')) {
+                                    echo '<td><a href="view-subject.php?id=' . $subject->subject_id . '">' . $subject->name . '</a> '
 
-                                    . '<a href="add-subject.php?id=' . $subject->subject_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                        . '<a href="add-subject.php?id=' . $subject->subject_id . '"></a></td>';
+
+
+                                }
                                 echo '<td>' . $subject->otdel . '</td>';
                                 echo '<td>' . $subject->hours . '</td>';
-
+                                echo '</tr>';
                             }
                             ?>
                         </tbody>

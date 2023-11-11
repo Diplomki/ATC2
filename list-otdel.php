@@ -31,7 +31,10 @@ require_once 'template/header.php';
                 </ol>
             </section>
             <div class="box-body">
-                <a class="btn btn-success" href="add-otdel.php">Добавить отдел</a>
+                <?php if (Helper::can('admin')) { ?>
+                    <a class="btn btn-success" href="add-otdel.php">Добавить отдел</a>
+                <?php }
+                ; ?>
             </div>
             <div class="box-body">
                 <?php
@@ -47,8 +50,13 @@ require_once 'template/header.php';
                             <?php
                             foreach ($arrOtdels as $otdel) {
                                 echo '<tr>';
-                                echo '<td><a href="view-otdel.php?id=' . $otdel->otdel_id . '">' . $otdel->name . '</a> '
-                                    . '<a href="add-otdel.php?id=' . $otdel->otdel_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                if (Helper::can('admin')) {
+                                    echo '<td><a href="view-otdel.php?id=' . $otdel->otdel_id . '">' . $otdel->name . '</a> '
+                                        . '<a href="add-otdel.php?id=' . $otdel->otdel_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                } elseif (Helper::can('manager')) {
+                                    echo '<td><a href="view-otdel.php?id=' . $otdel->otdel_id . '">' . $otdel->name . '</a> '
+                                        . '<a href="add-otdel.php?id=' . $otdel->otdel_id . '"></a></td>';
+                                }
                             }
                             ?>
                         </tbody>

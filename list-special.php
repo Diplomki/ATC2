@@ -32,9 +32,10 @@ fa-dashboard"></i> Главная</a></li>
                                 </ol>
                         </section>
                         <div class="box-body">
-
-                                <a class="btn btn-success" href="add-special.php">Добавить специальность</a>
-
+                                <?php if (Helper::can('admin')) { ?>
+                                        <a class="btn btn-success" href="add-special.php">Добавить специальность</a>
+                                <?php }
+                                ; ?>
                         </div>
                         <div class="box-body">
                                 <?php
@@ -56,9 +57,17 @@ fa-dashboard"></i> Главная</a></li>
                                                         <?php
                                                         foreach ($specials as $special) {
                                                                 echo '<tr>';
-                                                                echo '<td><a href="view-special.php?id=' . $special->special_id . '">' . $special->name . '</a> '
-                                                                        . '<a href="add-special.php?id=' . $special->special_id . '"><i class="fa fa-pencil"></i></a></td>';
-                                                                echo '<td>' . $special->otdel . '</td>';
+                                                                if (Helper::can('admin')) {
+                                                                        echo '<td><a href="view-special.php?id=' . $special->special_id . '">' . $special->name . '</a> '
+                                                                                . '<a href="add-special.php?id=' . $special->special_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                                                        echo '<td>' . $special->otdel . '</td>';
+                                                                } elseif (Helper::can('manager')) {
+                                                                        echo '<td><a href="view-special.php?id=' . $special->special_id . '">' . $special->name . '</a> '
+                                                                                . '<a href="add-special.php?id=' . $special->special_id . '"></a></td>';
+                                                                        echo '<td>' . $special->otdel . '</td>';
+
+                                                                }
+
                                                                 echo '</tr>';
                                                         }
                                                         ?>
