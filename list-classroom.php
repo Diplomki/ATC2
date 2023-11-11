@@ -57,11 +57,11 @@ require_once 'template/header.php';
                                     echo '<td><a href="view-classroom.php?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
                                         . '<a href="add-classroom.php?id=' . $classroom->classroom_id . '"><i class="fa fa-pencil"></i></a></td>';
                                 } elseif (Helper::can('manager')) {
-                                    echo '<td>' . $classroom->branch . '</td>';
                                     echo '<td><a href="view-classroom.php?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
                                         . '<a href="add-classroom.php?id=' . $classroom->classroom_id . '"></a></td>';
+                                    echo '<td>' . $classroom->branch . '</td>';
                                 }
-
+                                echo '</tr>';
 
                             }
                             ?>

@@ -63,19 +63,42 @@ class StudentMap extends BaseMap
 
     public function savePaymentArchive($student = Student)
     {
+
         return $this->insertPaymentArchive($student);
+
     }
+
+    public function saveUpdatePaymentArchive($student = Student)
+    {
+
+        return $this->updatePaymentArchive($student);
+
+    }
+
 
     private function insertPaymentArchive($student = Student)
     {
         if (
-            $this->db->exec("INSERT INTO payment_archive (parent_id, child_id, subject_id, count, tab, price, attend) 
-            VALUES($student->parent_id, $student->user_id, $student->subject_id, $student->count, '$student->tab', $student->price, $student->attend)") == 1
+            $this->db->exec("INSERT INTO 
+            payment_archive (parent_id, child_id, subject_id, count, tab, price, attend) 
+            VALUES($student->parent_id, $student->user_id, 
+            $student->subject_id, $student->count, '$student->tab', $student->price, $student->attend)
+            ") == 1
         ) {
             return true;
         }
         return false;
     }
+
+    private function updatePaymentArchive($student = Student)
+    {
+        if ($this->db->exec("UPDATE payment_archive SET count = count + $student->count WHERE child_id=" . $student->user_id . " and subject_id=" . $student->subject_id) == 1) {
+            return true;
+        }
+        return false;
+    }
+
+
     private function update($student = Student)
     {
         if ($this->db->exec("UPDATE student SET gruppa_id = $student->gruppa_id WHERE user_id=" . $student->user_id) == 1) {
@@ -198,7 +221,7 @@ class StudentMap extends BaseMap
     public function findStudentByControl($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT payment_archive.child_id as child, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.name as subject, payment_archive.count FROM payment_archive
+            $res = $this->db->query("SELECT payment_archive.id as id, payment_archive.child_id as child, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.name as subject, payment_archive.count FROM payment_archive
             INNER JOIN subject ON subject.subject_id = payment_archive.subject_id
             INNER JOIN user ON user.user_id=payment_archive.child_id
             WHERE payment_archive.child_id = $id");
@@ -206,4 +229,6 @@ class StudentMap extends BaseMap
         }
         return false;
     }
+
+
 }
