@@ -53,7 +53,9 @@ if (isset($_POST['paymentSubmit'])) {
     } catch (PDOException $e) {
         die("Ошибка подключения к базе данных: " . $e->getMessage());
     }
+
     $sql2 = "SELECT payment_archive.child_id, payment_archive.subject_id FROM payment_archive";
+
     try {
         $stmt = $pdo->prepare($sql2);
         $stmt->execute();

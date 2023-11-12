@@ -143,17 +143,57 @@ if (isset($_POST['gradeSubmit'])) {
     $sql = "INSERT INTO grade_accept (user_id, subject_id, grade, date, attend) VALUES ('$user_id', '$subject_id', $grade, NOW(), $attend)";
     $sql2 = "DELETE FROM grades WHERE grade_id = '$grade_delete'";
 
-    if ($conn->query($sql) && $conn->query($sql2)) {
-        echo '<script type="text/javascript">
-                setTimeout(function () {
-                window.location.href = window.location.href;
-                }, 0);
-            </script>';
+    $host = '127.0.0.1';
+    $dbname = 'atc';
+    $username = 'root';
+    $password = 'root';
 
-    } else {
-
+    // Создаем объект PDO для подключения к базе данных
+    try {
+        $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+        // Устанавливаем режим выброса исключений при ошибке
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    } catch (PDOException $e) {
+        die("Ошибка подключения к базе данных: " . $e->getMessage());
     }
+    $sql3 = "SELECT payment_archive.child_id, payment_archive.subject_id FROM payment_archive";
+
+    $sql4 = "UPDATE payment_archive SET count = count - 1 WHERE child_id=" . $user_id . " and subject_id=" . $subject_id;
+    try {
+        $stmt = $pdo->prepare($sql3);
+        $stmt->execute();
+
+        // Получаем результат в виде ассоциативного массива
+        $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $stmt2 = $pdo->prepare($sql4);
+
+
+        if ($conn->query($sql) && $conn->query($sql2)) {
+            foreach ($result as $row) {
+                if ($user_id == $row["child_id"] && $subject_id == $row["subject_id"]) {
+                    $stmt2->execute();
+                    $found = true;
+                    break;
+                }
+            }
+
+            echo '<script type="text/javascript">
+                    setTimeout(function () {
+                    window.location.href = window.location.href;
+                    }, 0);
+                </script>';
+        }
+
+
+
+    } catch (PDOException $e) {
+        die("Ошибка выполнения запроса: " . $e->getMessage());
+    }
+
+
 }
+
+
 
 if (isset($_POST['gradeDelete'])) {
     $grade_delete = $_POST['grade_id'];
