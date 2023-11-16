@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 5.0.4
+-- version 4.9.7
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 15 2023 г., 09:54
+-- Время создания: Ноя 16 2023 г., 04:51
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -37,9 +38,6 @@ CREATE TABLE `admin` (
 --
 
 INSERT INTO `admin` (`user_id`, `branch_id`) VALUES
-(2, 1),
-(15, 2),
-(16, 3),
 (2, 1),
 (15, 2),
 (16, 3);
@@ -160,27 +158,10 @@ CREATE TABLE `grades` (
   `grade_id` int NOT NULL,
   `user_id` bigint NOT NULL,
   `subject_id` int NOT NULL,
-  `grade` int DEFAULT NULL,
+  `grade` varchar(2) DEFAULT NULL,
   `date` date DEFAULT NULL,
   `attend` tinyint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Дамп данных таблицы `grades`
---
-
-INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `attend`) VALUES
-(262, 37, 5, NULL, '2023-11-15', 0),
-(263, 18, 5, NULL, '2023-11-15', 0),
-(265, 37, 5, NULL, '2023-11-15', 0),
-(266, 18, 5, NULL, '2023-11-15', 0),
-(268, 37, 5, NULL, '2023-11-15', 0),
-(269, 18, 5, NULL, '2023-11-15', 0),
-(270, 9, 5, NULL, '2023-11-15', 0),
-(271, 37, 5, NULL, '2023-11-15', 0),
-(272, 18, 6, NULL, '2023-11-15', 0),
-(276, 9, 3, NULL, '2023-11-15', 0),
-(277, 37, 3, NULL, '2023-11-15', 0);
 
 -- --------------------------------------------------------
 
@@ -210,9 +191,23 @@ INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `att
 (161, 18, 5, 0, '2023-11-15', 0),
 (162, 9, 5, 0, '2023-11-15', 0),
 (163, 9, 6, 90, '2023-11-15', 1),
-(164, 9, 6, 0, '2023-11-15', 0),
-(165, 18, 3, 0, '2023-11-15', 0),
-(166, 18, 6, 90, '2023-11-15', 1);
+(164, 37, 5, 0, '2023-11-15', 0),
+(165, 18, 5, 0, '2023-11-15', 0),
+(166, 37, 5, 0, '2023-11-15', 0),
+(167, 18, 5, 0, '2023-11-15', 0),
+(168, 37, 5, 0, '2023-11-15', 0),
+(169, 9, 5, 0, '2023-11-16', 0),
+(170, 9, 5, 0, '2023-11-16', 0),
+(171, 18, 5, 0, '2023-11-16', 0),
+(172, 9, 5, 0, '2023-11-16', 0),
+(173, 37, 5, 0, '2023-11-16', 0),
+(174, 9, 5, 0, '2023-11-16', 1),
+(175, 18, 6, 0, '2023-11-16', 1),
+(176, 9, 6, 0, '2023-11-16', 1),
+(177, 37, 6, 0, '2023-11-16', 1),
+(178, 18, 5, 90, '2023-11-16', 1),
+(179, 9, 5, 80, '2023-11-16', 1),
+(180, 37, 5, 50, '2023-11-16', 1);
 
 -- --------------------------------------------------------
 
@@ -234,11 +229,10 @@ CREATE TABLE `gruppa` (
 --
 
 INSERT INTO `gruppa` (`gruppa_id`, `name`, `special_id`, `date_begin`, `date_end`, `branch`) VALUES
-(1, '7', 10, '2022-11-06', '2022-11-16', 1),
+(1, '7Б', 11, '2022-11-06', '2022-11-16', 1),
 (2, '7А', 3, '2023-10-01', '2023-10-31', 2),
 (3, '8', 11, '2023-09-01', '2025-06-10', 1),
-(4, '9', 13, '2020-01-31', '2026-10-24', 2),
-(5, '7', 3, '2023-11-01', '2023-11-30', 1);
+(4, '7', 13, '2020-01-31', '2026-10-24', 2);
 
 -- --------------------------------------------------------
 
@@ -281,10 +275,7 @@ CREATE TABLE `lesson_plan` (
 --
 
 INSERT INTO `lesson_plan` (`lesson_plan_id`, `gruppa_id`, `subject_id`, `user_id`) VALUES
-(2, 1, 6, 6),
-(3, 1, 2, 22),
-(4, 1, 4, 25),
-(5, 3, 5, 6);
+(1, 1, 2, 6);
 
 -- --------------------------------------------------------
 
@@ -378,7 +369,7 @@ INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `cou
 (41, 10, 7, 5, 1, '1699588319ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (42, 10, 7, 6, 10, '1699588325ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (77, 10, 9, 1, 25, '1699682076ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
-(78, 10, 9, 5, 15, '1699682118ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
+(78, 10, 9, 5, 10, '1699682118ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
 (79, 10, 9, 6, 33, '1699783960ПРОЧИТАЙ!!!!!!!!!!!.txt', 20000, 1),
 (93, 10, 9, 3, 10, '1700012243ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
 (94, 10, 9, 4, 10, '1700012553ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1);
@@ -420,13 +411,6 @@ CREATE TABLE `schedule` (
   `lesson_num_id` int NOT NULL,
   `classroom_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
---
--- Дамп данных таблицы `schedule`
---
-
-INSERT INTO `schedule` (`schedule_id`, `lesson_plan_id`, `day_id`, `lesson_num_id`, `classroom_id`) VALUES
-(1, 5, 2, 3, 5);
 
 -- --------------------------------------------------------
 
@@ -472,7 +456,7 @@ INSERT INTO `student` (`user_id`, `gruppa_id`, `num_zach`) VALUES
 (7, 2, '0'),
 (8, 2, '0'),
 (9, 1, '0'),
-(18, 3, '0'),
+(18, 1, '0'),
 (37, 1, '0');
 
 -- --------------------------------------------------------
@@ -769,19 +753,19 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=279;
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=292;
 
 --
 -- AUTO_INCREMENT для таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
 --
 ALTER TABLE `gruppa`
-  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT для таблицы `lesson_num`
@@ -793,7 +777,7 @@ ALTER TABLE `lesson_num`
 -- AUTO_INCREMENT для таблицы `lesson_plan`
 --
 ALTER TABLE `lesson_plan`
-  MODIFY `lesson_plan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `lesson_plan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT для таблицы `otdel`
@@ -829,7 +813,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT для таблицы `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT для таблицы `special`
