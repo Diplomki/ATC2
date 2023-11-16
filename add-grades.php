@@ -26,35 +26,7 @@ $students = $studentMap->findStudentsFromGroup($id, $page * $size - $size, $size
 $header = 'Список студентов';
 require_once 'template/header.php';
 
-if (isset($_POST['formSubmit'])) {
-    $mysqli = new mysqli("ATC2", "root", "root", "atc");
-    if ($mysqli->connect_errno) {
-        echo "Ошибка";
-        exit;
-    }
 
-    foreach ($_POST['grade_id'] as $user_id => $grade) {
-        $subject_id = $_POST['subject_id'][$user_id];
-        $student_id = $student->user_id;
-        $attend = $_POST['attend'][$user_id];
-        $grade = $mysqli->real_escape_string($grade);
-
-        if (isset($_POST["grade_id"][$user_id]) && $_POST["grade_id"][$user_id] !== "") {
-            $grade = $_POST["grade_id"][$user_id];
-        } else {
-            $grade = "NULL";
-        }
-
-        $query = "INSERT INTO grades (user_id, subject_id, grade, date, attend) VALUES ('$user_id', '$subject_id', $grade, NOW(), $attend)";
-        $result = $mysqli->query($query);
-
-
-        if (!$result) {
-            echo $query;
-        }
-    }
-    $mysqli->close();
-}
 ?>
 
 <div class="row">
@@ -70,12 +42,14 @@ if (isset($_POST['formSubmit'])) {
             <div class="box-body">
                 <?php if (Helper::can('admin') || Helper::can('manager')) { ?>
                     <a class="btn btn-success" href="add-student.php">Добавить студента</a>
+
                 <?php } ?>
             </div>
+
             <!-- /.box-header -->
             <div class="box-body">
                 <?php if ($students) { ?>
-                    <form method="POST">
+                    <form action="save-addGrades.php" method="POST">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
@@ -84,6 +58,7 @@ if (isset($_POST['formSubmit'])) {
                                     <th>Оценка</th>
                                     <th>Посещаемость</th>
                                 </tr>
+
                             </thead>
                             <tbody>
                                 <?php foreach ($students as $student) { ?>
@@ -98,30 +73,8 @@ if (isset($_POST['formSubmit'])) {
                                         <td>
                                             <select name="subject_id[<?php echo $student->user_id; ?>]">
                                                 <?php
-
-                                                if ($_SESSION['role'] == 'teacher') {
-
-
-
-                                                    $mysqli = new mysqli("ATC2", "root", "root", "atc");
-                                                    if ($mysqli->connect_errno) {
-                                                        echo "Ошибка";
-                                                        exit;
-                                                    }
-                                                    $sql = "SELECT teacher.otdel_id as otdel FROM teacher WHERE teacher.user_id = {$_SESSION['id']}";
-                                                    $result = $mysqli->query($sql);
-                                                    if ($result->num_rows > 0) {
-                                                        $row = $result->fetch_assoc();
-                                                        $fieldValue = $row['otdel'];
-                                                    }
-                                                }
-                                                $sql2 = "SELECT subject.subject_id as id, subject.name as name FROM subject WHERE subject.otdel_id = $fieldValue";
-                                                $result2 = $mysqli->query($sql2);
-                                                if ($result2->num_rows > 0) {
-                                                    while ($row = $result2->fetch_assoc()) {
-                                                        echo "<option value='" . $row["id"] . "'>" . $row["name"] . "</option>";
-                                                    }
-                                                } ?>
+                                                Helper::printSelectOptions($student->subject_id, (new StudentMap())->arrSubjectFromBranch());
+                                                ?>
                                             </select>
                                         </td>
                                         <td>
@@ -130,19 +83,7 @@ if (isset($_POST['formSubmit'])) {
                                         <td>
                                             <select name="attend[<?php echo $student->user_id; ?>]">
                                                 <?php
-
-                                                $mysqli = new mysqli("ATC2", "root", "root", "atc");
-                                                if ($mysqli->connect_errno) {
-                                                    echo "Ошибка";
-                                                    exit;
-                                                }
-                                                $sql = "SELECT * FROM attend";
-                                                $result = $mysqli->query($sql);
-                                                if ($result->num_rows > 0) {
-                                                    while ($row = $result->fetch_assoc()) {
-                                                        echo "<option value='" . $row["id"] . "'>" . $row["attend"] . "</option>";
-                                                    }
-                                                }
+                                                Helper::printSelectOptions($student->attend, (new StudentMap())->arrAttends());
                                                 ?>
                                             </select>
                                         </td>
@@ -160,7 +101,6 @@ if (isset($_POST['formSubmit'])) {
         </div>
     </div>
 </div>
-
 <?php
 require_once 'template/footer.php';
 

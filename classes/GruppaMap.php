@@ -3,9 +3,10 @@ class GruppaMap extends BaseMap
 {
     public function arrGruppas()
     {
-        $res = $this->db->query("SELECT gruppa_id AS id, name AS value, branch.id AS branch FROM gruppa
-        INNER JOIN branch ON branch.id = gruppa.gruppa_id
-        WHERE branch.id = {$_SESSION['branch']}");
+        $res = $this->db->query("SELECT gruppa.gruppa_id AS id, gruppa.name AS value, branch.id AS branch FROM gruppa
+        INNER JOIN branch ON branch.id = gruppa.branch
+        WHERE branch.id = {$_SESSION['branch']}
+        ");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
     public function findById($id = null)

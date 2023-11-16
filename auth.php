@@ -26,5 +26,6 @@ if (isset($_SESSION['role'])) {
 логин или пароль</span>';
     }
 }
+
 require_once('template/login.php');
 ?>

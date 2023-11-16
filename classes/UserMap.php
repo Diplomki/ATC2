@@ -161,6 +161,33 @@ class UserMap extends BaseMap
         return false;
     }
 
+    public function teacherCount()
+    {
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT COUNT(*) as count FROM teacher
+            INNER JOIN user ON teacher.user_id = user.user_id
+            WHERE user.branch_id = {$_SESSION['branch']}");
+            ;
+        } else {
+            $res = $this->db->query("SELECT COUNT(*) as count FROM teacher");
+        }
+        return $res->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function studentCount()
+    {
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT COUNT(*) as count FROM student
+            INNER JOIN user ON student.user_id = user.user_id
+            WHERE user.branch_id = {$_SESSION['branch']}");
+            ;
+        } else {
+            $res = $this->db->query("SELECT COUNT(*) as count FROM student");
+        }
+        return $res->fetch(PDO::FETCH_OBJ);
+    }
+
+
     public function identity($id)
     {
         if ((new TeacherMap())->findById($id)->validate()) {

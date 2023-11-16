@@ -65,7 +65,7 @@ require_once 'template/header.php';
                                 echo '<td>' . $student->child_fio . '</td>';
                                 echo '<td>' . $student->subject . '</td>';
                                 echo '<td>' . $student->count . '</td>';
-                                echo '<td>' . '<a href="uploads/' . $student->tab . '">' . $student->tab . '</a>' . '</td>';
+                                echo '<td>' . '<a href="uploads/' . $student->tab . '">' . preg_replace("/[0-9]/", "", $student->tab) . '</a>' . '</td>';
                                 echo '<td>' . $student->price . '</td>';
                                 echo "<td>" . '<form action="save-paymentArchive.php" method="post">
                                         <input type="hidden" name="id" value="' . $student->id . '">
@@ -91,7 +91,6 @@ require_once 'template/header.php';
         </div>
     </div>
 </div>
-
 <?php
 require_once 'template/footer.php';
 ?>

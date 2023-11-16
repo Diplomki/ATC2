@@ -85,4 +85,12 @@ class TeacherMap extends BaseMap
         }
         return false;
     }
+
+    public function findOtdel()
+    {
+        $res = $this->db->query("SELECT user.user_id, otdel.otdel_id AS otdel_id FROM user 
+        INNER JOIN teacher ON user.user_id=teacher.user_id 
+        INNER JOIN otdel ON teacher.otdel_id=otdel.otdel_id WHERE teacher.user_id = {$_SESSION['id']}");
+        return $res->fetch(PDO::FETCH_OBJ);
+    }
 }

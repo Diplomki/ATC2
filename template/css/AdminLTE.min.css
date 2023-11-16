@@ -2079,8 +2079,38 @@ a:focus {
     border-top-right-radius: 0;
     border-bottom-right-radius: 3px;
     border-bottom-left-radius: 3px;
-    padding: 10px
+    padding: 10px;
 }
+
+@media only screen and (max-width: 768px) {
+    .box-body {
+        border-radius: 3px;
+        padding: 5px;
+    }
+}
+
+@media only screen and (max-width: 768px) {
+    .box {
+        border-radius: 3px;
+        padding: -10px;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .box {
+        position: relative;
+        margin-top: 5px;
+        top: 0;
+        right: 0;
+        float: none;
+        padding-left: 10px;
+    }
+
+}
+
+
+
+
 
 .no-header .box-body {
     border-top-right-radius: 3px;

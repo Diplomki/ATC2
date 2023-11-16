@@ -21,8 +21,7 @@ if (isset($_GET['id'])) {
 }
 
 $studentMap = new StudentMap();
-$count = $studentMap->count();
-$students = $studentMap->findStudentsFromGrades($id, $page * $size - $size, $size);
+$students = $studentMap->viewPerformance();
 $header = 'Студент';
 $userMap = new UserMap();
 $user = $userMap->auth($login, $password);
@@ -57,34 +56,14 @@ require_once 'template/header.php';
                             </thead>
                             <tbody>
                                 <?php
-                                $mysqli = new mysqli("ATC2", "root", "root", "atc");
-                                if ($mysqli->connect_errno) {
-                                    echo "Ошибка";
-                                    exit;
+                                foreach ($students as $student) {
+                                    echo "<tr>";
+                                    echo "<td>" . $student->fio . "</td>";
+                                    echo "<td>" . $student->subject . "</td>";
+                                    echo "<td>" . $student->attend . "</td>";
+                                    echo "<td>" . $student->date . "</td>";
+                                    echo "</tr>";
                                 }
-                                $sql = "SELECT parent.child_id as child_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.name as subject, grade_accept.date as date, attend.attend as attend, branch.id as branch, user.user_id as user_id
-                                FROM parent
-                                INNER JOIN user ON user.user_id = parent.child_id
-                                INNER JOIN grade_accept ON grade_accept.user_id = parent.child_id
-                                INNER JOIN subject ON subject.subject_id = grade_accept.subject_id
-                                INNER JOIN attend ON attend.id = grade_accept.attend
-                                INNER JOIN branch ON branch.id = user.branch_id
-                                WHERE parent.user_id = {$_SESSION['id']} and grade_accept.grade is null and branch.id = {$_SESSION['branch']}";
-                                $result = $mysqli->query($sql);
-                                if ($result->num_rows > 0) {
-                                    while ($row = $result->fetch_assoc()) {
-                                        echo "<tr>";
-                                        echo "<td>" . $row['fio'] . "</td>";
-                                        echo "<td>" . $row['subject'] . "</td>";
-                                        echo "<td>" . $row['attend'] . "</td>";
-                                        echo "<td>" . $row['date'] . "</td>";
-
-                                        echo "</tr>";
-                                    }
-                                } else {
-                                    echo "Нет данных в таблице.";
-                                }
-
                                 ?>
                             </tbody>
                         </table>
@@ -99,20 +78,5 @@ require_once 'template/header.php';
 </div>
 
 <?php
-// Подключение к базе данных
-$servername = "ATC2";
-$username = "root";
-$password = "root";
-$dbname = "atc";
-
-$conn = new mysqli($servername, $username, $password, $dbname);
-
-// Проверка подключения
-if ($conn->connect_error) {
-    die("Ошибка подключения: " . $conn->connect_error);
-}
-
-// Закрытие соединения с базой данных
-$conn->close();
 require_once 'template/footer.php';
 ?>
