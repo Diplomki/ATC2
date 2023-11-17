@@ -54,7 +54,7 @@ require_once 'template/header.php';
                                 <th>Кол-во уроков</th>
                                 <th>Чек</th>
                                 <th>Цена</th>
-                                <th>Подтверждение</th>
+                                <th>Подтвер-ждение</th>
                             </tr>
                         </thead>
                         <tbody>

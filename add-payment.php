@@ -44,9 +44,9 @@ require_once 'template/header.php';
                                 <tr>
                                     <th>Ф.И.О</th>
                                     <th>Предмет</th>
-                                    <th>Количество уроков</th>
+                                    <th>Кол-во уроков</th>
                                     <th>Сумма</th>
-                                    <th>Подтвеждение</th>
+                                    <th>Подтвеж-дение</th>
                                 </tr>
                             </thead>
                             <tbody>

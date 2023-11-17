@@ -52,7 +52,7 @@ require_once 'template/header.php';
                                 <th>Предмет</th>
                                 <th>Оценка</th>
                                 <th>Дата</th>
-                                <th>Посещаемость</th>
+                                <th>Посеща-емость</th>
                             </tr>
                         </thead>
                         <tbody>

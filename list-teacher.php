@@ -46,7 +46,6 @@ fa-dashboard"></i> Главная</a></li>
                         <thead>
                             <tr>
                                 <th>Ф.И.О</th>
-                                <th>Пол</th>
                                 <th>Дата рождения</th>
                                 <th>Отделение</th>
                                 <?php if (Helper::can('manager')) { ?>
@@ -65,7 +64,6 @@ fa-dashboard"></i> Главная</a></li>
                                 } else {
                                     echo '<td><p>' . $teacher->fio . '</p> ';
                                 }
-                                echo '<td>' . $teacher->gender . '</td>';
                                 echo '<td>' . $teacher->birthday . '</td>';
                                 echo '<td>' . $teacher->otdel . '</td>';
                                 if (Helper::can('manager'))

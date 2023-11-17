@@ -29,6 +29,8 @@ require_once 'template/header.php';
 
 ?>
 
+
+
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
@@ -56,7 +58,7 @@ require_once 'template/header.php';
                                     <th>Ф.И.О</th>
                                     <th>Предмет</th>
                                     <th>Оценка</th>
-                                    <th>Посещаемость</th>
+                                    <th>Посещае-мость</th>
                                 </tr>
 
                             </thead>
@@ -101,6 +103,15 @@ require_once 'template/header.php';
         </div>
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/hyphenopoly@2.8.0/dist/hyphenopoly.module.js"></script>
+<script>
+    // Конфигурация переноса слов по слогам для русского языка
+    window.hyphenopolyConfig = {
+        require: ['ru']
+    };
+</script>
+<script src="https://cdn.jsdelivr.net/npm/hyphenopoly@2.8.0/dist/configurator.js"></script>
 <?php
 require_once 'template/footer.php';
 
