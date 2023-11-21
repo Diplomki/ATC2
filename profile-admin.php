@@ -17,19 +17,19 @@ require_once 'template/header.php';
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h1>Профиль студента</h1>
+                <h1>Профиль администратора</h1>
                 <ol class="breadcrumb">
                     <li><a href="index.php"><i class="fa
 fa-dashboard"></i> Главная</a></li>
 
-                    <li><a href="list-student.php">Студенты</a></li>
+                    <li><a href="list-admin.php">Администраторы</a></li>
 
                     <li class="active">Профиль</li>
                 </ol>
             </section>
             <div class="box-body">
                 <?php if (Helper::can('manager')) { ?>
-                    <a class="btn btn-success" href="add-student.php?id=<?= $id; ?>">Изменить</a>
+                    <a class="btn btn-success" href="add-admin.php?id=<?= $id; ?>">Изменить</a>
                 <?php } ?>
 
             </div>

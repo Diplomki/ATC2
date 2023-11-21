@@ -64,8 +64,13 @@ class ClassroomMap extends BaseMap
 
     public function count()
     {
-        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM classroom");
-        return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM classroom WHERE branch = {$_SESSION['branch']}");
+            return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        } else {
+            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM classroom WHERE branch");
+            return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        }
     }
 
     public function findViewById($id = null)

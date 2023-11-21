@@ -283,11 +283,15 @@ class StudentMap extends BaseMap
 
     public function count()
     {
-        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM student
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM student
         INNER JOIN user ON user.user_id = student.user_id
-        INNER JOIN branch ON  user.branch_id = branch.id
-        WHERE branch.id = {$_SESSION['branch']}");
-        return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        WHERE user.branch_id = {$_SESSION['branch']}");
+            return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        } else {
+            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM student");
+            return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        }
     }
     public function findProfileById($id = null)
     {

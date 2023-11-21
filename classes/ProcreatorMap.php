@@ -61,7 +61,7 @@ class ProcreatorMap extends BaseMap
     public function findAll($ofset = 0, $limit = 30)
     {
         if ($_SESSION['branch'] == 999) {
-            $res = $this->db->query("SELECT 
+            $res = $this->db->query("SELECT DISTINCT
             user.user_id,
             CONCAT(procreator.lastname,' ', procreator.firstname, ' ', procreator.patronymic) AS parent_fio, 
             CONCAT(child.lastname,' ', child.firstname, ' ', child.patronymic) AS child_fio, 
@@ -73,33 +73,37 @@ class ProcreatorMap extends BaseMap
             INNER JOIN user as child on child.user_id = parent.child_id
             INNER JOIN user on user.user_id = parent.user_id
             INNER JOIN branch on user.branch_id = branch.id
+            INNER JOIN gender ON user.gender_id = gender.gender_id
             INNER JOIN gender ON user.gender_id = gender.gender_id LIMIT $ofset, $limit");
         } else {
-            $res = $this->db->query("SELECT 
-                user.user_id,
-                CONCAT(procreator.lastname,' ', procreator.firstname, ' ', procreator.patronymic) AS parent_fio, 
-                CONCAT(child.lastname,' ', child.firstname, ' ', child.patronymic) AS child_fio, 
-                gender.name as gender, 
-                user.birthday as birthday,
-                branch.branch as branch
-                FROM parent
-                INNER JOIN user as procreator on procreator.user_id = parent.user_id
-                INNER JOIN user as child on child.user_id = parent.child_id
-                INNER JOIN user on user.user_id = parent.user_id
-                INNER JOIN branch on user.branch_id = branch.id
-                INNER JOIN gender ON user.gender_id = gender.gender_id
-                WHERE user.branch_id = {$_SESSION['branch']} LIMIT $ofset, $limit")
-
-            ;
-
+            $res = $this->db->query("SELECT DISTINCT
+            user.user_id,
+            CONCAT(procreator.lastname,' ', procreator.firstname, ' ', procreator.patronymic) AS parent_fio, 
+            CONCAT(child.lastname,' ', child.firstname, ' ', child.patronymic) AS child_fio, 
+            gender.name as gender, 
+            user.birthday as birthday,
+            branch.branch as branch
+            FROM parent
+            INNER JOIN user as procreator on procreator.user_id = parent.user_id
+            INNER JOIN user as child on child.user_id = parent.child_id
+            INNER JOIN user on user.user_id = parent.user_id
+            INNER JOIN branch on user.branch_id = branch.id
+            INNER JOIN gender ON user.gender_id = gender.gender_id
+            WHERE user.branch_id = {$_SESSION['branch']} LIMIT $ofset, $limit");
         }
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function count()
     {
-        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM parent
-        INNER JOIN user ON user.user_id = parent.user_id");
-        return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM parent
+        INNER JOIN user ON user.user_id = parent.user_id
+        WHERE user.branch_id = {$_SESSION['branch']}");
+            return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        } else {
+            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM parent");
+            return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        }
     }
 }

@@ -71,8 +71,15 @@ class TeacherMap extends BaseMap
     }
     public function count()
     {
-        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM teacher");
-        return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM teacher
+        INNER JOIN user ON user.user_id = teacher.user_id
+        WHERE user.branch_id = {$_SESSION['branch']}");
+            return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        } else {
+            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM teacher");
+            return $res->fetch(PDO::FETCH_OBJ)->cnt;
+        }
     }
     public function findProfileById($id = null)
     {

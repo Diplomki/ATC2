@@ -100,9 +100,6 @@ desired effect
             </li>
             <!-- Menu Footer-->
             <li class="user-footer">
-              <div class="pull-left">
-                <a href="#" class="btn btn-default btn-flat">Профиль</a>
-              </div>
               <div class="pull-right">
                 <form method="POST">
                   <button type="submit" class="btn btn-default btn-flat" name="out">Выход</button>
