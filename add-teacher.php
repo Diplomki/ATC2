@@ -49,10 +49,10 @@ teacher.php">Преподаватели</a></li>
             <label>Заблокировать</label>
             <div class="radio">
                 <label>
-                    <input type="radio" name="active" value="1" <?= ($user->active) ? 'checked' : ''; ?>> Нет
+                    <input type="radio" name="active" value="1" class="input-radio" <?= ($user->active) ? 'checked' : ''; ?>> Нет
                 </label> &nbsp;
                 <label>
-                    <input type="radio" name="active" value="0" <?= (!$user->active) ? 'checked' : ''; ?>> Да
+                    <input type="radio" name="active" value="0" class="input-radio" <?= (!$user->active) ? 'checked' : ''; ?>> Да
                 </label>
             </div>
         </div>

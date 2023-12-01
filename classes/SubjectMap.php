@@ -34,17 +34,18 @@ class SubjectMap extends BaseMap
     }
     private function insert($subject = Subject)
     {
-        $name = $this->db->quote($subject->name);
-        $hours = $this->db->quote($subject->hours);
-        $active = $this->db->quote($subject->active);
-        if (
-            $this->db->exec("INSERT INTO subject(name, otdel_id,
-        hours, active)"
-                . " VALUES($name, $subject->otdel_id, $hours, $active)") == 1
-        ) {
+        $sql = "INSERT INTO subject(name, otdel_id, hours, active) VALUES(:name, :otdel_id, :hours, 1)";
+        $stmt = $this->db->prepare($sql);
+
+        $stmt->bindParam(':name', $subject->name);
+        $stmt->bindParam(':otdel_id', $subject->otdel_id);
+        $stmt->bindParam(':hours', $subject->hours);
+
+        if ($stmt->execute()) {
             $subject->subject_id = $this->db->lastInsertId();
             return true;
         }
+
         return false;
     }
     private function update($subject = Subject)

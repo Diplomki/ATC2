@@ -29,18 +29,15 @@ fa-dashboard"></i> Главная</a></li>
                         родителей</li>
                 </ol>
             </section>
-            <div class="box-body">
-                <?php if (Helper::can('admin')) { ?>
+            <?php if (Helper::can('admin')) { ?>
+                <div class="box-body">
                     <a class="btn btn-success" href="add-parent.php">Добавить родителя</a>
-                <?php } ?>
+                </div>
 
-            </div>
-            <div class="box-body">
-                <?php if (Helper::can('admin')) { ?>
+                <div class="box-body">
                     <a class="btn btn-success" href="add-child-parent.php">Добавить ученика к родителю</a>
-                <?php } ?>
-
-            </div>
+                </div>
+            <?php } ?>
             <!-- /.box-header -->
             <div class="box-body">
                 <?php

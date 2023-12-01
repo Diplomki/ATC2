@@ -26,11 +26,11 @@ require_once 'template/header.php';
                     <li class="active">Профиль</li>
                 </ol>
             </section>
-            <div class="box-body">
-
-                <a class="btn btn-success" href="add-parent.php?id=<?= $id; ?>">Изменить</a>
-
-            </div>
+            <?php if (Helper::can('admin')) { ?>
+                <div class="box-body">
+                    <a class="btn btn-success" href="add-parent.php?id=<?= $id; ?>">Изменить</a>
+                </div>
+            <?php } ?>
             <div class="box-body">
 
                 <table class="table table-bordered table-

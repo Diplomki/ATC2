@@ -12,10 +12,9 @@ if (isset($_POST['formSubmit'])) {
         $student->user_id = $user_id;
         $student->attend = $_POST['attend'][$user_id];
         $student->grade = $grade;
-
         (new StudentMap())->saveAddGrades($student);
     }
-    header('Location: add-grades.php');
+    header('Location: list-grades.php');
     exit();
 }
 

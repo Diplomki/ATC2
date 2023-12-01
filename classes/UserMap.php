@@ -42,15 +42,22 @@ class UserMap extends BaseMap
 
     public function arrRoles()
     {
-        $res = $this->db->query("SELECT role_id AS id, name AS
-        value FROM role");
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT role_id AS id, name AS value FROM role
+        WHERE role.sys_name != 'manager' and role.sys_name != 'admin'");
+        }
+        if ($_SESSION['branch'] == 999) {
+            $res = $this->db->query("SELECT role_id AS id, name AS value FROM role
+        WHERE role.sys_name != 'manager'");
+        }
+
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
     public function arrBranchs()
     {
-        $res = $this->db->query("SELECT id AS id, branch AS
-        value FROM branch");
+        $res = $this->db->query("SELECT id AS id, branch AS value FROM branch 
+        WHERE id != 999");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 

@@ -60,7 +60,7 @@ class ProcreatorMap extends BaseMap
 
     public function findAll($ofset = 0, $limit = 30)
     {
-        if ($_SESSION['branch'] == 999) {
+        if ($_SESSION['branch'] != 999) {
             $res = $this->db->query("SELECT DISTINCT
             user.user_id,
             CONCAT(procreator.lastname,' ', procreator.firstname, ' ', procreator.patronymic) AS parent_fio, 
@@ -74,7 +74,8 @@ class ProcreatorMap extends BaseMap
             INNER JOIN user on user.user_id = parent.user_id
             INNER JOIN branch on user.branch_id = branch.id
             INNER JOIN gender ON user.gender_id = gender.gender_id
-            INNER JOIN gender ON user.gender_id = gender.gender_id LIMIT $ofset, $limit");
+            WHERE user.branch_id = {$_SESSION['branch']}
+            LIMIT $ofset, $limit");
         } else {
             $res = $this->db->query("SELECT DISTINCT
             user.user_id,
@@ -88,8 +89,7 @@ class ProcreatorMap extends BaseMap
             INNER JOIN user as child on child.user_id = parent.child_id
             INNER JOIN user on user.user_id = parent.user_id
             INNER JOIN branch on user.branch_id = branch.id
-            INNER JOIN gender ON user.gender_id = gender.gender_id
-            WHERE user.branch_id = {$_SESSION['branch']} LIMIT $ofset, $limit");
+            INNER JOIN gender ON user.gender_id = gender.gender_id LIMIT $ofset, $limit");
         }
         return $res->fetchAll(PDO::FETCH_OBJ);
     }

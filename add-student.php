@@ -8,7 +8,7 @@ $id = 0;
 if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 }
-$student = (new studentMap())->findById($id);
+$student = (new StudentMap())->findById($id);
 $header = (($id) ? 'Редактировать данные' : 'Добавить') . '
 Студента';
 require_once 'template/header.php';

@@ -4,9 +4,6 @@ if (!Helper::can('admin')) {
     header('Location: 404.php');
     exit();
 }
-
-
-
 if (isset($_POST['gradeSubmit'])) {
     $student = new Student();
     $studentMap = new StudentMap();
