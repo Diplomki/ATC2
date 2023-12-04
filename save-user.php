@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 if (isset($_POST['user_id'])) {
@@ -32,15 +32,15 @@ if (isset($_POST['user_id'])) {
         $user->role_id = Helper::clearInt(4);
         if ((new TeacherMap())->save($user, $teacher)) {
 
-            header('Location: profile-teacher.php?id=' . $teacher->user_id);
+            header('Location: profile-teacher?id=' . $teacher->user_id);
 
         } else {
             if ($teacher->user_id) {
 
-                header('Location: profile-teacher.php?id=' . $teacher->user_id);
+                header('Location: profile-teacher?id=' . $teacher->user_id);
 
             } else {
-                header('Location: profile-teacher.php');
+                header('Location: profile-teacher');
             }
         }
         exit();
@@ -52,15 +52,15 @@ if (isset($_POST['user_id'])) {
         $user->role_id = Helper::clearInt(6);
         if ((new ProcreatorMap())->save($user, $parent)) {
 
-            header('Location: profile-parent.php?id=' . $parent->user_id);
+            header('Location: profile-parent?id=' . $parent->user_id);
 
         } else {
             if ($parent->user_id) {
 
-                header('Location: profile-parent.php?id=' . $parent->user_id);
+                header('Location: profile-parent?id=' . $parent->user_id);
 
             } else {
-                header('Location: profile-parent.php');
+                header('Location: profile-parent');
             }
         }
         exit();
@@ -73,15 +73,15 @@ if (isset($_POST['user_id'])) {
         $user->role_id = Helper::clearInt(5);
         if ((new StudentMap())->save($user, $student)) {
 
-            header('Location: profile-student.php?id=' . $student->user_id);
+            header('Location: profile-student?id=' . $student->user_id);
 
         } else {
             if ($student->user_id) {
 
-                header('Location: profile-student.php?id=' . $student->user_id);
+                header('Location: profile-student?id=' . $student->user_id);
 
             } else {
-                header('Location: profile-student.php');
+                header('Location: profile-student');
             }
         }
         exit();
@@ -94,15 +94,15 @@ if (isset($_POST['user_id'])) {
         $user->role_id = Helper::clearInt(2);
         if ((new AdminMap())->save($user, $admin)) {
 
-            header('Location: profile-admin.php?id=' . $admin->user_id);
+            header('Location: profile-admin?id=' . $admin->user_id);
 
         } else {
             if ($admin->user_id) {
 
-                header('Location: profile-admin.php?id=' . $admin->user_id);
+                header('Location: profile-admin?id=' . $admin->user_id);
 
             } else {
-                header('Location: profile-admin.php');
+                header('Location: profile-admin');
             }
         }
         exit();

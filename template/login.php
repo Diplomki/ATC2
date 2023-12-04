@@ -43,7 +43,7 @@
           <?= $message; ?>
         </p>
 
-        <form action="auth.php" method="post">
+        <form action="auth" method="post">
           <div class="form-group has-feedback">
             <div class="input-group">
               <span class="input-group-addon">

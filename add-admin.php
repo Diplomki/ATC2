@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $id = 0;
@@ -21,9 +21,9 @@ require_once 'template/header.php';
     </h3>
     <ol class="breadcrumb">
 
-        <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+        <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
 
-        <li><a href="list-admin.php">Администраторы</a></li>
+        <li><a href="list-admin">Администраторы</a></li>
 
         <li class="active">
             <?= $header; ?>
@@ -31,7 +31,7 @@ require_once 'template/header.php';
     </ol>
 </section>
 <div class="box-body">
-    <form action="save-user.php" method="POST">
+    <form action="save-user" method="POST">
         <?php require_once '_formUser.php'; ?>
 
         <div class="form-group">

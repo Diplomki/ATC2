@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 if (isset($_GET['id'])) {
@@ -20,11 +20,11 @@ if (isset($_GET['id'])) {
                         </b>
                     </h3>
                     <ol class="breadcrumb">
-                        <li><a href="index.php"><i class="fa
+                        <li><a href="index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
 
                         <li><a href="list-
-gruppa.php">Группы</a></li>
+gruppa">Группы</a></li>
 
                         <li class="active">
                             <?= $header; ?>
@@ -33,7 +33,7 @@ gruppa.php">Группы</a></li>
                 </section>
                 <div class="box-body">
                     <?php if (Helper::can('admin')) { ?>
-                        <a class="btn btn-success" href="add-gruppa.php?id=<?= $id; ?>">Изменить</a>
+                        <a class="btn btn-success" href="add-gruppa?id=<?= $id; ?>">Изменить</a>
                     <?php }
                     ; ?>
                 </div>

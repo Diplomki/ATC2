@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 if (isset($_POST['saveChildParent'])) {
@@ -11,8 +11,8 @@ if (isset($_POST['saveChildParent'])) {
     $parentMap = new ProcreatorMap();
     if ($parentMap->saveChild($parent)) {
 
-        header('Location: list-parent.php');
+        header('Location: list-parent');
     } else {
-        header('Location: add-child-parent.php');
+        header('Location: add-child-parent');
     }
 }

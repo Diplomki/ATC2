@@ -2,7 +2,7 @@
 require_once 'secure.php';
 
 if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 
@@ -34,7 +34,7 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3><b>Список оценок</b></h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+                    <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список оценок</li>
 
                 </ol>
@@ -64,7 +64,7 @@ require_once 'template/header.php';
                                 echo "<td>" . $student->grade . "</td>";
                                 echo "<td>" . $student->date . "</td>";
                                 echo "<td>" . $student->attend . "</td>";
-                                echo "<td>" . '<form action="save-grades.php" method="post">
+                                echo "<td>" . '<form action="save-grades" method="post">
                                                         <input type="hidden" name="grade_id" value="' . $student->id . '">
                                                         <input type="hidden" name="user_id" value="' . $student->user_id . '">
                                                         <input type="hidden" name="subject_id" value="' . $student->subject_id . '">

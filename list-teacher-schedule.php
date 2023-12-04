@@ -2,7 +2,7 @@
 $header = 'Расписание и планы преподавателей';
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 require_once 'template/header.php';
@@ -25,7 +25,7 @@ $teachers = (new LessonPlanMap())->findTeachers($page * $size - $size, $size);
                     </b>
                 </h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fafa-dashboard"></i> Главная</a></li>
+                    <li><a href="/index"><i class="fafa-dashboard"></i> Главная</a></li>
                     <li class="active">
                         <?= $header; ?>
                     </li>
@@ -69,12 +69,12 @@ $teachers = (new LessonPlanMap())->findTeachers($page * $size - $size, $size);
                                     </td>
                                     <td>
 
-                                        <a href="list-plan.php?id=<?= $teacher->user_id; ?>" title="План
+                                        <a href="list-plan?id=<?= $teacher->user_id; ?>" title="План
 
 преподавателя"><i class="fa fa-table"></i></a>&nbsp;
 
-                                        <a href="list-schedule.php?id=<?= $teacher->user_id; ?>"
-                                            title="Расписание преподавателя"><i class="fa fa-calendar-plus-o"></i></a>
+                                        <a href="list-schedule?id=<?= $teacher->user_id; ?>" title="Расписание преподавателя"><i
+                                                class="fa fa-calendar-plus-o"></i></a>
 
                                     </td>
                                 </tr>

@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $size = 5;
@@ -26,7 +26,7 @@ require_once 'template/header.php';
                     </b>
                 </h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fafa-dashboard"></i> Главная</a></li>
+                    <li><a href="/index"><i class="fafa-dashboard"></i> Главная</a></li>
                     <li class="active">
                         <?= $header; ?>
                     </li>
@@ -34,7 +34,7 @@ require_once 'template/header.php';
             </section>
             <div class="box-body">
                 <?php if (Helper::can('admin')) { ?>
-                    <a class="btn btn-success" href="add-classroom.php">Добавить аудиторию</a>
+                    <a class="btn btn-success" href="add-classroom">Добавить аудиторию</a>
                 <?php }
                 ; ?>
             </div>
@@ -56,11 +56,11 @@ require_once 'template/header.php';
                             foreach ($arrClassrooms as $classroom) {
                                 echo '<tr>';
                                 if (Helper::can('admin')) {
-                                    echo '<td><a href="view-classroom.php?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
-                                        . '<a href="add-classroom.php?id=' . $classroom->classroom_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                    echo '<td><a href="view-classroom?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
+                                        . '<a href="add-classroom?id=' . $classroom->classroom_id . '"><i class="fa fa-pencil"></i></a></td>';
                                 } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="view-classroom.php?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
-                                        . '<a href="add-classroom.php?id=' . $classroom->classroom_id . '"></a></td>';
+                                    echo '<td><a href="view-classroom?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
+                                        . '<a href="add-classroom?id=' . $classroom->classroom_id . '"></a></td>';
                                     echo '<td>' . $classroom->branch . '</td>';
                                 }
                                 echo '</tr>';

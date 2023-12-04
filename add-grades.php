@@ -2,7 +2,7 @@
 require_once 'secure.php';
 
 if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 
@@ -37,13 +37,13 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3><b>Список студентов</b></h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+                    <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список студентов</li>
                 </ol>
             </section>
             <div class="box-body">
                 <?php if (Helper::can('admin') || Helper::can('manager')) { ?>
-                    <a class="btn btn-success" href="add-student.php">Добавить студента</a>
+                    <a class="btn btn-success" href="add-student">Добавить студента</a>
 
                 <?php } ?>
             </div>
@@ -51,7 +51,7 @@ require_once 'template/header.php';
             <!-- /.box-header -->
             <div class="box-body">
                 <?php if ($students) { ?>
-                    <form action="save-addGrades.php" method="POST">
+                    <form action="save-addGrades" method="POST">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>

@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 if (isset($_POST['gruppa_id'])) {
@@ -12,14 +12,14 @@ if (isset($_POST['gruppa_id'])) {
     $gruppa->date_begin = Helper::clearString($_POST['date_begin']);
     $gruppa->date_end = Helper::clearString($_POST['date_end']);
     if ((new GruppaMap())->save($gruppa)) {
-        header('Location: view-gruppa.php?id=' . $gruppa->gruppa_id);
+        header('Location: view-gruppa?id=' . $gruppa->gruppa_id);
     } else {
         if ($gruppa->gruppa_id) {
 
-            header('Location: add-gruppa.php?id=' . $gruppa->gruppa_id);
+            header('Location: add-gruppa?id=' . $gruppa->gruppa_id);
 
         } else {
-            header('Location: add-gruppa.php');
+            header('Location: add-gruppa');
         }
     }
 }

@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 if (isset($_POST['name'])) {
@@ -12,12 +12,12 @@ if (isset($_POST['name'])) {
     $subject->hours = Helper::clearString($_POST['hours']);
 
     if ((new SubjectMap())->save($subject)) {
-        header('Location: view-subject.php?id=' . $subject->subject_id);
+        header('Location: view-subject?id=' . $subject->subject_id);
     } else {
         if ($subject->subject_id) {
-            header('Location: add-subject.php?id=' . $subject->subject_id);
+            header('Location: add-subject?id=' . $subject->subject_id);
         } else {
-            header('Location: add-subject.php');
+            header('Location: add-subject');
         }
     }
 }

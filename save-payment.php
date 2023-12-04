@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('procreator')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 if (isset($_POST['savePayment'])) {
@@ -16,14 +16,14 @@ if (isset($_POST['savePayment'])) {
     move_uploaded_file($fileTmpName, "uploads/" . $student->tab);
 
     if ((new StudentMap())->savePayment($student)) {
-        header('Location: check-child.php');
+        header('Location: check-child');
     } else {
         if ($student->user_id) {
 
-            header('Location: check-child.php');
+            header('Location: check-child');
 
         } else {
-            header('Location: check-child.php');
+            header('Location: check-child');
         }
     }
 }

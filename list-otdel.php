@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $size = 5;
@@ -26,7 +26,7 @@ require_once 'template/header.php';
                     </b>
                 </h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fafa-dashboard"></i> Главная</a></li>
+                    <li><a href="/index"><i class="fafa-dashboard"></i> Главная</a></li>
                     <li class="active">
                         <?= $header; ?>
                     </li>
@@ -34,7 +34,7 @@ require_once 'template/header.php';
             </section>
             <div class="box-body">
                 <?php if (Helper::can('admin')) { ?>
-                    <a class="btn btn-success" href="add-otdel.php">Добавить отдел</a>
+                    <a class="btn btn-success" href="add-otdel">Добавить отдел</a>
                 <?php }
                 ; ?>
             </div>
@@ -53,11 +53,11 @@ require_once 'template/header.php';
                             foreach ($arrOtdels as $otdel) {
                                 echo '<tr>';
                                 if (Helper::can('admin')) {
-                                    echo '<td><a href="view-otdel.php?id=' . $otdel->otdel_id . '">' . $otdel->name . '</a> '
-                                        . '<a href="add-otdel.php?id=' . $otdel->otdel_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                    echo '<td><a href="view-otdel?id=' . $otdel->otdel_id . '">' . $otdel->name . '</a> '
+                                        . '<a href="add-otdel?id=' . $otdel->otdel_id . '"><i class="fa fa-pencil"></i></a></td>';
                                 } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="view-otdel.php?id=' . $otdel->otdel_id . '">' . $otdel->name . '</a> '
-                                        . '<a href="add-otdel.php?id=' . $otdel->otdel_id . '"></a></td>';
+                                    echo '<td><a href="view-otdel?id=' . $otdel->otdel_id . '">' . $otdel->name . '</a> '
+                                        . '<a href="add-otdel?id=' . $otdel->otdel_id . '"></a></td>';
                                 }
                             }
                             ?>

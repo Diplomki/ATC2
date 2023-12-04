@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $size = 10;
@@ -23,7 +23,7 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3><b>Список администраторов</b></h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa
+                    <li><a href="/index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список
                         администраторов</li>
@@ -31,7 +31,7 @@ fa-dashboard"></i> Главная</a></li>
             </section>
             <div class="box-body">
                 <?php if (Helper::can('admin') || Helper::can('manager')) { ?>
-                    <a class="btn btn-success" href="add-admin.php">Добавить администратора</a>
+                    <a class="btn btn-success" href="add-admin">Добавить администратора</a>
                 <?php } ?>
             </div>
             <!-- /.box-header -->
@@ -57,9 +57,9 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($admins as $admin) {
                                 echo '<tr>';
                                 if (Helper::can('manager') || Helper::can('admin'))
-                                    echo '<td><a href="profile-admin.php?id=' . $admin->user_id . '">' . $admin->fio . '</a> ' . '<a href="add-admin.php?id=' . $admin->user_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                    echo '<td><a href="profile-admin?id=' . $admin->user_id . '">' . $admin->fio . '</a> ' . '<a href="add-admin?id=' . $admin->user_id . '"><i class="fa fa-pencil"></i></a></td>';
                                 else
-                                    echo '<td><p>' . $admin->fio . '</p> ' . '<a href="add-admin.php?id=' . $admin->user_id . '"></a></td>';
+                                    echo '<td><p>' . $admin->fio . '</p> ' . '<a href="add-admin?id=' . $admin->user_id . '"></a></td>';
                                 echo '<td>' . $admin->gender . '</td>';
                                 echo '<td>' . $admin->birthday . '</td>';
                                 if (Helper::can('manager'))

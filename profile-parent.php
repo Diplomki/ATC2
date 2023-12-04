@@ -1,13 +1,13 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 } else {
-    header('Location: 404.php');
+    header('Location: 404');
 }
 $header = 'Профиль родителя';
 $teacher = (new TeacherMap())->findProfileById($id);
@@ -19,16 +19,16 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3><b>Профиль родителя</b></h3>
                 <ol class="breadcrumb">
-                    <li><a href="index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+                    <li><a href="index"><i class="fa fa-dashboard"></i> Главная</a></li>
 
-                    <li><a href="list-parent.php">Родители</a></li>
+                    <li><a href="list-parent">Родители</a></li>
 
                     <li class="active">Профиль</li>
                 </ol>
             </section>
             <?php if (Helper::can('admin')) { ?>
                 <div class="box-body">
-                    <a class="btn btn-success" href="add-parent.php?id=<?= $id; ?>">Изменить</a>
+                    <a class="btn btn-success" href="add-parent?id=<?= $id; ?>">Изменить</a>
                 </div>
             <?php } ?>
             <div class="box-body">

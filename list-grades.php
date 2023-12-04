@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('manager') && !Helper::can('teacher')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $size = 5;
@@ -26,7 +26,7 @@ require_once 'template/header.php';
                     </b>
                 </h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+                    <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
                     <li class="active">
                         <?= $header; ?>
                     </li>
@@ -50,8 +50,8 @@ require_once 'template/header.php';
                             foreach ($gruppas as $gruppa) {
                                 echo '<tr>';
                                 if (Helper::can('teacher') || Helper::can('manager'))
-                                    echo '<td><p href="view-grades.php?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</p> ' . '<p href="add-gruppa.php?id=' . $gruppa->gruppa_id . '"></p></td>';
-                                echo '<td><a class="btn btn-primary" href="add-grades.php?id=' . $gruppa->gruppa_id . '">Выставить оценки</a> ' . '<p href="add-gruppa.php?id=' . $gruppa->gruppa_id . '"></p></td>';
+                                    echo '<td><p href="view-grades?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</p> ' . '<p href="add-gruppa?id=' . $gruppa->gruppa_id . '"></p></td>';
+                                echo '<td><a class="btn btn-primary" href="add-grades?id=' . $gruppa->gruppa_id . '">Выставить оценки</a> ' . '<p href="add-gruppa?id=' . $gruppa->gruppa_id . '"></p></td>';
                             }
                             ?>
                         </tbody>

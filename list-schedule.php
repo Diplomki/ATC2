@@ -1,14 +1,14 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $id = Helper::clearInt($_GET['id']);
 if ((new TeacherMap())->findById($id)->validate()) {
     $teacher = (new UserMap())->findProfileById($id);
 } else {
-    header('Location: 404.php');
+    header('Location: 404');
 }
 $header = 'Расписание преподавателя: ' . $teacher->fio;
 $daysSchedules = (new ScheduleMap())->findByTeacherId($id);
@@ -19,10 +19,10 @@ require_once 'template/header.php';
         <div class="box">
             <section class="content-header">
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa
+                    <li><a href="/index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
 
-                    <li><a href="list-teacher-schedule.php">Расписание</a></li>
+                    <li><a href="list-teacher-schedule">Расписание</a></li>
 
                     <li class="active">
                         <?= $header; ?>
@@ -47,7 +47,7 @@ fa-dashboard"></i> Главная</a></li>
                                     <h4 class="center-block">
                                         <?= $day['name']; ?>
 
-                                        <a href="add-schedule.php?idUser=<?= $id; ?>&idDay=<?= $day['id']; ?>"><i
+                                        <a href="add-schedule?idUser=<?= $id; ?>&idDay=<?= $day['id']; ?>"><i
                                                 class="fa fa-plus"></i></a>
                                     </h4>
                                 </th>
@@ -73,7 +73,7 @@ fa-dashboard"></i> Главная</a></li>
                                                 <?= $schedule['classroom']; ?>
                                             </td>
 
-                                            <td><a href="delete-schedule.php?id=<?= $schedule['schedule_id']; ?>&idTeacher=
+                                            <td><a href="delete-schedule?id=<?= $schedule['schedule_id']; ?>&idTeacher=
 
 <?= $id; ?>"><i class="fa fa-trash"></i></a></td>
                                         </tr>

@@ -31,7 +31,7 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3><b>Список студентов</b></h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+                    <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список студентов</li>
                 </ol>
             </section>

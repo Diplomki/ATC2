@@ -2,7 +2,7 @@
 require_once 'secure.php';
 
 if (!Helper::can('procreator')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $size = 10;

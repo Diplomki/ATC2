@@ -29,7 +29,7 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3><b>Список студентов</b></h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+                    <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список студентов</li>
                 </ol>
             </section>
@@ -38,7 +38,7 @@ require_once 'template/header.php';
             <!-- /.box-header -->
             <div class="box-body">
                 <?php if ($students) { ?>
-                    <form action="save-payment.php" method="POST" enctype="multipart/form-data">
+                    <form action="save-payment" method="POST" enctype="multipart/form-data">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>

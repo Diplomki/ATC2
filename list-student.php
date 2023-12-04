@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $size = 10;
@@ -23,7 +23,7 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3><b>Список студентов</b></h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa
+                    <li><a href="/index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список
                         студента</li>
@@ -31,7 +31,7 @@ fa-dashboard"></i> Главная</a></li>
             </section>
             <div class="box-body">
                 <?php if (Helper::can('admin')) { ?>
-                    <a class="btn btn-success" href="add-student.php">Добавить студента</a>
+                    <a class="btn btn-success" href="add-student">Добавить студента</a>
                 <?php } ?>
 
             </div>
@@ -58,9 +58,9 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($student as $student) {
                                 echo '<tr>';
                                 if (Helper::can('admin')) {
-                                    echo '<td><a href="profile-student.php?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="add-student.php?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                    echo '<td><a href="profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="add-student?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a></td>';
                                 } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="profile-student.php?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="add-student.php?id=' . $student->user_id . '"></a></td>';
+                                    echo '<td><a href="profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="add-student?id=' . $student->user_id . '"></a></td>';
                                 } else {
                                     echo '<td><p>' . $student->fio . '</p> ';
                                 }

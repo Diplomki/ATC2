@@ -23,7 +23,7 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3><b>Список преподавателей</b></h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa
+                    <li><a href="/index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список
                         преподавателей</li>
@@ -31,7 +31,7 @@ fa-dashboard"></i> Главная</a></li>
             </section>
             <div class="box-body">
                 <?php if (Helper::can('admin')) { ?>
-                    <a class="btn btn-success" href="add-teacher.php">Добавить преподавателя</a>
+                    <a class="btn btn-success" href="add-teacher">Добавить преподавателя</a>
                 <?php } ?>
 
             </div>
@@ -58,9 +58,9 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($teachers as $teacher) {
                                 echo '<tr>';
                                 if (Helper::can('admin')) {
-                                    echo '<td><a href="profile-teacher.php?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="add-teacher.php?id=' . $teacher->user_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                    echo '<td><a href="profile-teacher?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="add-teacher?id=' . $teacher->user_id . '"><i class="fa fa-pencil"></i></a></td>';
                                 } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="profile-teacher.php?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="add-teacher.php?id=' . $teacher->user_id . '"></a></td>';
+                                    echo '<td><a href="profile-teacher?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="add-teacher?id=' . $teacher->user_id . '"></a></td>';
                                 } else {
                                     echo '<td><p>' . $teacher->fio . '</p> ';
                                 }

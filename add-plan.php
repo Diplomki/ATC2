@@ -11,7 +11,7 @@ if (isset($_GET['id'])) {
 if ((new TeacherMap())->findById($id)) {
     $teacher = (new UserMap())->findProfileById($id);
 } else {
-    header('Location: 404.php');
+    header('Location: 404');
 }
 $header = 'Добавить пункт в план: ' . $teacher->fio;
 require_once 'template/header.php';
@@ -24,11 +24,11 @@ require_once 'template/header.php';
     </h3>
     <ol class="breadcrumb">
 
-        <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+        <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
 
-        <li><a href="list-teacher-schedule.php">Расписание</a></li>
+        <li><a href="list-teacher-schedule">Расписание</a></li>
 
-        <li><a href="list-plan.php?id=<?= $id; ?>">План
+        <li><a href="list-plan?id=<?= $id; ?>">План
                 преподавателя</a></li>
         <li class="active">
             <?= $header; ?>
@@ -46,7 +46,7 @@ require_once 'template/header.php';
             <?= Helper::getFlash(); ?>
         </div>
     <?php endif; ?>
-    <form action="save-plan.php" method="POST">
+    <form action="save-plan" method="POST">
         <div class="form-group">
             <label>Группа</label>
             <select class="form-control" name="gruppa_id">

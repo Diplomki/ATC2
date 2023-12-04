@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('procreator')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 require_once 'template/header.php';
@@ -17,11 +17,11 @@ require_once 'template/header.php';
                 </ol>
             </section>
             <div class="box-body">
-                <a class="btn btn-success" style="width: 150px;" href="view-grades.php">Оценки</a>
+                <a class="btn btn-success" style="width: 150px;" href="view-grades">Оценки</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <a class="btn btn-success" style="width: 150px;" href="view-performance.php">Посещаемость</a>
+                <a class="btn btn-success" style="width: 150px;" href="view-performance">Посещаемость</a>
             </div>
 
         </div>

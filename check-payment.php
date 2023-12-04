@@ -2,7 +2,7 @@
 require_once 'secure.php';
 
 if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 
@@ -34,7 +34,7 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3><b>Список студентов</b></h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+                    <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список студентов</li>
 
                 </ol>
@@ -67,7 +67,7 @@ require_once 'template/header.php';
                                 echo '<td>' . $student->count . '</td>';
                                 echo '<td>' . '<a href="uploads/' . $student->tab . '">' . preg_replace("/[0-9]/", "", $student->tab) . '</a>' . '</td>';
                                 echo '<td>' . $student->price . '</td>';
-                                echo "<td>" . '<form action="save-paymentArchive.php" method="post">
+                                echo "<td>" . '<form action="save-paymentArchive" method="post">
                                         <input type="hidden" name="id" value="' . $student->id . '">
                                         <input type="hidden" name="parent_id" value="' . $student->parent_id . '">
                                         <input type="hidden" name="child_id" value="' . $student->user_id . '">

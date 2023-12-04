@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-        header('Location: 404.php');
+        header('Location: 404');
         exit();
 }
 $size = 5;
@@ -26,7 +26,7 @@ require_once 'template/header.php';
                                         </b>
                                 </h3>
                                 <ol class="breadcrumb">
-                                        <li><a href="/index.php"><i class="fa
+                                        <li><a href="/index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                                         <li class="active">
                                                 <?= $header; ?>
@@ -35,7 +35,7 @@ fa-dashboard"></i> Главная</a></li>
                         </section>
                         <div class="box-body">
                                 <?php if (Helper::can('admin')) { ?>
-                                        <a class="btn btn-success" href="add-special.php">Добавить специальность</a>
+                                        <a class="btn btn-success" href="add-special">Добавить специальность</a>
                                 <?php }
                                 ; ?>
                         </div>
@@ -60,12 +60,12 @@ fa-dashboard"></i> Главная</a></li>
                                                         foreach ($specials as $special) {
                                                                 echo '<tr>';
                                                                 if (Helper::can('admin')) {
-                                                                        echo '<td><a href="view-special.php?id=' . $special->special_id . '">' . $special->name . '</a> '
-                                                                                . '<a href="add-special.php?id=' . $special->special_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                                                        echo '<td><a href="view-special?id=' . $special->special_id . '">' . $special->name . '</a> '
+                                                                                . '<a href="add-special?id=' . $special->special_id . '"><i class="fa fa-pencil"></i></a></td>';
                                                                         echo '<td>' . $special->otdel . '</td>';
                                                                 } elseif (Helper::can('manager')) {
-                                                                        echo '<td><a href="view-special.php?id=' . $special->special_id . '">' . $special->name . '</a> '
-                                                                                . '<a href="add-special.php?id=' . $special->special_id . '"></a></td>';
+                                                                        echo '<td><a href="view-special?id=' . $special->special_id . '">' . $special->name . '</a> '
+                                                                                . '<a href="add-special?id=' . $special->special_id . '"></a></td>';
                                                                         echo '<td>' . $special->otdel . '</td>';
 
                                                                 }

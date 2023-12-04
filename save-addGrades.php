@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('teacher')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 
@@ -14,7 +14,7 @@ if (isset($_POST['formSubmit'])) {
         $student->grade = $grade;
         (new StudentMap())->saveAddGrades($student);
     }
-    header('Location: list-grades.php');
+    header('Location: list-grades');
     exit();
 }
 

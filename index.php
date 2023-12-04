@@ -85,7 +85,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
     } else {
         $schedules = null;
     }
-    require_once 'template/header.php';
+    require_once 'template/header';
     ?>
     <div class="row">
         <div class="col-xs-12">
@@ -201,7 +201,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
 if (Helper::can('procreator')) {
     require_once 'secure.php';
     if (!Helper::can('procreator')) {
-        header('Location: 404.php');
+        header('Location: 404');
         exit();
     }
     $size = 10;
@@ -223,7 +223,7 @@ if (Helper::can('procreator')) {
                 <section class="content-header">
                     <h1>Оплата</h1>
                     <ol class="breadcrumb">
-                        <li><a href="/index.php"><i class="fa
+                        <li><a href="/index"><i class="fa
     fa-dashboard"></i> Главная</a></li>
                         <li class="active">Оплата</li>
                     </ol>
@@ -245,7 +245,7 @@ if (Helper::can('procreator')) {
                                 <?php
                                 foreach ($student as $student) {
                                     echo '<tr>';
-                                    echo '<td><a href="add-payment.php?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '</td>';
+                                    echo '<td><a href="add-payment?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '</td>';
                                 }
                                 ?>
                             </tbody>
@@ -263,7 +263,6 @@ if (Helper::can('procreator')) {
     </div>
     <?php
     require_once 'template/footer.php';
-    echo $_SESSION['test'];
 }
 require_once 'template/footer.php';
 

@@ -1,11 +1,11 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $id = Helper::clearInt($_GET['id']);
 $idTeacher = Helper::clearInt($_GET['idTeacher']);
 (new ScheduleMap())->delete($id);
-header('Location: list-schedule.php?id=' . $idTeacher);
+header('Location: list-schedule?id=' . $idTeacher);
 

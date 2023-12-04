@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $id = 0;
@@ -32,7 +32,7 @@ dashboard"></i> Главная</a></li>
     </ol>
 </section>
 <div class="box-body">
-    <form action="save-user.php" method="POST">
+    <form action="save-user" method="POST">
         <?php require_once '_formUser.php'; ?>
         <div class="form-group">
             <label>Группа</label>

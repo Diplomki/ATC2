@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('procreator')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $size = 10;
@@ -23,7 +23,7 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3><b>Оплата</b></h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa
+                    <li><a href="/index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                     <li class="active">Оплата</li>
                 </ol>
@@ -45,7 +45,7 @@ fa-dashboard"></i> Главная</a></li>
                             <?php
                             foreach ($student as $student) {
                                 echo '<tr>';
-                                echo '<td><a href="add-payment.php?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '</td>';
+                                echo '<td><a href="add-payment?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '</td>';
                             }
                             ?>
                         </tbody>

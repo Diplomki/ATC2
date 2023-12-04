@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Ноя 16 2023 г., 04:51
+-- Время создания: Дек 04 2023 г., 05:46
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -39,8 +39,10 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`user_id`, `branch_id`) VALUES
 (2, 1),
-(15, 2),
-(16, 3);
+(15, 1),
+(16, 3),
+(40, 1),
+(43, 2);
 
 -- --------------------------------------------------------
 
@@ -50,7 +52,7 @@ INSERT INTO `admin` (`user_id`, `branch_id`) VALUES
 
 CREATE TABLE `attend` (
   `id` tinyint NOT NULL,
-  `attend` varchar(1) NOT NULL
+  `attend` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -69,7 +71,7 @@ INSERT INTO `attend` (`id`, `attend`) VALUES
 
 CREATE TABLE `branch` (
   `id` int NOT NULL,
-  `branch` varchar(255) NOT NULL
+  `branch` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -90,7 +92,7 @@ INSERT INTO `branch` (`id`, `branch`) VALUES
 
 CREATE TABLE `classroom` (
   `classroom_id` int NOT NULL,
-  `name` varchar(20) NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `branch` int DEFAULT NULL,
   `active` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -114,7 +116,7 @@ INSERT INTO `classroom` (`classroom_id`, `name`, `branch`, `active`) VALUES
 
 CREATE TABLE `day` (
   `day_id` tinyint NOT NULL,
-  `name` varchar(20) NOT NULL
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -137,7 +139,7 @@ INSERT INTO `day` (`day_id`, `name`) VALUES
 
 CREATE TABLE `gender` (
   `gender_id` tinyint NOT NULL,
-  `name` varchar(10) NOT NULL
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -158,7 +160,7 @@ CREATE TABLE `grades` (
   `grade_id` int NOT NULL,
   `user_id` bigint NOT NULL,
   `subject_id` int NOT NULL,
-  `grade` varchar(2) DEFAULT NULL,
+  `grade` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date DEFAULT NULL,
   `attend` tinyint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -207,7 +209,45 @@ INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `att
 (177, 37, 6, 0, '2023-11-16', 1),
 (178, 18, 5, 90, '2023-11-16', 1),
 (179, 9, 5, 80, '2023-11-16', 1),
-(180, 37, 5, 50, '2023-11-16', 1);
+(180, 37, 5, 50, '2023-11-16', 1),
+(181, 9, 6, 70, '2023-11-29', 1),
+(182, 9, 5, 80, '2023-11-29', 1),
+(183, 9, 6, 70, '2023-11-29', 1),
+(184, 9, 6, 70, '2023-11-29', 1),
+(185, 9, 6, 70, '2023-11-29', 1),
+(186, 9, 6, 70, '2023-11-29', 1),
+(187, 9, 6, 70, '2023-11-29', 1),
+(188, 9, 6, 70, '2023-11-29', 1),
+(189, 42, 6, 40, '2023-11-29', 1),
+(190, 42, 6, 40, '2023-11-29', 1),
+(191, 42, 6, 40, '2023-11-29', 1),
+(192, 42, 6, 40, '2023-11-29', 1),
+(193, 42, 6, 40, '2023-11-29', 1),
+(194, 42, 6, 40, '2023-11-29', 1),
+(195, 42, 6, 40, '2023-11-29', 1),
+(196, 42, 5, 90, '2023-11-29', 1),
+(197, 42, 5, 90, '2023-11-29', 1),
+(198, 42, 5, 90, '2023-11-29', 1),
+(199, 42, 5, 90, '2023-11-29', 1),
+(200, 42, 5, 90, '2023-11-29', 1),
+(201, 42, 5, 90, '2023-11-29', 1),
+(202, 42, 5, 90, '2023-11-29', 1),
+(203, 42, 5, 90, '2023-11-29', 1),
+(204, 42, 5, 90, '2023-11-29', 1),
+(205, 42, 5, 90, '2023-11-29', 1),
+(206, 42, 5, 90, '2023-11-29', 1),
+(207, 42, 5, 90, '2023-11-29', 1),
+(208, 42, 6, 40, '2023-11-29', 1),
+(209, 42, 5, 90, '2023-11-29', 1),
+(210, 42, 6, 40, '2023-11-29', 1),
+(211, 42, 6, 40, '2023-11-29', 1),
+(212, 42, 5, 90, '2023-11-29', 1),
+(213, 42, 6, 40, '2023-11-29', 1),
+(214, 42, 6, 40, '2023-11-29', 1),
+(215, 42, 6, 40, '2023-11-29', 1),
+(216, 42, 6, 40, '2023-11-29', 1),
+(217, 42, 6, 40, '2023-11-29', 1),
+(218, 42, 5, 90, '2023-11-29', 1);
 
 -- --------------------------------------------------------
 
@@ -217,7 +257,7 @@ INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `att
 
 CREATE TABLE `gruppa` (
   `gruppa_id` int NOT NULL,
-  `name` varchar(10) NOT NULL,
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `special_id` int NOT NULL,
   `date_begin` date NOT NULL,
   `date_end` date DEFAULT NULL,
@@ -229,10 +269,11 @@ CREATE TABLE `gruppa` (
 --
 
 INSERT INTO `gruppa` (`gruppa_id`, `name`, `special_id`, `date_begin`, `date_end`, `branch`) VALUES
-(1, '7Б', 11, '2022-11-06', '2022-11-16', 1),
+(1, '7В', 11, '2022-11-06', '2022-11-16', 1),
 (2, '7А', 3, '2023-10-01', '2023-10-31', 2),
-(3, '8', 11, '2023-09-01', '2025-06-10', 1),
-(4, '7', 13, '2020-01-31', '2026-10-24', 2);
+(3, '8В', 11, '2023-09-01', '2025-06-10', 1),
+(4, '7', 13, '2020-01-31', '2026-10-24', 2),
+(5, '9А', 3, '2023-11-01', '2023-11-30', 1);
 
 -- --------------------------------------------------------
 
@@ -242,7 +283,7 @@ INSERT INTO `gruppa` (`gruppa_id`, `name`, `special_id`, `date_begin`, `date_end
 
 CREATE TABLE `lesson_num` (
   `lesson_num_id` int NOT NULL,
-  `name` varchar(10) NOT NULL,
+  `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `time_lesson` time NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -285,7 +326,7 @@ INSERT INTO `lesson_plan` (`lesson_plan_id`, `gruppa_id`, `subject_id`, `user_id
 
 CREATE TABLE `otdel` (
   `otdel_id` smallint NOT NULL,
-  `name` varchar(50) NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -296,7 +337,8 @@ CREATE TABLE `otdel` (
 INSERT INTO `otdel` (`otdel_id`, `name`, `active`) VALUES
 (1, 'Математический', 1),
 (2, 'Гуманитарный', 1),
-(4, 'Естественные науки', 1);
+(4, 'Естественные науки', 1),
+(5, 'test', 1);
 
 -- --------------------------------------------------------
 
@@ -322,7 +364,11 @@ INSERT INTO `parent` (`id`, `user_id`, `child_id`) VALUES
 (9, 10, 7),
 (10, 39, NULL),
 (11, 39, 8),
-(12, 38, 7);
+(12, 38, 7),
+(13, 10, 42),
+(14, 46, NULL),
+(15, 46, 42),
+(16, 47, NULL);
 
 -- --------------------------------------------------------
 
@@ -336,7 +382,7 @@ CREATE TABLE `payment` (
   `child_id` bigint DEFAULT NULL,
   `subject_id` int DEFAULT NULL,
   `count` int DEFAULT NULL,
-  `tab` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
+  `tab` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -352,7 +398,7 @@ CREATE TABLE `payment_archive` (
   `child_id` bigint NOT NULL,
   `subject_id` int DEFAULT NULL,
   `count` int NOT NULL,
-  `tab` varchar(64) DEFAULT NULL,
+  `tab` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` int DEFAULT NULL,
   `attend` tinyint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -369,10 +415,12 @@ INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `cou
 (41, 10, 7, 5, 1, '1699588319ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (42, 10, 7, 6, 10, '1699588325ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (77, 10, 9, 1, 25, '1699682076ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
-(78, 10, 9, 5, 10, '1699682118ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
-(79, 10, 9, 6, 33, '1699783960ПРОЧИТАЙ!!!!!!!!!!!.txt', 20000, 1),
+(78, 10, 9, 5, 9, '1699682118ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
+(79, 10, 9, 6, 26, '1699783960ПРОЧИТАЙ!!!!!!!!!!!.txt', 20000, 1),
 (93, 10, 9, 3, 10, '1700012243ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
-(94, 10, 9, 4, 10, '1700012553ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1);
+(94, 10, 9, 4, 10, '1700012553ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
+(95, 10, 42, 6, 9, '1701246542iqstudy.txt', 50000, 1),
+(96, 10, 42, 5, 9, '1701246675', 50000, 1);
 
 -- --------------------------------------------------------
 
@@ -382,8 +430,8 @@ INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `cou
 
 CREATE TABLE `role` (
   `role_id` tinyint NOT NULL,
-  `sys_name` varchar(20) NOT NULL,
-  `name` varchar(20) NOT NULL,
+  `sys_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
@@ -420,7 +468,7 @@ CREATE TABLE `schedule` (
 
 CREATE TABLE `special` (
   `special_id` int NOT NULL,
-  `name` varchar(250) NOT NULL,
+  `name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `otdel_id` smallint NOT NULL,
   `active` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
@@ -445,7 +493,7 @@ INSERT INTO `special` (`special_id`, `name`, `otdel_id`, `active`) VALUES
 CREATE TABLE `student` (
   `user_id` bigint NOT NULL,
   `gruppa_id` int NOT NULL,
-  `num_zach` varchar(10) NOT NULL
+  `num_zach` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
@@ -455,9 +503,11 @@ CREATE TABLE `student` (
 INSERT INTO `student` (`user_id`, `gruppa_id`, `num_zach`) VALUES
 (7, 2, '0'),
 (8, 2, '0'),
-(9, 1, '0'),
+(9, 3, '0'),
 (18, 1, '0'),
-(37, 1, '0');
+(37, 1, '0'),
+(42, 3, '0'),
+(45, 5, '0');
 
 -- --------------------------------------------------------
 
@@ -467,7 +517,7 @@ INSERT INTO `student` (`user_id`, `gruppa_id`, `num_zach`) VALUES
 
 CREATE TABLE `subject` (
   `subject_id` int NOT NULL,
-  `name` varchar(50) NOT NULL,
+  `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `otdel_id` smallint NOT NULL,
   `hours` smallint NOT NULL,
   `active` tinyint NOT NULL
@@ -483,7 +533,16 @@ INSERT INTO `subject` (`subject_id`, `name`, `otdel_id`, `hours`, `active`) VALU
 (3, 'Литература', 2, 40, 1),
 (4, 'Физика', 1, 45, 1),
 (5, 'География', 4, 50, 1),
-(6, 'Биология', 4, 60, 1);
+(6, 'Биология', 4, 60, 1),
+(7, 'test', 2, 50, 1),
+(8, 'test', 1, 40, 1),
+(9, '123', 4, 10, 1),
+(10, '456', 4, 54, 1),
+(11, 'sadasdsad', 4, 40, 1),
+(12, '12', 4, 41, 1),
+(13, 'ыфвыфвыфвыф', 4, 40, 1),
+(14, 'asdsadsadsad', 4, 4, 1),
+(15, 'dsadsad', 5, 40, 1);
 
 -- --------------------------------------------------------
 
@@ -502,9 +561,11 @@ CREATE TABLE `teacher` (
 
 INSERT INTO `teacher` (`user_id`, `otdel_id`) VALUES
 (17, 1),
+(22, 1),
+(44, 1),
 (12, 2),
-(22, 2),
 (25, 2),
+(41, 2),
 (6, 4),
 (14, 4);
 
@@ -516,11 +577,11 @@ INSERT INTO `teacher` (`user_id`, `otdel_id`) VALUES
 
 CREATE TABLE `user` (
   `user_id` bigint NOT NULL,
-  `lastname` varchar(50) NOT NULL,
-  `firstname` varchar(50) NOT NULL,
-  `patronymic` varchar(50) DEFAULT NULL,
-  `login` varchar(50) DEFAULT NULL,
-  `pass` varchar(255) DEFAULT NULL,
+  `lastname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `firstname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
+  `patronymic` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `login` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pass` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `gender_id` tinyint NOT NULL,
   `birthday` date DEFAULT NULL,
   `role_id` tinyint NOT NULL,
@@ -533,12 +594,12 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `pass`, `gender_id`, `birthday`, `role_id`, `branch_id`, `active`) VALUES
-(2, 'Смит', 'Джон', 'Тимофеевич', 'admin', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, NULL, 2, 1, 1),
+(2, 'Смит', 'Джон', 'Тимофеевич', 'admin', '$2y$10$RrTJrymzcimsFELTPgnQA.gRCJC2Y1j0EToPK.jq4IQwICuhI.IRS', 1, '2023-11-01', 2, 1, 1),
 (6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '2000-03-12', 4, 1, 1),
 (7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 1, 1),
 (8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 2, 1),
-(9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$1CXSVkGu79u5hCP0xK7pAeAt/dcFZzeQXq.S52aXoF.57.MiY6B4S', 2, '2003-02-20', 5, 1, 1),
-(10, 'Беспалов ', 'Агафон ', 'Даниилович', 'bespalov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '1980-12-12', 6, 1, 1),
+(9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$TE2o./47eSpX8WaCSQ.O2uzlks.vLNjIjE6tv5qtcg7eavAYMqO0q', 2, '2003-02-20', 5, 1, 1),
+(10, 'Беспалов', 'Агафон', 'Даниилович', 'bespalov', '$2y$10$z11Uv1aXozyKpN07XKTNm.VTf9AHH95kfmyOtmOvuVPuoSh4SyGTq', 1, '1980-12-12', 6, 1, 1),
 (11, 'Карпов', 'Антон', 'Онисимович', 'karpov', '$2y$10$yOW62BB4F8KYnC/Zs95xGeI7HnlX2Rxpdu9qkVInJDRV0igjzbZpq', 1, '1980-11-12', 6, 2, 1),
 (12, 'Гришин', 'Мечеслав', 'Христофорович', 'grishin', '$2y$10$HiUHq9eyUODAWKKvKb072eJFP2mmX993WlE2yvSHlx0X6JqMftKEe', 1, '2002-12-20', 4, 2, 1),
 (14, 'Макаров', 'Михаил', 'Робертович', 'makarov', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1977-06-05', 4, 1, 1),
@@ -547,11 +608,19 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (17, 'Соловьёв', 'Бронислав', 'Федотович', 'soloviev', '$2y$10$hwoeqR.h7cOSrs8mPHnbm.bmDXUd/2i4Xg968skfMTFQ.gQystHdC', 1, '1999-05-14', 4, 2, 1),
 (18, 'Кошелев', 'Эрнест', 'Лаврентьевич', 'koshelev', '$2y$10$mlU3F7DiiEWPXzdfjPiHseYtchL0YITkhg9XOGz72xF.klefiTgnO', 1, '2005-12-15', 5, 1, 1),
 (19, 'Дроздов ', 'Арсений', 'Михайлович', 'manager', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1997-07-12', 3, 999, 1),
-(22, 'Гурьев', 'Артем', 'Протасьевич', 'gurev', '$2y$10$Z4NTm7wDVyEZfAfnyEcGHOjAcYQQ7MJ2xVZQmXRFNzT4tHkIgihSi', 1, '2023-10-01', 4, 1, 1),
+(22, 'Гурьев', 'Артур', 'Протасьевич', 'gurevvv', '$2y$10$Jg6maoeW.bxJGgciUu0/O.C68W13QqU6k14doNZnQhaF/sQ0pwNBW', 1, '2023-10-01', 4, 1, 1),
 (25, 'Буров', 'Георгий', 'Матвеевич', 'burov', '$2y$10$7yGUP8SL7XyoEtvd5MPE1O9FBSiNSJ0NMp08qReKOAoySnAGPye6G', 1, '1999-05-15', 4, 1, 1),
 (37, 'Жукова', 'Адельфина', 'Артемовна', 'jykova', '$2y$10$LpJ3CgZk6cmh9B.9juW0vuZBxmcVlG.JMqyJKkc5/8QtfkqRpP0fa', 2, '2003-05-28', 5, 1, 1),
 (38, 'Соловьёва', 'Лея', 'Георгьевна', 'solovieva', '$2y$10$iH5wNehSfohUxfUTwKSNB.F01vhtYuddPbxUNZADQqgf5weDX7is2', 2, '2000-05-18', 6, 1, 1),
-(39, 'Шестаков', 'Бенедикт', 'Русланович', 'shestakov', '$2y$10$sSfncxp1TVq5wkKWWy/F4.6g1XKTimJXz2QfKQmNcGFW.Nkib5guq', 1, '2002-10-02', 6, 2, 1);
+(39, 'Шестаков', 'Бенедикт', 'Русланович', 'shestakov', '$2y$10$sSfncxp1TVq5wkKWWy/F4.6g1XKTimJXz2QfKQmNcGFW.Nkib5guq', 1, '2002-10-02', 6, 2, 1),
+(40, 'asd', 'asd', 'asd', 'asd', '$2y$10$1k/j0P2IBoiIbU5LHo9Xju6RrUMraewrdvIPp8403qeYj8pcp3gVa', 1, '2023-11-01', 2, 2, 1),
+(41, 'test', 'test', 'test', 'test', '$2y$10$oI8gKBvxGYd0bIf38EEQJulovcwqRfm38DRADUFKQdeTJqbFkyLci', 1, '2023-11-02', 2, 1, 1),
+(42, 'asd', 'asd', 'asd', 'asd', '$2y$10$B0l.SdHgBelVzAQ1K2yWqu6KihUswbrTDT3YahUj6xzKVF7KqnlqC', 1, '2023-11-01', 5, 1, 1),
+(43, 'test', 'test', 'test', '123', '$2y$10$noakuWFcWyR//2r.Kbdtle.IWXC06ZgjSVTCnt0NZD.hTHGBQgp5m', 1, '2023-12-01', 2, 2, 1),
+(44, 'asdsad', 'sadsadas', 'asdasdas', 'asdasdasdsadsa', '$2y$10$3MOMIhCAMcK9L0bfYg2ZmOvW.aQGunvpFv4ZOEU/GjH106R6H3xU2', 1, '2023-12-02', 4, 1, 1),
+(45, 'sadasd', 'sadasdas', 'dsadsadsad', 'asdasd', '$2y$10$A8zvAm8fL8D5P0A/rmFqm.3Q5Z0n4FFJYWavUrGoZgg2WqP5FZTUS', 1, '2023-12-01', 5, 1, 1),
+(46, 'assdasd', 'sdasd', 'asdsad', '1234', '$2y$10$14s0XDLAKCCPTWX2l38H2.W7bfOJnQnO4skBIdSGAP70/mIwob4wK', 1, '2023-12-01', 6, 1, 1),
+(47, 'asdsadasd', 'asdsadasdasd', 'asdasdasdasd', 'asdfd', '$2y$10$DTiIrLjw3ROCQmwTfqEiqOik2DMck67pDF3UiwDJi1WLuiL/r8zxG', 1, '2023-12-01', 6, 1, 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -753,19 +822,19 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=292;
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=297;
 
 --
 -- AUTO_INCREMENT для таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
 --
 ALTER TABLE `gruppa`
-  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `lesson_num`
@@ -783,25 +852,25 @@ ALTER TABLE `lesson_plan`
 -- AUTO_INCREMENT для таблицы `otdel`
 --
 ALTER TABLE `otdel`
-  MODIFY `otdel_id` smallint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `otdel_id` smallint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT для таблицы `parent`
 --
 ALTER TABLE `parent`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT для таблицы `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=116;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT для таблицы `payment_archive`
 --
 ALTER TABLE `payment_archive`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=95;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
 
 --
 -- AUTO_INCREMENT для таблицы `role`
@@ -825,13 +894,13 @@ ALTER TABLE `special`
 -- AUTO_INCREMENT для таблицы `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `subject_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

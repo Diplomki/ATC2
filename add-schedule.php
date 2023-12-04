@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $idUser = Helper::clearInt($_GET['idUser']);
@@ -9,7 +9,7 @@ $idDay = Helper::clearInt($_GET['idDay']);
 if ((new TeacherMap())->findById($idUser)->validate()) {
     $teacher = (new UserMap())->findProfileById($idUser);
 } else {
-    header('Location: 404.php');
+    header('Location: 404');
 }
 $schedule = new ScheduleMap();
 $day = $schedule->findDayById($idDay);
@@ -20,11 +20,11 @@ require_once 'template/header.php';
 <section class="content-header">
     <ol class="breadcrumb">
 
-        <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
+        <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
 
-        <li><a href="list-teacher-schedule.php">Расписание</a></li>
+        <li><a href="list-teacher-schedule">Расписание</a></li>
 
-        <li><a href="list-schedule.php?id=<?= $idUser; ?>">Расписание
+        <li><a href="list-schedule?id=<?= $idUser; ?>">Расписание
 
                 преподавателя</a></li>
         <li class="active">
@@ -49,7 +49,7 @@ require_once 'template/header.php';
             <?= Helper::getFlash(); ?>
         </div>
     <?php endif; ?>
-    <form action="save-schedule.php" method="POST">
+    <form action="save-schedule" method="POST">
         <div class="form-group">
             <label>Группа и предмет</label>
             <select class="form-control" name="lesson_plan_id">

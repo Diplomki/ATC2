@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $size = 10;
@@ -23,7 +23,7 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3><b>Список родителей</b></h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa
+                    <li><a href="/index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список
                         родителей</li>
@@ -31,11 +31,11 @@ fa-dashboard"></i> Главная</a></li>
             </section>
             <?php if (Helper::can('admin')) { ?>
                 <div class="box-body">
-                    <a class="btn btn-success" href="add-parent.php">Добавить родителя</a>
+                    <a class="btn btn-success" href="add-parent">Добавить родителя</a>
                 </div>
 
                 <div class="box-body">
-                    <a class="btn btn-success" href="add-child-parent.php">Добавить ученика к родителю</a>
+                    <a class="btn btn-success" href="add-child-parent">Добавить ученика к родителю</a>
                 </div>
             <?php } ?>
             <!-- /.box-header -->
@@ -61,9 +61,9 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($parent as $parent) {
                                 echo '<tr>';
                                 if (Helper::can('admin')) {
-                                    echo '<td><a href="profile-parent.php?id=' . $parent->user_id . '">' . $parent->parent_fio . '</a> ' . '<a href="add-parent.php?id=' . $parent->user_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                    echo '<td><a href="profile-parent?id=' . $parent->user_id . '">' . $parent->parent_fio . '</a> ' . '<a href="add-parent?id=' . $parent->user_id . '"><i class="fa fa-pencil"></i></a></td>';
                                 } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="profile-parent.php?id=' . $parent->user_id . '">' . $parent->parent_fio . '</a> ' . '<a href="add-parent.php?id=' . $parent->user_id . '"></a></td>';
+                                    echo '<td><a href="profile-parent?id=' . $parent->user_id . '">' . $parent->parent_fio . '</a> ' . '<a href="add-parent?id=' . $parent->user_id . '"></a></td>';
                                 } else {
                                     echo '<td><p>' . $parent->parent_fio . '</p> ';
                                 }

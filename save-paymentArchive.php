@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('manager')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 
@@ -22,13 +22,13 @@ if (isset($_POST['paymentSubmit'])) {
     foreach ($paymentArchives as $paymentArchive) {
         if ($paymentArchive->child_id == $student->user_id && $paymentArchive->subject_id == $student->subject_id) {
             (new StudentMap())->saveUpdatePaymentArchive($student);
-            header('Location: check-payment.php');
+            header('Location: check-payment');
             exit();
         }
     }
 
     (new StudentMap())->savePaymentArchive($student);
-    header('Location: check-payment.php');
+    header('Location: check-payment');
     exit();
 }
 
@@ -41,13 +41,13 @@ if (isset($_POST['paymentDelete'])) {
 
 
     if ((new StudentMap())->deletePayment($student)) {
-        header('Location: check-payment.php');
+        header('Location: check-payment');
 
     } else {
         if ($student->user_id) {
-            header('Location: check-payment.php');
+            header('Location: check-payment');
         } else {
-            header('Location: check-payment.php');
+            header('Location: check-payment');
         }
     }
 }

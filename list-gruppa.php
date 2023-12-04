@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
-    header('Location: 404.php');
+    header('Location: 404');
     exit();
 }
 $size = 5;
@@ -26,7 +26,7 @@ require_once 'template/header.php';
                     </b>
                 </h3>
                 <ol class="breadcrumb">
-                    <li><a href="/index.php"><i class="fa
+                    <li><a href="/index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                     <li class="active">
                         <?= $header; ?>
@@ -35,7 +35,7 @@ fa-dashboard"></i> Главная</a></li>
             </section>
             <div class="box-body">
                 <?php if (Helper::can('admin')) { ?>
-                    <a class="btn btn-success" href="add-gruppa.php">Добавить группу</a>
+                    <a class="btn btn-success" href="add-gruppa">Добавить группу</a>
                 <?php }
                 ; ?>
             </div>
@@ -62,11 +62,11 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($gruppas as $gruppa) {
                                 echo '<tr>';
                                 if (Helper::can('admin')) {
-                                    echo '<td><a href="view-gruppa.php?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</a> ' . '<a href="add-gruppa.php?id=' . $gruppa->gruppa_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                    echo '<td><a href="view-gruppa?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</a> ' . '<a href="add-gruppa?id=' . $gruppa->gruppa_id . '"><i class="fa fa-pencil"></i></a></td>';
                                 } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="view-gruppa.php?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</a> ' . '<a href="add-gruppa.php?id=' . $gruppa->gruppa_id . '"></a></td>';
+                                    echo '<td><a href="view-gruppa?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</a> ' . '<a href="add-gruppa?id=' . $gruppa->gruppa_id . '"></a></td>';
                                 } else
-                                    echo '<td><p>' . $gruppa->name . '</p> ' . '<a href="add-gruppa.php?id=' . $gruppa->gruppa_id . '"></a></td>';
+                                    echo '<td><p>' . $gruppa->name . '</p> ' . '<a href="add-gruppa?id=' . $gruppa->gruppa_id . '"></a></td>';
                                 echo '<td>' . $gruppa->special . '</td>';
 
                                 echo '<td>' . date(
