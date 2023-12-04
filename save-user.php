@@ -17,7 +17,7 @@ if (isset($_POST['user_id'])) {
         PASSWORD_BCRYPT
     );
     $user->gender_id = Helper::clearInt($_POST['gender_id']);
-    $user->role_id = Helper::clearInt($_POST['role_id']);
+
     if (Helper::can('manager')) {
         $user->branch_id = Helper::clearInt($_POST['branch_id']);
     } else {
@@ -29,6 +29,7 @@ if (isset($_POST['user_id'])) {
         $teacher = new Teacher();
         $teacher->otdel_id = Helper::clearInt($_POST['otdel_id']);
         $teacher->user_id = $user->user_id;
+        $user->role_id = Helper::clearInt(4);
         if ((new TeacherMap())->save($user, $teacher)) {
 
             header('Location: profile-teacher.php?id=' . $teacher->user_id);
@@ -36,10 +37,10 @@ if (isset($_POST['user_id'])) {
         } else {
             if ($teacher->user_id) {
 
-                header('Location: add-teacher.php?id=' . $teacher->user_id);
+                header('Location: profile-teacher.php?id=' . $teacher->user_id);
 
             } else {
-                header('Location: add-teacher.php');
+                header('Location: profile-teacher.php');
             }
         }
         exit();
@@ -48,6 +49,7 @@ if (isset($_POST['user_id'])) {
     if (isset($_POST['saveParent'])) {
         $parent = new Procreator();
         $parent->user_id = $user->user_id;
+        $user->role_id = Helper::clearInt(6);
         if ((new ProcreatorMap())->save($user, $parent)) {
 
             header('Location: profile-parent.php?id=' . $parent->user_id);
@@ -55,10 +57,10 @@ if (isset($_POST['user_id'])) {
         } else {
             if ($parent->user_id) {
 
-                header('Location: add-parent.php?id=' . $parent->user_id);
+                header('Location: profile-parent.php?id=' . $parent->user_id);
 
             } else {
-                header('Location: add-parent.php');
+                header('Location: profile-parent.php');
             }
         }
         exit();
@@ -68,6 +70,7 @@ if (isset($_POST['user_id'])) {
         $student = new Student();
         $student->gruppa_id = Helper::clearInt($_POST['gruppa_id']);
         $student->user_id = $user->user_id;
+        $user->role_id = Helper::clearInt(5);
         if ((new StudentMap())->save($user, $student)) {
 
             header('Location: profile-student.php?id=' . $student->user_id);
@@ -75,10 +78,10 @@ if (isset($_POST['user_id'])) {
         } else {
             if ($student->user_id) {
 
-                header('Location: add-student.php?id=' . $student->user_id);
+                header('Location: profile-student.php?id=' . $student->user_id);
 
             } else {
-                header('Location: add-student.php');
+                header('Location: profile-student.php');
             }
         }
         exit();
@@ -88,6 +91,7 @@ if (isset($_POST['user_id'])) {
         $admin = new Admin();
         $admin->branch_id = Helper::clearInt($_POST['branch_id']);
         $admin->user_id = $user->user_id;
+        $user->role_id = Helper::clearInt(2);
         if ((new AdminMap())->save($user, $admin)) {
 
             header('Location: profile-admin.php?id=' . $admin->user_id);
@@ -95,10 +99,10 @@ if (isset($_POST['user_id'])) {
         } else {
             if ($admin->user_id) {
 
-                header('Location: add-admin.php?id=' . $admin->user_id);
+                header('Location: profile-admin.php?id=' . $admin->user_id);
 
             } else {
-                header('Location: add-admin.php');
+                header('Location: profile-admin.php');
             }
         }
         exit();

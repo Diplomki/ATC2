@@ -32,10 +32,10 @@ require_once 'template/header.php';
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h1>Список студентов</h1>
+                <h3><b>Список оценок</b></h3>
                 <ol class="breadcrumb">
                     <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
-                    <li class="active">Список студентов</li>
+                    <li class="active">Список оценок</li>
 
                 </ol>
             </section>
@@ -78,7 +78,7 @@ require_once 'template/header.php';
                                 echo "</tr>";
                             }
                 } else {
-                    echo 'Ни одного студента не найдено';
+                    echo 'Оценок на подтверждение не найдено';
                 }
 
                 ?>

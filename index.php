@@ -46,7 +46,7 @@ $indexStudent = $userMap->studentCount();
                     <span class="info-box-icon bg-aqua"><i class="ion ion-stats-bars"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Кол-во учителей</span>
+                        <span class="info-box-text"><b>Кол-во учителей</b></span>
                         <span class="info-box-number">
                             <?php echo $indexTeacher->count; ?>
                         </span>
@@ -60,7 +60,7 @@ $indexStudent = $userMap->studentCount();
                     <span class="info-box-icon bg-red"><i class="ion ion-person-add"></i></span>
 
                     <div class="info-box-content">
-                        <span class="info-box-text">Кол-во студентов</span>
+                        <span class="info-box-text"><b>Кол-во студентов</b></span>
                         <span class="info-box-number">
                             <?php echo $indexStudent->count; ?>
                         </span>

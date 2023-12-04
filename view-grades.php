@@ -29,7 +29,7 @@ require_once 'template/header.php';
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h1>Оценки</h1>
+                <h3><b>Оценки</b></h3>
                 <ol class="breadcrumb">
                     <li><i class="fa fa-dashboard"></i> Главная</li>
                 </ol>
@@ -52,14 +52,14 @@ require_once 'template/header.php';
                             </thead>
                             <tbody>
                                 <?php
-                                    foreach ($students as $student) {
-                                        echo "<tr>";
-                                        echo "<td>" . $student->fio . "</td>";
-                                        echo "<td>" . $student->subject . "</td>";
-                                        echo "<td>" . $student->grade . "</td>";
-                                        echo "<td>" . $student->date . "</td>";
-                                        echo "</tr>";
-                                    }
+                                foreach ($students as $student) {
+                                    echo "<tr>";
+                                    echo "<td>" . $student->fio . "</td>";
+                                    echo "<td>" . $student->subject . "</td>";
+                                    echo "<td>" . $student->grade . "</td>";
+                                    echo "<td>" . $student->date . "</td>";
+                                    echo "</tr>";
+                                }
                                 ?>
                             </tbody>
                         </table>

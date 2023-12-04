@@ -14,9 +14,11 @@ $header = (($id) ? 'Редактировать данные' : 'Добавить
 require_once 'template/header.php';
 ?>
 <section class="content-header">
-    <h1>
-        <?= $header; ?>
-    </h1>
+    <h3>
+        <b>
+            <?= $header; ?>
+        </b>
+    </h3>
     <ol class="breadcrumb">
 
         <li><a href="/index.php"><i class="fa fa-
@@ -33,12 +35,6 @@ teacher.php">Родители</a></li>
 <div class="box-body">
     <form action="save-user.php" method="POST">
         <?php require_once '_formUser.php'; ?>
-        <div class="form-group">
-            <label>Роль</label>
-            <select class="form-control" name="role_id">
-                <?= Helper::printSelectOptions($user->role_id, $userMap->arrRoles()); ?>
-            </select>
-        </div>
         <div class="form-group">
             <label>Заблокировать</label>
             <div class="radio">

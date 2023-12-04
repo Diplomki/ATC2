@@ -34,7 +34,9 @@ require_once 'template/header.php';
 </section>
 <section class="box-body">
     <h3>
-        <?= $header; ?>
+        <b>
+            <?= $header; ?>
+        </b>
     </h3>
 </section>
 <div class="box-body">

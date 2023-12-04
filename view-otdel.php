@@ -14,9 +14,11 @@ if (isset($_GET['id'])) {
         <div class="col-xs-12">
             <div class="box">
                 <section class="content-header">
-                    <h1>
-                        <?= $header; ?>
-                    </h1>
+                    <h3>
+                        <b>
+                            <?= $header; ?>
+                        </b>
+                    </h3>
                     <ol class="breadcrumb">
                         <li><a href="index.php"><i class="fafa-dashboard"></i> Главная</a></li>
                         <li><a href="list-otdel.php">Отдел</a></li>
@@ -36,7 +38,9 @@ if (isset($_GET['id'])) {
                     <table class="table table-bordered table-hover">
                         <tr>
                             <th>Название</th>
-                            <td><?= $otdel->name; ?></td>
+                            <td>
+                                <?= $otdel->name; ?>
+                            </td>
                         </tr>
                         <tr>
                     </table>

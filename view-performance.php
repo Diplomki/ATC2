@@ -33,7 +33,7 @@ require_once 'template/header.php';
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h1>Посещаемость</h1>
+                <h3><b>Посещаемость</b></h3>
                 <ol class="breadcrumb">
                     <li><i class="fa fa-dashboard"></i> Главная</li>
                 </ol>

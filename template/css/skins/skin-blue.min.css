@@ -1,3 +1,21 @@
+body {
+    font-family: 'Helvetica', sans-serif;
+
+}
+
+b {
+    font-weight: bold;
+}
+
+h3 {
+    margin: 0;
+    font-size: 20px;
+}
+
+.btn-success {
+    font-weight: 550;
+}
+
 .skin-blue .main-header .navbar {
     background-color: #9b6aa9
 }

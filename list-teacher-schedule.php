@@ -19,9 +19,11 @@ $teachers = (new LessonPlanMap())->findTeachers($page * $size - $size, $size);
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h1>
-                    <?= $header; ?>
-                </h1>
+                <h3>
+                    <b>
+                        <?= $header; ?>
+                    </b>
+                </h3>
                 <ol class="breadcrumb">
                     <li><a href="/index.php"><i class="fafa-dashboard"></i> Главная</a></li>
                     <li class="active">
@@ -52,11 +54,19 @@ $teachers = (new LessonPlanMap())->findTeachers($page * $size - $size, $size);
 
                             <?php foreach ($teachers as $teacher): ?>
                                 <tr>
-                                    <td><?= $teacher->fio; ?></td>
+                                    <td>
+                                        <?= $teacher->fio; ?>
+                                    </td>
 
-                                    <td><?= $teacher->otdel; ?></td>
-                                    <td><?= $teacher->count_plan; ?></td>
-                                    <td><?= ($teacher->sum_hours) ? $teacher->sum_hours : 0; ?></td>
+                                    <td>
+                                        <?= $teacher->otdel; ?>
+                                    </td>
+                                    <td>
+                                        <?= $teacher->count_plan; ?>
+                                    </td>
+                                    <td>
+                                        <?= ($teacher->sum_hours) ? $teacher->sum_hours : 0; ?>
+                                    </td>
                                     <td>
 
                                         <a href="list-plan.php?id=<?= $teacher->user_id; ?>" title="План

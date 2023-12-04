@@ -13,9 +13,11 @@ $header = (($id) ? 'Редактировать' : 'Добавить') . ' гру
 require_once 'template/header.php';
 ?>
 <section class="content-header">
-    <h1>
-        <?= $header; ?>
-    </h1>
+    <h3>
+        <b>
+            <?= $header; ?>
+        </b>
+    </h3>
     <ol class="breadcrumb">
 
         <li><a href="/index.php"><i class="fa fa-dashboard"></i> Главная</a></li>
@@ -46,7 +48,8 @@ require_once 'template/header.php';
 
         <div class="form-group">
             <label>Дата окончания</label>
-            <input type="date" class="form-control" name="date_end" required="required" value="<?= $gruppa->date_end; ?>">
+            <input type="date" class="form-control" name="date_end" required="required"
+                value="<?= $gruppa->date_end; ?>">
         </div>
         <div class="form-group">
             <button type="submit" name="saveGruppa" class="btn btn-primary">Сохранить</button>

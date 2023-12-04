@@ -17,7 +17,7 @@ require_once 'template/header.php';
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h1>Профиль администратора</h1>
+                <h3><b>Профиль администратора</b></h3>
                 <ol class="breadcrumb">
                     <li><a href="index.php"><i class="fa
 fa-dashboard"></i> Главная</a></li>

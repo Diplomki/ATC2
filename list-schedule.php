@@ -31,7 +31,9 @@ fa-dashboard"></i> Главная</a></li>
             </section>
             <section class="box-body">
                 <h3>
-                    <?= $header; ?>
+                    <b>
+                        <?= $header; ?>
+                    </b>
                 </h3>
             </section>
             <div class="box-body">
