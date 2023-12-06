@@ -1,11 +1,11 @@
 <?php
 require_once 'secure.php';
-if (!Helper::can('manager')) {
+if(!Helper::can('manager')) {
     header('Location: 404');
     exit();
 }
 
-if (isset($_POST['paymentSubmit'])) {
+if(isset($_POST['paymentSubmit'])) {
     $student = new Student();
     $studentMap = new StudentMap();
     $paymentArchives = $studentMap->selectGrades();
@@ -19,35 +19,30 @@ if (isset($_POST['paymentSubmit'])) {
     $student->attend = 1;
     $flag = true;
 
-    foreach ($paymentArchives as $paymentArchive) {
-        if ($paymentArchive->child_id == $student->user_id && $paymentArchive->subject_id == $student->subject_id) {
+    foreach($paymentArchives as $paymentArchive) {
+        if($paymentArchive->child_id == $student->user_id && $paymentArchive->subject_id == $student->subject_id) {
             (new StudentMap())->saveUpdatePaymentArchive($student);
-            header('Location: check-payment');
+            header('Location: check-payment?message=ok');
             exit();
         }
     }
 
     (new StudentMap())->savePaymentArchive($student);
-    header('Location: check-payment');
+    header('Location: check-payment?message=err');
     exit();
 }
 
 
 
 
-if (isset($_POST['paymentDelete'])) {
+if(isset($_POST['paymentDelete'])) {
     $student = new Student();
     $student->id = Helper::clearInt($_POST['id']);
 
 
-    if ((new StudentMap())->deletePayment($student)) {
-        header('Location: check-payment');
-
+    if((new StudentMap())->deletePayment($student)) {
+        header('Location: check-payment?message=errDel');
     } else {
-        if ($student->user_id) {
-            header('Location: check-payment');
-        } else {
-            header('Location: check-payment');
-        }
+        header('Location: check-payment?message=okDel');
     }
 }

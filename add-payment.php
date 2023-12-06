@@ -3,17 +3,18 @@ require_once 'secure.php';
 
 $size = 10;
 
-if (isset($_GET['page'])) {
+if(isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 } else {
     $page = 1;
 }
 
-if (isset($_GET['id'])) {
+if(isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 } else {
     $id = 1;
 }
+
 
 $studentMap = new StudentMap();
 $count = $studentMap->count();
@@ -27,7 +28,7 @@ require_once 'template/header.php';
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h3><b>Список студентов</b></h3>
+                <h3><b>Оплата</b></h3>
                 <ol class="breadcrumb">
                     <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список студентов</li>
@@ -37,7 +38,7 @@ require_once 'template/header.php';
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <?php if ($students) { ?>
+                <?php if($students) { ?>
                     <form action="save-payment" method="POST" enctype="multipart/form-data">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
@@ -53,7 +54,7 @@ require_once 'template/header.php';
                                 <tr>
                                     <td>
                                         <?php
-                                        echo '<p>' . $students->fio . '</p>';
+                                        echo '<p>'.$students->fio.'</p>';
                                         ?>
                                     </td>
                                     <td>

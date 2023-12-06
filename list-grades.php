@@ -1,11 +1,11 @@
 <?php
 require_once 'secure.php';
-if (!Helper::can('manager') && !Helper::can('teacher')) {
+if(!Helper::can('manager') && !Helper::can('teacher')) {
     header('Location: 404');
     exit();
 }
 $size = 5;
-if (isset($_GET['page'])) {
+if(isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 } else {
     $page = 1;
@@ -14,6 +14,11 @@ $gruppaMap = new GruppaMap();
 $count = $gruppaMap->count();
 $gruppas = $gruppaMap->findAll($page * $size - $size, $size);
 $header = 'Список групп';
+if($_GET['message'] == 'ok') {
+    $header = '<span style="color: green;">Оценки успешно выставлены</span>';
+} elseif($_GET['message'] == 'err') {
+    $header = '<span style="color: red;">Ошибка при выставлении оценок</span>';
+}
 require_once 'template/header.php';
 ?>
 <div class="row">
@@ -34,7 +39,7 @@ require_once 'template/header.php';
             </section>
             <div class="box-body">
                 <?php
-                if ($gruppas) {
+                if($gruppas) {
                     ?>
 
                     <table id="example2" class="table table-bordered table-hover">
@@ -47,11 +52,11 @@ require_once 'template/header.php';
                         </thead>
                         <tbody>
                             <?php
-                            foreach ($gruppas as $gruppa) {
+                            foreach($gruppas as $gruppa) {
                                 echo '<tr>';
-                                if (Helper::can('teacher') || Helper::can('manager'))
-                                    echo '<td><p href="view-grades?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</p> ' . '<p href="add-gruppa?id=' . $gruppa->gruppa_id . '"></p></td>';
-                                echo '<td><a class="btn btn-primary" href="add-grades?id=' . $gruppa->gruppa_id . '">Выставить оценки</a> ' . '<p href="add-gruppa?id=' . $gruppa->gruppa_id . '"></p></td>';
+                                if(Helper::can('teacher') || Helper::can('manager'))
+                                    echo '<td><p href="view-grades?id='.$gruppa->gruppa_id.'">'.$gruppa->name.'</p> '.'<p href="add-gruppa?id='.$gruppa->gruppa_id.'"></p></td>';
+                                echo '<td><a class="btn btn-primary" href="add-grades?id='.$gruppa->gruppa_id.'">Выставить оценки</a> '.'<p href="add-gruppa?id='.$gruppa->gruppa_id.'"></p></td>';
                             }
                             ?>
                         </tbody>

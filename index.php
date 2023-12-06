@@ -39,7 +39,7 @@ $indexStudent = $userMap->studentCount();
 
 
 <body>
-    <?php if (!Helper::can('procreator') && !Helper::can('teacher')) { ?>
+    <?php if(!Helper::can('procreator') && !Helper::can('teacher')) { ?>
         <section class="content">
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
@@ -74,18 +74,18 @@ $indexStudent = $userMap->studentCount();
 </body>
 
 <?php
-if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator')) {
+if(!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator')) {
     $header = 'Главная: расписание занятий.';
 
     $userIdentity = (new UserMap())->identity($_SESSION['id']);
-    if ($userIdentity == UserMap::TEACHER) {
+    if($userIdentity == UserMap::TEACHER) {
         $schedules = (new ScheduleMap())->findByTeacherId($_SESSION['id']);
-    } elseif ($userIdentity == UserMap::STUDENT) {
+    } elseif($userIdentity == UserMap::STUDENT) {
         $schedules = (new ScheduleMap())->findByStudentId($_SESSION['id']);
     } else {
         $schedules = null;
     }
-    require_once 'template/header';
+    require_once 'template/header.php';
     ?>
     <div class="row">
         <div class="col-xs-12">
@@ -96,11 +96,11 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
                     </h3>
                 </section>
                 <div class="box-body">
-                    <?php if ($schedules): ?>
-                        <?php if ($userIdentity == UserMap::TEACHER): ?>
+                    <?php if($schedules): ?>
+                        <?php if($userIdentity == UserMap::TEACHER): ?>
                             <table class="table table-bordered table-hover">
 
-                                <?php foreach ($schedules as $day):
+                                <?php foreach($schedules as $day):
                                     ?>
                                     <tr>
                                         <th colspan="3">
@@ -110,15 +110,15 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
                                         </th>
                                     </tr>
 
-                                    <?php if ($day['gruppa']): ?>
-                                        <?php foreach ($day['gruppa'] as $gruppa): ?>
+                                    <?php if($day['gruppa']): ?>
+                                        <?php foreach($day['gruppa'] as $gruppa): ?>
                                             <tr>
                                                 <th colspan="3">
                                                     <?= $gruppa['name']; ?>
                                                 </th>
                                             </tr>
 
-                                            <?php foreach ($gruppa['schedule'] as $schedule): ?>
+                                            <?php foreach($gruppa['schedule'] as $schedule): ?>
                                                 <tr>
                                                     <td>
                                                         <?= $schedule['lesson_num']; ?>
@@ -149,7 +149,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
                             </p>
                             <table class="table table-bordered table-hover">
 
-                                <?php foreach ($schedules['allSchedule'] as $day):
+                                <?php foreach($schedules['allSchedule'] as $day):
                                     ?>
                                     <tr>
                                         <th colspan="3">
@@ -159,8 +159,8 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
                                         </th>
                                     </tr>
 
-                                    <?php if ($day['schedule']): ?>
-                                        <?php foreach ($day['schedule'] as $gruppa): ?>
+                                    <?php if($day['schedule']): ?>
+                                        <?php foreach($day['schedule'] as $gruppa): ?>
 
 
 
@@ -198,14 +198,14 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
     </div>
     <?php
 }
-if (Helper::can('procreator')) {
+if(Helper::can('procreator')) {
     require_once 'secure.php';
-    if (!Helper::can('procreator')) {
+    if(!Helper::can('procreator')) {
         header('Location: 404');
         exit();
     }
     $size = 10;
-    if (isset($_GET['page'])) {
+    if(isset($_GET['page'])) {
         $page = Helper::clearInt($_GET['page']);
 
     } else {
@@ -231,7 +231,7 @@ if (Helper::can('procreator')) {
                 <!-- /.box-header -->
                 <div class="box-body">
                     <?php
-                    if ($student) {
+                    if($student) {
                         ?>
 
                         <table id="example2" class="table table-bordered table-hover">
@@ -243,9 +243,9 @@ if (Helper::can('procreator')) {
                             </thead>
                             <tbody>
                                 <?php
-                                foreach ($student as $student) {
+                                foreach($student as $student) {
                                     echo '<tr>';
-                                    echo '<td><a href="add-payment?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '</td>';
+                                    echo '<td><a href="add-payment?id='.$student->user_id.'">'.$student->fio.'</a> '.'</td>';
                                 }
                                 ?>
                             </tbody>
