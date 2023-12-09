@@ -1,10 +1,10 @@
 <?php
 require_once 'secure.php';
-if(!Helper::can('admin')) {
+if (!Helper::can('admin')) {
     header('Location: 404');
     exit();
 }
-if(isset($_POST['gradeSubmit'])) {
+if (isset($_POST['gradeSubmit'])) {
     $student = new Student();
     $studentMap = new StudentMap();
     $paymentArchives = $studentMap->selectGrades();
@@ -15,26 +15,25 @@ if(isset($_POST['gradeSubmit'])) {
     $student->date = Helper::clearString($_POST['date']);
     $student->attend = Helper::clearInt($_POST['attend']);
 
-    foreach($paymentArchives as $paymentArchive) {
-        if($paymentArchive->child_id == $student->user_id && $paymentArchive->subject_id && $student->subject_id) {
-            (new StudentMap())->saveUpdateGrades($student);
+    foreach ($paymentArchives as $paymentArchive) {
+        if ((new StudentMap())->saveUpdateGrades($student)) {
             header('Location: check-grades?message=ok');
+            exit();
+        } else {
+            header('Location: check-grades?message=err');
             exit();
         }
     }
-    (new StudentMap())->saveGrades($student);
-    header('Location: check-grades?message=err');
-    exit();
 }
 
 
-if(isset($_POST['gradeDelete'])) {
+if (isset($_POST['gradeDelete'])) {
     $student = new Student();
     $student->grade_id = Helper::clearInt($_POST['grade_id']);
-    if((new StudentMap())->deleteGrades($student)) {
+    if ((new StudentMap())->deleteGrades($student)) {
         header('Location: check-grades?message=errDel');
     } else {
-        if($student->user_id) {
+        if ($student->user_id) {
             header('Location: check-grades?message=okDel');
         } else {
             header('Location: check-grades?message=okDel');

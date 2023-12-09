@@ -52,6 +52,8 @@
 
                     <a href="check-payment"><i class="fa fa-dollar"></i><span>Оплата</span></a>
 
+
+
                 </li>
             <?php } ?>
             <?php if (Helper::can('teacher')) { ?>
@@ -120,7 +122,9 @@
 
                     <a href="check-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
 
+                <li <?= ($_SERVER['PHP_SELF'] == '/check-payment.php') ? 'class="active"' : ''; ?>>
 
+                    <a href="add-notice"><i class="fa fa-envelope"></i><span>Уведомление об оплате</span></a>
                 <?php } ?>
 
                 <?php if (Helper::can('procreator')) { ?>
@@ -130,7 +134,7 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-performance.php') ? 'class="active"' : ''; ?>>
 
                     <a href="check-performance"><i class="fa fa-address-book"></i><span>Успеваемоcть</span></a>
-                <li <?= ($_SERVER['PHP_SELF'] == '/check-payment.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '/check-child.php') ? 'class="active"' : ''; ?>>
 
                     <a href="check-child"><i class="fa fa-usd"></i><span>Оплата</span></a>
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-control.php') ? 'class="active"' : ''; ?>>

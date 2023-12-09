@@ -1,20 +1,20 @@
 <?php
 require_once 'secure.php';
 
-if(!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
+if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
     header('Location: 404');
     exit();
 }
 
 $size = 10;
 
-if(isset($_GET['page'])) {
+if (isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 } else {
     $page = 1;
 }
 
-if(isset($_GET['id'])) {
+if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 } else {
     $id = 1;
@@ -22,7 +22,7 @@ if(isset($_GET['id'])) {
 
 $message = 'Список оценок';
 
-switch($_GET['message']) {
+switch ($_GET['message']) {
     case 'ok':
         $message = '<span style="color: green;">Оплата успешно подтверждена</span>';
         break;
@@ -63,7 +63,7 @@ require_once 'template/header.php';
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <?php if($students) { ?>
+                <?php if ($students) { ?>
                     <table id="example2" class="table table-bordered table-hover">
                         <thead>
                             <tr>
@@ -78,25 +78,25 @@ require_once 'template/header.php';
                         </thead>
                         <tbody>
                             <?php
-                            foreach($students as $student) {
+                            foreach ($students as $student) {
                                 echo '<tr>';
-                                echo '<td>'.$student->parent_fio.'</td>';
-                                echo '<td>'.$student->child_fio.'</td>';
-                                echo '<td>'.$student->subject.'</td>';
-                                echo '<td>'.$student->count.'</td>';
-                                echo '<td>'.'<a href="uploads/'.$student->tab.'">'.preg_replace("/[0-9]/", "", $student->tab).'</a>'.'</td>';
-                                echo '<td>'.$student->price.'</td>';
-                                echo "<td>".'<form action="save-paymentArchive" method="post">
-                                        <input type="hidden" name="id" value="'.$student->id.'">
-                                        <input type="hidden" name="parent_id" value="'.$student->parent_id.'">
-                                        <input type="hidden" name="child_id" value="'.$student->user_id.'">
-                                        <input type="hidden" name="subject_id" value="'.$student->subject_id.'">
-                                        <input type="hidden" name="count" value="'.$student->count.'">
-                                        <input type="hidden" name="tab" value="'.$student->tab.'">
-                                        <input type="hidden" name="price" value="'.$student->price.'">
+                                echo '<td>' . $student->parent_fio . '</td>';
+                                echo '<td>' . $student->child_fio . '</td>';
+                                echo '<td>' . $student->subject . '</td>';
+                                echo '<td>' . $student->count . '</td>';
+                                echo '<td>' . '<a href="uploads/' . $student->tab . '">' . preg_replace("/[0-9]/", "", $student->tab) . '</a>' . '</td>';
+                                echo '<td>' . $student->price . '</td>';
+                                echo "<td>" . '<form action="save-paymentArchive" method="post">
+                                        <input type="hidden" name="id" value="' . $student->id . '">
+                                        <input type="hidden" name="parent_id" value="' . $student->parent_id . '">
+                                        <input type="hidden" name="child_id" value="' . $student->user_id . '">
+                                        <input type="hidden" name="subject_id" value="' . $student->subject_id . '">
+                                        <input type="hidden" name="count" value="' . $student->count . '">
+                                        <input type="hidden" name="tab" value="' . $student->tab . '">
+                                        <input type="hidden" name="price" value="' . $student->price . '">
                                         <input class="btn btn-success" type="submit" name="paymentSubmit" value="Подтвердить">
                                         <input class="btn btn-danger" type="submit" name="paymentDelete" value="Отклонить">
-                                        </form>'."</td>";
+                                        </form>' . "</td>";
                                 echo '</tr>';
                             }
                             ?>

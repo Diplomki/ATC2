@@ -37,7 +37,21 @@ class AdminMap extends BaseMap
         }
         return false;
     }
+    public function insertNotice($admin = Admin)
+    {
 
+        $query = "INSERT INTO `notice` (`text`, `user_id`, `date`) VALUES (:text, :user_id, :date)";
+        $res = $this->db->prepare($query);
+        if (
+            $res->execute([
+                'text' => $admin->text,
+                'user_id' => $admin->user_id,
+                'date' => $admin->date
+            ]) == 1
+        )
+            return true;
+        return false;
+    }
     private function update($admin = Admin)
     {
         if (
