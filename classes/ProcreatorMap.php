@@ -106,4 +106,21 @@ class ProcreatorMap extends BaseMap
             return $res->fetch(PDO::FETCH_OBJ)->cnt;
         }
     }
+    public function notice()
+    {
+        $res = $this->db->query("SELECT notice.text as text, subject.name as subject, notice.date as date FROM notice
+        INNER JOIN subject ON subject.subject_id = notice.subject_id
+        WHERE notice.user_id = {$_SESSION['id']}");
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
+    public function noticeCount()
+    {
+        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM notice
+        INNER JOIN user ON notice.user_id = user.user_id
+        WHERE notice.user_id = {$_SESSION['id']}");
+        if ($res === false)
+            return 0;
+        return $res->fetch(PDO::FETCH_OBJ)->cnt;
+    }
+
 }

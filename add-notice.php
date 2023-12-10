@@ -42,7 +42,13 @@ require_once 'template/header.php';
     <form action="save-notice" method="POST">
         <div class="form-group">
             <label>Текст уведомления</label>
-            <input class="form-control" type="text" name="text">
+            <input class="form-control" type="text" name="text" value="Оплатите до указанного срока по предмету:">
+        </div>
+        <div class="form-group">
+            <label>Предмет</label>
+            <select class="form-control" name="subject_id">
+                <?php Helper::printSelectOptions(0, (new SubjectMap())->arrSubjects()) ?>
+            </select>
         </div>
         <div class="form-group">
             <label>Кому</label>

@@ -1,4 +1,7 @@
 <?php
+$procreatorMap = new ProcreatorMap();
+
+$notices = $procreatorMap->notice();
 ?>
 
 <!DOCTYPE html>
@@ -72,7 +75,42 @@ desired effect
         <div class="navbar-custom-menu">
           <ul class="nav navbar-nav">
             <!-- Messages: style can be found in dropdown.less-->
-            <li class="dropdown messages-menu">
+            <?php if (Helper::can('procreator')) { ?>
+
+              <li class="dropdown notifications-menu">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                  <i class="fa fa-bell-o"></i>
+                  <span class="label label-warning">
+                    <?php echo $procreatorMap->noticeCount(); ?>
+                  </span>
+                </a>
+                <ul class="dropdown-menu">
+                  <li class="header">
+                    <?php if ($procreatorMap->noticeCount() == 0) {
+                      echo 'У вас нет уведомлений';
+                    } else { ?>
+                      У вас
+                      <?php echo $procreatorMap->noticeCount(); ?>
+                      Уведомлений(я)
+                    <?php } ?>
+                  </li>
+                  <li class="header">
+                    <!-- inner menu: contains the actual data -->
+                    <ul class="menu">
+                      <?php if ($notices) { ?>
+                        <?php foreach ($notices as $notice) { ?>
+                          <li>
+                            <br><i class="fa fa-dollar"></i>
+                            <?= $notice->text; ?> <br>
+                            <?= $notice->subject; ?>&#10230;
+                            <?= $notice->date; ?>
+                          </li>
+                        <?php } ?>
+                      <?php } ?>
+                    </ul>
+                  </li>
+                </ul>
+              <?php } ?>
               <!-- User Account Menu -->
             <li class="dropdown user user-menu">
               <!-- Menu Toggle Button -->
