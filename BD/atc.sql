@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Дек 04 2023 г., 05:46
+-- Время создания: Дек 12 2023 г., 05:50
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -31,7 +31,7 @@ SET time_zone = "+00:00";
 CREATE TABLE `admin` (
   `user_id` bigint NOT NULL,
   `branch_id` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `admin`
@@ -53,7 +53,7 @@ INSERT INTO `admin` (`user_id`, `branch_id`) VALUES
 CREATE TABLE `attend` (
   `id` tinyint NOT NULL,
   `attend` varchar(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `attend`
@@ -72,7 +72,7 @@ INSERT INTO `attend` (`id`, `attend`) VALUES
 CREATE TABLE `branch` (
   `id` int NOT NULL,
   `branch` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `branch`
@@ -95,7 +95,7 @@ CREATE TABLE `classroom` (
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `branch` int DEFAULT NULL,
   `active` tinyint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `classroom`
@@ -117,7 +117,7 @@ INSERT INTO `classroom` (`classroom_id`, `name`, `branch`, `active`) VALUES
 CREATE TABLE `day` (
   `day_id` tinyint NOT NULL,
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `day`
@@ -140,7 +140,7 @@ INSERT INTO `day` (`day_id`, `name`) VALUES
 CREATE TABLE `gender` (
   `gender_id` tinyint NOT NULL,
   `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `gender`
@@ -163,7 +163,18 @@ CREATE TABLE `grades` (
   `grade` varchar(2) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date DEFAULT NULL,
   `attend` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `grades`
+--
+
+INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `attend`) VALUES
+(302, 37, 5, '', '2023-12-07', 0),
+(304, 37, 5, '50', '2023-12-07', 1),
+(306, 37, 5, '', '2023-12-07', 0),
+(310, 37, 5, '', '2023-12-07', 0),
+(312, 37, 5, '', '2023-12-07', 0);
 
 -- --------------------------------------------------------
 
@@ -178,76 +189,15 @@ CREATE TABLE `grade_accept` (
   `grade` int DEFAULT NULL,
   `date` date DEFAULT NULL,
   `attend` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `grade_accept`
 --
 
 INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `attend`) VALUES
-(156, 18, 5, 0, '2023-11-15', 0),
-(157, 37, 5, 0, '2023-11-15', 0),
-(158, 9, 5, 0, '2023-11-15', 0),
-(159, 9, 6, 90, '2023-11-15', 1),
-(160, 9, 6, 90, '2023-11-15', 1),
-(161, 18, 5, 0, '2023-11-15', 0),
-(162, 9, 5, 0, '2023-11-15', 0),
-(163, 9, 6, 90, '2023-11-15', 1),
-(164, 37, 5, 0, '2023-11-15', 0),
-(165, 18, 5, 0, '2023-11-15', 0),
-(166, 37, 5, 0, '2023-11-15', 0),
-(167, 18, 5, 0, '2023-11-15', 0),
-(168, 37, 5, 0, '2023-11-15', 0),
-(169, 9, 5, 0, '2023-11-16', 0),
-(170, 9, 5, 0, '2023-11-16', 0),
-(171, 18, 5, 0, '2023-11-16', 0),
-(172, 9, 5, 0, '2023-11-16', 0),
-(173, 37, 5, 0, '2023-11-16', 0),
-(174, 9, 5, 0, '2023-11-16', 1),
-(175, 18, 6, 0, '2023-11-16', 1),
-(176, 9, 6, 0, '2023-11-16', 1),
-(177, 37, 6, 0, '2023-11-16', 1),
-(178, 18, 5, 90, '2023-11-16', 1),
-(179, 9, 5, 80, '2023-11-16', 1),
-(180, 37, 5, 50, '2023-11-16', 1),
-(181, 9, 6, 70, '2023-11-29', 1),
-(182, 9, 5, 80, '2023-11-29', 1),
-(183, 9, 6, 70, '2023-11-29', 1),
-(184, 9, 6, 70, '2023-11-29', 1),
-(185, 9, 6, 70, '2023-11-29', 1),
-(186, 9, 6, 70, '2023-11-29', 1),
-(187, 9, 6, 70, '2023-11-29', 1),
-(188, 9, 6, 70, '2023-11-29', 1),
-(189, 42, 6, 40, '2023-11-29', 1),
-(190, 42, 6, 40, '2023-11-29', 1),
-(191, 42, 6, 40, '2023-11-29', 1),
-(192, 42, 6, 40, '2023-11-29', 1),
-(193, 42, 6, 40, '2023-11-29', 1),
-(194, 42, 6, 40, '2023-11-29', 1),
-(195, 42, 6, 40, '2023-11-29', 1),
-(196, 42, 5, 90, '2023-11-29', 1),
-(197, 42, 5, 90, '2023-11-29', 1),
-(198, 42, 5, 90, '2023-11-29', 1),
-(199, 42, 5, 90, '2023-11-29', 1),
-(200, 42, 5, 90, '2023-11-29', 1),
-(201, 42, 5, 90, '2023-11-29', 1),
-(202, 42, 5, 90, '2023-11-29', 1),
-(203, 42, 5, 90, '2023-11-29', 1),
-(204, 42, 5, 90, '2023-11-29', 1),
-(205, 42, 5, 90, '2023-11-29', 1),
-(206, 42, 5, 90, '2023-11-29', 1),
-(207, 42, 5, 90, '2023-11-29', 1),
-(208, 42, 6, 40, '2023-11-29', 1),
-(209, 42, 5, 90, '2023-11-29', 1),
-(210, 42, 6, 40, '2023-11-29', 1),
-(211, 42, 6, 40, '2023-11-29', 1),
-(212, 42, 5, 90, '2023-11-29', 1),
-(213, 42, 6, 40, '2023-11-29', 1),
-(214, 42, 6, 40, '2023-11-29', 1),
-(215, 42, 6, 40, '2023-11-29', 1),
-(216, 42, 6, 40, '2023-11-29', 1),
-(217, 42, 6, 40, '2023-11-29', 1),
-(218, 42, 5, 90, '2023-11-29', 1);
+(286, 18, 5, 0, '2023-12-07', 0),
+(287, 18, 5, 50, '2023-12-07', 1);
 
 -- --------------------------------------------------------
 
@@ -262,7 +212,7 @@ CREATE TABLE `gruppa` (
   `date_begin` date NOT NULL,
   `date_end` date DEFAULT NULL,
   `branch` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `gruppa`
@@ -273,7 +223,8 @@ INSERT INTO `gruppa` (`gruppa_id`, `name`, `special_id`, `date_begin`, `date_end
 (2, '7А', 3, '2023-10-01', '2023-10-31', 2),
 (3, '8В', 11, '2023-09-01', '2025-06-10', 1),
 (4, '7', 13, '2020-01-31', '2026-10-24', 2),
-(5, '9А', 3, '2023-11-01', '2023-11-30', 1);
+(5, '9А', 3, '2023-11-01', '2023-11-30', 1),
+(6, '123', 3, '2023-12-01', '2023-12-08', 1);
 
 -- --------------------------------------------------------
 
@@ -285,7 +236,7 @@ CREATE TABLE `lesson_num` (
   `lesson_num_id` int NOT NULL,
   `name` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `time_lesson` time NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `lesson_num`
@@ -309,7 +260,7 @@ CREATE TABLE `lesson_plan` (
   `gruppa_id` int NOT NULL,
   `subject_id` int NOT NULL,
   `user_id` bigint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `lesson_plan`
@@ -321,6 +272,30 @@ INSERT INTO `lesson_plan` (`lesson_plan_id`, `gruppa_id`, `subject_id`, `user_id
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `notice`
+--
+
+CREATE TABLE `notice` (
+  `id` int NOT NULL,
+  `text` varchar(255) NOT NULL,
+  `subject_id` int NOT NULL,
+  `user_id` bigint NOT NULL,
+  `child_id` bigint DEFAULT NULL,
+  `date` date NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `notice`
+--
+
+INSERT INTO `notice` (`id`, `text`, `subject_id`, `user_id`, `child_id`, `date`) VALUES
+(13, 'Оплатите до указанного срока по предмету:', 5, 10, 9, '2023-12-20'),
+(14, 'Оплатите до указанного срока по предмету:', 4, 10, 18, '2023-12-29'),
+(15, 'Оплатите до указанного срока по предмету:', 2, 38, 7, '2023-12-13');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `otdel`
 --
 
@@ -328,7 +303,7 @@ CREATE TABLE `otdel` (
   `otdel_id` smallint NOT NULL,
   `name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `otdel`
@@ -350,7 +325,7 @@ CREATE TABLE `parent` (
   `id` bigint NOT NULL,
   `user_id` bigint NOT NULL,
   `child_id` bigint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `parent`
@@ -368,7 +343,8 @@ INSERT INTO `parent` (`id`, `user_id`, `child_id`) VALUES
 (13, 10, 42),
 (14, 46, NULL),
 (15, 46, 42),
-(16, 47, NULL);
+(16, 47, NULL),
+(17, 10, 18);
 
 -- --------------------------------------------------------
 
@@ -384,7 +360,7 @@ CREATE TABLE `payment` (
   `count` int DEFAULT NULL,
   `tab` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` int DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -401,26 +377,28 @@ CREATE TABLE `payment_archive` (
   `tab` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` int DEFAULT NULL,
   `attend` tinyint DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `payment_archive`
 --
 
 INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `tab`, `price`, `attend`) VALUES
-(37, 10, 7, 1, 55, '1699588297ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
+(37, 10, 7, 1, 65, '1699588297ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (38, 10, 7, 2, 11, '1699588303ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (39, 10, 7, 3, 5, '1699588308ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (40, 10, 7, 4, 1, '1699588314ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (41, 10, 7, 5, 1, '1699588319ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (42, 10, 7, 6, 10, '1699588325ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (77, 10, 9, 1, 25, '1699682076ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
-(78, 10, 9, 5, 9, '1699682118ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
+(78, 10, 9, 5, 8, '1699682118ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
 (79, 10, 9, 6, 26, '1699783960ПРОЧИТАЙ!!!!!!!!!!!.txt', 20000, 1),
 (93, 10, 9, 3, 10, '1700012243ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
 (94, 10, 9, 4, 10, '1700012553ПРОЧИТАЙ!!!!!!!!!!!.txt', 50000, 1),
 (95, 10, 42, 6, 9, '1701246542iqstudy.txt', 50000, 1),
-(96, 10, 42, 5, 9, '1701246675', 50000, 1);
+(96, 10, 42, 5, 8, '1701246675', 50000, 1),
+(97, 10, 18, 5, 5, '1701912986iqstudy.zip', 50000, 1),
+(98, 10, 18, 1, 10, '1701913128iqstudy.txt', 50000, 1);
 
 -- --------------------------------------------------------
 
@@ -433,7 +411,7 @@ CREATE TABLE `role` (
   `sys_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `active` tinyint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `role`
@@ -458,7 +436,16 @@ CREATE TABLE `schedule` (
   `day_id` tinyint NOT NULL,
   `lesson_num_id` int NOT NULL,
   `classroom_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `schedule`
+--
+
+INSERT INTO `schedule` (`schedule_id`, `lesson_plan_id`, `day_id`, `lesson_num_id`, `classroom_id`) VALUES
+(1, 1, 2, 1, 1),
+(2, 1, 2, 2, 5),
+(3, 1, 2, 3, 5);
 
 -- --------------------------------------------------------
 
@@ -471,7 +458,7 @@ CREATE TABLE `special` (
   `name` varchar(250) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,
   `otdel_id` smallint NOT NULL,
   `active` tinyint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `special`
@@ -494,7 +481,7 @@ CREATE TABLE `student` (
   `user_id` bigint NOT NULL,
   `gruppa_id` int NOT NULL,
   `num_zach` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `student`
@@ -521,7 +508,7 @@ CREATE TABLE `subject` (
   `otdel_id` smallint NOT NULL,
   `hours` smallint NOT NULL,
   `active` tinyint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `subject`
@@ -553,7 +540,7 @@ INSERT INTO `subject` (`subject_id`, `name`, `otdel_id`, `hours`, `active`) VALU
 CREATE TABLE `teacher` (
   `user_id` bigint NOT NULL,
   `otdel_id` smallint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `teacher`
@@ -587,7 +574,7 @@ CREATE TABLE `user` (
   `role_id` tinyint NOT NULL,
   `branch_id` int DEFAULT NULL,
   `active` tinyint NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `user`
@@ -706,6 +693,15 @@ ALTER TABLE `lesson_plan`
   ADD KEY `user_id` (`user_id`);
 
 --
+-- Индексы таблицы `notice`
+--
+ALTER TABLE `notice`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`),
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `child_id` (`child_id`);
+
+--
 -- Индексы таблицы `otdel`
 --
 ALTER TABLE `otdel`
@@ -822,19 +818,19 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=297;
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=313;
 
 --
 -- AUTO_INCREMENT для таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=219;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=288;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
 --
 ALTER TABLE `gruppa`
-  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `lesson_num`
@@ -849,6 +845,12 @@ ALTER TABLE `lesson_plan`
   MODIFY `lesson_plan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT для таблицы `notice`
+--
+ALTER TABLE `notice`
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+
+--
 -- AUTO_INCREMENT для таблицы `otdel`
 --
 ALTER TABLE `otdel`
@@ -858,19 +860,19 @@ ALTER TABLE `otdel`
 -- AUTO_INCREMENT для таблицы `parent`
 --
 ALTER TABLE `parent`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
 
 --
 -- AUTO_INCREMENT для таблицы `payment_archive`
 --
 ALTER TABLE `payment_archive`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=97;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT для таблицы `role`
@@ -882,7 +884,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT для таблицы `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT;
+  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT для таблицы `special`
@@ -949,6 +951,14 @@ ALTER TABLE `lesson_plan`
   ADD CONSTRAINT `lesson_plan_ibfk_1` FOREIGN KEY (`gruppa_id`) REFERENCES `gruppa` (`gruppa_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `lesson_plan_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `lesson_plan_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `teacher` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Ограничения внешнего ключа таблицы `notice`
+--
+ALTER TABLE `notice`
+  ADD CONSTRAINT `notice_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `notice_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `notice_ibfk_3` FOREIGN KEY (`child_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `parent`

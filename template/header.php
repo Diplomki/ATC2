@@ -1,6 +1,5 @@
 <?php
 $procreatorMap = new ProcreatorMap();
-
 $notices = $procreatorMap->notice();
 ?>
 
@@ -17,7 +16,7 @@ $notices = $procreatorMap->notice();
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="/template/css/bootstrap.min.css">
   <link rel="stylesheet" href="/template/css/font-awesome.min.css">
-  <link rel="stylesheet" href="./template/css/ionicons.min.css">
+  <link rel="stylesheet" href="/template/css/ionicons.min.css">
   <link rel="stylesheet" href="/template/css/AdminLTE.min.css">
   <link rel="stylesheet" href="/template/css/skins/skin-blue.min.css">
 
@@ -102,8 +101,15 @@ desired effect
                           <li>
                             <br><i class="fa fa-dollar"></i>
                             <?= $notice->text; ?> <br>
-                            <?= $notice->subject; ?>&#10230;
-                            <?= $notice->date; ?>
+                            <b>
+                              <?= $notice->child; ?>:
+                            </b>
+                            <b>
+                              <?= $notice->subject; ?>
+                            </b>&#10230;
+                            <b>
+                              <?= $notice->date; ?>
+                            </b>
                           </li>
                         <?php } ?>
                       <?php } ?>

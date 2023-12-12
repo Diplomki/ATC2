@@ -109,9 +109,15 @@ class UserMap extends BaseMap
 
     public function arrParents()
     {
-        $res = $this->db->query("SELECT user.user_id AS id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) AS value, branch.id AS branch FROM user
-        INNER JOIN branch ON branch.id = user.branch_id
-        WHERE user.role_id = 6");
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT user.user_id AS id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) AS value, branch.id AS branch FROM user
+            INNER JOIN branch ON branch.id = user.branch_id
+            WHERE user.role_id = 6 and branch.id = {$_SESSION['branch']}");
+        } else {
+            $res = $this->db->query("SELECT user.user_id AS id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) AS value, branch.id AS branch FROM user
+            INNER JOIN branch ON branch.id = user.branch_id
+            WHERE user.role_id = 6");
+        }
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 

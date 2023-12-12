@@ -122,9 +122,9 @@
 
                     <a href="check-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/check-payment.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '/select-parent.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="add-notice"><i class="fa fa-envelope"></i><span>Уведомление об оплате</span></a>
+                    <a href="select-parent"><i class="fa fa-envelope"></i><span>Уведомление об оплате</span></a>
                 <?php } ?>
 
                 <?php if (Helper::can('procreator')) { ?>

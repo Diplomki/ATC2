@@ -10,7 +10,14 @@ class ProcreatorMap extends BaseMap
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function arrChilds($id)
+    {
 
+        $res = $this->db->query("SELECT DISTINCT parent.child_id as id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as value FROM parent
+        INNER JOIN user ON parent.child_id = user.user_id
+        WHERE parent.user_id = $id");
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
 
     public function findById($id = null)
     {
@@ -108,7 +115,9 @@ class ProcreatorMap extends BaseMap
     }
     public function notice()
     {
-        $res = $this->db->query("SELECT notice.text as text, subject.name as subject, notice.date as date FROM notice
+        $res = $this->db->query("SELECT notice.text as text, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as 
+        child, subject.name as subject, notice.date as date FROM notice
+        INNER JOIN user ON user.user_id = notice.child_id
         INNER JOIN subject ON subject.subject_id = notice.subject_id
         WHERE notice.user_id = {$_SESSION['id']}");
         return $res->fetchAll(PDO::FETCH_OBJ);
