@@ -132,4 +132,80 @@ class ProcreatorMap extends BaseMap
         return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
 
+    public function findHomeworkByGruppaId($id)
+    {
+        $query = "SELECT homework_teacher.id as homework_id, homework_teacher.name as name, 
+        homework_teacher.gruppa_id as gruppa_id FROM homework_teacher
+        WHERE homework_teacher.gruppa_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute(['id' => $id]);
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function findHomeworkById($id)
+    {
+        $query = "SELECT homework_teacher.id as id, homework_teacher.name as name, homework_teacher.user_id as user_id,
+        CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, homework_teacher.gruppa_id as gruppa_id,
+        gruppa.name as gruppa, homework_teacher.date_begin, homework_teacher.date_end, homework_teacher.subject_id as subject_id, 
+        subject.name as subject, homework_teacher.file
+        FROM `homework_teacher` 
+        INNER JOIN user ON homework_teacher.user_id = user.user_id
+        INNER JOIN gruppa ON homework_teacher.gruppa_id = gruppa.gruppa_id
+        INNER JOIN subject ON subject.subject_id = homework_teacher.subject_id
+        WHERE id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute(['id' => $id]);
+        return $res->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function findGruppaIdFromStudent($id)
+    {
+        $query = "SELECT student.user_id as user_id, student.gruppa_id as gruppa FROM student
+        WHERE student.user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute(['id' => $id]);
+        return $res->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function findStudentFromGruppa()
+    {
+        $query = "SELECT homework_teacher.name as name, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, 
+        homework_teacher.gruppa_id as gruppa_id, gruppa.name as gruppa_name, 
+        homework_teacher.date_begin as date_begin, homework_teacher.date_end as date_end, subject.name as subject_name,
+        homework_teacher.file as file
+        FROM homework_teacher
+        INNER JOIN user ON homework_teacher.user_id = user.user_id
+        INNER JOIN gruppa ON homework_teacher.gruppa_id = gruppa.gruppa_id
+        INNER join subject ON homework_teacher.subject_id = subject.subject_id";
+        $res = $this->db->prepare($query);
+        $res->execute();
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function insertHomeworkFromParent(Procreator $procreator)
+    {
+        $query = "INSERT INTO `homework_parent` (`homework_teacher_id`, `name`, `teacher_id`, `gruppa_id`, 
+        `student_id`, `date_begin`, `date_end`, `subject_id`, `file`, `file_prepared`) 
+        VALUES (:homework_teacher_id, :name, :teacher_id, :gruppa_id, 
+        :student_id, :date_begin, :date_end, :subject_id, :file, :file_prepared)";
+        $res = $this->db->prepare($query);
+        if (
+            $res->execute([
+                'homework_teacher_id' => $procreator->homework_teacher_id,
+                'name' => $procreator->name,
+                'teacher_id' => $procreator->teacher_id,
+                'gruppa_id' => $procreator->gruppa_id,
+                'student_id' => $procreator->child_id,
+                'date_begin' => $procreator->date_begin,
+                'date_end' => $procreator->date_end,
+                'subject_id' => $procreator->subject_id,
+                'file' => $procreator->file,
+                'file_prepared' => $procreator->file_prepared
+            ])
+        ) {
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -10,23 +10,13 @@ if (isset($_GET['id'])) {
 }
 $userMap = new UserMap();
 
-$message = 'Создать уведомление';
-
-switch ($_GET['message']) {
-    case 'ok':
-        $message = '<span style="color: green;">Уведомление отправлено</span>';
-        break;
-    case 'err':
-        $message = '<span style="color: red;">Ошибка при отправке уведомления</span>';
-        break;
-}
 require_once 'template/header.php';
 
 ?>
 <section class="content-header">
     <h3>
         <b>
-            <?= $message; ?>
+            <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Создать уведомление'; ?>
         </b>
     </h3>
     <ol class="breadcrumb">

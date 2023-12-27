@@ -81,7 +81,7 @@ class GruppaMap extends BaseMap
             $res = $this->db->query("SELECT COUNT(*) AS cnt FROM gruppa
             WHERE branch = {$_SESSION['branch']}");
             return $res->fetch(PDO::FETCH_OBJ)->cnt;
-        } else{
+        } else {
             $res = $this->db->query("SELECT COUNT(*) AS cnt FROM gruppa");
             return $res->fetch(PDO::FETCH_OBJ)->cnt;
         }

@@ -5,4 +5,5 @@ abstract class Config
     const DB_NAME = 'atc';
     const DB_USER = 'root';
     const DB_PASSWORD = 'root';
+    const CHARSET = 'utf8';
 }

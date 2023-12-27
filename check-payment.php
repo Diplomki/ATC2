@@ -20,23 +20,6 @@ if (isset($_GET['id'])) {
     $id = 1;
 }
 
-$message = 'Список оценок';
-
-switch ($_GET['message']) {
-    case 'ok':
-        $message = '<span style="color: green;">Оплата успешно подтверждена</span>';
-        break;
-    case 'err':
-        $message = '<span style="color: red;">Ошибка при подтверждении оплаты</span>';
-        break;
-    case 'okDel':
-        $message = '<span style="color: green;">Оплата успешно отклонена</span>';
-        break;
-    case 'errDel':
-        $message = '<span style="color: red;">Ошибка при отклонении оплаты</span>';
-        break;
-}
-
 $studentMap = new StudentMap();
 $count = $studentMap->count();
 $students = $studentMap->Payment();
@@ -50,7 +33,7 @@ require_once 'template/header.php';
         <div class="box">
             <section class="content-header">
                 <h3><b>
-                        <?= $message ?>
+                        <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список оценок'; ?>
                     </b></h3>
                 <ol class="breadcrumb">
                     <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>

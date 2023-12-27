@@ -1,20 +1,20 @@
 <?php
 require_once 'secure.php';
 
-if(!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
+if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
     header('Location: 404');
     exit();
 }
 
 $size = 10;
 
-if(isset($_GET['page'])) {
+if (isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 } else {
     $page = 1;
 }
 
-if(isset($_GET['id'])) {
+if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 } else {
     $id = 1;
@@ -42,7 +42,7 @@ require_once 'template/header.php';
                 </ol>
             </section>
             <div class="box-body">
-                <?php if(Helper::can('admin') || Helper::can('manager')) { ?>
+                <?php if (Helper::can('admin') || Helper::can('manager')) { ?>
                     <a class="btn btn-success" href="add-student">Добавить студента</a>
 
                 <?php } ?>
@@ -50,7 +50,7 @@ require_once 'template/header.php';
 
             <!-- /.box-header -->
             <div class="box-body">
-                <?php if($students) { ?>
+                <?php if ($students) { ?>
                     <form action="save-addGrades" method="POST">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
@@ -63,12 +63,12 @@ require_once 'template/header.php';
 
                             </thead>
                             <tbody>
-                                <?php foreach($students as $student) { ?>
+                                <?php foreach ($students as $student) { ?>
                                     <tr>
                                         <td>
                                             <?php
-                                            if(Helper::can('manager') || Helper::can('teacher')) {
-                                                echo '<p>'.$student->fio.'</p> '.'<a href="add-student.php?id='.$student->user_id.'"></a>';
+                                            if (Helper::can('manager') || Helper::can('teacher')) {
+                                                echo '<p>' . $student->fio . '</p> ' . '<a href="add-student.php?id=' . $student->user_id . '"></a>';
                                             }
                                             ?>
                                         </td>

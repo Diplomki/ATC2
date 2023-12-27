@@ -52,4 +52,23 @@ class Helper
     {
         return ($role === $_SESSION['role']) ? true : false;
     }
+
+
+    public static function getQuery($status)
+    {
+        $statuses = [
+            'ok' => 'Успешно',
+            'okDel' => 'Успешно удалено',
+            'err' => 'Ошибка',
+            'errDel' => 'Ошибка удаления',
+            'errGrades' => 'Ошибка при подтверждении оценки (Возможно у ученика закончились допуски к уроку)',
+        ];
+
+        if ($status == 'ok' || $status == 'okDel') {
+            $message = '<span style="color: green;">' . $statuses[$status] . '</span>';
+        } else {
+            $message = '<span style="color: red;">' . $statuses[$status] . '</span>';
+        }
+        echo $message;
+    }
 }

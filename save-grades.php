@@ -20,7 +20,7 @@ if (isset($_POST['gradeSubmit'])) {
             header('Location: check-grades?message=ok');
             exit();
         } else {
-            header('Location: check-grades?message=err');
+            header('Location: check-grades?message=errGrades');
             exit();
         }
     }

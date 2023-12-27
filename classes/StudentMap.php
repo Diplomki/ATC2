@@ -257,7 +257,7 @@ class StudentMap extends BaseMap
             $this->db->exec("UPDATE payment_archive SET count = count - 1
             WHERE child_id=" . $student->user_id . " and subject_id=" . $student->subject_id) == 1
         ) {
-            $this->db->exec("INSERT INTO grade_accept (user_id, subject_id, grade, date, attend) VALUES ($student->user_id, $student->subject_id, '$student->grade', '$student->date', $student->attend)");
+            $this->db->exec("INSERT INTO grade_accept (user_id, subject_id, grade, date, attend, branch_id) VALUES ($student->user_id, $student->subject_id, '$student->grade', '$student->date', $student->attend, {$_SESSION['branch']})");
             $this->db->exec("DELETE FROM grades WHERE grade_id = '$student->grade_id'");
             return true;
         }

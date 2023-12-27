@@ -14,11 +14,6 @@ $gruppaMap = new GruppaMap();
 $count = $gruppaMap->count();
 $gruppas = $gruppaMap->findAll($page * $size - $size, $size);
 $header = 'Список групп';
-if ($_GET['message'] == 'ok') {
-    $header = '<span style="color: green;">Оценки успешно выставлены</span>';
-} elseif ($_GET['message'] == 'err') {
-    $header = '<span style="color: red;">Ошибка при выставлении оценок</span>';
-}
 require_once 'template/header.php';
 ?>
 <div class="row">
@@ -27,7 +22,7 @@ require_once 'template/header.php';
             <section class="content-header">
                 <h3>
                     <b>
-                        <?= $header; ?>
+                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список оценок'; ?>
                     </b>
                 </h3>
                 <ol class="breadcrumb">

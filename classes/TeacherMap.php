@@ -100,4 +100,27 @@ class TeacherMap extends BaseMap
         INNER JOIN otdel ON teacher.otdel_id=otdel.otdel_id WHERE teacher.user_id = {$_SESSION['id']}");
         return $res->fetch(PDO::FETCH_OBJ);
     }
+
+    public function createHomework(Teacher $teacher)
+    {
+
+        $query = "INSERT INTO `homework_teacher` (`name`, `user_id`, `gruppa_id`, 
+            `date_begin`, `date_end`, `subject_id`, `file`) 
+            VALUES (:name, :user_id, :gruppa_id, :date_begin, :date_end, :subject_id, :file)";
+        $res = $this->db->prepare($query);
+        if (
+            $res->execute(
+                ['name' => $teacher->name,
+                    'user_id' => $_SESSION['id'],
+                    'gruppa_id' => $teacher->gruppa_id,
+                    'date_begin' => $teacher->date_begin,
+                    'date_end' => $teacher->date_end,
+                    'subject_id' => $teacher->subject_id,
+                    'file' => $teacher->file]
+            ) == 1
+        ) {
+            return true;
+        }
+        return false;
+    }
 }

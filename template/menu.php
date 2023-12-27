@@ -73,6 +73,11 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/list-grades.php') ? 'class="active"' : ''; ?>>
 
                     <a href="list-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
+
+                <li <?= ($_SERVER['PHP_SELF'] == '/create-homework.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="create-homework"><i class="fa fa-home"></i><span>Домашнее задание</span></a>
+
                 <?php } ?>
 
                 <?php if (Helper::can('admin')) { ?>
@@ -122,6 +127,10 @@
 
                     <a href="check-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
 
+                <li <?= ($_SERVER['PHP_SELF'] == '/select-subject.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="select-subject"><i class="fa fa-address-book"></i><span>Оценки</span></a>
+
                 <li <?= ($_SERVER['PHP_SELF'] == '/select-parent.php') ? 'class="active"' : ''; ?>>
 
                     <a href="select-parent"><i class="fa fa-envelope"></i><span>Уведомление об оплате</span></a>
@@ -140,6 +149,12 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/check-control.php') ? 'class="active"' : ''; ?>>
 
                     <a href="check-control"><i class="fa fa-usd"></i><span>Контроль оплаты</span></a>
+
+                <li <?= ($_SERVER['PHP_SELF'] == '/list-homework.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="list-homework"><i class="fa fa-home"></i><span>Домашнее задание</span></a>
+
+
                 <?php } ?>
         </ul>
     </section>

@@ -1,22 +1,17 @@
 <?php
 require_once 'secure.php';
-if(!Helper::can('procreator')) {
+if (!Helper::can('procreator')) {
     header('Location: 404');
     exit();
 }
 $size = 10;
-if(isset($_GET['page'])) {
+if (isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 
 } else {
     $page = 1;
 }
-$message = 'Оплата';
-if($_GET['message'] == 'ok') {
-    $message = '<span style="color: green;">Оплата успешно отправлена на подтверждение</span>';
-} elseif($_GET['message'] == 'err') {
-    $message = '<span style="color: red;">Ошибка при добавлении оплаты</span>';
-}
+
 $studentMap = new StudentMap();
 $count = $studentMap->count();
 $student = $studentMap->findStudentsFromParent($page * $size - $size, $size);
@@ -28,7 +23,7 @@ require_once 'template/header.php';
         <div class="box">
             <section class="content-header">
                 <h3><b>
-                        <?= $message ?>
+                        <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Оплата'; ?>
                     </b></h3>
                 <ol class="breadcrumb">
                     <li><a href="/index"><i class="fa
@@ -39,7 +34,7 @@ fa-dashboard"></i> Главная</a></li>
             <!-- /.box-header -->
             <div class="box-body">
                 <?php
-                if($student) {
+                if ($student) {
                     ?>
 
                     <table id="example2" class="table table-bordered table-hover">
@@ -51,9 +46,9 @@ fa-dashboard"></i> Главная</a></li>
                         </thead>
                         <tbody>
                             <?php
-                            foreach($student as $student) {
+                            foreach ($student as $student) {
                                 echo '<tr>';
-                                echo '<td><a href="add-payment?id='.$student->user_id.'">'.$student->fio.'</a> '.'</td>';
+                                echo '<td><a href="add-payment?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '</td>';
                             }
                             ?>
                         </tbody>
