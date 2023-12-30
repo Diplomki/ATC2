@@ -74,9 +74,9 @@
 
                     <a href="list-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/create-homework.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '/check-homework.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="create-homework"><i class="fa fa-home"></i><span>Домашнее задание</span></a>
+                    <a href="check-homework"><i class="fa fa-home"></i><span>Домашнее задание</span></a>
 
                 <?php } ?>
 

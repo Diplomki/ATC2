@@ -1,15 +1,14 @@
 <?php
 require_once 'secure.php';
-if (!Helper::can('procreator')) {
+if (!Helper::can('teacher')) {
     header('Location: 404');
     exit();
 }
 if (isset($_GET['id'])) {
     $_SESSION['child_id'] = $_GET['id'];
 }
-$procreatorMap = new ProcreatorMap();
-$procreatorGruppaId = $procreatorMap->findGruppaIdFromStudent($_SESSION['child_id']);
-$procreator = $procreatorMap->findHomeworkByGruppaId($procreatorGruppaId->gruppa);
+$gruppa = new GruppaMap();
+$arrGruppas = $gruppa->arrGruppas();
 $header = 'Список студентов';
 require_once 'template/header.php';
 ?>
@@ -29,7 +28,7 @@ fa-dashboard"></i> Главная</a></li>
             <!-- /.box-header -->
             <div class="box-body">
                 <?php
-                if ($procreator) {
+                if ($arrGruppas) {
                     ?>
 
                     <table id="example2" class="table table-bordered table-hover">
@@ -41,15 +40,15 @@ fa-dashboard"></i> Главная</a></li>
                         </thead>
                         <tbody>
                             <?php
-                            foreach ($procreator as $procreator) {
+                            foreach ($arrGruppas as $arrGruppas) {
                                 echo '<tr>';
-                                echo '<td><a href="homework?id=' . $procreator->homework_id . '">' . $procreator->name . '</a> ' . '</td>';
+                                echo '<td><a href="view-parent-homework?id=' . $arrGruppas['id'] . '">' . $arrGruppas['value'] . '</a> ' . '</td>';
                             }
                             ?>
                         </tbody>
                     </table>
                 <?php } else {
-                    echo 'Ни одного студента не найдено';
+                    echo 'Ни одного домашнего задания не найдено';
                 } ?>
             </div>
         </div>

@@ -123,4 +123,61 @@ class TeacherMap extends BaseMap
         }
         return false;
     }
+
+
+    public function findHomeworkByGruppaIdAndTeacherId($id)
+    {
+        $query = "SELECT 
+        homework_parent.id as homework_id, 
+        homework_parent.name as name, 
+        homework_parent.teacher_id as teacher_id,
+        CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as student_fio,
+        homework_parent.gruppa_id as gruppa_id 
+        FROM homework_parent
+        INNER JOIN user ON homework_parent.student_id = user.user_id
+        WHERE homework_parent.gruppa_id = :id and homework_parent.teacher_id = :teacher_id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id,
+            'teacher_id' => $_SESSION['id']
+        ]);
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function findHomeworkById($id)
+    {
+        $query = "SELECT homework_parent.id as id,homework_parent.name as name, gruppa.name as gruppa, homework_parent.student_id as student_id, 
+        CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as student_fio,
+        homework_parent.date_begin as date_begin, homework_parent.date_end as date_end,
+        homework_parent.subject_id as subject_id,
+        subject.name as subject,
+        homework_parent.file as file,
+        homework_parent.file_prepared as file_prepared
+        FROM homework_parent
+        INNER JOIN gruppa ON homework_parent.gruppa_id = gruppa.gruppa_id
+        INNER JOIN user ON homework_parent.student_id = user.user_id
+        INNER JOIN subject ON homework_parent.subject_id = subject.subject_id
+        WHERE id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute(['id' => $id]);
+        return $res->fetch(PDO::FETCH_OBJ);
+    }
+
+    public function insertGradeFromHomework(Teacher $teacher)
+    {
+        $query1 = "INSERT INTO grades (user_id, subject_id, grade, date) VALUES (:user_id, :subject_id, :grade, NOW())";
+        $res1 = $this->db->prepare($query1);
+        if (
+            $res1->execute(['user_id' => $teacher->user_id,
+                'subject_id' => $teacher->subject_id,
+                'grade' => $teacher->grade])
+        ) {
+            $query2 = "DELETE FROM `homework_parent` WHERE `homework_parent`.`id` = :id";
+            $res2 = $this->db->prepare($query2);
+            if ($res2->execute(['id' => $teacher->id])) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

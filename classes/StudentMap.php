@@ -187,11 +187,11 @@ class StudentMap extends BaseMap
     public function checkGrades()
     {
         $res = $this->db->query("SELECT grades.grade_id as id, user.user_id AS user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.subject_id AS subject_id, subject.name AS subject, grades.grade AS grade, grades.date AS date, attend.attend as attend, attend.id as attend_id, branch.id AS branch FROM user
-            INNER JOIN grades ON user.user_id = grades.user_id
-            INNER JOIN subject on subject.subject_id=grades.subject_id
-            INNER JOIN attend on attend.id = grades.attend
-            INNER JOIN branch on branch.id = user.branch_id
-            WHERE branch.id = {$_SESSION['branch']}");
+        INNER JOIN grades ON user.user_id = grades.user_id
+        INNER JOIN subject on subject.subject_id=grades.subject_id
+        LEFT JOIN attend on attend.id = grades.attend
+        INNER JOIN branch on branch.id = user.branch_id
+        WHERE branch.id = {$_SESSION['branch']}");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
 
