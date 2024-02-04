@@ -11,46 +11,46 @@
             <?php if (!Helper::can('teacher') && !Helper::can('admin') && !Helper::can('procreator')) { ?>
                 <li class="header">Пользователи</li>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-admin.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-admin.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-admin"><i class="fa fa-users"></i><span>Администраторы</span></a>
+                    <a href="../list/list-admin"><i class="fa fa-users"></i><span>Администраторы</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-teacher.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-teacher.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-teacher"><i class="fa fa-users"></i><span>Преподаватели</span></a>
+                    <a href="../list/list-teacher"><i class="fa fa-users"></i><span>Преподаватели</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-student.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-student.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-student"><i class="fa fa-users"></i><span>Студенты</span></a>
+                    <a href="../list/list-student"><i class="fa fa-users"></i><span>Студенты</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-parent.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-parent.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-parent"><i class="fa fa-users"></i><span>Родители</span></a>
+                    <a href="../list/list-parent"><i class="fa fa-users"></i><span>Родители</span></a>
 
                 <li class="header">Справочники</li>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-gruppa.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-gruppa.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-gruppa"><i class="fa fa-object-group"></i><span>Группы</span></a>
+                    <a href="../list/list-gruppa"><i class="fa fa-object-group"></i><span>Группы</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-otdel.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-otdel.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-otdel"><i class="fa fa-building"></i><span>Отделы</span></a>
+                    <a href="../list/list-otdel"><i class="fa fa-building"></i><span>Отделы</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-special.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-special.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-special"><i class="fa fa-code-fork"></i><span>Специальности</span></a>
+                    <a href="../list/list-special"><i class="fa fa-code-fork"></i><span>Специальности</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-subject.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-subject.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-subject"><i class="fa fa-sitemap"></i><span>Предметы</span></a>
+                    <a href="../list/list-subject"><i class="fa fa-sitemap"></i><span>Предметы</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-classroom.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-classroom.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-classroom"><i class="fa fa-graduation-cap"></i><span>Аудитории</span></a>
-                <li <?= ($_SERVER['PHP_SELF'] == '/check-payment.php') ? 'class="active"' : ''; ?>>
+                    <a href="../list/list-classroom"><i class="fa fa-graduation-cap"></i><span>Аудитории</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '../check/check-payment.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="check-payment"><i class="fa fa-dollar"></i><span>Оплата</span></a>
+                    <a href="../check/check-payment"><i class="fa fa-dollar"></i><span>Оплата</span></a>
 
 
 
@@ -59,73 +59,73 @@
             <?php if (Helper::can('teacher')) { ?>
                 <li class="header">Пользователи</li>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-teacher.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-teacher.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-teacher"><i class="fa fa-users"></i><span>Преподаватели</span></a>
+                    <a href="../list/list-teacher"><i class="fa fa-users"></i><span>Преподаватели</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-student.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-student.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-student"><i class="fa fa-users"></i><span>Студенты</span></a>
+                    <a href="../list/list-student"><i class="fa fa-users"></i><span>Студенты</span></a>
                 <li class="header">Справочники</li>
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-gruppa.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-gruppa.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-gruppa"><i class="fa fa-object-group"></i><span>Группы</span></a>
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-grades.php') ? 'class="active"' : ''; ?>>
+                    <a href="../list/list-gruppa"><i class="fa fa-object-group"></i><span>Группы</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-grades.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
+                    <a href="../list/list-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/check-homework.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../check/check-homework.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="check-homework"><i class="fa fa-home"></i><span>Домашнее задание</span></a>
+                    <a href="../check/check-homework"><i class="fa fa-home"></i><span>Домашнее задание</span></a>
 
                 <?php } ?>
 
                 <?php if (Helper::can('admin')) { ?>
                 <li class="header">Пользователи</li>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-teacher.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-teacher.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-teacher"><i class="fa fa-users"></i><span>Преподаватели</span></a>
+                    <a href="../list/list-teacher"><i class="fa fa-users"></i><span>Преподаватели</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-student.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-student.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-student"><i class="fa fa-users"></i><span>Студенты</span></a>
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-parent.php') ? 'class="active"' : ''; ?>>
+                    <a href="../list/list-student"><i class="fa fa-users"></i><span>Студенты</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-parent.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-parent"><i class="fa fa-users"></i><span>Родители</span></a>
+                    <a href="../list/list-parent"><i class="fa fa-users"></i><span>Родители</span></a>
 
 
                 <li class="header">Справочники</li>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-gruppa.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-gruppa.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-gruppa"><i class="fa fa-object-group"></i><span>Группы</span></a>
+                    <a href="../list/list-gruppa"><i class="fa fa-object-group"></i><span>Группы</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-otdel.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-otdel.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-otdel"><i class="fa fa-building"></i><span>Отделы</span></a>
+                    <a href="../list/list-otdel"><i class="fa fa-building"></i><span>Отделы</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-special.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-special.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-special"><i class="fa fa-code-fork"></i><span>Специальности</span></a>
+                    <a href="../list/list-special"><i class="fa fa-code-fork"></i><span>Специальности</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-subject.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-subject.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-subject"><i class="fa fa-sitemap"></i><span>Предметы</span></a>
+                    <a href="../list/list-subject"><i class="fa fa-sitemap"></i><span>Предметы</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-classroom.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-classroom.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-classroom"><i class="fa fa-graduation-cap"></i><span>Аудитории</span></a>
+                    <a href="../list/list-classroom"><i class="fa fa-graduation-cap"></i><span>Аудитории</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-teacher-schedule.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-teacher-schedule.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-teacher-schedule"><i class="fa fa-table"></i><span>Управление
+                    <a href="../list/list-teacher-schedule"><i class="fa fa-table"></i><span>Управление
                             расписанием</span></a>
 
                 </li>
-                <li <?= ($_SERVER['PHP_SELF'] == '/check-grades.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../check/check-grades.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="check-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
+                    <a href="../check/check-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/select-subject.php') ? 'class="active"' : ''; ?>>
 
@@ -140,19 +140,19 @@
 
                 <li class="header">Справочники</li>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/check-performance.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../check/check-performance.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="check-performance"><i class="fa fa-address-book"></i><span>Успеваемоcть</span></a>
-                <li <?= ($_SERVER['PHP_SELF'] == '/check-child.php') ? 'class="active"' : ''; ?>>
+                    <a href="../check/check-performance"><i class="fa fa-address-book"></i><span>Успеваемоcть</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '../check/check-child.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="check-child"><i class="fa fa-usd"></i><span>Оплата</span></a>
-                <li <?= ($_SERVER['PHP_SELF'] == '/check-control.php') ? 'class="active"' : ''; ?>>
+                    <a href="../check/check-child"><i class="fa fa-usd"></i><span>Оплата</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '../check/check-control.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="check-control"><i class="fa fa-usd"></i><span>Контроль оплаты</span></a>
+                    <a href="../check/check-control"><i class="fa fa-usd"></i><span>Контроль оплаты</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list-homework.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-homework.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="list-homework"><i class="fa fa-home"></i><span>Домашнее задание</span></a>
+                    <a href="../list/list-homework"><i class="fa fa-home"></i><span>Домашнее задание</span></a>
 
 
                 <?php } ?>

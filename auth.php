@@ -4,8 +4,8 @@ session_start();
 $message = 'Войдите для просмотра расписания занятий';
 if (isset($_SESSION['role'])) {
     header('Location: index');
-    exit;
-} elseif (
+}
+if (
     isset($_POST['login']) &&
     isset($_POST['password'])
 ) {

@@ -116,15 +116,15 @@ desired effect
                     </ul>
                   </li>
                 </ul>
-              <?php } ?>
-              <!-- User Account Menu -->
+              </li>
+            <?php } ?>
+            <!-- User Account Menu -->
             <li class="dropdown user user-menu">
               <!-- Menu Toggle Button -->
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                 <!-- The user image in the navbar-->
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
-                <?php
-                ?>
+                <?php ?>
                 <span class="hidden-xs">Здраствуйте,
                   <?= $_SESSION["fio"] ?>
                 </span>
@@ -168,7 +168,7 @@ desired effect
         <!-- search form (Optional) -->
 
         <!-- /.search form -->
-        <?php require_once 'template/menu.php'; ?>
+        <?php require_once 'menu.php'; ?>
       </section>
       <!-- /.sidebar -->
     </aside>
