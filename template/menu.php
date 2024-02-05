@@ -5,7 +5,7 @@
         <ul class="sidebar-menu" data-widget="tree">
             <li <?= ($_SERVER['PHP_SELF'] == '/index.php') ? 'class="active"' : ''; ?>>
 
-                <a href="index"><i class="fa fa-calendar"></i><span>Главная</span></a>
+                <a href="../index"><i class="fa fa-calendar"></i><span>Главная</span></a>
 
             </li>
             <?php if (!Helper::can('teacher') && !Helper::can('admin') && !Helper::can('procreator')) { ?>
@@ -127,13 +127,13 @@
 
                     <a href="../check/check-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/select-subject.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../select-subject.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="select-subject"><i class="fa fa-address-book"></i><span>Оценки</span></a>
+                    <a href="../select-subject"><i class="fa fa-address-book"></i><span>Оценки</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/select-parent.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '../select-parent.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="select-parent"><i class="fa fa-envelope"></i><span>Уведомление об оплате</span></a>
+                    <a href="../select-parent"><i class="fa fa-envelope"></i><span>Уведомление об оплате</span></a>
                 <?php } ?>
 
                 <?php if (Helper::can('procreator')) { ?>

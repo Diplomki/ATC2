@@ -6,7 +6,10 @@ abstract class BaseMap extends Config
     {
         try {
             $this->db = new
-                PDO('mysql:host=' . self::HOST . ';dbname=' . self::DB_NAME . ';charset=' . self::CHARSET, self::DB_USER, self::DB_PASSWORD
+                PDO(
+                'mysql:host=' . self::HOST . ';dbname=' . self::DB_NAME,
+                self::DB_USER,
+                self::DB_PASSWORD
             );
             $this->db->setAttribute(
                 PDO::ATTR_ERRMODE,

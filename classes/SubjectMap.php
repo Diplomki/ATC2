@@ -7,7 +7,6 @@ class SubjectMap extends BaseMap
 
         $res = $this->db->query("SELECT subject.subject_id AS id, subject.name AS value, otdel.name as otdel_name FROM subject
         INNER JOIN otdel ON otdel.otdel_id = subject.otdel_id
-
         ");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }

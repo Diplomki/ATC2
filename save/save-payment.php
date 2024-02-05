@@ -6,7 +6,7 @@ if (!Helper::can('procreator')) {
 }
 if (isset($_POST['savePayment'])) {
     $student = new Student();
-    $student->user_id = Helper::clearInt($_POST['user_id']);
+    $student->user_id = Helper::clearInt($_POST['child_id']);
     $student->subject_id = Helper::clearInt($_POST['subject_id']);
     $student->subject_count = Helper::clearInt($_POST['subject_count']);
     $student->subject_price = Helper::clearInt($_POST['subject_price']);

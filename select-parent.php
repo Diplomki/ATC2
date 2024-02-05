@@ -30,7 +30,7 @@ require_once 'template/header.php';
 </section>
 <div class="box-body">
     <div class="form-group">
-        <form method="GET" action="add-notice">
+        <form method="GET" action="../add/add-notice">
             <div class="form-group">
                 <label>Кому</label>
                 <select class="form-control" name="id">

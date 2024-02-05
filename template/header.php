@@ -98,19 +98,22 @@ desired effect
                     <ul class="menu">
                       <?php if ($notices) { ?>
                         <?php foreach ($notices as $notice) { ?>
-                          <li>
-                            <br><i class="fa fa-dollar"></i>
-                            <?= $notice->text; ?> <br>
-                            <b>
-                              <?= $notice->child; ?>:
-                            </b>
-                            <b>
-                              <?= $notice->subject; ?>
-                            </b>&#10230;
-                            <b>
-                              <?= $notice->date; ?>
-                            </b>
-                          </li>
+                          <a href="../check/check-notice?id=<?= $notice->id; ?>">
+                            <li>
+                              <br>
+                              <?= $notice->text; ?>
+                              <br>
+                              <b>
+                                <?= $notice->child; ?>:
+                              </b>
+                              <b>
+                                <?= $notice->subject; ?>
+                              </b>&#10230;
+                              <b>
+                                <?= $notice->date; ?>
+                              </b>
+                            </li>
+                          </a>
                         <?php } ?>
                       <?php } ?>
                     </ul>
