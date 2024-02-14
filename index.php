@@ -221,11 +221,9 @@ if (Helper::can('procreator')) {
         <div class="col-xs-12">
             <div class="box">
                 <section class="content-header">
-                    <h1>Оплата</h1>
+                    <h1>Главная</h1>
                     <ol class="breadcrumb">
-                        <li><a href="/index"><i class="fa
-    fa-dashboard"></i> Главная</a></li>
-                        <li class="active">Оплата</li>
+                        <li class="active">Главная</li>
                     </ol>
                 </section>
                 <!-- /.box-header -->
@@ -233,23 +231,25 @@ if (Helper::can('procreator')) {
                     <?php
                     if ($student) {
                         ?>
+                        <form action="save/saveStundentInfo" method="POST" enctype="multipart/form-data">
+                            <table id="example2" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Ф.И.О</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php
+                                    foreach ($student as $student) {
+                                        echo '<tr>';
+                                        echo '<td><a href="profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '</td>';
+                                        echo '</tr>';
+                                    }
+                                    ?>
+                                </tbody>
+                            </table>
+                        </form>
 
-                        <table id="example2" class="table table-bordered table-hover">
-
-                            <thead>
-                                <tr>
-                                    <th>Ф.И.О</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <?php
-                                foreach ($student as $student) {
-                                    echo '<tr>';
-                                    echo '<td><a href="add-payment?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '</td>';
-                                }
-                                ?>
-                            </tbody>
-                        </table>
                     <?php } else {
                         echo 'Ни одного студента не найдено';
                     } ?>

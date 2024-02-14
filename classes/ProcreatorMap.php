@@ -140,6 +140,7 @@ class ProcreatorMap extends BaseMap
         return $res->fetch(PDO::FETCH_OBJ);
     }
 
+
     public function noticeCount()
     {
         $res = $this->db->query("SELECT COUNT(*) AS cnt FROM notice
@@ -224,6 +225,11 @@ class ProcreatorMap extends BaseMap
             return true;
         }
         return false;
+    }
+
+    public function addReferenceAndPhoto($id)
+    {
+        $query = "";
     }
 
 }

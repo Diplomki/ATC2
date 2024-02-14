@@ -295,7 +295,7 @@ class StudentMap extends BaseMap
     public function findProfileById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT student.user_id, gruppa.name AS gruppa, user.user_id, branch.branch FROM student 
+            $res = $this->db->query("SELECT student.user_id, gruppa.name AS gruppa, user.user_id, branch.branch, student.reference FROM student 
             INNER JOIN user ON user.user_id=student.user_id 
             INNER JOIN branch ON branch.id=user.branch_id 
             INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id WHERE student.user_id = $id");

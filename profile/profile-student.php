@@ -1,6 +1,6 @@
 <?php
 require_once '../secure.php';
-if (!Helper::can('admin') && !Helper::can('manager')) {
+if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator')) {
     header('Location: 404');
     exit();
 }
@@ -51,16 +51,24 @@ hover">
 
                     </tr>
 
+                    <tr>
+
+                        <th>Справки</th>
+
+                        <td>
+                            <?= $student->reference; ?>
+                        </td>
+
+
+                    </tr>
+
                     <?php if (Helper::can('manager')) { ?>
-
                         <tr>
-
                             <th>Филиал</th>
 
                             <td>
                                 <?= $student->branch; ?>
                             </td>
-
 
                         </tr>
                     <?php } ?>

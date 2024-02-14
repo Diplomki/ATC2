@@ -32,8 +32,7 @@ require_once '../template/header.php';
                     if ($notice->id == $id) {
                         echo "<p style='font-size: 16px;'>" . $notice->text . "</p>";
                         echo "<b style='font-size: 16px;'>" . $notice->child . "->" . $notice->subject . "->" .
-                            $notice->date ."</b>";
-
+                            $notice->date . "</b>";
                     }
                 }
                 ?>

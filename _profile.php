@@ -9,6 +9,19 @@ if ($user) {
         </td>
     </tr>
     <tr>
+        <th>Фото профиля</th>
+        <td>
+            <?php
+            if ($user->photo == NULL) {
+                echo "<input type='file'>";
+            } else {
+                echo $user->photo;
+                echo "<input type='file'>";
+            }
+            ?>
+        </td>
+    </tr>
+    <tr>
         <th>Пол</th>
         <td>
             <?= $user->gender; ?>

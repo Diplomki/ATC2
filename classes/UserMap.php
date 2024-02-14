@@ -154,13 +154,12 @@ class UserMap extends BaseMap
     {
         if ($id) {
             $res = $this->db->query("SELECT user.user_id,
-        CONCAT(user.lastname,' ', user.firstname, ' ',
-        user.patronymic) AS fio,"
-                . " user.login, user.birthday, gender.name AS
-        gender, role.name AS role, user.active FROM user "
-                . "INNER JOIN gender ON
-        user.gender_id=gender.gender_id INNER JOIN role ON
-        user.role_id=role.role_id WHERE user.user_id = $id");
+            CONCAT(user.lastname,' ', user.firstname, ' ',user.patronymic) AS fio, 
+            user.login, user.birthday, gender.name AS
+            gender, role.name AS role, user.active, user.photo FROM user INNER JOIN gender ON
+            user.gender_id=gender.gender_id 
+            INNER JOIN role ON
+            user.role_id=role.role_id WHERE user.user_id = $id");
             return $res->fetch(PDO::FETCH_OBJ);
         }
         return false;
