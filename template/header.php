@@ -130,6 +130,7 @@ desired effect
                 <?php ?>
                 <span class="hidden-xs">Здраствуйте,
                   <?= $_SESSION["fio"] ?>
+
                 </span>
               </a>
               <ul class="dropdown-menu">
@@ -140,6 +141,7 @@ desired effect
                     <small>
                       <?= $_SESSION['roleName'] ?>
                     </small>
+                    <img style="width: 75px; height: 75px;" src="../avatars/<?= $_SESSION['photo'] ?>">
                   </p>
                 </li>
                 <!-- Menu Body -->

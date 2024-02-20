@@ -39,8 +39,16 @@ $indexStudent = $userMap->studentCount();
 
 
 <body>
-    <?php if (!Helper::can('procreator') && !Helper::can('teacher')) { ?>
+    <?php if (!Helper::can('procreator') && !Helper::can('teacher')) {
+        $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : 'Главная';
+        ?>
+        <section class="content-header">
+            <h3><b>
+                    <?= $header ?>
+                </b></h3>
+        </section>
         <section class="content">
+
             <div class="col-md-3 col-sm-6 col-xs-12">
                 <div class="info-box">
                     <span class="info-box-icon bg-aqua"><i class="ion ion-stats-bars"></i></span>
@@ -214,14 +222,17 @@ if (Helper::can('procreator')) {
     $studentMap = new StudentMap();
     $count = $studentMap->count();
     $student = $studentMap->findStudentsFromParent($page * $size - $size, $size);
-    $header = 'Список студентов';
+    $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : 'Главная';
     require_once 'template/header.php';
     ?>
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
                 <section class="content-header">
-                    <h1>Главная</h1>
+                    <h1><b>
+                            <?= $header ?>
+                        </b>
+                    </h1>
                     <ol class="breadcrumb">
                         <li class="active">Главная</li>
                     </ol>

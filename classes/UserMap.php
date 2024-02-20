@@ -9,7 +9,7 @@ class UserMap extends BaseMap
     function auth($login, $password)
     {
         $login = $this->db->quote($login);
-        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.pass, role.sys_name, role.name, branch.id AS branch FROM user 
+        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.pass, role.sys_name, role.name, user.photo, branch.id AS branch FROM user 
         INNER JOIN role ON user.role_id=role.role_id 
         INNER JOIN branch ON user.branch_id = branch.id 
         WHERE user.login = $login AND user.active = 1");
@@ -79,12 +79,13 @@ class UserMap extends BaseMap
         $login = $this->db->quote($user->login);
         $pass = $this->db->quote($user->pass);
         $birthday = $this->db->quote($user->birthday);
+        $photo = $this->db->quote($user->photo);
         if ($_SESSION['branch'] != 999) {
             if (
                 $this->db->exec("INSERT INTO user(lastname,
             firstname, patronymic, login, pass, gender_id, birthday,
-            role_id, branch_id, active) VALUES($lastname, $firstname, $patronymic, $login,
-            $pass, $user->gender_id, $birthday, $user->role_id, $user->branch_id,
+            role_id, branch_id, photo, active) VALUES($lastname, $firstname, $patronymic, $login,
+            $pass, $user->gender_id, $birthday, $user->role_id, $user->branch_id, $photo,
             $user->active)") == 1
             ) {
                 $user->user_id = $this->db->lastInsertId();
@@ -95,8 +96,8 @@ class UserMap extends BaseMap
             if (
                 $this->db->exec("INSERT INTO user(lastname,
             firstname, patronymic, login, pass, gender_id, birthday,
-            role_id, branch_id, active) VALUES($lastname, $firstname, $patronymic, $login,
-            $pass, $user->gender_id, $birthday, $user->role_id, $user->branch_id,
+            role_id, branch_id, photo, active) VALUES($lastname, $firstname, $patronymic, $login,
+            $pass, $user->gender_id, $birthday, $user->role_id, $user->branch_id, $photo,
             1)") == 1
             ) {
                 $user->user_id = $this->db->lastInsertId();
@@ -132,15 +133,25 @@ class UserMap extends BaseMap
         if (
             $this->db->exec("UPDATE user SET lastname =
         $lastname, firstname = $firstname, patronymic =
-        $patronymic,"
-                . " login = $login, pass = $pass, gender_id = $user->gender_id, birthday = $birthday, role_id = $user->role_id, active = $user->active "
-                . "WHERE user_id = " . $user->user_id) == 1
+        $patronymic, login = $login, pass = $pass, gender_id = $user->gender_id, 
+                birthday = $birthday, role_id = $user->role_id,
+                active = $user->active WHERE user_id = $user->user_id") == 1
         ) {
             return true;
         }
         return false;
     }
 
+    public function updatePhoto($user = User)
+    {
+        $photo = $this->db->quote($user->photo);
+        if (
+            $this->db->exec("UPDATE user SET photo = $photo WHERE user_id = $user->user_id") == 1
+        ) {
+            return true;
+        }
+        return false;
+    }
     private function existsLogin($login)
     {
         $login = $this->db->quote($login);

@@ -27,8 +27,9 @@ class StudentMap extends BaseMap
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT user_id, gruppa_id
-        FROM student WHERE user_id = $id");
+            $res = $this->db->query("SELECT student.user_id, gruppa_id, user.role_id FROM student 
+            INNER JOIN user ON student.user_id = user.user_id
+            WHERE student.user_id = $id");
             $student = $res->fetchObject("Student");
             if ($student) {
                 return $student;

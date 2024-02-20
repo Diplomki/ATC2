@@ -1,9 +1,39 @@
 <?php
 require_once '../secure.php';
-if (!Helper::can('admin') && !Helper::can('manager')) {
+if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator')) {
     header('Location: 404');
     exit();
 }
+
+if (isset($_POST['saveAvatarStudent'])) {
+    $user = new User();
+    $user->user_id = Helper::clearInt($_POST['saveAvatarStudent']);
+
+    $types = array(
+        '.jpg',
+        '.JPG',
+        '.jpeg',
+        '.gif',
+        '.bmp',
+        '.png'
+    );
+
+    $user->photo = time() . '_' . $_FILES["photo"]["name"];
+    $fileTmpName = $_FILES["photo"]["tmp_name"];
+
+    $ext = strtolower(substr($_FILES["photo"]["name"], strrpos($_FILES["photo"]["name"], '.')));
+    if (!in_array($ext, $types)) {
+        header('Location: ../index?message=Err');
+        exit;
+    }
+    move_uploaded_file($fileTmpName, "../avatars/" . $user->photo);
+
+    if ((new UserMap())->updatePhoto($user)) {
+        header('Location: ../profile/profile-student?id=' . $user->user_id);
+    }
+
+}
+
 if (isset($_POST['user_id'])) {
     $user = new User();
     $user->lastname = Helper::clearString($_POST['lastname']);
@@ -12,10 +42,14 @@ if (isset($_POST['user_id'])) {
     $user->patronymic = Helper::clearString($_POST['patronymic']);
     $user->birthday = Helper::clearString($_POST['birthday']);
     $user->login = Helper::clearString($_POST['login']);
+
+
+
     $user->pass = password_hash(
         Helper::clearString($_POST['password']),
         PASSWORD_BCRYPT
     );
+
     $user->gender_id = Helper::clearInt($_POST['gender_id']);
 
     if (Helper::can('manager')) {
@@ -24,6 +58,8 @@ if (isset($_POST['user_id'])) {
         $user->branch_id = $_SESSION['branch'];
     }
     $user->active = Helper::clearInt($_POST['active']);
+
+
 
     if (isset($_POST['saveTeacher'])) {
         $teacher = new Teacher();
@@ -45,6 +81,9 @@ if (isset($_POST['user_id'])) {
         }
         exit();
     }
+
+
+
 
     if (isset($_POST['saveParent'])) {
         $parent = new Procreator();
@@ -71,6 +110,7 @@ if (isset($_POST['user_id'])) {
         $student->gruppa_id = Helper::clearInt($_POST['gruppa_id']);
         $student->user_id = $user->user_id;
         $user->role_id = Helper::clearInt(5);
+
         if ((new StudentMap())->save($user, $student)) {
 
             header('Location: ../profile/profile-student?id=' . $student->user_id);

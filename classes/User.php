@@ -11,6 +11,7 @@ class User extends Table
     public $role_id = 0;
     public $branch_id = 0;
     public $gender_id = 0;
+    public $photo = 'default.png';
     public $active = 1;
     function validate()
     {

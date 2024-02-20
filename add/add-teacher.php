@@ -33,7 +33,7 @@ teacher">Преподаватели</a></li>
     </ol>
 </section>
 <div class="box-body">
-    <form action="../save/save-user" method="POST">
+    <form action="../save/save-user" method="POST" enctype="multipart/form-data">
         <?php require_once '../_formUser.php'; ?>
         <div class="form-group">
             <label>Отделение</label>

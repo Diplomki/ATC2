@@ -75,6 +75,9 @@ hover">
 
                 </table>
             </div>
+            <div class="box-body">
+                <a href="../add/add-avatar?id=<?= $id ?>" class="btn btn-primary">Изменить фото</a>
+            </div>
         </div>
     </div>
 </div>

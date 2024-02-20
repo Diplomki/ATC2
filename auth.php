@@ -19,6 +19,7 @@ if (
         $_SESSION['roleName'] = $user->name;
         $_SESSION['fio'] = $user->fio;
         $_SESSION['branch'] = $user->branch;
+        $_SESSION['photo'] = $user->photo;
         header('Location: index');
         exit;
     } else {

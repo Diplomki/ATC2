@@ -12,12 +12,7 @@ if ($user) {
         <th>Фото профиля</th>
         <td>
             <?php
-            if ($user->photo == NULL) {
-                echo "<input type='file'>";
-            } else {
-                echo $user->photo;
-                echo "<input type='file'>";
-            }
+            echo '<img style="width: 75px; height: 75px;"" src="../avatars/' . $user->photo . ' "/>';
             ?>
         </td>
     </tr>
