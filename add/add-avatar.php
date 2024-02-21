@@ -1,5 +1,6 @@
 <?php
 require_once '../secure.php';
+
 $id = 0;
 if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
@@ -19,32 +20,29 @@ if ($user->role_id != 5) {
     exit();
 }
 
-$header = (($id) ? 'Редактировать фото' : 'Добавить') . '
-Студента';
 require_once '../template/header.php';
 ?>
 <section class="content-header">
     <h3>
         <b>
-            <?= $header; ?>
+            Редактировать фото студента
         </b>
     </h3>
     <ol class="breadcrumb">
 
-        <li><a href="../index.php"><i class="fa fa-
+        <li><a href="../index"><i class="fa fa-
 dashboard"></i> Главная</a></li>
 
-        <li><a href="../list/list-student.php">Студенты</a></li>
+        <li><a href="../list/list-student">Студенты</a></li>
 
         <li class="active">
-            <?= $header; ?>
+            Редактировать фото студента
         </li>
     </ol>
 </section>
 <div class="box-body">
     <form action="../save/save-user" method="POST" enctype="multipart/form-data">
         <div class="form-group">
-            <label>Фото профиля</label>
             <input type="file" name="photo" required="required">
         </div>
         <div class="form-group">

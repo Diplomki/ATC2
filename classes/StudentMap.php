@@ -305,6 +305,27 @@ class StudentMap extends BaseMap
         return false;
     }
 
+    public function findReferenceById($id = null)
+    {
+        $query = "SELECT id, user_id, reference FROM `reference` WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function insertReference(Student $student)
+    {
+        $query = "INSERT INTO `reference` (`user_id`, `reference`) 
+        VALUES (:user_id, :reference)";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'user_id' => $student->user_id,
+            'reference' => $student->reference
+        ]);
+    }
+
     public function Payment()
     {
         $res = $this->db->query("SELECT 

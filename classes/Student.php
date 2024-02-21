@@ -16,6 +16,7 @@ class Student extends Table
     public $subject_price = 0;
     public $attend = 0;
     public $num_zach = 0;
+    public $reference = '';
     function validate()
     {
         if (!empty($this->gruppa_id)) {

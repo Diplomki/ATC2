@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Янв 29 2024 г., 06:10
+-- Время создания: Фев 21 2024 г., 07:33
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -364,7 +364,9 @@ INSERT INTO `notice` (`id`, `text`, `subject_id`, `user_id`, `child_id`, `date`)
 (14, 'Оплатите до указанного срока по предмету:', 4, 10, 18, '2023-12-29'),
 (15, 'Оплатите до указанного срока по предмету:', 2, 38, 7, '2023-12-13'),
 (16, 'Оплатите до указанного срока по предмету:', 3, 11, 8, '2023-12-16'),
-(17, 'Оплатите до указанного срока по предмету:', 1, 10, 7, '2023-12-30');
+(17, 'Оплатите до указанного срока по предмету:', 1, 10, 7, '2023-12-30'),
+(18, 'jhsdgfjksdbf', 5, 46, 43, '2024-02-06'),
+(19, 'Оплатите до указанного срока по предмету:', 5, 10, 9, '2024-02-15');
 
 -- --------------------------------------------------------
 
@@ -459,7 +461,7 @@ CREATE TABLE `payment_archive` (
 --
 
 INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `tab`, `price`, `attend`) VALUES
-(37, 10, 7, 1, 65, '1699588297ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
+(37, 10, 7, 1, 75, '1699588297ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (38, 10, 7, 2, 11, '1699588303ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (39, 10, 7, 3, 5, '1699588308ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
 (40, 10, 7, 4, 1, '1699588314ПРОЧИТАЙ!!!!!!!!!!!.txt', 5000, 1),
@@ -473,7 +475,7 @@ INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `cou
 (95, 10, 42, 6, 9, '1701246542iqstudy.txt', 50000, 1),
 (96, 10, 42, 5, 8, '1701246675', 50000, 1),
 (97, 10, 18, 5, 1, '1701912986iqstudy.zip', 50000, 1),
-(98, 10, 18, 1, 10, '1701913128iqstudy.txt', 50000, 1),
+(98, 10, 18, 1, 12, '1701913128iqstudy.txt', 50000, 1),
 (99, 10, 37, 5, 1, '1702611363iqstudy.txt', 50000, 1),
 (100, 10, 37, 6, 47, '1702611608iqstudy.txt', 250000, 1),
 (101, 10, 18, 6, 48, '1702611617iqstudy.txt', 250000, 1),
@@ -560,21 +562,22 @@ INSERT INTO `special` (`special_id`, `name`, `otdel_id`, `active`) VALUES
 CREATE TABLE `student` (
   `user_id` bigint NOT NULL,
   `gruppa_id` int NOT NULL,
-  `num_zach` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL
+  `reference` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `num_zach` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `student`
 --
 
-INSERT INTO `student` (`user_id`, `gruppa_id`, `num_zach`) VALUES
-(7, 2, '0'),
-(8, 2, '0'),
-(9, 3, '0'),
-(18, 1, '0'),
-(37, 1, '0'),
-(42, 3, '0'),
-(45, 5, '0');
+INSERT INTO `student` (`user_id`, `gruppa_id`, `reference`, `num_zach`) VALUES
+(7, 2, '123', '0'),
+(8, 2, NULL, '0'),
+(9, 3, NULL, '0'),
+(18, 1, NULL, '0'),
+(37, 1, NULL, '0'),
+(42, 3, NULL, '0'),
+(45, 5, NULL, '0');
 
 -- --------------------------------------------------------
 
@@ -622,9 +625,17 @@ INSERT INTO `teacher` (`user_id`, `otdel_id`) VALUES
 (22, 1),
 (44, 1),
 (48, 1),
+(50, 1),
+(51, 1),
+(52, 1),
+(53, 1),
+(54, 1),
+(55, 1),
+(56, 1),
 (12, 2),
 (25, 2),
 (41, 2),
+(49, 2),
 (6, 4),
 (14, 4);
 
@@ -645,6 +656,7 @@ CREATE TABLE `user` (
   `birthday` date DEFAULT NULL,
   `role_id` tinyint NOT NULL,
   `branch_id` int DEFAULT NULL,
+  `photo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'default.png',
   `active` tinyint NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -652,35 +664,43 @@ CREATE TABLE `user` (
 -- Дамп данных таблицы `user`
 --
 
-INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `pass`, `gender_id`, `birthday`, `role_id`, `branch_id`, `active`) VALUES
-(2, 'Смит', 'Джон', 'Тимофеевич', 'admin', '$2y$10$kkAc3Z1kd7baFhhpVj98feshP7nhhY8IeT7L04xY9I4PuuhKT3Aii', 1, '2023-11-01', 2, 1, 1),
-(6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '2000-03-12', 4, 1, 1),
-(7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 1, 1),
-(8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 1, 1),
-(9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$TE2o./47eSpX8WaCSQ.O2uzlks.vLNjIjE6tv5qtcg7eavAYMqO0q', 2, '2003-02-20', 5, 1, 1),
-(10, 'Беспалов', 'Агафон', 'Даниилович', 'bespalov', '$2y$10$z11Uv1aXozyKpN07XKTNm.VTf9AHH95kfmyOtmOvuVPuoSh4SyGTq', 1, '1980-12-12', 6, 1, 1),
-(11, 'Карпов', 'Антон', 'Онисимович', 'karpov', '$2y$10$yOW62BB4F8KYnC/Zs95xGeI7HnlX2Rxpdu9qkVInJDRV0igjzbZpq', 1, '1980-11-12', 6, 1, 1),
-(12, 'Гришин', 'Мечеслав', 'Христофорович', 'grishin', '$2y$10$HiUHq9eyUODAWKKvKb072eJFP2mmX993WlE2yvSHlx0X6JqMftKEe', 1, '2002-12-20', 4, 2, 1),
-(14, 'Макаров', 'Михаил', 'Робертович', 'makarov', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1977-06-05', 4, 1, 1),
-(15, 'Андреев ', 'Венедикт ', 'Святославович', 'admin2', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1975-08-03', 2, 2, 1),
-(16, 'Лебедев', 'Альфред ', 'Викторович', 'admin3', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1997-07-12', 2, 3, 1),
-(17, 'Соловьёв', 'Бронислав', 'Федотович', 'soloviev', '$2y$10$hwoeqR.h7cOSrs8mPHnbm.bmDXUd/2i4Xg968skfMTFQ.gQystHdC', 1, '1999-05-14', 4, 2, 1),
-(18, 'Кошелев', 'Эрнест', 'Лаврентьевич', 'koshelev', '$2y$10$mlU3F7DiiEWPXzdfjPiHseYtchL0YITkhg9XOGz72xF.klefiTgnO', 1, '2005-12-15', 5, 1, 1),
-(19, 'Дроздов ', 'Арсений', 'Михайлович', 'manager', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1997-07-12', 3, 999, 1),
-(22, 'Гурьев', 'Артур', 'Протасьевич', 'gurevvv', '$2y$10$Jg6maoeW.bxJGgciUu0/O.C68W13QqU6k14doNZnQhaF/sQ0pwNBW', 1, '2023-10-01', 4, 1, 1),
-(25, 'Буров', 'Георгий', 'Матвеевич', 'burov', '$2y$10$7yGUP8SL7XyoEtvd5MPE1O9FBSiNSJ0NMp08qReKOAoySnAGPye6G', 1, '1999-05-15', 4, 1, 1),
-(37, 'Жукова', 'Адельфина', 'Артемова', 'jykova', '$2y$10$LpJ3CgZk6cmh9B.9juW0vuZBxmcVlG.JMqyJKkc5/8QtfkqRpP0fa', 2, '2003-05-28', 5, 1, 1),
-(38, 'Соловьёва', 'Лея', 'Георгьевна', 'solovieva', '$2y$10$iH5wNehSfohUxfUTwKSNB.F01vhtYuddPbxUNZADQqgf5weDX7is2', 2, '2000-05-18', 6, 1, 1),
-(39, 'Шестаков', 'Бенедикт', 'Русланович', 'shestakov', '$2y$10$sSfncxp1TVq5wkKWWy/F4.6g1XKTimJXz2QfKQmNcGFW.Nkib5guq', 1, '2002-10-02', 6, 2, 1),
-(40, 'asd', 'asd', 'asd', 'asd', '$2y$10$1k/j0P2IBoiIbU5LHo9Xju6RrUMraewrdvIPp8403qeYj8pcp3gVa', 1, '2023-11-01', 2, 2, 1),
-(41, 'test', 'test', 'test', 'test', '$2y$10$oI8gKBvxGYd0bIf38EEQJulovcwqRfm38DRADUFKQdeTJqbFkyLci', 1, '2023-11-02', 2, 1, 1),
-(42, 'asd', 'asd', 'asd', 'asd', '$2y$10$B0l.SdHgBelVzAQ1K2yWqu6KihUswbrTDT3YahUj6xzKVF7KqnlqC', 1, '2023-11-01', 5, 1, 1),
-(43, 'test', 'test', 'test', '123', '$2y$10$noakuWFcWyR//2r.Kbdtle.IWXC06ZgjSVTCnt0NZD.hTHGBQgp5m', 1, '2023-12-01', 2, 2, 1),
-(44, 'asdsad', 'sadsadas', 'asdasdas', 'asdasdasdsadsa', '$2y$10$3MOMIhCAMcK9L0bfYg2ZmOvW.aQGunvpFv4ZOEU/GjH106R6H3xU2', 1, '2023-12-02', 4, 1, 1),
-(45, 'sadasd', 'sadasdas', 'dsadsadsad', 'asdasd', '$2y$10$A8zvAm8fL8D5P0A/rmFqm.3Q5Z0n4FFJYWavUrGoZgg2WqP5FZTUS', 1, '2023-12-01', 5, 1, 1),
-(46, 'assdasd', 'sdasd', 'asdsad', '1234', '$2y$10$14s0XDLAKCCPTWX2l38H2.W7bfOJnQnO4skBIdSGAP70/mIwob4wK', 1, '2023-12-01', 6, 1, 1),
-(47, 'asdsadasd', 'asdsadasdasd', 'asdasdasdasd', 'asdfd', '$2y$10$DTiIrLjw3ROCQmwTfqEiqOik2DMck67pDF3UiwDJi1WLuiL/r8zxG', 1, '2023-12-01', 6, 1, 1),
-(48, 'test2', 'test2', 'test2', 'test2', '$2y$10$KgMM268dqpwL.oRtnM.o/.opCP9heolbsII0x2tKGHuHQF9FeFijy', 1, '2023-12-21', 4, 2, 1);
+INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `pass`, `gender_id`, `birthday`, `role_id`, `branch_id`, `photo`, `active`) VALUES
+(2, 'Смит', 'Джон', 'Тимофеевич', 'admin', '$2y$10$kkAc3Z1kd7baFhhpVj98feshP7nhhY8IeT7L04xY9I4PuuhKT3Aii', 1, '2023-11-01', 2, 1, NULL, 1),
+(6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$kctvKQHKBEkiswKKFpqCf.yj9trLzGny8Q3k.29cQWgny.1N.wpzy', 1, '2000-03-12', 4, 1, NULL, 1),
+(7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 1, '1708485498_asd.jpg', 1),
+(8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 1, NULL, 1),
+(9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$TE2o./47eSpX8WaCSQ.O2uzlks.vLNjIjE6tv5qtcg7eavAYMqO0q', 2, '2003-02-20', 5, 1, '1708400431_asd.jpg', 1),
+(10, 'Беспалов', 'Агафон', 'Даниилович', 'bespalov', '$2y$10$z11Uv1aXozyKpN07XKTNm.VTf9AHH95kfmyOtmOvuVPuoSh4SyGTq', 1, '1980-12-12', 6, 1, NULL, 1),
+(11, 'Карпов', 'Антон', 'Онисимович', 'karpov', '$2y$10$yOW62BB4F8KYnC/Zs95xGeI7HnlX2Rxpdu9qkVInJDRV0igjzbZpq', 1, '1980-11-12', 6, 1, NULL, 1),
+(12, 'Гришин', 'Мечеслав', 'Христофорович', 'grishin', '$2y$10$HiUHq9eyUODAWKKvKb072eJFP2mmX993WlE2yvSHlx0X6JqMftKEe', 1, '2002-12-20', 4, 2, NULL, 1),
+(14, 'Макаров', 'Михаил', 'Робертович', 'makarov', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1977-06-05', 4, 1, NULL, 1),
+(15, 'Андреев ', 'Венедикт ', 'Святославович', 'admin2', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1975-08-03', 2, 2, NULL, 1),
+(16, 'Лебедев', 'Альфред ', 'Викторович', 'admin3', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1997-07-12', 2, 3, NULL, 1),
+(17, 'Соловьёв', 'Бронислав', 'Федотович', 'soloviev', '$2y$10$hwoeqR.h7cOSrs8mPHnbm.bmDXUd/2i4Xg968skfMTFQ.gQystHdC', 1, '1999-05-14', 4, 2, NULL, 1),
+(18, 'Кошелев', 'Эрнест', 'Лаврентьевич', 'koshelev', '$2y$10$mlU3F7DiiEWPXzdfjPiHseYtchL0YITkhg9XOGz72xF.klefiTgnO', 1, '2005-12-15', 5, 1, NULL, 1),
+(19, 'Дроздов ', 'Арсений', 'Михайлович', 'manager', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1997-07-12', 3, 999, NULL, 1),
+(22, 'Гурьев', 'Артур', 'Протасьевич', 'gurevvv', '$2y$10$BWSudi2gFFaUmgaVnrnttecMUKyQLev5h/vsnX25pqlbv3VCTqvCe', 1, '2023-10-01', 4, 1, '1708318625_asdasd.jpg', 1),
+(25, 'Буров', 'Георгий', 'Матвеевич', 'burov', '$2y$10$7yGUP8SL7XyoEtvd5MPE1O9FBSiNSJ0NMp08qReKOAoySnAGPye6G', 1, '1999-05-15', 4, 1, NULL, 1),
+(37, 'Жукова', 'Адельфина', 'Артемова', 'jykova', '$2y$10$LpJ3CgZk6cmh9B.9juW0vuZBxmcVlG.JMqyJKkc5/8QtfkqRpP0fa', 2, '2003-05-28', 5, 1, NULL, 1),
+(38, 'Соловьёва', 'Лея', 'Георгьевна', 'solovieva', '$2y$10$iH5wNehSfohUxfUTwKSNB.F01vhtYuddPbxUNZADQqgf5weDX7is2', 2, '2000-05-18', 6, 1, NULL, 1),
+(39, 'Шестаков', 'Бенедикт', 'Русланович', 'shestakov', '$2y$10$sSfncxp1TVq5wkKWWy/F4.6g1XKTimJXz2QfKQmNcGFW.Nkib5guq', 1, '2002-10-02', 6, 2, NULL, 1),
+(40, 'asd', 'asd', 'asd', 'asd', '$2y$10$1k/j0P2IBoiIbU5LHo9Xju6RrUMraewrdvIPp8403qeYj8pcp3gVa', 1, '2023-11-01', 2, 2, NULL, 1),
+(41, 'test', 'test', 'test', 'test', '$2y$10$oI8gKBvxGYd0bIf38EEQJulovcwqRfm38DRADUFKQdeTJqbFkyLci', 1, '2023-11-02', 2, 1, NULL, 1),
+(42, 'asd', 'asd', 'asd', 'asd', '$2y$10$B0l.SdHgBelVzAQ1K2yWqu6KihUswbrTDT3YahUj6xzKVF7KqnlqC', 1, '2023-11-01', 5, 1, NULL, 1),
+(43, 'test', 'test', 'test', '123', '$2y$10$noakuWFcWyR//2r.Kbdtle.IWXC06ZgjSVTCnt0NZD.hTHGBQgp5m', 1, '2023-12-01', 2, 2, NULL, 1),
+(44, 'asdsad', 'sadsadas', 'asdasdas', 'asdasdasdsadsa', '$2y$10$3MOMIhCAMcK9L0bfYg2ZmOvW.aQGunvpFv4ZOEU/GjH106R6H3xU2', 1, '2023-12-02', 4, 1, NULL, 1),
+(45, 'sadasd', 'sadasdas', 'dsadsadsad', 'asdasd', '$2y$10$A8zvAm8fL8D5P0A/rmFqm.3Q5Z0n4FFJYWavUrGoZgg2WqP5FZTUS', 1, '2023-12-01', 5, 1, NULL, 1),
+(46, 'assdasd', 'sdasd', 'asdsad', '1234', '$2y$10$14s0XDLAKCCPTWX2l38H2.W7bfOJnQnO4skBIdSGAP70/mIwob4wK', 1, '2023-12-01', 6, 1, NULL, 1),
+(47, 'asdsadasd', 'asdsadasdasd', 'asdasdasdasd', 'asdfd', '$2y$10$DTiIrLjw3ROCQmwTfqEiqOik2DMck67pDF3UiwDJi1WLuiL/r8zxG', 1, '2023-12-01', 6, 1, NULL, 1),
+(48, 'test2', 'test2', 'test2', 'test2', '$2y$10$KgMM268dqpwL.oRtnM.o/.opCP9heolbsII0x2tKGHuHQF9FeFijy', 1, '2023-12-21', 4, 2, NULL, 1),
+(49, 'test', 'test', 'test', 'test', '$2y$10$mC4nII9C8gGwuSkriCIB9.w4hd9AkObWXKh52Ku8GMzkji72jyEWu', 1, '2024-02-01', 4, 1, NULL, 1),
+(50, 'asdsad', 'asdsadas', 'dasdasdsad', 'asd', '$2y$10$lDXwjLH/1o/zRUEVVsjyz.4wQeUCF6FGOzq757IninRx/EyHMPzCC', 1, '2024-02-01', 4, 1, '1708316522', 1),
+(51, 'фывфыв', 'фывфыв', 'ыфвыфв', 'asd', '$2y$10$8psV5nJ8TA4pZi1c3uKM5ul13w46hawKkox8MeZZQtH/f8PT3CAM.', 1, '2024-02-01', 4, 1, '1708316664тз.docx', 1),
+(52, 'asdsadsad', 'sdsadsadsa', 'sadsadsadasdasd', 'asd', '$2y$10$VTu/IkHsgW95Hh5qP61v4uwNb8oh7mVEbnzCX0P3ywEcT5rGZBJzG', 1, '2024-02-01', 4, 1, '1708316707_тз.docx', 1),
+(53, 'vbcvb', 'vcbvcbcv', 'bvcbvcb', 'asdzxc', '$2y$10$8rhn603qR086CJTKgDu8PubjukM9Hryso2cFU4kOrg8T79oSPZUsq', 1, '2024-02-01', 4, 1, 'default.png', 1),
+(54, 'asd', 'asd', 'asd', 'asd', '$2y$10$oKlxPy6/hPDUgxnV0Xgq7eMSw/5y6lVmRGHVHPx4XsU/44iRTO3Py', 1, '2024-02-01', 4, 1, '1708397867_asd.jpg', 1),
+(55, 'test2', 'test2', 'test2', 'test2', '$2y$10$VZnpBI/uSPPLu0LdcOko3ePJSo93Ez0zyhgNr4FANQblDRQDEQBnu', 1, '2024-02-01', 4, 1, 'default.png', 1),
+(56, 'test4', 'test4', 'test4', 'test4', '$2y$10$kPIFFdU1bgY3LtSQaQW8f.k/gqFG7qCZVxOrrPP4yfqaWtNKbQjC2', 1, '2024-02-01', 4, 1, 'default.png', 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -954,7 +974,7 @@ ALTER TABLE `lesson_plan`
 -- AUTO_INCREMENT для таблицы `notice`
 --
 ALTER TABLE `notice`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT для таблицы `otdel`
@@ -972,7 +992,7 @@ ALTER TABLE `parent`
 -- AUTO_INCREMENT для таблицы `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=127;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT для таблицы `payment_archive`
@@ -1008,7 +1028,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=57;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц

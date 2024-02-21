@@ -10,7 +10,11 @@ if (isset($_GET['id'])) {
     header('Location: 404');
 }
 $header = 'Профиль студента';
+
 $student = (new StudentMap())->findProfileById($id);
+
+$reference = (new StudentMap())->findReferenceById($id);
+
 require_once '../template/header.php';
 ?>
 <div class="row">
@@ -35,8 +39,7 @@ fa-dashboard"></i> Главная</a></li>
             </div>
             <div class="box-body">
 
-                <table class="table table-bordered table-
-hover">
+                <table class="table table-bordered table-hover">
 
                     <?php require_once '../_profile.php'; ?>
 
@@ -56,7 +59,11 @@ hover">
                         <th>Справки</th>
 
                         <td>
-                            <?= $student->reference; ?>
+                            <?php
+                            foreach ($reference as $item) {
+                                echo '<a href="../references/' . $item->reference . '">' . $item->reference . ' ' . '</a>';
+                            }
+                            ?>
                         </td>
 
 

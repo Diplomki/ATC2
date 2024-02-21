@@ -222,7 +222,7 @@ if (Helper::can('procreator')) {
     $studentMap = new StudentMap();
     $count = $studentMap->count();
     $student = $studentMap->findStudentsFromParent($page * $size - $size, $size);
-    $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : 'Главная';
+    $header = isset($_GET['message']) ? '<span style="color: red;">Ошибка</span>' : 'Главная';
     require_once 'template/header.php';
     ?>
     <div class="row">
@@ -247,6 +247,8 @@ if (Helper::can('procreator')) {
                                 <thead>
                                     <tr>
                                         <th>Ф.И.О</th>
+                                        <th></th>
+                                        <th>Действие</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -254,6 +256,8 @@ if (Helper::can('procreator')) {
                                     foreach ($student as $student) {
                                         echo '<tr>';
                                         echo '<td><a href="profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '</td>';
+                                        echo '<td><a class="btn btn-primary" href="add/add-avatar?id=' . $student->user_id . '">Изменить фото</a> ' . '</td>';
+                                        echo '<td><a class="btn btn-primary" href="add/add-reference?id=' . $student->user_id . '">Добавить справку</a> ' . '</td>';
                                         echo '</tr>';
                                     }
                                     ?>
