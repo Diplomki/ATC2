@@ -57,7 +57,7 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($admins as $admin) {
                                 echo '<tr>';
                                 if (Helper::can('manager') || Helper::can('admin'))
-                                    echo '<td><a href="../profile/profile-admin?id=' . $admin->user_id . '">' . $admin->fio . '</a> ' . '<a href="../add/add-admin?id=' . $admin->user_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                    echo '<td><a href="../profile/profile-admin?id=' . $admin->user_id . '">' . $admin->fio . '</a> ' . '<a href="../add/add-admin?id=' . $admin->user_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-teacher?id=' . $admin->user_id . '"><i class="fa fa-times"></i></a></td>';
                                 else
                                     echo '<td><p>' . $admin->fio . '</p> ' . '<a href="../add/add-admin?id=' . $admin->user_id . '"></a></td>';
                                 echo '<td>' . $admin->gender . '</td>';

@@ -14,14 +14,17 @@ if (isset($_GET['page'])) {
 $parentMap = new ProcreatorMap();
 $count = $parentMap->count();
 $parent = $parentMap->findAll($page * $size - $size, $size);
-$header = 'Список студентов';
 require_once '../template/header.php';
 ?>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h3><b>Список родителей</b></h3>
+                <h3><b>
+                        <?php
+                        $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список родителей';
+                        ?>
+                    </b></h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
@@ -61,7 +64,7 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($parent as $parent) {
                                 echo '<tr>';
                                 if (Helper::can('admin')) {
-                                    echo '<td><a href="../profile/profile-parent?id=' . $parent->user_id . '">' . $parent->parent_fio . '</a> ' . '<a href="../add/add-parent?id=' . $parent->user_id . '"><i class="fa fa-pencil"></i></a> <a><i class="fa fa-times"></i></a></td>';
+                                    echo '<td><a href="../profile/profile-parent?id=' . $parent->user_id . '">' . $parent->parent_fio . '</a> ' . '<a href="../add/add-parent?id=' . $parent->user_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-parent?id=' . $parent->user_id . '"><i class="fa fa-times"></i></a></td>';
                                 } elseif (Helper::can('manager')) {
                                     echo '<td><a href="../profile/profile-parent?id=' . $parent->user_id . '">' . $parent->parent_fio . '</a> ' . '<a href="../add/add-parent?id=' . $parent->user_id . '"></a></td>';
                                 } else {

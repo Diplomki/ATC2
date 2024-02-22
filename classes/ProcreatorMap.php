@@ -24,7 +24,9 @@ class ProcreatorMap extends BaseMap
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT user_id, child_id FROM parent WHERE user_id = $id");
+            $res = $this->db->query("SELECT CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, parent.user_id, child_id FROM parent
+            INNER JOIN user ON parent.user_id = user.user_id
+            WHERE parent.user_id = $id");
             return $res->fetchObject("Procreator");
         }
         return new Procreator();
@@ -227,9 +229,22 @@ class ProcreatorMap extends BaseMap
         return false;
     }
 
-    public function addReferenceAndPhoto($id)
+    public function deleteParentById($id)
     {
-        $query = "";
+        $query = "DELETE FROM parent WHERE user_id = :id";
+        $query2 = "DELETE FROM notice WHERE user_id = :id";
+        $query3 = "DELETE FROM user WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+        $res2 = $this->db->prepare($query2);
+        $res2->execute([
+            'id' => $id
+        ]);
+        $res3 = $this->db->prepare($query3);
+        $res3->execute([
+            'id' => $id
+        ]);
     }
-
 }

@@ -58,7 +58,7 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($student as $student) {
                                 echo '<tr>';
                                 if (Helper::can('admin')) {
-                                    echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                    echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-student?id=' . $teacher->user_id . '"><i class="fa fa-times"></i></a></td>';
                                 } elseif (Helper::can('manager')) {
                                     echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"></a></td>';
                                 } else {

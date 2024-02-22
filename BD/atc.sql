@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Фев 21 2024 г., 07:33
+-- Время создания: Фев 22 2024 г., 18:05
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -485,6 +485,33 @@ INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `cou
 -- --------------------------------------------------------
 
 --
+-- Структура таблицы `reference`
+--
+
+CREATE TABLE `reference` (
+  `id` bigint NOT NULL,
+  `user_id` bigint NOT NULL,
+  `reference` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `reference`
+--
+
+INSERT INTO `reference` (`id`, `user_id`, `reference`) VALUES
+(2, 7, '1708491921тз.docx'),
+(3, 9, '1708492025_тз.docx'),
+(4, 9, '1708492075_тз.docx'),
+(5, 9, '1708492131_тз.docx'),
+(6, 42, '1708492206_тз.docx'),
+(7, 9, '1708492322_тз.docx'),
+(8, 7, '1708492433_тз.docx'),
+(9, 7, '1708492580_тз.docx'),
+(10, 9, '1708494107_asdsadasd.txt');
+
+-- --------------------------------------------------------
+
+--
 -- Структура таблицы `role`
 --
 
@@ -848,6 +875,13 @@ ALTER TABLE `payment_archive`
   ADD KEY `subject_id` (`subject_id`);
 
 --
+-- Индексы таблицы `reference`
+--
+ALTER TABLE `reference`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
+
+--
 -- Индексы таблицы `role`
 --
 ALTER TABLE `role`
@@ -1001,6 +1035,12 @@ ALTER TABLE `payment_archive`
   MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=104;
 
 --
+-- AUTO_INCREMENT для таблицы `reference`
+--
+ALTER TABLE `reference`
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
 -- AUTO_INCREMENT для таблицы `role`
 --
 ALTER TABLE `role`
@@ -1127,6 +1167,12 @@ ALTER TABLE `payment_archive`
   ADD CONSTRAINT `payment_archive_ibfk_1` FOREIGN KEY (`child_id`) REFERENCES `parent` (`child_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `payment_archive_ibfk_2` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `payment_archive_ibfk_3` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+
+--
+-- Ограничения внешнего ключа таблицы `reference`
+--
+ALTER TABLE `reference`
+  ADD CONSTRAINT `reference_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `student` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `schedule`
