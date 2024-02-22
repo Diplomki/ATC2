@@ -35,7 +35,10 @@ require_once('../template/header.php');
 <div class="box-body">
     <form action="../save/save-reference" method="POST" enctype="multipart/form-data">
         <div class="form-group">
-            <input type="file" name="reference" required="required">
+            <input type="file" name="reference" id="fileInput" style="display: none;" required="required">
+            <span id="fileNameLabel">Добавьте справку для загрузки</span><br>
+            <label for="fileInput" class="btn btn-primary">Выберите файл</label>
+            <span id="fileName"></span>
         </div>
         <input type="hidden" name="user_id" value="<?= $student->user_id ?>">
         <div class="form-group">
@@ -43,6 +46,25 @@ require_once('../template/header.php');
         </div>
     </form>
 </div>
+
+<script>
+    document.getElementById('fileInput').addEventListener('change', function () {
+        var fileName = this.files[0].name; // Получаем имя выбранного файла
+        document.getElementById('fileName').innerText = fileName; // Обновляем текст сообщения справа
+    });
+
+    document.getElementById('fileInput').addEventListener('change', function () {
+        var fileName = this.value.split('\\').pop(); // Получаем имя выбранного файла
+        if (fileName) {
+            document.getElementById('fileNameLabel').style.display = 'none'; // Скрываем надпись
+            document.getElementById('fileName').innerText = fileName; // Выводим имя файла (опционально)
+        } else {
+            document.getElementById('fileNameLabel').style.display = 'block'; // Показываем надпись, если файл не выбран
+            document.getElementById('fileName').innerText = ''; // Очищаем текст в элементе для имени файла (опционально)
+        }
+    });
+</script>
+
 <?php
 require_once('../template/footer.php');
 ?>
