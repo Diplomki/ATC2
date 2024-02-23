@@ -14,27 +14,28 @@ if (isset($_GET['page'])) {
 $studentMap = new StudentMap();
 $count = $studentMap->count();
 $student = $studentMap->findAll($page * $size - $size, $size);
-$header = 'Список студентов';
+
 require_once '../template/header.php';
 ?>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h3><b>Список студентов</b></h3>
+                <h3><b>
+                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список студентов'; ?>
+                    </b></h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список
-                        студента</li>
+                        студентов</li>
                 </ol>
             </section>
-            <div class="box-body">
-                <?php if (Helper::can('admin')) { ?>
+            <?php if (Helper::can('admin')) { ?>
+                <div class="box-body">
                     <a class="btn btn-success" href="../add/add-student">Добавить студента</a>
-                <?php } ?>
-
-            </div>
+                </div>
+            <?php } ?>
             <!-- /.box-header -->
             <div class="box-body">
                 <?php
@@ -58,7 +59,7 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($student as $student) {
                                 echo '<tr>';
                                 if (Helper::can('admin')) {
-                                    echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-student?id=' . $teacher->user_id . '"><i class="fa fa-times"></i></a></td>';
+                                    echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-student?id=' . $student->user_id . '"><i class="fa fa-times"></i></a></td>';
                                 } elseif (Helper::can('manager')) {
                                     echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"></a></td>';
                                 } else {

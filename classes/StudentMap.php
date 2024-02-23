@@ -27,7 +27,8 @@ class StudentMap extends BaseMap
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT student.user_id, gruppa_id, user.role_id FROM student 
+            $res = $this->db->query("SELECT CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, 
+            student.user_id, gruppa_id, user.role_id FROM student 
             INNER JOIN user ON student.user_id = user.user_id
             WHERE student.user_id = $id");
             $student = $res->fetchObject("Student");
@@ -57,7 +58,8 @@ class StudentMap extends BaseMap
     private function insertPayment($student = Student)
     {
         if (
-            $this->db->exec("INSERT INTO payment(parent_id, child_id, subject_id, count, tab, price) VALUES({$_SESSION['id']}, $student->user_id, 
+            $this->db->exec("INSERT INTO payment(parent_id, child_id, subject_id, count, tab, price) 
+            VALUES({$_SESSION['id']}, $student->user_id, 
             $student->subject_id, $student->subject_count, '$student->tab', $student->subject_price)") == 1
         ) {
             return true;
@@ -388,5 +390,40 @@ class StudentMap extends BaseMap
         $stmt->bindParam(':attend', $student->attend, PDO::PARAM_INT);
 
         return $stmt->execute();
+    }
+
+    public function deleteStudentById($id)
+    {
+        $query = "DELETE FROM grades WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+
+        $query = "DELETE FROM grade_accept WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+
+        $query = "DELETE FROM reference WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+
+        $query = "DELETE FROM student WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+
+        $query = "DELETE FROM user WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+
+
     }
 }

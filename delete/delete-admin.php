@@ -1,25 +1,24 @@
 <?php
 require_once('../secure.php');
 ob_start();
-if (!Helper::can('admin')) {
+if (!Helper::can('manager')) {
     header('Location: 404');
     exit;
 }
-
 $id = 0;
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 }
-$parent = (new ProcreatorMap())->findById($id);
-require_once('../template/header.php');
 
+$admin = (new AdminMap())->findById($id);
+require_once('../template/header.php');
 ?>
 <section class="content-header">
     <h3><b>Удаление пользователя</b></h3>
     <ol class="breadcrumb">
-        <li><a href="../list/list-parent"><i class="fa
-fa-dashboard"></i> Список родителей</a></li>
-        <li><a href="../list/list-student">Удаление пользователя</a></li>
+        <li><a href="../list/list-admin"><i class="fa
+fa-dashboard"></i> Список</a></li>
+        <li>Удаление пользователя</li>
     </ol>
 </section>
 
@@ -27,17 +26,17 @@ fa-dashboard"></i> Список родителей</a></li>
     <form method="POST">
         <p style="font-size: 16px;">Вы действительно хотите удалить пользователя:</p>
         <b style="font-size: 18px;">
-            <?= $parent->fio; ?>
+            <?= $admin->fio; ?>
         </b><br><br>
-        <input class="btn btn-primary" name="deleteParent" type="submit" value="Удалить">
+        <input class="btn btn-primary" name="deleteAdmin" type="submit" value="Удалить">
     </form>
 </div>
 <?php
 
-if (isset($_POST['deleteParent'])) {
-    $procreator = new ProcreatorMap();
-    $procreator->deleteParentById($id);
-    header('Location: ../list/list-parent?message=ok');
+if (isset($_POST['deleteAdmin'])) {
+    $admin = new AdminMap();
+    $admin->deleteStudentById($id);
+    header('Location: ../list/list-admin?message=ok');
     exit();
 }
 ob_end_flush();

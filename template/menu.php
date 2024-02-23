@@ -52,7 +52,9 @@
 
                     <a href="../check/check-payment"><i class="fa fa-dollar"></i><span>Оплата</span></a>
 
+                <li <?= ($_SERVER['PHP_SELF'] == '../add/add-payment.php') ? 'class="active"' : ''; ?>>
 
+                    <a href="../add/add-payment"><i class="fa fa-dollar"></i><span>Создать оплату</span></a>
 
                 </li>
             <?php } ?>

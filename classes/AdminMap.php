@@ -5,8 +5,8 @@ class AdminMap extends BaseMap
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT user_id, branch_id
-        FROM admin WHERE user_id = $id");
+            $res = $this->db->query("SELECT CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, admin.user_id, admin.branch_id FROM admin
+            INNER JOIN user ON user.user_id = admin.user_id WHERE admin.user_id = $id");
             $admin = $res->fetchObject("Admin");
             if ($admin) {
                 return $admin;
@@ -91,5 +91,20 @@ class AdminMap extends BaseMap
             return $res->fetch(PDO::FETCH_OBJ);
         }
         return false;
+    }
+
+    public function deleteStudentById($id)
+    {
+        $query = "DELETE FROM admin WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+
+        $query = "DELETE FROM user WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
     }
 }

@@ -5,8 +5,8 @@ class TeacherMap extends BaseMap
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT user_id, otdel_id
-        FROM teacher WHERE user_id = $id");
+            $res = $this->db->query("SELECT CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, teacher.user_id, otdel_id FROM teacher
+            INNER JOIN user ON teacher.user_id = user.user_id WHERE teacher.user_id = $id");
             $teacher = $res->fetchObject("Teacher");
             if ($teacher) {
                 return $teacher;
@@ -110,13 +110,15 @@ class TeacherMap extends BaseMap
         $res = $this->db->prepare($query);
         if (
             $res->execute(
-                ['name' => $teacher->name,
+                [
+                    'name' => $teacher->name,
                     'user_id' => $_SESSION['id'],
                     'gruppa_id' => $teacher->gruppa_id,
                     'date_begin' => $teacher->date_begin,
                     'date_end' => $teacher->date_end,
                     'subject_id' => $teacher->subject_id,
-                    'file' => $teacher->file]
+                    'file' => $teacher->file
+                ]
             ) == 1
         ) {
             return true;
@@ -168,9 +170,11 @@ class TeacherMap extends BaseMap
         $query1 = "INSERT INTO grades (user_id, subject_id, grade, date) VALUES (:user_id, :subject_id, :grade, NOW())";
         $res1 = $this->db->prepare($query1);
         if (
-            $res1->execute(['user_id' => $teacher->user_id,
+            $res1->execute([
+                'user_id' => $teacher->user_id,
                 'subject_id' => $teacher->subject_id,
-                'grade' => $teacher->grade])
+                'grade' => $teacher->grade
+            ])
         ) {
             $query2 = "DELETE FROM `homework_parent` WHERE `homework_parent`.`id` = :id";
             $res2 = $this->db->prepare($query2);
@@ -179,5 +183,20 @@ class TeacherMap extends BaseMap
             }
         }
         return false;
+    }
+
+    public function deleteTeacherById($id)
+    {
+        $query = "DELETE FROM teacher WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+
+        $query = "DELETE FROM user WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
     }
 }

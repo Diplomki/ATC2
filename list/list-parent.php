@@ -21,8 +21,8 @@ require_once '../template/header.php';
         <div class="box">
             <section class="content-header">
                 <h3><b>
-                        <?php
-                        $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список родителей';
+                        <?=
+                            $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список родителей';
                         ?>
                     </b></h3>
                 <ol class="breadcrumb">

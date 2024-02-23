@@ -21,7 +21,9 @@ require_once '../template/header.php';
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h3><b>Список администраторов</b></h3>
+                <h3><b>
+                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список администраторов' ?>
+                    </b></h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
@@ -39,9 +41,7 @@ fa-dashboard"></i> Главная</a></li>
                 <?php
                 if ($admins) {
                     ?>
-
                     <table id="example2" class="table table-bordered table-hover">
-
                         <thead>
                             <tr>
                                 <th>Ф.И.О</th>
@@ -57,7 +57,7 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($admins as $admin) {
                                 echo '<tr>';
                                 if (Helper::can('manager') || Helper::can('admin'))
-                                    echo '<td><a href="../profile/profile-admin?id=' . $admin->user_id . '">' . $admin->fio . '</a> ' . '<a href="../add/add-admin?id=' . $admin->user_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-teacher?id=' . $admin->user_id . '"><i class="fa fa-times"></i></a></td>';
+                                    echo '<td><a href="../profile/profile-admin?id=' . $admin->user_id . '">' . $admin->fio . '</a> ' . '<a href="../add/add-admin?id=' . $admin->user_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-admin?id=' . $admin->user_id . '"><i class="fa fa-times"></i></a></td>';
                                 else
                                     echo '<td><p>' . $admin->fio . '</p> ' . '<a href="../add/add-admin?id=' . $admin->user_id . '"></a></td>';
                                 echo '<td>' . $admin->gender . '</td>';
@@ -65,7 +65,6 @@ fa-dashboard"></i> Главная</a></li>
                                 if (Helper::can('manager'))
                                     echo '<td>' . $admin->branch_name . '</td>';
                                 echo '</tr>';
-
                             }
                             ?>
                         </tbody>

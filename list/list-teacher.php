@@ -14,27 +14,28 @@ if (isset($_GET['page'])) {
 $teacherMap = new TeacherMap();
 $count = $teacherMap->count();
 $teachers = $teacherMap->findAll($page * $size - $size, $size);
-$header = 'Список преподавателей';
+
 require_once '../template/header.php';
 ?>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h3><b>Список преподавателей</b></h3>
+                <h3><b>
+                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список учителей' ?>
+                    </b></h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список
-                        преподавателей</li>
+                        учителей</li>
                 </ol>
             </section>
-            <div class="box-body">
-                <?php if (Helper::can('admin')) { ?>
+            <?php if (Helper::can('admin')) { ?>
+                <div class="box-body">
                     <a class="btn btn-success" href="../add/add-teacher">Добавить преподавателя</a>
-                <?php } ?>
-
-            </div>
+                </div>
+            <?php } ?>
             <!-- /.box-header -->
             <div class="box-body">
                 <?php
@@ -81,7 +82,6 @@ fa-dashboard"></i> Главная</a></li>
             <div class="box-body">
                 <?php Helper::paginator($count, $page, $size); ?>
             </div>
-            <!-- /.box-body -->
         </div>
     </div>
 </div>
