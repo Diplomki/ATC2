@@ -5,26 +5,25 @@ if (!Helper::can('procreator')) {
     header('Location: 404');
     exit();
 }
-
 $size = 10;
 
-if (isset($_GET['page'])) {
-    $page = Helper::clearInt($_GET['page']);
-} else {
-    $page = 1;
+$user_id = 0;
+if (isset($_POST['user_id'])) {
+    $user_id = $_POST['user_id'];
 }
 
-if (isset($_GET['id'])) {
-    $id = Helper::clearInt($_GET['id']);
-} else {
-    $id = 1;
+$subject_id = 0;
+if (isset($_POST['subject_id'])) {
+    $subject_id = $_POST['subject_id'];
 }
 
-$studentMap = new StudentMap();
-$students = $studentMap->viewPerformance();
+$branch_id = 0;
+if (isset($_POST['branch_id'])) {
+    $branch_id = $_POST['branch_id'];
+}
+
+$gradeInfo = (new ProcreatorMap())->findPerformanceByGradeInfo($user_id, $subject_id, $branch_id);
 $header = 'Студент';
-$userMap = new UserMap();
-$user = $userMap->auth($login, $password);
 require_once '../template/header.php';
 
 ?>
@@ -43,25 +42,55 @@ require_once '../template/header.php';
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-                <?php if ($students) { ?>
+                <?php if ($gradeInfo) { ?>
                     <form method="POST">
                         <table id="example2" class="table table-bordered table-hover">
                             <thead>
                                 <tr>
-                                    <th>Ф.И.О</th>
-                                    <th>Предмет</th>
-                                    <th>Посещаемость</th>
-                                    <th>Дата</th>
+                                    <th></th>
+                                    <?php
+                                    // Генерация заголовков по датам
+                                    foreach ($gradeInfo as $item) {
+                                        echo '<th>' . $item->date . '</th>';
+                                    }
+                                    ?>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
-                                foreach ($students as $student) {
+                                // Генерация строк по категориям
+                                $categories = ["Присутствовал", "Домашнее задание", "Активность", "Комментарий"];
+                                foreach ($categories as $category) {
                                     echo "<tr>";
-                                    echo "<td>" . $student->fio . "</td>";
-                                    echo "<td>" . $student->subject . "</td>";
-                                    echo "<td>" . $student->attend . "</td>";
-                                    echo "<td>" . $student->date . "</td>";
+                                    echo "<td><b>$category</b></td>";
+
+                                    // Генерация ячеек для каждой даты
+                                    foreach ($gradeInfo as $item) {
+                                        // В зависимости от категории выводим соответствующее значение
+                                        switch ($category) {
+                                            case "Присутствовал":
+                                                if ($item->attend == 1) {
+                                                    echo "<td>Б</td>";
+                                                } else if ($item->attend == 0) {
+                                                    echo "<td>Н</td>";
+                                                }
+                                                break;
+                                            case "Домашнее задание":
+                                                echo "<td>$item->homework</td>";
+                                                break;
+                                            case "Активность":
+                                                echo "<td>$item->grade</td>";
+                                                break;
+                                            case "Комментарий":
+                                                echo "<td>$item->comment</td>";
+                                                break;
+                                            default:
+                                                echo "<td></td>"; // Для остальных случаев
+                                        }
+                                    }
+
+                                    echo "</tr>";
+
                                     echo "</tr>";
                                 }
                                 ?>
@@ -69,7 +98,7 @@ require_once '../template/header.php';
                         </table>
                     </form>
                 <?php } else {
-                    echo 'Ни одного студента не найдено';
+                    echo 'Ни одной записи не найдено';
                 } ?>
             </div>
 

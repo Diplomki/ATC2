@@ -21,6 +21,20 @@ class ProcreatorMap extends BaseMap
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function arrChildsByParent()
+    {
+
+        $query = "SELECT DISTINCT parent.child_id as id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) 
+        as value FROM parent
+        INNER JOIN user ON parent.child_id = user.user_id
+        WHERE parent.user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $_SESSION['id']
+        ]);
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function findById($id = null)
     {
         if ($id) {
@@ -246,5 +260,22 @@ class ProcreatorMap extends BaseMap
         $res3->execute([
             'id' => $id
         ]);
+    }
+
+
+    public function findPerformanceByGradeInfo($user_id, $subject_id, $branch_id)
+    {
+        $query = "SELECT grade_accept.user_id as user_id, subject.name as subject, grade_accept.subject_id, 
+        grade_accept.grade as grade, grade_accept.date as date, grade_accept.attend, grade_accept.branch_id 
+        FROM grade_accept
+        INNER JOIN subject ON subject.subject_id = grade_accept.subject_id
+        WHERE grade_accept.user_id = :user_id and grade_accept.subject_id = :subject_id and grade_accept.branch_id = :branch_id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'user_id' => $user_id,
+            'subject_id' => $subject_id,
+            'branch_id' => $branch_id
+        ]);
+        return $res->fetchAll(PDO::FETCH_OBJ);
     }
 }
