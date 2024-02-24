@@ -4,8 +4,10 @@ if (!Helper::can('manager')) {
     header('Location: 404');
     exit();
 }
+$parent_id = (new StudentMap())->findParentByStudentId($_POST['child_id']);
 if (isset($_POST['savePayment'])) {
     $student = new Student();
+    $student->parent_id = Helper::clearint($parent_id);
     $student->user_id = Helper::clearInt($_POST['child_id']);
     $student->subject_id = Helper::clearInt($_POST['subject_id']);
     $student->subject_count = Helper::clearInt($_POST['subject_count']);
@@ -15,10 +17,11 @@ if (isset($_POST['savePayment'])) {
 
     move_uploaded_file($fileTmpName, "../uploads/" . $student->tab);
 
+
     if ((new StudentMap())->savePayment($student)) {
-        header('Location: ../check/check-child?message=ok');
+        header('Location: ../add/add-payment?message=ok');
     } else {
-        header('Location: ../check/check-child?message=err');
+        header('Location: ../add/add-payment?message=err');
     }
 }
 

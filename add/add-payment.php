@@ -1,7 +1,13 @@
 <?php
 require_once '../secure.php';
 
+$id = 0;
+
 $size = 10;
+
+if (isset($_GET['id'])) {
+    $id = Helper::clearInt($_GET['id']);
+}
 
 if (isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
@@ -9,106 +15,64 @@ if (isset($_GET['page'])) {
     $page = 1;
 }
 
-if (isset($_GET['id'])) {
-    $id = Helper::clearInt($_GET['id']);
-} else {
-    $id = 1;
-}
-
-
-$studentMap = new StudentMap();
-$count = $studentMap->count();
-$students = $studentMap->findStudentById($id);
-$header = 'Список студентов';
+$procreatorMap = new ProcreatorMap();
+$notice = $procreatorMap->findNoticeById($id);
 require_once '../template/header.php';
-
+$header = "Оплата";
 ?>
 
-<div class="row">
-    <div class="col-xs-12">
-        <div class="box">
-            <section class="content-header">
-                <h3><b>Оплата</b></h3>
-                <ol class="breadcrumb">
-                    <li><a href="../index"><i class="fa fa-dashboard"></i> Главная</a></li>
-                    <li class="active">Список студентов</li>
-                </ol>
-            </section>
-            <div class="box-body">
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <?php if ($students) { ?>
-                    <form action="../save/save-payment" method="POST" enctype="multipart/form-data">
-                        <table id="example2" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Ф.И.О</th>
-                                    <th>Предмет</th>
-                                    <th>Кол-во уроков</th>
-                                    <th>Сумма</th>
-                                    <th>Подтвеж-дение</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <?php
-                                        echo '<p>' . $students->fio . '</p>';
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <select class="form-control" name="subject_id">
-                                            <?= Helper::printSelectOptions($students->subject_id, (new SubjectMap())->arrSubjects()); ?>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        echo '<input type="number" name="subject_count" id="input1" oninput="calculateSum()">';
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        echo '<input type="hidden" name="subject_price">';
-                                        echo '<span id="sum"></span>';
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <?php
-                                        echo '<input  type="file" name="fileToUpload">';
-                                        ?>
-                                    </td>
-                                    <td>
-                                        <button type="submit" name="savePayment" class="btn btn-primary">Сохранить</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                        <input type="hidden" name="user_id" value="<?= $id; ?>" />
-                    </form>
-                <?php } else {
-                    echo 'Cтудент не найден';
-                } ?>
-            </div>
-
-        </div>
+<section class="content-header">
+    <h3><b>
+            <?= $header ?>
+        </b></h3>
+    <ol class="breadcrumb">
+        <li><a href="../index"><i class="fa fa-dashboard"></i> Главная</a></li>
+        <li class="active">Оплата</li>
+    </ol>
+</section><br>
+<form action="../save/save-payment" method="post" enctype="multipart/form-data">
+    <div class="box-body">
+        <table class="table table-bordered table-hover">
+            <tr>
+                <th>Текст уведомления</th>
+                <td>
+                    <?= $notice->text ?>
+                </td>
+            </tr>
+            <tr>
+                <th>Предмет</th>
+                <td>
+                    <?= $notice->subject ?>
+                </td>
+            </tr>
+            <tr>
+                <th>За кого</th>
+                <td>
+                    <?= $notice->fio ?>
+                </td>
+            </tr>
+            <tr>
+                <th>Количество предметов</th>
+                <td>
+                    <?= $notice->subject_count ?>
+                </td>
+            </tr>
+            <tr>
+                <th>Цена</th>
+                <td>
+                    <?= $notice->subject_price ?>
+                </td>
+            </tr>
+            <tr>
+                <th>До</th>
+                <td>
+                    <?= $notice->date; ?>
+                </td>
+            </tr>
+        </table>
     </div>
-</div>
-<script>
-    function calculateSum() {
-        var input1 = parseFloat(document.getElementById("input1").value);
+</form>
 
-        if (isNaN(input1) || input1 < 0) {
-            document.getElementsByName("subject_price")[0].value = 0;
-            document.getElementById("sum").textContent = 0 + "₸";
-        }
-        else if (sum != 0) {
-            var sum = input1 * 5000;
-            document.getElementsByName("subject_price")[0].value = sum;
-            document.getElementById("sum").textContent = sum + "₸";
-        }
-    }
-</script>
 <?php
 require_once '../template/footer.php';
 

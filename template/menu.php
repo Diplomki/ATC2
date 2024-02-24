@@ -54,7 +54,7 @@
 
                 <li <?= ($_SERVER['PHP_SELF'] == '../add/add-payment.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../add/add-payment"><i class="fa fa-dollar"></i><span>Создать оплату</span></a>
+                    <a href="../select-parent"><i class="fa fa-dollar"></i><span>Создать оплату</span></a>
 
                 </li>
             <?php } ?>
@@ -133,29 +133,27 @@
 
                     <a href="../select-subject"><i class="fa fa-address-book"></i><span>Оценки</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '../select-parent.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../select-parent"><i class="fa fa-envelope"></i><span>Уведомление об оплате</span></a>
                 <?php } ?>
 
                 <?php if (Helper::can('procreator')) { ?>
 
                 <li class="header">Справочники</li>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '../check/check-performance.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '/check/check-performance.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../check/check-performance"><i class="fa fa-address-book"></i><span>Успеваемоcть</span></a>
-                <li <?= ($_SERVER['PHP_SELF'] == '../check/check-child.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '/view/view-notice.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../check/check-child"><i class="fa fa-usd"></i><span>Оплата</span></a>
-                <li <?= ($_SERVER['PHP_SELF'] == '../check/check-control.php') ? 'class="active"' : ''; ?>>
+                    <a href="../view/view-notice"><i class="fa fa-usd"></i><span>Оплата</span></a>
+
+                <li <?= ($_SERVER['PHP_SELF'] == '/check/check-control.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../check/check-control"><i class="fa fa-usd"></i><span>Контроль оплаты</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-homework.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-homework.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../list/list-homework"><i class="fa fa-home"></i><span>Домашнее задание</span></a>
-
 
                 <?php } ?>
         </ul>

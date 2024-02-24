@@ -107,7 +107,6 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
                     <?php if ($schedules): ?>
                         <?php if ($userIdentity == UserMap::TEACHER): ?>
                             <table class="table table-bordered table-hover">
-
                                 <?php foreach ($schedules as $day):
                                     ?>
                                     <tr>

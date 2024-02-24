@@ -5,7 +5,7 @@ if (!Helper::can('procreator')) {
     exit();
 }
 
-$id = 14;
+$id = 0;
 if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 }
@@ -31,7 +31,7 @@ require_once '../template/header.php';
                 foreach ($notices as $notice) {
                     if ($notice->id == $id) {
                         echo "<p style='font-size: 16px;'>" . $notice->text . "</p>";
-                        echo "<b style='font-size: 16px;'>" . $notice->child . "->" . $notice->subject . "->" .
+                        echo "<b style='font-size: 16px;'>" . $notice->child . " -> " . $notice->subject . " -> " .
                             $notice->date . "</b>";
                     }
                 }

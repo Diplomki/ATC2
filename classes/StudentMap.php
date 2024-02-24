@@ -6,7 +6,7 @@ class StudentMap extends BaseMap
     {
         $res = $this->db->query("SELECT user.user_id AS id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) AS value, branch.id AS branch FROM user
         INNER JOIN branch ON branch.id = user.branch_id
-        WHERE user.role_id = 5 and user.branch_id = {$_SESSION['branch']}");
+        WHERE user.role_id = 5");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -59,7 +59,7 @@ class StudentMap extends BaseMap
     {
         if (
             $this->db->exec("INSERT INTO payment(parent_id, child_id, subject_id, count, tab, price) 
-            VALUES({$_SESSION['id']}, $student->user_id, 
+            VALUES($student->parent_id, $student->user_id, 
             $student->subject_id, $student->subject_count, '$student->tab', $student->subject_price)") == 1
         ) {
             return true;
@@ -428,7 +428,15 @@ class StudentMap extends BaseMap
         $res->execute([
             'id' => $id
         ]);
-
-
+    }
+    public function findParentByStudentId($id)
+    {
+        $query = "SELECT DISTINCT parent.user_id FROM parent
+        WHERE child_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+        return $res->fetchColumn();
     }
 }

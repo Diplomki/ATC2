@@ -97,20 +97,20 @@ desired effect
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
                       <?php if ($notices) { ?>
-                        <?php foreach ($notices as $notice) { ?>
-                          <a href="../check/check-notice?id=<?= $notice->id; ?>">
+                        <?php foreach ($notices as $item) { ?>
+                          <a href="../add/add-payment?id=<?= $item->id; ?>">
                             <li>
                               <br>
-                              <?= $notice->text; ?>
+                              <?= $item->text; ?>
                               <br>
                               <b>
-                                <?= $notice->child; ?>:
+                                <?= $item->child; ?>:
                               </b>
                               <b>
-                                <?= $notice->subject; ?>
+                                <?= $item->subject; ?>
                               </b>&#10230;
                               <b>
-                                <?= $notice->date; ?>
+                                <?= $item->date; ?>
                               </b>
                             </li>
                           </a>

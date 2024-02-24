@@ -21,6 +21,20 @@ class ProcreatorMap extends BaseMap
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function arrChildsByParentId($id)
+    {
+        $query = "SELECT DISTINCT parent.child_id as id, 
+        CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) 
+        as value FROM parent
+        INNER JOIN user ON parent.child_id = user.user_id
+        WHERE parent.user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function arrChildsByParent()
     {
 
@@ -138,7 +152,8 @@ class ProcreatorMap extends BaseMap
         child, subject.name as subject, notice.date as date FROM notice
         INNER JOIN user ON user.user_id = notice.child_id
         INNER JOIN subject ON subject.subject_id = notice.subject_id
-        WHERE notice.user_id = {$_SESSION['id']}");
+        WHERE notice.user_id = {$_SESSION['id']}
+        ORDER BY notice.id DESC");
 
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
@@ -277,5 +292,21 @@ class ProcreatorMap extends BaseMap
             'branch_id' => $branch_id
         ]);
         return $res->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function findNoticeById($id)
+    {
+        $query = "SELECT notice.id, notice.text, notice.subject_id as subject_id, subject.name as subject, 
+        CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, notice.subject_count,
+        notice.subject_price, notice.date 
+        FROM notice
+        INNER JOIN user ON notice.child_id = user.user_id
+        INNER JOIN subject ON notice.subject_id = subject.subject_id
+        WHERE id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+        return $res->fetch(PDO::FETCH_OBJ);
     }
 }

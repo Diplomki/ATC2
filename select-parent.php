@@ -1,6 +1,6 @@
 <?php
 require_once 'secure.php';
-if (!Helper::can('admin')) {
+if (!Helper::can('manager')) {
     header('Location: 404');
     exit();
 }
@@ -16,16 +16,12 @@ require_once 'template/header.php';
 <section class="content-header">
     <h3>
         <b>
-            <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Создать уведомление'; ?>
+            <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Создать оплату'; ?>
         </b>
     </h3>
     <ol class="breadcrumb">
-
         <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
-
-        <li>Уведомления</li>
-
-
+        <li>Создать оплату</li>
     </ol>
 </section>
 <div class="box-body">
