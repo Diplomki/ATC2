@@ -73,7 +73,7 @@ require_once 'template/header.php';
                             echo '</tr>';
                             echo '<tr>';
                             echo '<th>Загрузить файл с выполненым заданием:</th>';
-                            echo "<td>" . '<form action="save-homework-parent" method="post" enctype="multipart/form-data">
+                            echo "<td>" . '<form action="save/save-homework-parent" method="post" enctype="multipart/form-data">
                                         <input type="hidden" name="homework_teacher_id" value="' . $procreator->id . '">
                                         <input type="hidden" name="name" value="' . $procreator->name . '">
                                         <input type="hidden" name="teacher_id" value="' . $procreator->user_id . '">

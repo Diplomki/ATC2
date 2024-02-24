@@ -167,13 +167,15 @@ class TeacherMap extends BaseMap
 
     public function insertGradeFromHomework(Teacher $teacher)
     {
-        $query1 = "INSERT INTO grades (user_id, subject_id, grade, date) VALUES (:user_id, :subject_id, :grade, NOW())";
+        $query1 = "INSERT INTO grades (user_id, subject_id, grade, date, comment, homework) VALUES (:user_id, :subject_id, :grade, NOW(), :comment, :homework)";
         $res1 = $this->db->prepare($query1);
         if (
             $res1->execute([
                 'user_id' => $teacher->user_id,
                 'subject_id' => $teacher->subject_id,
-                'grade' => $teacher->grade
+                'grade' => $teacher->grade,
+                'comment' => $teacher->comment,
+                'homework' => $teacher->file
             ])
         ) {
             $query2 = "DELETE FROM `homework_parent` WHERE `homework_parent`.`id` = :id";

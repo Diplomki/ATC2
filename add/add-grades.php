@@ -58,7 +58,8 @@ require_once '../template/header.php';
                                     <th>Ф.И.О</th>
                                     <th>Предмет</th>
                                     <th>Оценка</th>
-                                    <th>Посещае-мость</th>
+                                    <th>Посещаемость</th>
+                                    <th>Комментарий</th>
                                 </tr>
 
                             </thead>
@@ -88,6 +89,9 @@ require_once '../template/header.php';
                                                 Helper::printSelectOptions($student->attend, (new StudentMap())->arrAttends());
                                                 ?>
                                             </select>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="comment[<?php echo $student->user_id; ?>]">
                                         </td>
                                     </tr>
                                 <?php } ?>

@@ -11,6 +11,7 @@ class Teacher extends Table
   public $subject_id = 0;
   public $file = '';
   public $otdel_id = 0;
+  public $comment = '';
   function validate()
   {
     if (!empty($this->otdel_id)) {

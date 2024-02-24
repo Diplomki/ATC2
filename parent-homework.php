@@ -78,12 +78,19 @@ require_once 'template/header.php';
                             echo '</tr>';
                             echo '<tr>';
                             echo '<th>Оценка за задание:</th>';
-                            echo "<td>" . '<form action="save-grade-from-homework" method="post">
+                            echo "<td>" . '<form action="save/save-grade-from-homework" method="post">
                                         <input type="hidden" name="id" value="' . $teacher->id . '">
                                         <input type="hidden" name="user_id" value="' . $teacher->student_id . '">
                                         <input type="hidden" name="subject_id" value="' . $teacher->subject_id . '">
+                                        <input type="hidden" name="homework" value="' . $teacher->file_prepared . '">
                                         <input type="text" name="grade">
                                         ' . "</td>";
+                            echo '</tr>';
+                            echo '<tr>';
+                            echo '<th>Комментарий:</th>';
+                            echo "<td>" . '<form action="save/save-grade-from-homework" method="post">
+                            <input type="text" name="comment">
+                            ' . "</td>";
                             echo '</tr>';
                             echo '<tr>';
                             ?>

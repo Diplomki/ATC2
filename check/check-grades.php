@@ -55,7 +55,10 @@ require_once '../template/header.php';
                                 <th>Предмет</th>
                                 <th>Оценка</th>
                                 <th>Дата</th>
-                                <th>Посеща-емость</th>
+                                <th>Посещаемость</th>
+                                <th>Комментарий</th>
+                                <th>Дом. задание</th>
+                                <th>Действие</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -67,6 +70,8 @@ require_once '../template/header.php';
                                 echo "<td>" . $student->grade . "</td>";
                                 echo "<td>" . $student->date . "</td>";
                                 echo "<td>" . $student->attend . "</td>";
+                                echo "<td>" . $student->comment . "</td>";
+                                echo "<td> <a href='../homework-student/" . $student->homework . "'>" . preg_replace("/^[0-9_]+/", "", $student->homework) . "</a></td>";
                                 echo "<td>" . '<form action="../save/save-grades" method="post">
                                                         <input type="hidden" name="grade_id" value="' . $student->id . '">
                                                         <input type="hidden" name="user_id" value="' . $student->user_id . '">
@@ -74,6 +79,8 @@ require_once '../template/header.php';
                                                         <input type="hidden" name="grade" value="' . $student->grade . '">
                                                         <input type="hidden" name="date" value="' . $student->date . '">
                                                         <input type="hidden" name="attend" value="' . $student->attend_id . '">
+                                                        <input type="hidden" name="comment" value="' . $student->comment . '">
+                                                        <input type="hidden" name="homework" value="' . $student->homework . '">
                                                         <input class="btn btn-success" type="submit" name="gradeSubmit" value="Подтвердить">
                                                         <input class="btn btn-danger" type="submit" name="gradeDelete" value="Отклонить">
                                                         </form>' . "</td>";

@@ -10,6 +10,8 @@ if (isset($_POST['saveHomeworkStudent'])) {
     $teacher->user_id = $_POST['user_id'];
     $teacher->grade = $_POST['grade'];
     $teacher->subject_id = $_POST['subject_id'];
+    $teacher->comment = $_POST['comment'];
+    $teacher->file = $_POST['homework'];
     if ((new TeacherMap())->insertGradeFromHomework($teacher)) {
         header('Location: ../check/check-parent-homework?message=ok');
     } else {

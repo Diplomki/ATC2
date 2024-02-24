@@ -189,7 +189,10 @@ class StudentMap extends BaseMap
 
     public function checkGrades()
     {
-        $res = $this->db->query("SELECT grades.grade_id as id, user.user_id AS user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.subject_id AS subject_id, subject.name AS subject, grades.grade AS grade, grades.date AS date, attend.attend as attend, attend.id as attend_id, branch.id AS branch FROM user
+        $res = $this->db->query("SELECT grades.grade_id as id, user.user_id AS user_id, 
+        CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, subject.subject_id AS subject_id, 
+        subject.name AS subject, grades.grade AS grade, grades.date AS date, attend.attend as attend, 
+        attend.id as attend_id, grades.comment,grades.homework, branch.id AS branch FROM user
         INNER JOIN grades ON user.user_id = grades.user_id
         INNER JOIN subject on subject.subject_id=grades.subject_id
         LEFT JOIN attend on attend.id = grades.attend
@@ -260,7 +263,9 @@ class StudentMap extends BaseMap
             $this->db->exec("UPDATE payment_archive SET count = count - 1
             WHERE child_id=" . $student->user_id . " and subject_id=" . $student->subject_id) == 1
         ) {
-            $this->db->exec("INSERT INTO grade_accept (user_id, subject_id, grade, date, attend, branch_id) VALUES ($student->user_id, $student->subject_id, '$student->grade', '$student->date', $student->attend, {$_SESSION['branch']})");
+            $this->db->exec("INSERT INTO grade_accept (user_id, subject_id, grade, date, attend, comment, homework, branch_id) 
+            VALUES ($student->user_id, $student->subject_id, '$student->grade', '$student->date', $student->attend, 
+            '$student->comment', '$student->file', {$_SESSION['branch']})");
             $this->db->exec("DELETE FROM grades WHERE grade_id = '$student->grade_id'");
             return true;
         }
@@ -381,14 +386,14 @@ class StudentMap extends BaseMap
             return false;
         }
 
-        $query = "INSERT INTO grades (user_id, subject_id, grade, date, attend) VALUES (:user_id, :subject_id, :grade, NOW(), :attend)";
+        $query = "INSERT INTO grades (user_id, subject_id, grade, date, attend, comment) VALUES (:user_id, :subject_id, :grade, NOW(), :attend, :comment)";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':user_id', $student->user_id, PDO::PARAM_INT);
         $stmt->bindParam(':subject_id', $student->subject_id, PDO::PARAM_INT);
         $stmt->bindParam(':grade', $student->grade);
         $stmt->bindParam(':attend', $student->attend, PDO::PARAM_INT);
-
+        $stmt->bindParam(':comment', $student->comment);
         return $stmt->execute();
     }
 

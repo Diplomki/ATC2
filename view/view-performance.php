@@ -76,13 +76,26 @@ require_once '../template/header.php';
                                                 }
                                                 break;
                                             case "Домашнее задание":
-                                                echo "<td>$item->homework</td>";
+                                                if ($item->homework != NULL) {
+                                                    echo "<td><a href='../homework-student/$item->homework'>" . preg_replace("/^[0-9_]+/", "", $item->homework) . "</a></td>";
+                                                } else {
+                                                    echo "<td>-</td>";
+
+                                                }
                                                 break;
                                             case "Активность":
-                                                echo "<td>$item->grade</td>";
+                                                if ($item->grade != 0) {
+                                                    echo "<td>$item->grade</td>";
+                                                } else {
+                                                    echo "<td>-</td>";
+                                                }
                                                 break;
                                             case "Комментарий":
-                                                echo "<td>$item->comment</td>";
+                                                if ($item->comment != NULL) {
+                                                    echo "<td>$item->comment</td>";
+                                                } else {
+                                                    echo "<td>-</td>";
+                                                }
                                                 break;
                                             default:
                                                 echo "<td></td>"; // Для остальных случаев

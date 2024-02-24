@@ -17,6 +17,8 @@ class Student extends Table
     public $attend = 0;
     public $num_zach = 0;
     public $reference = '';
+    public $comment = '';
+    public $file = '';
     function validate()
     {
         if (!empty($this->gruppa_id)) {

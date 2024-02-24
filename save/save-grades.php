@@ -14,6 +14,8 @@ if (isset($_POST['gradeSubmit'])) {
     $student->grade = Helper::clearInt($_POST['grade']);
     $student->date = Helper::clearString($_POST['date']);
     $student->attend = Helper::clearInt($_POST['attend']);
+    $student->comment = Helper::clearString($_POST['comment']);
+    $student->file = Helper::clearString($_POST['homework']);
 
     foreach ($paymentArchives as $paymentArchive) {
         if ((new StudentMap())->saveUpdateGrades($student)) {

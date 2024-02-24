@@ -13,6 +13,7 @@ if (isset($_POST['formSubmit'])) {
         $student->user_id = $user_id;
         $student->attend = $_POST['attend'][$user_id];
         $student->grade = $grade;
+        $student->comment = $_POST['comment'][$user_id];
         (new StudentMap())->saveAddGrades($student);
         $flag = true;
     }
