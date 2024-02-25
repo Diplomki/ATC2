@@ -5,6 +5,10 @@ require_once 'template/header.php';
 $userMap = new UserMap();
 $indexTeacher = $userMap->teacherCount();
 $indexStudent = $userMap->studentCount();
+
+$branch_name = $_SESSION['branch_name'];
+$branch = $userMap->findBranchByName($branch_name);
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,10 +44,17 @@ $indexStudent = $userMap->studentCount();
 
 <body>
     <?php if (!Helper::can('procreator') && !Helper::can('teacher')) {
-        $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : 'Главная';
+        $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch_name;
         ?>
+
         <section class="content-header">
             <h3><b>
+                    <?= $header ?>
+                </b></h3>
+        </section>
+        <section class="content-header">
+            <h3><b>
+                    Дата основания:
                     <?= $header ?>
                 </b></h3>
         </section>

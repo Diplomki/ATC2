@@ -9,7 +9,7 @@ class UserMap extends BaseMap
     function auth($login, $password)
     {
         $login = $this->db->quote($login);
-        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.pass, role.sys_name, role.name, user.photo, branch.id AS branch FROM user 
+        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.pass, role.sys_name, role.name, user.photo, branch.id AS branch, branch.branch as branch_name FROM user 
         INNER JOIN role ON user.role_id=role.role_id 
         INNER JOIN branch ON user.branch_id = branch.id 
         WHERE user.login = $login AND user.active = 1");
@@ -60,7 +60,12 @@ class UserMap extends BaseMap
         WHERE id != 999");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
-
+    public function findBranchByName($name)
+    {
+        $res = $this->db->query("SELECT id AS id, branch AS value FROM branch 
+        WHERE id != 999");
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
     public function save($user = User)
     {
         if ($user->user_id == 0) {

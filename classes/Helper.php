@@ -20,6 +20,17 @@ class Helper
             <?php }
         }
     }
+    static function printSelectOptionsByIdAndValue($options = array())
+    {
+        if ($options) {
+            foreach ($options as $option) { ?>
+                <option value="<?= $option['id']; ?>, <?= $option['value']; ?>">
+                    <?= $option['value']; ?>
+                </option>
+            <?php }
+        }
+    }
+
     public static function paginator($count = 1, $current = 1, $size = 30)
     {
         $numPages = ceil($count / $size);
@@ -61,6 +72,7 @@ class Helper
             'okDel' => 'Успешно удалено',
             'err' => 'Ошибка',
             'errDel' => 'Ошибка удаления',
+            'errBranch' => 'Вы не принадлежите этому филиалу',
             'errGrades' => 'Ошибка при подтверждении оценки (Возможно у ученика закончились допуски к уроку)',
         ];
 
