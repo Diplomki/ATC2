@@ -8,24 +8,12 @@
                 <a href="../index"><i class="fa fa-calendar"></i><span>Главная</span></a>
 
             </li>
-            <?php if (!Helper::can('teacher') && !Helper::can('admin') && !Helper::can('procreator')) { ?>
+            <?php if (Helper::can('manager')) { ?>
                 <li class="header">Пользователи</li>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '../list/list-admin.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../list/list-admin"><i class="fa fa-users"></i><span>Администраторы</span></a>
-
-                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-teacher.php') ? 'class="active"' : ''; ?>>
-
-                    <a href="../list/list-teacher"><i class="fa fa-users"></i><span>Преподаватели</span></a>
-
-                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-student.php') ? 'class="active"' : ''; ?>>
-
-                    <a href="../list/list-student"><i class="fa fa-users"></i><span>Студенты</span></a>
-
-                <li <?= ($_SERVER['PHP_SELF'] == '../list/list-parent.php') ? 'class="active"' : ''; ?>>
-
-                    <a href="../list/list-parent"><i class="fa fa-users"></i><span>Родители</span></a>
 
                 <li class="header">Справочники</li>
 

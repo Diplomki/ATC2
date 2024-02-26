@@ -5,10 +5,11 @@ require_once 'template/header.php';
 $userMap = new UserMap();
 $indexTeacher = $userMap->teacherCount();
 $indexStudent = $userMap->studentCount();
+$indexParent = $userMap->parentCount();
 
 $branch_name = $_SESSION['branch_name'];
+$branch_name = trim($branch_name);
 $branch = $userMap->findBranchByName($branch_name);
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -55,37 +56,52 @@ $branch = $userMap->findBranchByName($branch_name);
         <section class="content-header">
             <h3><b>
                     Дата основания:
-                    <?= $header ?>
+                    <?= $branch->date_founding ?>
                 </b></h3>
         </section>
         <section class="content">
+            <a style="text-decoration: none; color: #333;" href="list/list-teacher">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua"><i class="ion ion-stats-bars"></i></span>
 
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-aqua"><i class="ion ion-stats-bars"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Кол-во учителей</b></span>
-                        <span class="info-box-number">
-                            <?php echo $indexTeacher->count; ?>
-                        </span>
-                    </div>
-
-                </div>
-            </div>
-
-            <div class="col-md-3 col-sm-6 col-xs-12">
-                <div class="info-box">
-                    <span class="info-box-icon bg-red"><i class="ion ion-person-add"></i></span>
-
-                    <div class="info-box-content">
-                        <span class="info-box-text"><b>Кол-во студентов</b></span>
-                        <span class="info-box-number">
-                            <?php echo $indexStudent->count; ?>
-                        </span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Кол-во учителей</b></span>
+                            <span class="info-box-number">
+                                <?= $indexTeacher->count ?>
+                            </span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
+
+            <a style="text-decoration: none; color: #333;" href="list/list-student">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-red"><i class="ion ion-person-add"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Кол-во учеников</b></span>
+                            <span class="info-box-number">
+                                <?= $indexStudent->count ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a style="text-decoration: none; color: #333;" href="list/list-teacher">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-red"><i class="ion ion-person-add"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Кол-во родителей</b></span>
+                            <span class="info-box-number">
+                                <?= $indexParent->count ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </section>
     <?php } ?>
 

@@ -62,10 +62,15 @@ class UserMap extends BaseMap
     }
     public function findBranchByName($name)
     {
-        $res = $this->db->query("SELECT id AS id, branch AS value FROM branch 
-        WHERE id != 999");
-        return $res->fetchAll(PDO::FETCH_ASSOC);
+        $query = "SELECT id AS id, branch AS name, date_founding FROM branch 
+        WHERE branch = :branch and id != 999";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'branch' => $name
+        ]);
+        return $res->fetch(PDO::FETCH_OBJ);
     }
+
     public function save($user = User)
     {
         if ($user->user_id == 0) {
@@ -223,6 +228,19 @@ class UserMap extends BaseMap
         return $res->fetch(PDO::FETCH_OBJ);
     }
 
+    public function parentCount()
+    {
+        if ($_SESSION['branch'] != 999) {
+            $res = $this->db->query("SELECT COUNT(DISTINCT parent.user_id) as count 
+            FROM parent
+            INNER JOIN user ON parent.user_id = user.user_id
+            WHERE user.branch_id = {$_SESSION['branch']}");
+            ;
+        } else {
+            $res = $this->db->query("SELECT COUNT(*) as count FROM student");
+        }
+        return $res->fetch(PDO::FETCH_OBJ);
+    }
 
     public function identity($id)
     {

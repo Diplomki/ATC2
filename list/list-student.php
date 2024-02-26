@@ -22,18 +22,18 @@ require_once '../template/header.php';
         <div class="box">
             <section class="content-header">
                 <h3><b>
-                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список студентов'; ?>
+                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список учеников'; ?>
                     </b></h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                     <li class="active">Список
-                        студентов</li>
+                        учеников</li>
                 </ol>
             </section>
             <?php if (Helper::can('admin')) { ?>
                 <div class="box-body">
-                    <a class="btn btn-success" href="../add/add-student">Добавить студента</a>
+                    <a class="btn btn-success" href="../add/add-student">Добавить ученика</a>
                 </div>
             <?php } ?>
             <!-- /.box-header -->
@@ -76,7 +76,7 @@ fa-dashboard"></i> Главная</a></li>
                         </tbody>
                     </table>
                 <?php } else {
-                    echo 'Ни одного студента не найдено';
+                    echo 'Ни одного ученика не найдено';
                 } ?>
             </div>
             <div class="box-body">
