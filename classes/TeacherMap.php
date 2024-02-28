@@ -5,8 +5,12 @@ class TeacherMap extends BaseMap
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, teacher.user_id, otdel_id FROM teacher
-            INNER JOIN user ON teacher.user_id = user.user_id WHERE teacher.user_id = $id");
+            $res = $this->db->query("SELECT CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, teacher.user_id, otdel_id, awards.subject_id, awards.award FROM teacher
+
+            LEFT JOIN awards ON teacher.user_id = awards.user_id
+            INNER JOIN user ON teacher.user_id = user.user_id 
+            
+            WHERE teacher.user_id = $id");
             $teacher = $res->fetchObject("Teacher");
             if ($teacher) {
                 return $teacher;
@@ -34,6 +38,14 @@ class TeacherMap extends BaseMap
             $this->db->exec("INSERT INTO teacher(user_id,
         otdel_id) VALUES($teacher->user_id, $teacher->otdel_id)") == 1
         ) {
+            $stmt = $this->db->prepare("INSERT INTO awards (user_id, subject_id, award) 
+            VALUES (:user_id, :subject_id, :award)");
+            $stmt->bindParam(':user_id', $teacher->user_id);
+            $stmt->bindParam(':subject_id', $teacher->award_subject_id);
+            $stmt->bindParam(':award', $teacher->award);
+            if ($stmt->execute()) {
+                return true;
+            }
             return true;
         }
         return false;
@@ -41,6 +53,10 @@ class TeacherMap extends BaseMap
 
     private function update($teacher = Teacher)
     {
+        $this->db->exec("UPDATE awards SET subject_id = '$teacher->award_subject_id' WHERE user_id = 
+            $teacher->user_id");
+        $this->db->exec("UPDATE awards SET award = '$teacher->award' WHERE user_id = 
+            $teacher->user_id");
         if ($this->db->exec("UPDATE teacher SET otdel_id = $teacher->otdel_id WHERE user_id=" . $teacher->user_id) == 1) {
             return true;
         }
@@ -49,13 +65,16 @@ class TeacherMap extends BaseMap
     public function findAll($ofset = 0, $limit = 30)
     {
         if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT user.user_id,  CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, otdel.name AS otdel, role.name AS role, branch.id AS branch FROM user 
-        INNER JOIN teacher ON user.user_id=teacher.user_id 
-        INNER JOIN gender ON user.gender_id=gender.gender_id 
-        INNER JOIN otdel ON teacher.otdel_id=otdel.otdel_id
-        INNER JOIN role ON user.role_id=role.role_id
-        INNER JOIN branch ON branch.id=user.branch_id
-        WHERE branch.id = {$_SESSION['branch']}
+            $res = $this->db->query("SELECT user.user_id,  CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, otdel.name AS otdel, role.name AS role, subject.name as subject, awards.award, branch.id AS branch FROM user 
+            INNER JOIN teacher ON user.user_id=teacher.user_id 
+            INNER JOIN gender ON user.gender_id=gender.gender_id 
+            LEFT JOIN otdel ON teacher.otdel_id=otdel.otdel_id
+            INNER JOIN role ON user.role_id=role.role_id
+            INNER JOIN branch ON branch.id=user.branch_id
+            LEFT JOIN awards ON user.user_id = awards.user_id
+            LEFT JOIN subject ON subject.subject_id = awards.subject_id
+    
+            WHERE branch.id = {$_SESSION['branch']}
         LIMIT $ofset, $limit");
             return $res->fetchAll(PDO::FETCH_OBJ);
         } else {
@@ -189,6 +208,12 @@ class TeacherMap extends BaseMap
 
     public function deleteTeacherById($id)
     {
+        $query = "DELETE FROM awards WHERE user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'id' => $id
+        ]);
+
         $query = "DELETE FROM teacher WHERE user_id = :id";
         $res = $this->db->prepare($query);
         $res->execute([

@@ -52,13 +52,10 @@ require_once '../template/header.php';
                             <?php
                             foreach ($arrOtdels as $otdel) {
                                 echo '<tr>';
-                                if (Helper::can('admin')) {
-                                    echo '<td><a href="../view/view-otdel?id=' . $otdel->otdel_id . '">' . $otdel->name . '</a> '
-                                        . '<a href="../add/add-otdel?id=' . $otdel->otdel_id . '"><i class="fa fa-pencil"></i></a></td>';
-                                } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="../view/view-otdel?id=' . $otdel->otdel_id . '">' . $otdel->name . '</a> '
-                                        . '<a href="../add/add-otdel?id=' . $otdel->otdel_id . '"></a></td>';
-                                }
+
+                                echo '<td><a href="../view/view-otdel?id=' . $otdel->otdel_id . '">' . $otdel->name . '</a> '
+                                    . '<a href="../add/add-otdel?id=' . $otdel->otdel_id . '"><i class="fa fa-pencil"></i> </a><a href="../delete/delete-otdel?id=' . $otdel->otdel_id . '"><i class="fa fa-times"></i></a></td>';
+
                             }
                             ?>
                         </tbody>

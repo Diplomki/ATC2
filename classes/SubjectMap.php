@@ -63,7 +63,7 @@ class SubjectMap extends BaseMap
     public function findAll($ofset = 0, $limit = 30)
     {
         $res = $this->db->query("SELECT subject.subject_id,
-        subject.name, subject.name AS special, subject.hours AS hours, otdel.name AS otdel FROM subject INNER JOIN otdel ON
+        subject.name, subject.name AS special, subject.hours AS hours, otdel.name AS otdel FROM subject LEFT JOIN otdel ON
         subject.otdel_id=otdel.otdel_id LIMIT $ofset,
         $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);

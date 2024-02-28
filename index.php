@@ -89,7 +89,7 @@ $branch = $userMap->findBranchByName($branch_name);
                 </div>
             </a>
 
-            <a style="text-decoration: none; color: #333;" href="list/list-teacher">
+            <a style="text-decoration: none; color: #333;" href="list/list-parent">
                 <div class="col-md-3 col-sm-6 col-xs-12">
                     <div class="info-box">
                         <span class="info-box-icon bg-red"><i class="ion ion-person-add"></i></span>

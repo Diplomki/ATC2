@@ -1,6 +1,6 @@
 <?php
 require_once '../secure.php';
-if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator')) {
+if (!Helper::can('manager') && !Helper::can('admin')) {
     header('Location: 404');
     exit();
 }
@@ -31,7 +31,6 @@ if (isset($_POST['saveAvatarStudent'])) {
     if ((new UserMap())->updatePhoto($user)) {
         header('Location: ../profile/profile-student?id=' . $user->user_id);
     }
-
 }
 
 if (isset($_POST['user_id'])) {
@@ -42,21 +41,12 @@ if (isset($_POST['user_id'])) {
     $user->patronymic = Helper::clearString($_POST['patronymic']);
     $user->birthday = Helper::clearString($_POST['birthday']);
     $user->login = Helper::clearString($_POST['login']);
-
-
-
     $user->pass = password_hash(
         Helper::clearString($_POST['password']),
         PASSWORD_BCRYPT
     );
-
     $user->gender_id = Helper::clearInt($_POST['gender_id']);
-
-    if (Helper::can('manager')) {
-        $user->branch_id = Helper::clearInt($_POST['branch_id']);
-    } else {
-        $user->branch_id = $_SESSION['branch'];
-    }
+    $user->branch_id = $_SESSION['branch'];
     $user->active = Helper::clearInt($_POST['active']);
 
 
@@ -65,6 +55,10 @@ if (isset($_POST['user_id'])) {
         $teacher = new Teacher();
         $teacher->otdel_id = Helper::clearInt($_POST['otdel_id']);
         $teacher->user_id = $user->user_id;
+        if ($_POST['award'] != NULL) {
+            $teacher->award_subject_id = Helper::clearInt($_POST['subject_id']);
+            $teacher->award = Helper::clearString($_POST['award']);
+        }
         $user->role_id = Helper::clearInt(4);
         if ((new TeacherMap())->save($user, $teacher)) {
 

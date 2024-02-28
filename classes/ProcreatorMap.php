@@ -263,14 +263,17 @@ class ProcreatorMap extends BaseMap
         $query = "DELETE FROM parent WHERE user_id = :id";
         $query2 = "DELETE FROM notice WHERE user_id = :id";
         $query3 = "DELETE FROM user WHERE user_id = :id";
+
         $res = $this->db->prepare($query);
         $res->execute([
             'id' => $id
         ]);
+
         $res2 = $this->db->prepare($query2);
         $res2->execute([
             'id' => $id
         ]);
+
         $res3 = $this->db->prepare($query3);
         $res3->execute([
             'id' => $id

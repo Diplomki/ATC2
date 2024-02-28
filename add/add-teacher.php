@@ -12,6 +12,7 @@ $teacher = (new TeacherMap())->findById($id);
 $header = (($id) ? 'Редактировать данные' : 'Добавить') . '
 преподавателя';
 require_once '../template/header.php';
+var_dump($teacher->otdel_id);
 ?>
 <section class="content-header">
     <h3>
@@ -37,9 +38,31 @@ teacher">Преподаватели</a></li>
         <?php require_once '../_formUser.php'; ?>
         <div class="form-group">
             <label>Отделение</label>
-            <select class="form-control" name="otdel_id">
-                <?= Helper::printSelectOptions($teacher->otdel_id, (new OtdelMap())->arrOtdels()); ?>
+            <?php
+            if ($teacher->otdel_id == NULL) {
+                ?>
+                <select class="form-control" name="otdel_id">
+                    <?= Helper::printSelectOptions(0, (new OtdelMap())->arrOtdels()); ?>
+                </select>
+                <?php
+            } else {
+                ?>
+                <select class="form-control" name="otdel_id">
+                    <?= Helper::printSelectOptions($teacher->otdel_id, (new OtdelMap())->arrOtdels()); ?>
+                </select>
+                <?php
+            }
+            ?>
+        </div>
+        <div class="form-group">
+            <label>Дисциплина</label>
+            <select class="form-control" name="subject_id">
+                <?= Helper::printSelectOptions($teacher->subject_id, (new SubjectMap())->arrSubjects()); ?>
             </select>
+        </div>
+        <div class="form-group">
+            <label>Достижение</label>
+            <input type="text" class="form-control" name="award" value="<?= $teacher->award ?>">
         </div>
         <div class="form-group">
             <label>Заблокировать</label>
@@ -52,6 +75,7 @@ teacher">Преподаватели</a></li>
                 </label>
             </div>
         </div>
+
         <div class="form-group">
             <button type="submit" name="saveTeacher" class="btn btn-primary">Сохранить</button>
         </div>

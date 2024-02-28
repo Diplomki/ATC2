@@ -31,11 +31,9 @@ fa-dashboard"></i> Главная</a></li>
                         учителей</li>
                 </ol>
             </section>
-            <?php if (Helper::can('admin')) { ?>
-                <div class="box-body">
-                    <a class="btn btn-success" href="../add/add-teacher">Добавить преподавателя</a>
-                </div>
-            <?php } ?>
+            <div class="box-body">
+                <a class="btn btn-success" href="../add/add-teacher">Добавить преподавателя</a>
+            </div>
             <!-- /.box-header -->
             <div class="box-body">
                 <?php
@@ -49,9 +47,9 @@ fa-dashboard"></i> Главная</a></li>
                                 <th>Ф.И.О</th>
                                 <th>Дата рождения</th>
                                 <th>Отделение</th>
-                                <?php if (Helper::can('manager')) { ?>
-                                    <th>Филиал</th>
-                                <?php } ?>
+                                <th>Дисциплина</th>
+                                <th>Достижение</th>
+
                             </tr>
                         </thead>
                         <tbody>
@@ -67,8 +65,8 @@ fa-dashboard"></i> Главная</a></li>
                                 }
                                 echo '<td>' . $teacher->birthday . '</td>';
                                 echo '<td>' . $teacher->otdel . '</td>';
-                                if (Helper::can('manager'))
-                                    echo '<td>' . $teacher->branch_name . '</td>';
+                                echo '<td>' . $teacher->subject . '</td>';
+                                echo '<td>' . $teacher->award . '</td>';
                                 echo '</tr>';
 
                             }

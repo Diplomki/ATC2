@@ -9,9 +9,11 @@ class Teacher extends Table
   public $date_begin = '';
   public $date_end = '';
   public $subject_id = 0;
+  public $award_subject_id = NULL;
   public $file = '';
   public $otdel_id = 0;
   public $comment = '';
+  public $award = NULL;
   function validate()
   {
     if (!empty($this->otdel_id)) {
