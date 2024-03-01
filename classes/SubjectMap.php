@@ -85,4 +85,81 @@ class SubjectMap extends BaseMap
         }
         return false;
     }
+
+    public function deleteSubjectById($id)
+    {
+        $query = "UPDATE grades SET subject_id = NULL WHERE subject_id = :id";
+        $res = $this->db->prepare($query);
+        if (
+            $res->execute([
+                'id' => $id
+            ])
+        ) {
+            $query = "UPDATE grade_accept SET subject_id = NULL WHERE subject_id = :id";
+            $res = $this->db->prepare($query);
+            if (
+                $res->execute([
+                    'id' => $id
+                ])
+            ) {
+                $query = "UPDATE notice SET subject_id = NULL WHERE subject_id = :id";
+                $res = $this->db->prepare($query);
+                if (
+                    $res->execute([
+                        'id' => $id
+                    ])
+                ) {
+                    $query = "UPDATE payment SET subject_id = NULL WHERE subject_id = :id";
+                    $res = $this->db->prepare($query);
+                    if (
+                        $res->execute([
+                            'id' => $id
+                        ])
+                    ) {
+                        $query = "UPDATE payment_archive SET subject_id = NULL WHERE subject_id = :id";
+                        $res = $this->db->prepare($query);
+                        if (
+                            $res->execute([
+                                'id' => $id
+                            ])
+                        ) {
+                            $query = "UPDATE lesson_plan SET subject_id = NULL WHERE subject_id = :id";
+                            $res = $this->db->prepare($query);
+                            if (
+                                $res->execute([
+                                    'id' => $id
+                                ])
+                            ) {
+                                $query = "UPDATE lesson_plan SET subject_id = NULL WHERE subject_id = :id";
+                                $res = $this->db->prepare($query);
+                                if (
+                                    $res->execute([
+                                        'id' => $id
+                                    ])
+                                ) {
+                                    $query = "DELETE FROM subject WHERE subject_id = :id";
+                                    $res = $this->db->prepare($query);
+                                    if (
+                                        $res->execute([
+                                            'id' => $id
+                                        ])
+                                    ) {
+                                        return true;
+                                    }
+                                    return false;
+                                }
+                                return false;
+                            }
+                            return false;
+                        }
+                        return false;
+                    }
+                    return false;
+                }
+                return false;
+            }
+            return false;
+        }
+        return false;
+    }
 }

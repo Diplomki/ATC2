@@ -22,13 +22,13 @@ require_once '../template/header.php';
             <section class="content-header">
                 <h3>
                     <b>
-                        <?= $header; ?>
+                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список отделов' ?>
                     </b>
                 </h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fafa-dashboard"></i> Главная</a></li>
                     <li class="active">
-                        <?= $header; ?>
+                        Список отделов
                     </li>
                 </ol>
             </section>

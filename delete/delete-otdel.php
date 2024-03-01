@@ -16,9 +16,9 @@ require_once('../template/header.php');
 <section class="content-header">
     <h3><b>Удаление отдела</b></h3>
     <ol class="breadcrumb">
-        <li><a href="../list/list-parent"><i class="fa
-fa-dashboard"></i> Список Отделов</a></li>
-        <li><a href="../list/list-student">Удаление отделов</a></li>
+        <li><a href="../list/list-otdel"><i class="fa
+fa-dashboard"></i> Список отделов</a></li>
+        <li>Удаление отделов</li>
     </ol>
 </section>
 

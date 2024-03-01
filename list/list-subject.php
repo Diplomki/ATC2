@@ -13,7 +13,7 @@ if (isset($_GET['page'])) {
 $subjectMap = new SubjectMap();
 $count = $subjectMap->count();
 $subjects = $subjectMap->findAll($page * $size - $size, $size);
-$header = 'Список предметов';
+
 require_once '../template/header.php';
 ?>
 <div class="row">
@@ -22,14 +22,15 @@ require_once '../template/header.php';
             <section class="content-header">
                 <h3>
                     <b>
-                        <?= $header; ?>
+                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список предметов' ?>
                     </b>
                 </h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
                     <li class="active">
-                        <?= $header; ?>
+                        Список
+                        предметов
                     </li>
                 </ol>
             </section>
@@ -51,8 +52,6 @@ fa-dashboard"></i> Главная</a></li>
                                 <th>Название</th>
                                 <th>Предмет</th>
                                 <th>Часы</th>
-
-
                             </tr>
                         </thead>
                         <tbody>
@@ -62,7 +61,7 @@ fa-dashboard"></i> Главная</a></li>
                                 if (Helper::can('admin')) {
                                     echo '<td><a href="../view/view-subject?id=' . $subject->subject_id . '">' . $subject->name . '</a> '
 
-                                        . '<a href="../add/add-subject?id=' . $subject->subject_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                        . '<a href="../add/add-subject?id=' . $subject->subject_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-subject?id=' . $subject->subject_id . '"><i class="fa fa-times"></i></a></td>';
                                 } elseif (Helper::can('manager')) {
                                     echo '<td><a href="../view/view-subject?id=' . $subject->subject_id . '">' . $subject->name . '</a> '
 
