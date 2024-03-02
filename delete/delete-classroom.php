@@ -1,7 +1,7 @@
 <?php
 require_once('../secure.php');
 ob_start();
-if (!Helper::can('admin')) {
+if (!Helper::can('admin') && !Helper::can('manager')) {
     header('Location: 404');
     exit;
 }
@@ -14,17 +14,17 @@ $classroom = (new ClassroomMap())->findById($id);
 require_once('../template/header.php');
 ?>
 <section class="content-header">
-    <h3><b>Удаление аудитории</b></h3>
+    <h3><b>Удаление кабинета</b></h3>
     <ol class="breadcrumb">
         <li><a href="../list/list-gruppa"><i class="fa
-fa-dashboard"></i> Список аудиторий</a></li>
-        <li>Удаление аудитории</li>
+fa-dashboard"></i> Список кабинетов</a></li>
+        <li>Удаление кабинетов</li>
     </ol>
 </section>
 
 <div class="box-body">
     <form method="POST">
-        <p style="font-size: 16px;">Вы действительно хотите удалить аудитории:</p>
+        <p style="font-size: 16px;">Вы действительно хотите удалить кабинет:</p>
         <b style="font-size: 18px;">
             <?= $classroom->name; ?>
         </b><br><br>

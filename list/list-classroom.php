@@ -13,7 +13,7 @@ if (isset($_GET['page'])) {
 $classroomMap = new ClassroomMap();
 $count = $classroomMap->count();
 $arrClassrooms = $classroomMap->findAll($page * $size - $size, $size);
-$header = 'Список аудиторий';
+$header = 'Список кабинетов';
 require_once '../template/header.php';
 ?>
 <div class="row">
@@ -22,7 +22,7 @@ require_once '../template/header.php';
             <section class="content-header">
                 <h3>
                     <b>
-                        <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список аудиторий'; ?>
+                        <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список кабинетов'; ?>
                     </b>
                 </h3>
                 <ol class="breadcrumb">
@@ -34,7 +34,7 @@ require_once '../template/header.php';
             </section>
             <div class="box-body">
                 <?php if (Helper::can('admin')) { ?>
-                    <a class="btn btn-success" href="../add/add-classroom">Добавить аудиторию</a>
+                    <a class="btn btn-success" href="../add/add-classroom">Добавить кабинет</a>
                 <?php }
                 ; ?>
             </div>
@@ -64,7 +64,7 @@ require_once '../template/header.php';
                         </tbody>
                     </table>
                 <?php } else {
-                    echo 'Ни одной аудитории не найдено';
+                    echo 'Ни одного кабинета не найдено';
                 } ?>
             </div>
             <div class="box-body">

@@ -1,6 +1,6 @@
 <?php
 require_once 'secure.php';
-if (!Helper::can('admin')) {
+if (!Helper::can('admin') && !Helper::can('manager')) {
     header('Location: 404');
     exit();
 }
@@ -13,10 +13,10 @@ $message = 'Посмотреть оценки';
 
 switch ($_GET['message']) {
     case 'ok':
-        $message = '<span style="color: green;">Уведомление отправлено</span>';
+        $message = '<span style="color: green;">Ошибка</span>';
         break;
     case 'err':
-        $message = '<span style="color: red;">Ошибка при отправке уведомления</span>';
+        $message = '<span style="color: red;">Ошибка</span>';
         break;
 }
 require_once 'template/header.php';
@@ -39,22 +39,42 @@ require_once 'template/header.php';
 </section>
 <div class="box-body">
     <div class="form-group">
-        <form method="GET" action="list-students-grades">
+        <form method="GET" action="list/list-students-grades">
+            <div class="form-group">
+                <label>Дата</label>
+                <input class="form-control" type="date" name="date">
+            </div>
             <div class="form-group">
                 <label>Предмет</label>
-                <select class="form-control" name="id">
+                <select class="form-control" name="subject_id">
                     <?php Helper::printSelectOptions(0, (new SubjectMap)->arrSubjects()) ?>
                 </select>
             </div>
             <div class="form-group">
-                <button type="submit" class="btn btn-primary">Далее</button>
+                <label>Группа</label>
+                <select class="form-control" name="gruppa_id">
+                    <?php Helper::printSelectOptions(0, (new GruppaMap)->arrGruppas()) ?>
+                </select>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Применить</button>
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-primary" onclick="redirectToAnotherPage()">Экспортировать в
+                    Excel</button>
             </div>
         </form>
-        <div class="form-group">
-            <a class="btn btn-primary" href="list-students-grades">Посмотреть оценки по всем дисциплинам</a>
-        </div>
     </div>
 </div>
+<script>
+    function redirectToAnotherPage() {
+        var date = document.querySelector('input[name="date"]').value;
+        var subject_id = document.querySelector('select[name="subject_id"]').value;
+        var gruppa_id = document.querySelector('select[name="gruppa_id"]').value;
+        var url = 'excel?date=' + date + '&subject_id=' + subject_id + '&gruppa_id=' + gruppa_id;
+        window.location.href = url;
+    }
+</script>
 <?php
 
 require_once 'template/footer.php';

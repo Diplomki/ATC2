@@ -35,7 +35,12 @@
 
                 <li <?= ($_SERVER['PHP_SELF'] == '../list/list-classroom.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../list/list-classroom"><i class="fa fa-graduation-cap"></i><span>Аудитории</span></a>
+                    <a href="../list/list-classroom"><i class="fa fa-graduation-cap"></i><span>Кабинеты</span></a>
+
+                <li <?= ($_SERVER['PHP_SELF'] == '../select-subject.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="../select-subject"><i class="fa fa-address-book"></i><span>Журнал</span></a>
+
                 <li <?= ($_SERVER['PHP_SELF'] == '../check/check-payment.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../check/check-payment"><i class="fa fa-dollar"></i><span>Оплата</span></a>
@@ -105,7 +110,7 @@
 
                 <li <?= ($_SERVER['PHP_SELF'] == '../list/list-classroom.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../list/list-classroom"><i class="fa fa-graduation-cap"></i><span>Аудитории</span></a>
+                    <a href="../list/list-classroom"><i class="fa fa-graduation-cap"></i><span>Кабинеты</span></a>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '../list/list-teacher-schedule.php') ? 'class="active"' : ''; ?>>
 

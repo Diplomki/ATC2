@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 
-if (!Helper::can('admin')) {
+if (!Helper::can('admin') && !Helper::can('manager')) {
     header('Location: 404');
     exit();
 }
@@ -23,9 +23,21 @@ foreach ($fields as $field) {
     $sheet->setCellValue($col . '1', $field);
     $col++;
 }
+$date = '';
+$subject_id = 0;
+$gruppa_id = 0;
+
+if (isset($_GET['date']) && $_GET['date'] != '') {
+    $date = $_GET['date'];
+    $subject_id = $_GET['subject_id'];
+    $gruppa_id = $_GET['gruppa_id'];
+} else {
+    header('Location: select-subject?message=err');
+    exit();
+}
 
 $gradeMap = new GradeMap();
-$grades = $gradeMap->findBySubjectId($_SESSION['subject_id']);
+$grades = $gradeMap->findBySubjectId($date, $subject_id, $gruppa_id);
 
 if ($grades) {
     $row = 2;

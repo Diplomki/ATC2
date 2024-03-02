@@ -58,17 +58,8 @@ fa-dashboard"></i> Главная</a></li>
                             <?php
                             foreach ($subjects as $subject) {
                                 echo '<tr>';
-                                if (Helper::can('admin')) {
-                                    echo '<td><a href="../view/view-subject?id=' . $subject->subject_id . '">' . $subject->name . '</a> '
-
-                                        . '<a href="../add/add-subject?id=' . $subject->subject_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-subject?id=' . $subject->subject_id . '"><i class="fa fa-times"></i></a></td>';
-                                } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="../view/view-subject?id=' . $subject->subject_id . '">' . $subject->name . '</a> '
-
-                                        . '<a href="../add/add-subject?id=' . $subject->subject_id . '"></a></td>';
-
-
-                                }
+                                echo '<td><a href="../view/view-subject?id=' . $subject->subject_id . '">' . $subject->name . '</a> '
+                                    . '<a href="../add/add-subject?id=' . $subject->subject_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-subject?id=' . $subject->subject_id . '"><i class="fa fa-times"></i></a></td>';
                                 echo '<td>' . $subject->otdel . '</td>';
                                 echo '<td>' . $subject->hours . '</td>';
                                 echo '</tr>';

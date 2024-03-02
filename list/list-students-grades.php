@@ -1,27 +1,28 @@
 <?php
 require_once '../secure.php';
-if (!Helper::can('admin')) {
+if (!Helper::can('admin') && !Helper::can('manager')) {
     header('Location: 404');
     exit();
 }
 $size = 10;
 if (isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
-
 } else {
     $page = 1;
 }
-$id = 0;
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+
+$subject_id = 0;
+$date = '';
+$gruppa_id = 0;
+if (isset($_GET['subject_id'])) {
+    $subject_id = $_GET['subject_id'];
+    $date = $_GET['date'];
+    $gruppa_id = $_GET['gruppa_id'];
 }
-$_SESSION['subject_id'] = $id;
+
 $gradeMap = new GradeMap();
-if ($id != 0) {
-    $grade = $gradeMap->findBySubjectId($id);
-} else {
-    $grade = $gradeMap->findBySubjectId();
-}
+$grade = $gradeMap->findBySubjectId($date, $subject_id, $gruppa_id);
+
 $header = 'Список студентов';
 require_once '../template/header.php';
 ?>
@@ -63,9 +64,12 @@ require_once '../template/header.php';
                             ?>
                         </tbody>
                     </table>
-                    <form action="../excel">
-                        <div class="form-group">
+                    <form action="../excel" method="GET">
+                        <div class="form-group"><br>
                             <button type="submit" class="btn btn-primary">Выгрузка в Excel</button>
+                            <input type="hidden" name="subject_id" value="<?= $subject_id ?>">
+                            <input type="hidden" name="date" value="<?= $date ?>">
+                            <input type="hidden" name="gruppa_id" value="<?= $gruppa_id ?>">
                         </div>
                     </form>
                 <?php } else {

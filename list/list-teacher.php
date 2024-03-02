@@ -56,13 +56,7 @@ fa-dashboard"></i> Главная</a></li>
                             <?php
                             foreach ($teachers as $teacher) {
                                 echo '<tr>';
-                                if (Helper::can('admin')) {
-                                    echo '<td><a href="../profile/profile-teacher?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="../add/add-teacher?id=' . $teacher->user_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-teacher?id=' . $teacher->user_id . '"><i class="fa fa-times"></i></a></td>';
-                                } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="../profile/profile-teacher?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="./add/add-teacher?id=' . $teacher->user_id . '"></a></td>';
-                                } else {
-                                    echo '<td><p>' . $teacher->fio . '</p> ';
-                                }
+                                echo '<td><a href="../profile/profile-teacher?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="../add/add-teacher?id=' . $teacher->user_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-teacher?id=' . $teacher->user_id . '"><i class="fa fa-times"></i></a></td>';
                                 echo '<td>' . $teacher->birthday . '</td>';
                                 echo '<td>' . $teacher->otdel . '</td>';
                                 echo '<td>' . $teacher->subject . '</td>';

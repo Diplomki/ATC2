@@ -1,7 +1,7 @@
 <?php
 require_once('../secure.php');
 ob_start();
-if (!Helper::can('admin')) {
+if (!Helper::can('admin') && !Helper::can('manager')) {
     header('Location: 404');
     exit;
 }

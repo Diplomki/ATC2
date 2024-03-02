@@ -59,16 +59,10 @@ fa-dashboard"></i> Главная</a></li>
                                                         <?php
                                                         foreach ($specials as $special) {
                                                                 echo '<tr>';
-                                                                if (Helper::can('admin')) {
-                                                                        echo '<td><a href="../view/view-special?id=' . $special->special_id . '">' . $special->name . '</a> '
-                                                                                . '<a href="../add/add-special?id=' . $special->special_id . '"><i class="fa fa-pencil"></i></a></td>';
-                                                                        echo '<td>' . $special->otdel . '</td>';
-                                                                } elseif (Helper::can('manager')) {
-                                                                        echo '<td><a href="../view/view-special?id=' . $special->special_id . '">' . $special->name . '</a> '
-                                                                                . '<a href="../add/add-special?id=' . $special->special_id . '"></a></td>';
-                                                                        echo '<td>' . $special->otdel . '</td>';
+                                                                echo '<td><a href="../view/view-special?id=' . $special->special_id . '">' . $special->name . '</a> '
+                                                                        . '<a href="../add/add-special?id=' . $special->special_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                                                echo '<td>' . $special->otdel . '</td>';
 
-                                                                }
 
                                                                 echo '</tr>';
                                                         }

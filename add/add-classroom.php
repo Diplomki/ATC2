@@ -9,7 +9,7 @@ if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 }
 $classroom = (new ClassroomMap())->findById($id);
-$header = (($id) ? 'Редактировать' : 'Добавить') . ' аудиторию';
+$header = (($id) ? 'Редактировать' : 'Добавить') . ' кабинет';
 require_once '../template/header.php';
 ?>
 <section class="content-header">
@@ -22,7 +22,7 @@ require_once '../template/header.php';
 
         <li><a href="../index"><i class="fa fa-dashboard"></i> Главная</a></li>
 
-        <li><a href="../list/list-classroom">Группы</a></li>
+        <li><a href="../list/list-classroom">Кабинеты</a></li>
         <li class="active">
             <?= $header; ?>
         </li>

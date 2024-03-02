@@ -31,11 +31,9 @@ fa-dashboard"></i> Главная</a></li>
                         учеников</li>
                 </ol>
             </section>
-            <?php if (Helper::can('admin')) { ?>
-                <div class="box-body">
-                    <a class="btn btn-success" href="../add/add-student">Добавить ученика</a>
-                </div>
-            <?php } ?>
+            <div class="box-body">
+                <a class="btn btn-success" href="../add/add-student">Добавить ученика</a>
+            </div>
             <!-- /.box-header -->
             <div class="box-body">
                 <?php
@@ -58,13 +56,7 @@ fa-dashboard"></i> Главная</a></li>
                             <?php
                             foreach ($student as $student) {
                                 echo '<tr>';
-                                if (Helper::can('admin')) {
-                                    echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-student?id=' . $student->user_id . '"><i class="fa fa-times"></i></a></td>';
-                                } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"></a></td>';
-                                } else {
-                                    echo '<td><p>' . $student->fio . '</p> ';
-                                }
+                                echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-student?id=' . $student->user_id . '"><i class="fa fa-times"></i></a></td>';
                                 echo '<td>' . $student->birthday . '</td>';
                                 echo '<td>' . $student->gruppa . '</td>';
                                 if (Helper::can('manager'))
