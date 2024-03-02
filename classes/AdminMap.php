@@ -95,15 +95,9 @@ class AdminMap extends BaseMap
         return false;
     }
 
-    public function deleteStudentById($id)
+    public function deleteAdminById($id)
     {
-        $query = "DELETE FROM admin WHERE user_id = :id";
-        $res = $this->db->prepare($query);
-        $res->execute([
-            'id' => $id
-        ]);
-
-        $query = "DELETE FROM user WHERE user_id = :id";
+        $query = "UPDATE student SET deleted = 1 WHERE user_id = :id";
         $res = $this->db->prepare($query);
         $res->execute([
             'id' => $id

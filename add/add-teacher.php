@@ -12,7 +12,6 @@ $teacher = (new TeacherMap())->findById($id);
 $header = (($id) ? 'Редактировать данные' : 'Добавить') . '
 преподавателя';
 require_once '../template/header.php';
-var_dump($teacher->otdel_id);
 ?>
 <section class="content-header">
     <h3>

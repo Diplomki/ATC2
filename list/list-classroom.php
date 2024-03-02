@@ -22,7 +22,7 @@ require_once '../template/header.php';
             <section class="content-header">
                 <h3>
                     <b>
-                        <?= $header; ?>
+                        <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список аудиторий'; ?>
                     </b>
                 </h3>
                 <ol class="breadcrumb">
@@ -55,14 +55,8 @@ require_once '../template/header.php';
                             <?php
                             foreach ($arrClassrooms as $classroom) {
                                 echo '<tr>';
-                                if (Helper::can('admin')) {
-                                    echo '<td><a href="../view/view-classroom?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
-                                        . '<a href="../add/add-classroom?id=' . $classroom->classroom_id . '"><i class="fa fa-pencil"></i></a></td>';
-                                } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="../view/view-classroom?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
-                                        . '<a href="../add/add-classroom?id=' . $classroom->classroom_id . '"></a></td>';
-                                    echo '<td>' . $classroom->branch . '</td>';
-                                }
+                                echo '<td><a href="../view/view-classroom?id=' . $classroom->classroom_id . '">' . $classroom->name . '</a> '
+                                    . '<a href="../add/add-classroom?id=' . $classroom->classroom_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-classroom?id=' . $classroom->classroom_id . '"><i class="fa fa-times"></i></a></td>';
                                 echo '</tr>';
 
                             }

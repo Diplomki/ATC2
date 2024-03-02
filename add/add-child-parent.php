@@ -33,6 +33,7 @@ require_once '../template/header.php';
                 <?= Helper::printSelectOptions(0, (new ProcreatorMap())->arrParents()); ?>
             </select>
         </div>
+
         <div class="form-group">
             <label>Ученик</label>
             <select class="form-control" name="child_id">

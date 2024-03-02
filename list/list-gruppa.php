@@ -22,7 +22,7 @@ require_once '../template/header.php';
             <section class="content-header">
                 <h3>
                     <b>
-                        <?= $header; ?>
+                        <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список групп' ?>
                     </b>
                 </h3>
                 <ol class="breadcrumb">
@@ -61,12 +61,7 @@ fa-dashboard"></i> Главная</a></li>
                             <?php
                             foreach ($gruppas as $gruppa) {
                                 echo '<tr>';
-                                if (Helper::can('admin')) {
-                                    echo '<td><a href="../view/view-gruppa?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</a> ' . '<a href="./add/add-gruppa?id=' . $gruppa->gruppa_id . '"><i class="fa fa-pencil"></i></a></td>';
-                                } elseif (Helper::can('manager')) {
-                                    echo '<td><a href="../view/view-gruppa?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</a> ' . '<a href="../add/add-gruppa?id=' . $gruppa->gruppa_id . '"></a></td>';
-                                } else
-                                    echo '<td><p>' . $gruppa->name . '</p> ' . '<a href="../add/add-gruppa?id=' . $gruppa->gruppa_id . '"></a></td>';
+                                echo '<td><a href="../view/view-gruppa?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</a> ' . '<a href="../add/add-gruppa?id=' . $gruppa->gruppa_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-gruppa?id=' . $gruppa->gruppa_id . '"><i class="fa fa-times"></i></a></td>';
                                 echo '<td>' . $gruppa->special . '</td>';
 
                                 echo '<td>' . date(

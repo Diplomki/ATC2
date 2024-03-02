@@ -33,10 +33,11 @@ require_once('../template/header.php');
 <?php
 
 if (isset($_POST['deleteTeacher'])) {
-    $teacher = new TeacherMap();
-    $teacher->deleteTeacherById($id);
+
+    (new TeacherMap())->deleteTeacherById($id);
     header('Location: ../list/list-teacher?message=ok');
     exit();
+
 }
 ob_end_flush();
 require_once('../template/footer.php');

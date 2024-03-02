@@ -5,8 +5,10 @@ class SubjectMap extends BaseMap
     public function arrSubjects()
     {
 
-        $res = $this->db->query("SELECT subject.subject_id AS id, subject.name AS value, otdel.name as otdel_name FROM subject
+        $res = $this->db->query("SELECT subject.subject_id AS id, 
+        subject.name AS value, otdel.name as otdel_name FROM subject
         INNER JOIN otdel ON otdel.otdel_id = subject.otdel_id
+        WHERE subject.deleted = 0
         ");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -64,7 +66,7 @@ class SubjectMap extends BaseMap
     {
         $res = $this->db->query("SELECT subject.subject_id,
         subject.name, subject.name AS special, subject.hours AS hours, otdel.name AS otdel FROM subject LEFT JOIN otdel ON
-        subject.otdel_id=otdel.otdel_id LIMIT $ofset,
+        subject.otdel_id=otdel.otdel_id WHERE subject.deleted = 0 LIMIT $ofset,
         $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
@@ -88,77 +90,14 @@ class SubjectMap extends BaseMap
 
     public function deleteSubjectById($id)
     {
-        $query = "UPDATE grades SET subject_id = NULL WHERE subject_id = :id";
+        $query = "UPDATE subject SET deleted = 1 WHERE subject_id = :id";
         $res = $this->db->prepare($query);
         if (
             $res->execute([
                 'id' => $id
             ])
         ) {
-            $query = "UPDATE grade_accept SET subject_id = NULL WHERE subject_id = :id";
-            $res = $this->db->prepare($query);
-            if (
-                $res->execute([
-                    'id' => $id
-                ])
-            ) {
-                $query = "UPDATE notice SET subject_id = NULL WHERE subject_id = :id";
-                $res = $this->db->prepare($query);
-                if (
-                    $res->execute([
-                        'id' => $id
-                    ])
-                ) {
-                    $query = "UPDATE payment SET subject_id = NULL WHERE subject_id = :id";
-                    $res = $this->db->prepare($query);
-                    if (
-                        $res->execute([
-                            'id' => $id
-                        ])
-                    ) {
-                        $query = "UPDATE payment_archive SET subject_id = NULL WHERE subject_id = :id";
-                        $res = $this->db->prepare($query);
-                        if (
-                            $res->execute([
-                                'id' => $id
-                            ])
-                        ) {
-                            $query = "UPDATE lesson_plan SET subject_id = NULL WHERE subject_id = :id";
-                            $res = $this->db->prepare($query);
-                            if (
-                                $res->execute([
-                                    'id' => $id
-                                ])
-                            ) {
-                                $query = "UPDATE lesson_plan SET subject_id = NULL WHERE subject_id = :id";
-                                $res = $this->db->prepare($query);
-                                if (
-                                    $res->execute([
-                                        'id' => $id
-                                    ])
-                                ) {
-                                    $query = "DELETE FROM subject WHERE subject_id = :id";
-                                    $res = $this->db->prepare($query);
-                                    if (
-                                        $res->execute([
-                                            'id' => $id
-                                        ])
-                                    ) {
-                                        return true;
-                                    }
-                                    return false;
-                                }
-                                return false;
-                            }
-                            return false;
-                        }
-                        return false;
-                    }
-                    return false;
-                }
-                return false;
-            }
-            return false;
+            return true;
         }
         return false;
     }

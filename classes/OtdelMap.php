@@ -5,7 +5,7 @@ class OtdelMap extends BaseMap
     public function arrOtdels()
     {
         $res = $this->db->query("SELECT otdel_id AS id, name AS
-        value FROM otdel");
+        value FROM otdel WHERE deleted = 0");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -52,9 +52,8 @@ class OtdelMap extends BaseMap
 
     public function findAll($ofset = 0, $limit = 30)
     {
-        $res = $this->db->query("SELECT otdel.otdel_id,
-        otdel.name"
-            . " FROM otdel LIMIT $ofset,
+        $res = $this->db->query("SELECT otdel.otdel_id, otdel.name FROM otdel
+        WHERE otdel.deleted = 0 LIMIT $ofset,
         $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
@@ -76,42 +75,14 @@ class OtdelMap extends BaseMap
 
     public function deleteOtdelById($id)
     {
-        $query = "UPDATE teacher SET otdel_id = NULL WHERE otdel_id = :id";
+        $query = "UPDATE otdel SET deleted = 1 WHERE otdel_id = :id";
         $res = $this->db->prepare($query);
         if (
             $res->execute([
                 ":id" => $id
             ])
         ) {
-            $query = "UPDATE special SET otdel_id = NULL WHERE otdel_id = :id";
-            $res = $this->db->prepare($query);
-            if (
-                $res->execute([
-                    ":id" => $id
-                ])
-            ) {
-                $query = "UPDATE subject SET otdel_id = NULL WHERE otdel_id = :id";
-                $res = $this->db->prepare($query);
-                if (
-                    $res->execute([
-                        ":id" => $id
-                    ])
-                ) {
-                    $query = "DELETE FROM otdel WHERE otdel_id = :id";
-                    $res = $this->db->prepare($query);
-                    if (
-                        $res->execute([
-                            ":id" => $id
-                        ])
-                    ) {
-                        return true;
-                    }
-
-                    return false;
-                }
-                return false;
-            }
-            return false;
+            return true;
         }
         return false;
     }

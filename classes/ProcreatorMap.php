@@ -4,9 +4,10 @@ class ProcreatorMap extends BaseMap
 
     public function arrParents()
     {
-        $res = $this->db->query("SELECT user.user_id AS id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) AS value, branch.id AS branch FROM user
+        $res = $this->db->query("SELECT DISTINCT parent.user_id AS id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) AS value, branch.id AS branch FROM parent
+		INNER JOIN user ON parent.user_id = user.user_id
         INNER JOIN branch ON branch.id = user.branch_id
-        WHERE user.role_id = 6 and user.branch_id = {$_SESSION['branch']}");
+        WHERE user.role_id = 6 and user.branch_id = {$_SESSION['branch']} and parent.deleted = 0");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -17,7 +18,9 @@ class ProcreatorMap extends BaseMap
 
         $res = $this->db->query("SELECT DISTINCT parent.child_id as id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) 
         as value FROM parent
-        INNER JOIN user ON parent.child_id = user.user_id");
+        INNER JOIN user ON parent.child_id = user.user_id
+        WHERE parent.deleted = 0
+        ");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -27,7 +30,7 @@ class ProcreatorMap extends BaseMap
         CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) 
         as value FROM parent
         INNER JOIN user ON parent.child_id = user.user_id
-        WHERE parent.user_id = :id";
+        WHERE parent.user_id = :id and parent.deleted = 0";
         $res = $this->db->prepare($query);
         $res->execute([
             'id' => $id
@@ -41,7 +44,7 @@ class ProcreatorMap extends BaseMap
         $query = "SELECT DISTINCT parent.child_id as id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) 
         as value FROM parent
         INNER JOIN user ON parent.child_id = user.user_id
-        WHERE parent.user_id = :id";
+        WHERE parent.user_id = :id and parent.deleted = 0";
         $res = $this->db->prepare($query);
         $res->execute([
             'id' => $_SESSION['id']
@@ -99,8 +102,7 @@ class ProcreatorMap extends BaseMap
 
     public function findAll($ofset = 0, $limit = 30)
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT DISTINCT
+        $res = $this->db->query("SELECT DISTINCT
             user.user_id,
             CONCAT(procreator.lastname,' ', procreator.firstname, ' ', procreator.patronymic) AS parent_fio, 
             CONCAT(child.lastname,' ', child.firstname, ' ', child.patronymic) AS child_fio, 
@@ -113,23 +115,9 @@ class ProcreatorMap extends BaseMap
             INNER JOIN user on user.user_id = parent.user_id
             INNER JOIN branch on user.branch_id = branch.id
             INNER JOIN gender ON user.gender_id = gender.gender_id
-            WHERE user.branch_id = {$_SESSION['branch']}
+            WHERE user.branch_id = {$_SESSION['branch']} and parent.deleted = 0
             LIMIT $ofset, $limit");
-        } else {
-            $res = $this->db->query("SELECT DISTINCT
-            user.user_id,
-            CONCAT(procreator.lastname,' ', procreator.firstname, ' ', procreator.patronymic) AS parent_fio, 
-            CONCAT(child.lastname,' ', child.firstname, ' ', child.patronymic) AS child_fio, 
-            gender.name as gender, 
-            user.birthday as birthday,
-            branch.branch as branch
-            FROM parent
-            INNER JOIN user as procreator on procreator.user_id = parent.user_id
-            INNER JOIN user as child on child.user_id = parent.child_id
-            INNER JOIN user on user.user_id = parent.user_id
-            INNER JOIN branch on user.branch_id = branch.id
-            INNER JOIN gender ON user.gender_id = gender.gender_id LIMIT $ofset, $limit");
-        }
+
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
 
@@ -260,24 +248,16 @@ class ProcreatorMap extends BaseMap
 
     public function deleteParentById($id)
     {
-        $query = "DELETE FROM parent WHERE user_id = :id";
-        $query2 = "DELETE FROM notice WHERE user_id = :id";
-        $query3 = "DELETE FROM user WHERE user_id = :id";
-
+        $query = "UPDATE parent SET deleted = 1 WHERE user_id = :id";
         $res = $this->db->prepare($query);
-        $res->execute([
-            'id' => $id
-        ]);
-
-        $res2 = $this->db->prepare($query2);
-        $res2->execute([
-            'id' => $id
-        ]);
-
-        $res3 = $this->db->prepare($query3);
-        $res3->execute([
-            'id' => $id
-        ]);
+        if (
+            $res->execute([
+                'id' => $id
+            ])
+        ) {
+            return true;
+        }
+        return false;
     }
 
 

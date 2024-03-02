@@ -4,9 +4,11 @@ class StudentMap extends BaseMap
 {
     public function arrStudents()
     {
-        $res = $this->db->query("SELECT user.user_id AS id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) AS value, branch.id AS branch FROM user
+        $res = $this->db->query("SELECT student.user_id AS id, 
+        CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) AS value, branch.id AS branch FROM student
+        INNER JOIN user ON user.user_id = student.user_id
         INNER JOIN branch ON branch.id = user.branch_id
-        WHERE user.role_id = 5");
+        WHERE user.role_id = 5 and student.deleted = 0");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -20,7 +22,8 @@ class StudentMap extends BaseMap
     {
         $teacherMap = new TeacherMap();
         $teacher = $teacherMap->findOtdel();
-        $res = $this->db->query("SELECT subject.subject_id as id, subject.name as value FROM subject WHERE subject.otdel_id = $teacher->otdel_id");
+        $res = $this->db->query("SELECT subject.subject_id as id, 
+        subject.name as value FROM subject WHERE subject.otdel_id = $teacher->otdel_id and subject.deleted = 0");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -138,27 +141,15 @@ class StudentMap extends BaseMap
     }
     public function findAll($ofset = 0, $limit = 30)
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, role.name AS role, branch.id AS branch FROM user 
+        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, role.name AS role, branch.id AS branch, branch.branch AS branch_name FROM user 
             INNER JOIN student ON user.user_id=student.user_id 
             INNER JOIN gender ON user.gender_id=gender.gender_id 
             INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
             INNER JOIN role ON user.role_id=role.role_id
             INNER JOIN branch ON user.branch_id = branch.id
-            WHERE branch.id = {$_SESSION['branch']}
+            WHERE student.deleted = 0
             LIMIT $ofset, $limit");
-            return $res->fetchAll(PDO::FETCH_OBJ);
-        } else {
-            $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, role.name AS role, branch.id AS branch, branch.branch AS branch_name FROM user 
-            INNER JOIN student ON user.user_id=student.user_id 
-            INNER JOIN gender ON user.gender_id=gender.gender_id 
-            INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
-            INNER JOIN role ON user.role_id=role.role_id
-            INNER JOIN branch ON user.branch_id = branch.id
-            LIMIT $ofset, $limit");
-            return $res->fetchAll(PDO::FETCH_OBJ);
-        }
-
+        return $res->fetchAll(PDO::FETCH_OBJ);
     }
     public function findStudentsFromGroup($id = null, $ofset = 0, $limit = 30)
     {
@@ -399,35 +390,16 @@ class StudentMap extends BaseMap
 
     public function deleteStudentById($id)
     {
-        $query = "DELETE FROM grades WHERE user_id = :id";
+        $query = "UPDATE student SET deleted = 1 WHERE user_id = :id";
         $res = $this->db->prepare($query);
-        $res->execute([
-            'id' => $id
-        ]);
-
-        $query = "DELETE FROM grade_accept WHERE user_id = :id";
-        $res = $this->db->prepare($query);
-        $res->execute([
-            'id' => $id
-        ]);
-
-        $query = "DELETE FROM reference WHERE user_id = :id";
-        $res = $this->db->prepare($query);
-        $res->execute([
-            'id' => $id
-        ]);
-
-        $query = "DELETE FROM student WHERE user_id = :id";
-        $res = $this->db->prepare($query);
-        $res->execute([
-            'id' => $id
-        ]);
-
-        $query = "DELETE FROM user WHERE user_id = :id";
-        $res = $this->db->prepare($query);
-        $res->execute([
-            'id' => $id
-        ]);
+        if (
+            $res->execute([
+                'id' => $id
+            ])
+        ) {
+            return true;
+        }
+        return false;
     }
     public function findParentByStudentId($id)
     {

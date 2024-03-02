@@ -5,7 +5,7 @@ class GruppaMap extends BaseMap
     {
         $res = $this->db->query("SELECT gruppa.gruppa_id AS id, gruppa.name AS value, branch.id AS branch FROM gruppa
         INNER JOIN branch ON branch.id = gruppa.branch
-        WHERE branch.id = {$_SESSION['branch']}
+        WHERE branch.id = {$_SESSION['branch']} and gruppa.deleted = 0
         ");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -59,21 +59,14 @@ class GruppaMap extends BaseMap
     }
     public function findAll($ofset = 0, $limit = 30)
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT gruppa.gruppa_id, gruppa.name, special.name AS special, gruppa.date_begin, gruppa.date_end, branch.id FROM gruppa 
-        INNER JOIN special ON gruppa.special_id=special.special_id 
-        INNER JOIN branch ON gruppa.branch=branch.id 
-        WHERE branch.id = {$_SESSION['branch']} LIMIT $ofset,
-        $limit");
-            return $res->fetchAll(PDO::FETCH_OBJ);
-        } else {
-            $res = $this->db->query("SELECT gruppa.gruppa_id, gruppa.name, special.name AS special, gruppa.date_begin, gruppa.date_end, branch.id, branch.branch FROM gruppa 
+
+        $res = $this->db->query("SELECT gruppa.gruppa_id, gruppa.name, special.name AS special, 
+            gruppa.date_begin, gruppa.date_end, branch.id, branch.branch FROM gruppa 
             INNER JOIN special ON gruppa.special_id=special.special_id 
             INNER JOIN branch ON gruppa.branch=branch.id 
-            LIMIT $ofset,
-            $limit");
-            return $res->fetchAll(PDO::FETCH_OBJ);
-        }
+            WHERE gruppa.deleted = 0 and gruppa.branch = {$_SESSION['branch']}
+            LIMIT $ofset, $limit");
+        return $res->fetchAll(PDO::FETCH_OBJ);
     }
     public function count()
     {
@@ -94,6 +87,20 @@ class GruppaMap extends BaseMap
             INNER JOIN special ON gruppa.special_id=special.special_id
             INNER JOIN branch ON branch.id=gruppa.branch WHERE gruppa_id = $id");
             return $res->fetch(PDO::FETCH_OBJ);
+        }
+        return false;
+    }
+
+    public function deleteGruppaById($id)
+    {
+        $query = "UPDATE gruppa SET deleted = 1 WHERE gruppa_id = :id";
+        $res = $this->db->prepare($query);
+        if (
+            $res->execute([
+                'id' => $id
+            ])
+        ) {
+            return true;
         }
         return false;
     }

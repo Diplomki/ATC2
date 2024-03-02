@@ -57,7 +57,7 @@ class UserMap extends BaseMap
     public function arrBranchs()
     {
         $res = $this->db->query("SELECT id AS id, branch AS value FROM branch 
-        WHERE id != 999");
+        WHERE id != 999 and deleted = 0");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
     public function findBranchByName($name)
@@ -120,15 +120,11 @@ class UserMap extends BaseMap
 
     public function arrParents()
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT user.user_id AS id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) AS value, branch.id AS branch FROM user
-            INNER JOIN branch ON branch.id = user.branch_id
-            WHERE user.role_id = 6 and branch.id = {$_SESSION['branch']}");
-        } else {
-            $res = $this->db->query("SELECT user.user_id AS id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) AS value, branch.id AS branch FROM user
-            INNER JOIN branch ON branch.id = user.branch_id
-            WHERE user.role_id = 6");
-        }
+        $res = $this->db->query("SELECT DISTINCT parent.user_id AS id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) 
+        AS value, branch.id AS branch FROM parent
+        INNER JOIN user ON parent.user_id = user.user_id
+        INNER JOIN branch ON branch.id = user.branch_id
+        WHERE user.role_id = 6 and parent.deleted = 0");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 

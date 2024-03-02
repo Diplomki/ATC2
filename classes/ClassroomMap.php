@@ -47,19 +47,13 @@ class ClassroomMap extends BaseMap
 
     public function findAll($ofset = 0, $limit = 30)
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT classroom.classroom_id, classroom.name, branch.id FROM classroom
+
+        $res = $this->db->query("SELECT classroom.classroom_id, classroom.name, branch.id, branch.branch FROM classroom
             INNER JOIN branch ON branch.id = classroom.branch
-            WHERE branch.id = {$_SESSION['branch']} LIMIT $ofset,
-            $limit");
-            return $res->fetchAll(PDO::FETCH_OBJ);
-        } else {
-            $res = $this->db->query("SELECT classroom.classroom_id, classroom.name, branch.id, branch.branch FROM classroom
-            INNER JOIN branch ON branch.id = classroom.branch
+            WHERE classroom.branch = {$_SESSION['branch']} and classroom.deleted = 0
             LIMIT $ofset,
             $limit");
-            return $res->fetchAll(PDO::FETCH_OBJ);
-        }
+        return $res->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function count()
@@ -85,8 +79,21 @@ class ClassroomMap extends BaseMap
     public function arrClassrooms()
     {
         $res = $this->db->query("SELECT classroom_id AS id, name AS value, branch AS branch FROM classroom 
-        WHERE active=1 and branch = {$_SESSION['branch']}");
+        WHERE active=1 and branch = {$_SESSION['branch']} and deleted = 0");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function deleteClassroomById($id)
+    {
+        $query = "UPDATE classroom SET deleted = 1 WHERE classroom_id = :id";
+        $res = $this->db->prepare($query);
+        if (
+            $res->execute([
+                'id' => $id
+            ])
+        ) {
+            return true;
+        }
+        return false;
+    }
 }

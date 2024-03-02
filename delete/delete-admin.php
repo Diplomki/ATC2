@@ -35,7 +35,7 @@ fa-dashboard"></i> Список</a></li>
 
 if (isset($_POST['deleteAdmin'])) {
     $admin = new AdminMap();
-    $admin->deleteStudentById($id);
+    $admin->deleteAdminById($id);
     header('Location: ../list/list-admin?message=ok');
     exit();
 }

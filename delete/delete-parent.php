@@ -36,9 +36,13 @@ fa-dashboard"></i> Список родителей</a></li>
 
 if (isset($_POST['deleteParent'])) {
     $procreator = new ProcreatorMap();
-    $procreator->deleteParentById($id);
-    header('Location: ../list/list-parent?message=ok');
-    exit();
+    if ($procreator->deleteParentById($id)) {
+        header('Location: ../list/list-parent?message=ok');
+        exit();
+    } else {
+        header('Location: ../list/list-parent?message=err');
+        exit();
+    }
 }
 ob_end_flush();
 require_once('../template/footer.php');

@@ -35,9 +35,13 @@ fa-dashboard"></i> Список</a></li>
 
 if (isset($_POST['deleteStudent'])) {
     $student = new StudentMap();
-    $student->deleteStudentById($id);
-    header('Location: ../list/list-student?message=ok');
-    exit();
+    if ($student->deleteStudentById($id)) {
+        header('Location: ../list/list-student?message=ok');
+        exit();
+    } else {
+        header('Location: ../list/list-student?message=err');
+        exit();
+    }
 }
 ob_end_flush();
 require_once('../template/footer.php');
