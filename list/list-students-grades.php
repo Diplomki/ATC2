@@ -1,5 +1,6 @@
 <?php
 require_once '../secure.php';
+ob_start();
 if (!Helper::can('admin') && !Helper::can('manager')) {
     header('Location: 404');
     exit();
@@ -24,6 +25,7 @@ $gradeMap = new GradeMap();
 $grade = $gradeMap->findBySubjectId($date, $subject_id, $gruppa_id);
 
 $header = 'Список студентов';
+$attend = '';
 require_once '../template/header.php';
 ?>
 <div class="row">
@@ -41,35 +43,46 @@ require_once '../template/header.php';
                 <?php
                 if ($grade) {
                     ?>
-                    <table id="example2" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Ф.И.О</th>
-                                <th>Предмет</th>
-                                <th>Оценка</th>
-                                <th>Дата</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php
-                            foreach ($grade as $grade) {
-                                echo '<tr>';
-                                echo '<td>' . $grade->fio . '</td>';
-                                echo '<td>' . $grade->subject . '</td>';
-                                echo '<td>' . $grade->grade . '</td>';
-                                echo '<td>' . $grade->date . '</td>';
-                                echo '</tr>';
+                    <form method="POST">
+                        <table id="example2" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Ф.И.О</th>
+                                    <th>Предмет</th>
+                                    <th>Оценка</th>
+                                    <th>Дата</th>
+                                    <th>Для пропуска</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                foreach ($grade as $grade) {
+                                    if ($grade->attend == 0) {
+                                        $attend = 'Н';
+                                    } else {
+                                        $attend = 'Б';
+                                    }
+                                    echo '<tr>';
+                                    echo '<td>' . $grade->fio . '</td>';
+                                    echo '<td>' . $grade->subject . '</td>';
+                                    echo '<td>' . $grade->grade . ' ' . $attend . '</td>';
+                                    echo '<td>' . $grade->date . '</td>';
+                                    if ($grade->attend == 0) {
+                                        echo '<td>
+                                    <select style="width: 150px" class="form-control" name="reason[' . $grade->id . ']"> 
+                                        <option value="0">Не ув. причина</option>
+                                        <option value="1">Ув. причина</option>
+                                    </select>
+                                        </td>';
+                                    }
+                                    echo '</tr>';
 
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                    <form action="../excel" method="GET">
-                        <div class="form-group"><br>
-                            <button type="submit" class="btn btn-primary">Выгрузка в Excel</button>
-                            <input type="hidden" name="subject_id" value="<?= $subject_id ?>">
-                            <input type="hidden" name="date" value="<?= $date ?>">
-                            <input type="hidden" name="gruppa_id" value="<?= $gruppa_id ?>">
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                        <div class="form-group">
+                            <button type="submit" name="saveReason" class="btn btn-primary">Сохранить</button>
                         </div>
                     </form>
                 <?php } else {
@@ -80,5 +93,25 @@ require_once '../template/header.php';
     </div>
 </div>
 <?php
+if (isset($_POST['saveReason'])) {
+    $count = 0;
+    foreach ($_POST['reason'] as $item => $grade->id) {
+        $grade = new Grade();
+        $grade->reason = $_POST['reason'][$item];
+        $id = $item;
+        if ((new GradeMap)->insertReason($grade, $id)) {
+            $count += 1;
+        }
+    }
+
+    if (count($_POST['reason']) == $count) {
+        header('Location: ../select-subject?message=ok');
+        exit();
+    } else {
+        header('Location: ../select-subject?message=err');
+        exit();
+    }
+}
+ob_end_flush();
 require_once '../template/footer.php';
 ?>

@@ -13,7 +13,7 @@ $message = 'Посмотреть оценки';
 
 switch ($_GET['message']) {
     case 'ok':
-        $message = '<span style="color: green;">Ошибка</span>';
+        $message = '<span style="color: green;">Успешно</span>';
         break;
     case 'err':
         $message = '<span style="color: red;">Ошибка</span>';

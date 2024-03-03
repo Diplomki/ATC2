@@ -6,6 +6,7 @@ class Grade extends Table
     public $subject_id = 0;
     public $grade = 0;
     public $date = date;
+    public $reason = 0;
     function validate()
     {
         if (

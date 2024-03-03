@@ -161,7 +161,7 @@ class StudentMap extends BaseMap
             INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
             INNER JOIN role ON user.role_id=role.role_id 
             INNER JOIN branch ON user.branch_id = branch.id 
-            WHERE gruppa.gruppa_id = $id AND branch.id = {$_SESSION['branch']} LIMIT $ofset, $limit");
+            WHERE gruppa.gruppa_id = $id AND branch.id = {$_SESSION['branch']} and student.deleted = 0 LIMIT $ofset, $limit");
             return $res->fetchAll(PDO::FETCH_OBJ);
         }
     }
