@@ -9,6 +9,7 @@ class Admin extends Table
     public $role_id = 0;
     public $date = "";
     public $subject_price = 0;
+    public $link = "";
 
     function validate()
     {

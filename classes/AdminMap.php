@@ -40,8 +40,8 @@ class AdminMap extends BaseMap
     public function insertNotice($admin = Admin)
     {
 
-        $query = "INSERT INTO `notice` (`text`, `subject_id`, `user_id`, `child_id`, `subject_count`, `subject_price`, `date`)
-        VALUES (:text, :subject_id, :user_id, :child_id, :subject_count, :subject_price, :date)";
+        $query = "INSERT INTO `notice` (`text`, `subject_id`, `user_id`, `child_id`, `subject_count`, `subject_price`, `date`, `link`)
+        VALUES (:text, :subject_id, :user_id, :child_id, :subject_count, :subject_price, :date, :link)";
         $res = $this->db->prepare($query);
         if (
             $res->execute([
@@ -51,7 +51,8 @@ class AdminMap extends BaseMap
                 'child_id' => $admin->child_id,
                 'subject_count' => $admin->subject_count,
                 'subject_price' => $admin->subject_price,
-                'date' => $admin->date
+                'date' => $admin->date,
+                'link' => $admin->link
             ]) == 1
         )
             return true;

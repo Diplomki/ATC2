@@ -31,7 +31,7 @@ require_once '../template/header.php';
 <form action="../save/save-notice" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Текст уведомления</label>
-        <input class="form-control" type="text" name="text" value="Оплатите до указанного срока по предмету:">
+        <input class="form-control" type="text" name="text" value="Оплатите сумму указанную в приложении">
     </div>
 
     <div class="form-group">
@@ -51,19 +51,22 @@ require_once '../template/header.php';
 
     <div class="form-group">
         <label>Сумма за один урок</label>
-        <input class="form-control" type="number" id="subject_sum" oninput="calculateSum()">
+        <input class="form-control" type="number" id="subject_sum" oninput="calculateSum()" required>
     </div>
 
     <div class="form-group">
         <label>Кол-во уроков</label>
-        <input class="form-control" type="number" name="subject_count" id="input1" oninput="calculateSum()">
+        <input class="form-control" type="number" name="subject_count" id="input1" oninput="calculateSum()" required>
     </div>
 
     <div class="form-group">
         <label>Кол-во пропусков по ув. причине</label>
         <input class="form-control" type="number" name="reason" id="input2" oninput="calculateSum()">
     </div>
-
+    <div class="form-group">
+        <label>Ссылка</label>
+        <input class="form-control" type="text" name="link" value="https://example.com">
+    </div>
     <div class="form-group">
         <label>Сумма</label>
         <input type="hidden" name="subject_price">
@@ -72,7 +75,7 @@ require_once '../template/header.php';
 
     <div class=" form-group">
         <label>Оплатить до</label>
-        <input class="form-control" type="date" class="form-control" name="date">
+        <input class="form-control" type="date" class="form-control" name="date" required>
     </div>
 
     <div class="form-group">

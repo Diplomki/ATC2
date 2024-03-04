@@ -52,7 +52,7 @@ $header = "Оплата";
                 </td>
             </tr>
             <tr>
-                <th>Количество предметов</th>
+                <th>Количество занятий</th>
                 <td>
                     <?= $notice->subject_count ?>
                 </td>
@@ -61,6 +61,14 @@ $header = "Оплата";
                 <th>Цена</th>
                 <td>
                     <?= $notice->subject_price ?>
+                </td>
+            </tr>
+            <tr>
+                <th>Ссылка</th>
+                <td>
+                    <a href="<?= $notice->link ?>">
+                        <?= $notice->link ?>
+                    </a>
                 </td>
             </tr>
             <tr>

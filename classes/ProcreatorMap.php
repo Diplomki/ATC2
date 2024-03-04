@@ -137,7 +137,7 @@ class ProcreatorMap extends BaseMap
     {
         $res = $this->db->query("SELECT notice.id as id, notice.text as text, 
         CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as 
-        child, subject.name as subject, notice.date as date FROM notice
+        child, subject.name as subject, notice.date as date, notice.link FROM notice
         INNER JOIN user ON user.user_id = notice.child_id
         INNER JOIN subject ON subject.subject_id = notice.subject_id
         WHERE notice.user_id = {$_SESSION['id']}
@@ -281,10 +281,10 @@ class ProcreatorMap extends BaseMap
     {
         $query = "SELECT notice.id, notice.text, notice.subject_id as subject_id, subject.name as subject, 
         CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, notice.subject_count,
-        notice.subject_price, notice.date 
+        notice.subject_price, notice.date, notice.link
         FROM notice
         INNER JOIN user ON notice.child_id = user.user_id
-        INNER JOIN subject ON notice.subject_id = subject.subject_id
+        LEFT JOIN subject ON notice.subject_id = subject.subject_id
         WHERE id = :id";
         $res = $this->db->prepare($query);
         $res->execute([
