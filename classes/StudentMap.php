@@ -61,9 +61,23 @@ class StudentMap extends BaseMap
     private function insertPayment($student = Student)
     {
         if (
-            $this->db->exec("INSERT INTO payment(parent_id, child_id, subject_id, count, tab, price) 
+            $this->db->exec("INSERT INTO payment(parent_id, child_id, subject_id, count, tab, price, link) 
             VALUES($student->parent_id, $student->user_id, 
-            $student->subject_id, $student->subject_count, '$student->tab', $student->subject_price)") == 1
+            $student->subject_id, $student->subject_count, '$student->tab', $student->subject_price, '$student->link')") == 1
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    public function deleteNoticeById($id)
+    {
+        $query = "UPDATE notice SET deleted = 1 WHERE id = :id";
+        $res = $this->db->prepare($query);
+        if (
+            $res->execute([
+                'id' => $id
+            ])
         ) {
             return true;
         }

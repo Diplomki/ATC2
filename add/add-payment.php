@@ -77,7 +77,21 @@ $header = "Оплата";
                     <?= $notice->date; ?>
                 </td>
             </tr>
+            <tr>
+                <th>Чек</th>
+                <td>
+                    <input type="file" name="tab" required>
+                </td>
+            </tr>
         </table>
+        <input type="hidden" name="child_id" value="<?= $notice->child_id ?>">
+        <input type="hidden" name="subject_id" value="<?= $notice->subject_id ?>">
+        <input type="hidden" name="subject_count" value="<?= $notice->subject_count ?>">
+        <input type="hidden" name="subject_price" value="<?= $notice->subject_price ?>">
+        <input type="hidden" name="link" value="<?= $notice->link ?>">
+        <input type="hidden" name="id" value="<?= $notice->id ?>">
+        <br>
+        <input class="btn btn-primary" type="submit" name="savePayment" value="Оплатить">
     </div>
 </form>
 

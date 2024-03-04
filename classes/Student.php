@@ -19,6 +19,7 @@ class Student extends Table
     public $reference = '';
     public $comment = '';
     public $file = '';
+    public $link = '';
     function validate()
     {
         if (!empty($this->gruppa_id)) {

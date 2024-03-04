@@ -140,7 +140,7 @@ class ProcreatorMap extends BaseMap
         child, subject.name as subject, notice.date as date, notice.link FROM notice
         INNER JOIN user ON user.user_id = notice.child_id
         INNER JOIN subject ON subject.subject_id = notice.subject_id
-        WHERE notice.user_id = {$_SESSION['id']}
+        WHERE notice.user_id = {$_SESSION['id']} and notice.deleted = 0
         ORDER BY notice.id DESC");
 
         return $res->fetchAll(PDO::FETCH_OBJ);
@@ -164,7 +164,7 @@ class ProcreatorMap extends BaseMap
     {
         $res = $this->db->query("SELECT COUNT(*) AS cnt FROM notice
         INNER JOIN user ON notice.user_id = user.user_id
-        WHERE notice.user_id = {$_SESSION['id']}");
+        WHERE notice.user_id = {$_SESSION['id']} and notice.deleted = 0");
         if ($res === false)
             return 0;
         return $res->fetch(PDO::FETCH_OBJ)->cnt;
@@ -279,7 +279,8 @@ class ProcreatorMap extends BaseMap
 
     public function findNoticeById($id)
     {
-        $query = "SELECT notice.id, notice.text, notice.subject_id as subject_id, subject.name as subject, 
+        $query = "SELECT notice.id, notice.text, notice.child_id, 
+        notice.subject_id as subject_id, subject.name as subject, 
         CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, notice.subject_count,
         notice.subject_price, notice.date, notice.link
         FROM notice

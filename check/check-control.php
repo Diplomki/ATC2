@@ -1,6 +1,6 @@
 <?php
 require_once '../secure.php';
-if (!Helper::can('procreator')) {
+if (!Helper::can('manager')) {
     header('Location: 404');
     exit();
 }

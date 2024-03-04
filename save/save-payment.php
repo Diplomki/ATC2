@@ -1,27 +1,36 @@
 <?php
 require_once '../secure.php';
-if (!Helper::can('manager')) {
+if (!Helper::can('procreator')) {
     header('Location: 404');
     exit();
 }
-$parent_id = (new StudentMap())->findParentByStudentId($_POST['child_id']);
+
 if (isset($_POST['savePayment'])) {
     $student = new Student();
-    $student->parent_id = Helper::clearint($parent_id);
+    $id = $_POST['id'];
+    $student->parent_id = Helper::clearInt($_SESSION['id']);
     $student->user_id = Helper::clearInt($_POST['child_id']);
     $student->subject_id = Helper::clearInt($_POST['subject_id']);
     $student->subject_count = Helper::clearInt($_POST['subject_count']);
     $student->subject_price = Helper::clearInt($_POST['subject_price']);
-    $student->tab = time() . $_FILES["fileToUpload"]["name"];
-    $fileTmpName = $_FILES["fileToUpload"]["tmp_name"];
+    $student->link = Helper::clearString($_POST['link']);
+    $student->tab = time() . $_FILES["tab"]["name"];
+    $fileTmpName = $_FILES["tab"]["tmp_name"];
 
     move_uploaded_file($fileTmpName, "../uploads/" . $student->tab);
 
 
     if ((new StudentMap())->savePayment($student)) {
-        header('Location: ../add/add-payment?message=ok');
+        if ((new StudentMap())->deleteNoticeById($id)) {
+            header('Location: ../view/view-notice?message=ok');
+            exit();
+        } else {
+            header('Location: ../view/view-notice?message=err');
+            exit();
+        }
     } else {
-        header('Location: ../add/add-payment?message=err');
+        header('Location: ../view/view-notice?message=err');
+        exit();
     }
 }
 

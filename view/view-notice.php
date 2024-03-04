@@ -35,7 +35,7 @@ foreach ($notice as $item) {
                             <?= $item->link ?>
                         </p>
                         <form action="../add/add-payment" method="get">
-                            <input class="btn btn-primary" type="submit" value="Оплатить">
+                            <input class="btn btn-primary" type="submit" value="Посмотреть">
                             <input type="hidden" name="id" value="<?= $item->id ?>">
                         </form>
                     </div>
@@ -62,11 +62,10 @@ foreach ($notice as $item) {
                             <?= $item->link ?>
                         </p>
                         <form action="../add/add-payment" method="get">
-                            <input class="btn btn-primary" type="submit" value="Оплатить">
+                            <input class="btn btn-primary" type="submit" value="Посмотреть">
                             <input type="hidden" name="id" value="<?= $item->id ?>">
                         </form>
                     </div>
-
                 </div>
             </div>
         </div>

@@ -1,7 +1,7 @@
 <?php
 require_once '../secure.php';
 
-if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher')) {
+if (!Helper::can('manager')) {
     header('Location: 404');
     exit();
 }
@@ -56,7 +56,7 @@ require_once '../template/header.php';
                                 <th>Кол-во уроков</th>
                                 <th>Чек</th>
                                 <th>Цена</th>
-                                <th>Подтвер-ждение</th>
+                                <th>Подтверждение</th>
                             </tr>
                         </thead>
                         <tbody>
