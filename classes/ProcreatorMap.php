@@ -137,7 +137,7 @@ class ProcreatorMap extends BaseMap
     {
         $res = $this->db->query("SELECT notice.id as id, notice.text as text, 
         CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as 
-        child, subject.name as subject, notice.date as date, notice.link FROM notice
+        child, subject.name as subject, notice.date as date, notice.link, notice.canceled FROM notice
         INNER JOIN user ON user.user_id = notice.child_id
         INNER JOIN subject ON subject.subject_id = notice.subject_id
         WHERE notice.user_id = {$_SESSION['id']} and notice.deleted = 0

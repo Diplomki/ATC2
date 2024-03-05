@@ -17,7 +17,6 @@ if (isset($_POST['paymentSubmit'])) {
     $student->tab = $_POST['tab'];
     $student->price = $_POST['price'];
     $student->attend = 1;
-    $flag = true;
 
     foreach ($paymentArchives as $paymentArchive) {
         if ($paymentArchive->child_id == $student->user_id && $paymentArchive->subject_id == $student->subject_id) {
@@ -43,11 +42,17 @@ if (isset($_POST['paymentSubmit'])) {
 if (isset($_POST['paymentDelete'])) {
     $student = new Student();
     $student->id = Helper::clearInt($_POST['id']);
-
-
+    $student->text = Helper::clearString($_POST['text']);
+    $student->subject_id = Helper::clearInt($_POST['subject_id']);
+    $student->parent_id = Helper::clearInt($_POST['parent_id']);
+    $student->child_id = Helper::clearInt($_POST['child_id']);
+    $student->subject_count = Helper::clearInt($_POST['subject_count']);
+    $student->subject_price = Helper::clearInt($_POST['subject_price']);
     if ((new StudentMap())->deletePayment($student)) {
-        header('Location: ../check/check-payment?message=errDel');
-    } else {
         header('Location: ../check/check-payment?message=okDel');
+        exit();
+    } else {
+        header('Location: ../check/check-payment?message=errDel');
+        exit();
     }
 }

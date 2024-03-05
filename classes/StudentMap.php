@@ -104,7 +104,32 @@ class StudentMap extends BaseMap
 
     public function deletePayment($student = Student)
     {
-        $res = $this->db->query("DELETE FROM payment WHERE id = $student->id");
+        $query = "UPDATE payment SET deleted = 1 WHERE id = :id";
+        $res = $this->db->prepare($query);
+        if (
+            $res->execute([
+                'id' => $student->id
+            ])
+        ) {
+            $query = "INSERT INTO notice(text, subject_id, user_id, child_id, subject_count, subject_price, canceled)
+            VALUES(:text, :subject_id, :user_id, :child_id, :subject_count, :subject_price, :canceled)";
+            $res = $this->db->prepare($query);
+            if (
+                $res->execute([
+                    'text' => $student->text,
+                    'subject_id' => $student->subject_id,
+                    'user_id' => $student->parent_id,
+                    'child_id' => $student->child_id,
+                    'subject_count' => $student->subject_count,
+                    'subject_price' => $student->subject_price,
+                    'canceled' => 1
+                ])
+            ) {
+                return true;
+            }
+            return false;
+        }
+        return false;
     }
 
     public function saveUpdatePaymentArchive($student = Student)
@@ -124,7 +149,7 @@ class StudentMap extends BaseMap
             $student->subject_id, $student->count, '$student->tab', $student->price, $student->attend)
             ") == 1
         ) {
-            $res = $this->db->query("DELETE FROM payment WHERE id = $student->id");
+            $res = $this->db->query("UPDATE payment FROM payment WHERE id = $student->id");
             return true;
         }
         return false;
@@ -144,6 +169,7 @@ class StudentMap extends BaseMap
         }
         return false;
     }
+
 
 
     private function update($student = Student)
@@ -350,11 +376,13 @@ class StudentMap extends BaseMap
         subject.name as subject, 
         payment.count as count, 
         payment.tab as tab, 
-        payment.price as price 
+        payment.price as price,
+        payment.deleted
         FROM payment
         INNER JOIN user AS parent ON parent.user_id = payment.parent_id
         INNER JOIN user AS child ON child.user_id = payment.child_id
-        INNER JOIN subject ON payment.subject_id = subject.subject_id");
+        INNER JOIN subject ON payment.subject_id = subject.subject_id 
+        WHERE payment.deleted = 0");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
     public function findStudentById()
@@ -425,4 +453,5 @@ class StudentMap extends BaseMap
         ]);
         return $res->fetchColumn();
     }
+
 }

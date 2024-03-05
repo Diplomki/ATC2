@@ -78,6 +78,15 @@ require_once '../template/header.php';
                                         <input type="hidden" name="tab" value="' . $student->tab . '">
                                         <input type="hidden" name="price" value="' . $student->price . '">
                                         <input class="btn btn-success" type="submit" name="paymentSubmit" value="Подтвердить">
+                                        </form>' . "</td>";
+                                echo "<td>" . '<form action="../cancel-reason" method="get">
+                                        <input type="hidden" name="id" value="' . $student->id . '">
+                                        <input type="hidden" name="parent_id" value="' . $student->parent_id . '">
+                                        <input type="hidden" name="child_id" value="' . $student->user_id . '">
+                                        <input type="hidden" name="subject_id" value="' . $student->subject_id . '">
+                                        <input type="hidden" name="count" value="' . $student->count . '">
+                                        <input type="hidden" name="tab" value="' . $student->tab . '">
+                                        <input type="hidden" name="price" value="' . $student->price . '">
                                         <input class="btn btn-danger" type="submit" name="paymentDelete" value="Отклонить">
                                         </form>' . "</td>";
                                 echo '</tr>';

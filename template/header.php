@@ -97,23 +97,68 @@ desired effect
                     <!-- inner menu: contains the actual data -->
                     <ul class="menu">
                       <?php if ($notices) { ?>
-                        <?php foreach ($notices as $item) { ?>
-                          <a href="../add/add-payment?id=<?= $item->id; ?>">
-                            <li>
-                              <br>
-                              <?= $item->text; ?>
-                              <br>
-                              <b>
-                                <?= $item->child; ?>:
-                              </b>
-                              <b>
-                                <?= $item->subject; ?>
-                              </b>&#10230;
-                              <b>
-                                <?= $item->date; ?>
-                              </b>
-                            </li>
-                          </a>
+                        <?php foreach ($notices as $item) {
+                          $text = "Оплатите сумму указанную в приложении";
+                          if (strtolower($item->text) == strtolower($text)) {
+                            $text = mb_substr($text, 8);
+                            ?>
+
+                            <a href="../add/add-payment?id=<?= $item->id; ?>">
+                              <li>
+                                Оплатите
+                                <b>
+                                  за
+                                  <?= $item->child ?>
+                                  по предмету
+
+                                  <?= $item->subject ?>
+                                </b>
+                                <?= $text ?> до <b>
+                                  <?= $item->date ?> по ссылке
+
+                                </b>
+                                <?= $item->link ?>
+                              </li>
+                            </a><br>
+                          <?php } elseif ($item->canceled == 1) {
+                            ?>
+                            <a href="../add/add-payment?id=<?= $item->id; ?>">
+                              <li>
+                                Ваша оплата
+                                <b>
+                                  за
+                                  <?= $item->child ?>
+                                </b>
+                                по предмету
+                                <b>
+                                  <?= $item->subject ?>
+                                </b>
+                                Отменена по причине
+                                <b>
+                                  <?= $item->text ?>
+                                </b>
+                              </li>
+                            </a><br>
+                            <?php
+                          } else {
+                            ?>
+                            <a href="../add/add-payment?id=<?= $item->id; ?>">
+                              <li>
+                                <?= $item->text ?>
+                                <b>
+                                  <?= $item->child ?>
+                                  <?= $item->subject ?>
+                                  до
+                                  <?= $item->date ?>
+                                  по ссылке
+                                </b>
+                                <?= $item->link ?><br>
+                              </li>
+                            </a><br>
+
+                            <?php
+                          }
+                          ?>
                         <?php } ?>
                       <?php } ?>
                     </ul>

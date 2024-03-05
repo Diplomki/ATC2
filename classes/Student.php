@@ -2,6 +2,7 @@
 class Student extends Table
 {
     public $id = 0;
+    public $text = '';
     public $user_id = 0;
     public $parent_id = 0;
     public $gruppa_id = 0;
