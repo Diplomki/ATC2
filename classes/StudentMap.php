@@ -149,7 +149,7 @@ class StudentMap extends BaseMap
             $student->subject_id, $student->count, '$student->tab', $student->price, $student->attend)
             ") == 1
         ) {
-            $res = $this->db->query("UPDATE payment FROM payment WHERE id = $student->id");
+            $res = $this->db->query("UPDATE payment SET deleted = 1 WHERE id = $student->id");
             return true;
         }
         return false;
@@ -164,7 +164,7 @@ class StudentMap extends BaseMap
     private function updatePaymentArchive($student = Student)
     {
         if ($this->db->exec("UPDATE payment_archive SET count = count + $student->count WHERE child_id=" . $student->user_id . " and subject_id=" . $student->subject_id) == 1) {
-            $res = $this->db->query("DELETE FROM payment WHERE id = $student->id");
+            $res = $this->db->query("UPDATE payment SET deleted = 1 WHERE id = $student->id");
             return true;
         }
         return false;

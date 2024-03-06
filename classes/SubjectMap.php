@@ -101,4 +101,13 @@ class SubjectMap extends BaseMap
         }
         return false;
     }
+
+    public function listSubject()
+    {
+        $query = "SELECT subject.subject_id FROM subject
+        WHERE subject.deleted = 0";
+        $res = $this->db->prepare($query);
+        $res->execute();
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
 }

@@ -257,4 +257,53 @@ class UserMap extends BaseMap
         }
         return null;
     }
+
+
+
+    public function autoNotifications()
+    {
+        $listParentAndChild = (new ProcreatorMap())->listParentAndChild();
+        $listSubject = (new SubjectMap())->listSubject();
+
+        $current_date = date("Y-m-d");
+
+        $next_month = date('Y-m-d', strtotime('+1 month', strtotime($current_date)));
+
+        $next_month_first_day = date('Y-m-01', strtotime($next_month));
+
+        $current_date = date("Y-m-d");
+        if (date('d', strtotime($current_date)) == 27) {
+            foreach ($listParentAndChild as $item) {
+                foreach ($listSubject as $item2) {
+
+                    $query = "SELECT * FROM notice WHERE subject_id = :subject_id AND user_id = :user_id AND child_id = :child_id AND date = :date";
+                    $res = $this->db->prepare($query);
+                    $res->execute([
+                        'subject_id' => $item2->subject_id,
+                        'user_id' => $item->user_id,
+                        'child_id' => $item->child_id,
+                        'date' => $next_month_first_day
+                    ]);
+
+                    if ($res->fetch()) {
+                        continue;
+                    }
+
+                    $query = "INSERT INTO notice(text, subject_id, user_id, child_id, subject_count, subject_price, link, date) 
+        VALUES(:text, :subject_id, :user_id, :child_id, :subject_count, :subject_price, :link, :date)";
+                    $res = $this->db->prepare($query);
+                    $res->execute([
+                        'text' => 'Оплатите сумму указанную в приложении',
+                        'subject_id' => $item2->subject_id,
+                        'user_id' => $item->user_id,
+                        'child_id' => $item->child_id,
+                        'subject_count' => 5,
+                        'subject_price' => 2000,
+                        'link' => 'https://example.com',
+                        'date' => $next_month_first_day
+                    ]);
+                }
+            }
+        }
+    }
 }

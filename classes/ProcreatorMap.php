@@ -293,4 +293,13 @@ class ProcreatorMap extends BaseMap
         ]);
         return $res->fetch(PDO::FETCH_OBJ);
     }
+
+    public function listParentAndChild()
+    {
+        $query = "SELECT parent.user_id, parent.child_id FROM parent
+        WHERE parent.deleted = 0 AND parent.child_id IS NOT NULL";
+        $res = $this->db->prepare($query);
+        $res->execute();
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
 }
