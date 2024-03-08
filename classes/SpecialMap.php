@@ -62,7 +62,7 @@ class SpecialMap extends BaseMap
     public function count()
     {
         $res = $this->db->query("SELECT COUNT(*) AS cnt FROM
-        special");
+        special ");
         return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
     public function findViewById($id = null)

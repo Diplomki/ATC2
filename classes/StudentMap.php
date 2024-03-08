@@ -187,7 +187,7 @@ class StudentMap extends BaseMap
             INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
             INNER JOIN role ON user.role_id=role.role_id
             INNER JOIN branch ON user.branch_id = branch.id
-            WHERE student.deleted = 0
+            WHERE student.deleted = 0 AND user.branch_id = {$_SESSION['branch']}
             LIMIT $ofset, $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
@@ -321,15 +321,10 @@ class StudentMap extends BaseMap
 
     public function count()
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM student
-        INNER JOIN user ON user.user_id = student.user_id
-        WHERE user.branch_id = {$_SESSION['branch']}");
-            return $res->fetch(PDO::FETCH_OBJ)->cnt;
-        } else {
-            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM student");
-            return $res->fetch(PDO::FETCH_OBJ)->cnt;
-        }
+        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM student
+            INNER JOIN user ON user.user_id = student.user_id
+            WHERE user.branch_id = {$_SESSION['branch']} AND student.deleted = 0");
+        return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
     public function findProfileById($id = null)
     {

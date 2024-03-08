@@ -200,41 +200,26 @@ class UserMap extends BaseMap
 
     public function teacherCount()
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT COUNT(*) as count FROM teacher
+        $res = $this->db->query("SELECT COUNT(*) as count FROM teacher
             INNER JOIN user ON teacher.user_id = user.user_id
-            WHERE user.branch_id = {$_SESSION['branch']}");
-            ;
-        } else {
-            $res = $this->db->query("SELECT COUNT(*) as count FROM teacher");
-        }
+            WHERE user.branch_id = {$_SESSION['branch']} AND teacher.deleted = 0");
         return $res->fetch(PDO::FETCH_OBJ);
     }
 
     public function studentCount()
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT COUNT(*) as count FROM student
+        $res = $this->db->query("SELECT COUNT(*) as count FROM student
             INNER JOIN user ON student.user_id = user.user_id
-            WHERE user.branch_id = {$_SESSION['branch']}");
-            ;
-        } else {
-            $res = $this->db->query("SELECT COUNT(*) as count FROM student");
-        }
+            WHERE user.branch_id = {$_SESSION['branch']} and student.deleted = 0");
         return $res->fetch(PDO::FETCH_OBJ);
     }
 
     public function parentCount()
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT COUNT(DISTINCT parent.user_id) as count 
+        $res = $this->db->query("SELECT COUNT(DISTINCT parent.user_id) as count 
             FROM parent
             INNER JOIN user ON parent.user_id = user.user_id
-            WHERE user.branch_id = {$_SESSION['branch']}");
-            ;
-        } else {
-            $res = $this->db->query("SELECT COUNT(*) as count FROM student");
-        }
+            WHERE user.branch_id = {$_SESSION['branch']} AND parent.deleted = 0");
         return $res->fetch(PDO::FETCH_OBJ);
     }
 

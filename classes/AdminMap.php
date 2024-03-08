@@ -82,7 +82,8 @@ class AdminMap extends BaseMap
     }
     public function count()
     {
-        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM admin");
+        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM admin WHERE admin.deleted = 0 
+        AND admin.branch = {$_SESSION['branch']}");
         return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
     public function findProfileById($id = null)

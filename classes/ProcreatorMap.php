@@ -123,15 +123,12 @@ class ProcreatorMap extends BaseMap
 
     public function count()
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM parent
-        INNER JOIN user ON user.user_id = parent.user_id
-        WHERE user.branch_id = {$_SESSION['branch']}");
-            return $res->fetch(PDO::FETCH_OBJ)->cnt;
-        } else {
-            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM parent");
-            return $res->fetch(PDO::FETCH_OBJ)->cnt;
-        }
+
+        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM parent 
+        INNER JOIN user ON user.user_id  = parent.user_id
+        WHERE parent.deleted = 0 
+        AND user.branch_id = {$_SESSION['branch']}");
+        return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
     public function notice()
     {

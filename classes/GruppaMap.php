@@ -70,15 +70,8 @@ class GruppaMap extends BaseMap
     }
     public function count()
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM gruppa
-            WHERE branch = {$_SESSION['branch']}");
-            return $res->fetch(PDO::FETCH_OBJ)->cnt;
-        } else {
-            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM gruppa");
-            return $res->fetch(PDO::FETCH_OBJ)->cnt;
-        }
-
+        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM gruppa WHERE gruppa.deleted = 0 AND gruppa.branch = {$_SESSION['branch']}");
+        return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
     public function findViewById($id = null)
     {

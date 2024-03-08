@@ -8,7 +8,7 @@ class SubjectMap extends BaseMap
         $res = $this->db->query("SELECT subject.subject_id AS id, 
         subject.name AS value, otdel.name as otdel_name FROM subject
         INNER JOIN otdel ON otdel.otdel_id = subject.otdel_id
-        WHERE subject.deleted = 0
+        WHERE subject.deleted = 0 AND subject.branch = {$_SESSION['branch']}
         ");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -66,14 +66,14 @@ class SubjectMap extends BaseMap
     {
         $res = $this->db->query("SELECT subject.subject_id,
         subject.name, subject.name AS special, subject.hours AS hours, otdel.name AS otdel FROM subject LEFT JOIN otdel ON
-        subject.otdel_id=otdel.otdel_id WHERE subject.deleted = 0 LIMIT $ofset,
+        subject.otdel_id=otdel.otdel_id WHERE subject.deleted = 0 AND subject.branch = {$_SESSION['branch']} LIMIT $ofset,
         $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
     public function count()
     {
         $res = $this->db->query("SELECT COUNT(*) AS cnt FROM
-        subject");
+        subject WHERE subject.deleted = 0 AND subject.branch = {$_SESSION['branch']}");
         return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
     public function findViewById($id = null)

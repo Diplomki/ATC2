@@ -60,7 +60,7 @@ class OtdelMap extends BaseMap
 
     public function count()
     {
-        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM otdel");
+        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM otdel WHERE otdel.deleted = 0");
         return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
 

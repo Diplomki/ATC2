@@ -74,21 +74,16 @@ class TeacherMap extends BaseMap
                     LEFT JOIN otdel ON teacher.otdel_id=otdel.otdel_id
                     INNER JOIN role ON user.role_id=role.role_id
                     INNER JOIN branch ON branch.id=user.branch_id
-                    WHERE teacher.deleted = 0
+                    WHERE teacher.deleted = 0 AND user.branch_id = {$_SESSION['branch']}
             LIMIT $ofset, $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
     public function count()
     {
-        if ($_SESSION['branch'] != 999) {
-            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM teacher
+        $res = $this->db->query("SELECT COUNT(*) AS cnt FROM teacher 
         INNER JOIN user ON user.user_id = teacher.user_id
-        WHERE user.branch_id = {$_SESSION['branch']}");
-            return $res->fetch(PDO::FETCH_OBJ)->cnt;
-        } else {
-            $res = $this->db->query("SELECT COUNT(*) AS cnt FROM teacher");
-            return $res->fetch(PDO::FETCH_OBJ)->cnt;
-        }
+        WHERE teacher.deleted = 0 AND user.branch_id = {$_SESSION['branch']}");
+        return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
     public function findProfileById($id = null)
     {
