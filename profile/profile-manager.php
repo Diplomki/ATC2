@@ -1,35 +1,33 @@
 <?php
 require_once '../secure.php';
-if (!Helper::can('manager')) {
+if (!Helper::can('admin')) {
     header('Location: 404');
     exit();
 }
 if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
-} else {
-    header('Location: 404');
 }
-$header = 'Профиль администратора';
-$admin = (new AdminMap())->findProfileById($id);
+$header = 'Профиль менеджера';
+$manager = (new ManagerMap())->findProfileById($id);
 require_once '../template/header.php';
 ?>
 <div class="row">
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h3><b>Профиль администратора</b></h3>
+                <h3><b>Профиль менеджера</b></h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa
 fa-dashboard"></i> Главная</a></li>
 
-                    <li><a href="../list/list-admin">Администраторы</a></li>
+                    <li><a href="../list/list-manager">Менеджеры</a></li>
 
                     <li class="active">Профиль</li>
                 </ol>
             </section>
             <div class="box-body">
                 <?php if (Helper::can('manager')) { ?>
-                    <a class="btn btn-success" href="../add/add-admin?id=<?= $id; ?>">Изменить</a>
+                    <a class="btn btn-success" href="../add/add-manager?id=<?= $id; ?>">Изменить</a>
                 <?php } ?>
 
             </div>
@@ -41,15 +39,11 @@ hover">
                     <?php require_once '../_profile.php'; ?>
 
                     <tr>
-
                         <th>Филиал</th>
-
                         <td>
-                            <?= $admin->branch ?>
+                            <?= $manager->branch ?>
                         </td>
-
                     </tr>
-
                 </table>
             </div>
         </div>

@@ -1,7 +1,9 @@
 <?php
 require_once 'autoload.php';
 session_start();
+
 (new UserMap())->autoNotifications();
+
 $message = 'Войдите для просмотра расписания занятий';
 if (
     isset($_POST['login']) &&
@@ -29,12 +31,11 @@ if (
 
 if (isset($_POST['branch'])) {
 
-
     $res = explode(',', $_POST['branch']);
     $branch_id = $res[0];
     $branch_name = $res[1];
 
-    if (Helper::can('manager')) {
+    if (Helper::can('admin')) {
         $_SESSION['branch'] = $branch_id;
         $_SESSION['branch_name'] = $branch_name;
         header("Location: index");
@@ -45,8 +46,8 @@ if (isset($_POST['branch'])) {
         header("Location: template/branch?message=errBranch");
         exit;
     }
-
     header("Location: index");
+
 }
 
 require_once('template/login.php');

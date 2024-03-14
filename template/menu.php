@@ -77,6 +77,10 @@
                 <?php if (Helper::can('admin')) { ?>
                 <li class="header">Пользователи</li>
 
+                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-manager.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="../list/list-manager"><i class="fa fa-users"></i><span>Менеджеры</span></a>
+
                 <li <?= ($_SERVER['PHP_SELF'] == '/list/list-teacher.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../list/list-teacher"><i class="fa fa-users"></i><span>Преподаватели</span></a>

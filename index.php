@@ -1,16 +1,29 @@
 <?php
 require_once 'secure.php';
 require_once 'template/header.php';
+if (isset($_GET['id'])) {
+    $_SESSION['branch'] = (int) $_GET['id'];
+}
+
+$id = $_SESSION['branch'];
 
 $userMap = new UserMap();
 $indexTeacher = $userMap->teacherCount();
 $indexStudent = $userMap->studentCount();
 $indexParent = $userMap->parentCount();
 
-$branch_name = $_SESSION['branch_name'];
-$branch_name = trim($branch_name);
-$branch = $userMap->findBranchByName($branch_name);
+$branch = $userMap->findBranchById($id);
+
+$branchWithoutCurrent = (new UserMap())->arrBranchWithoutCurrent();
+
+
+
+
 ?>
+<script>
+
+
+</script>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -44,8 +57,8 @@ $branch = $userMap->findBranchByName($branch_name);
 
 
 <body>
-    <?php if (!Helper::can('procreator') && !Helper::can('teacher')) {
-        $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch_name;
+    <?php if (Helper::can('manager')) {
+        $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch->name;
         ?>
 
         <section class="content-header">
@@ -58,6 +71,94 @@ $branch = $userMap->findBranchByName($branch_name);
                     Дата основания:
                     <?= $branch->date_founding ?>
                 </b></h3>
+        </section>
+        <section class="content">
+            <a style="text-decoration: none; color: #333;" href="list/list-teacher">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-aqua"><i class="ion ion-stats-bars"></i></span>
+
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Кол-во учителей</b></span>
+                            <span class="info-box-number">
+                                <?= $indexTeacher->count ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a style="text-decoration: none; color: #333;" href="list/list-student">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-red"><i class="ion ion-person-add"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Кол-во учеников</b></span>
+                            <span class="info-box-number">
+                                <?= $indexStudent->count ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+
+            <a style="text-decoration: none; color: #333;" href="list/list-parent">
+                <div class="col-md-3 col-sm-6 col-xs-12">
+                    <div class="info-box">
+                        <span class="info-box-icon bg-red"><i class="ion ion-person-add"></i></span>
+                        <div class="info-box-content">
+                            <span class="info-box-text"><b>Кол-во родителей</b></span>
+                            <span class="info-box-number">
+                                <?= $indexParent->count ?>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </section>
+    <?php } ?>
+
+
+
+    <?php if (Helper::can('admin')) {
+        $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch->name;
+        ?>
+
+        <section class="content-header">
+            <h3><b>
+                    <?= $header ?>
+                </b></h3>
+        </section>
+        <section class="content-header">
+            <h3><b>
+                    Дата основания:
+                    <?= $branch->date_founding ?>
+                </b></h3>
+        </section>
+
+        <section class="content-header">
+            <h3><b>
+                    Список филиалов:
+
+                </b></h3>
+        </section>
+        <section class="content-header">
+            <form id="myForm" action="index" method="GET">
+                <?php foreach ($branchWithoutCurrent as $item): ?>
+                    <button class="btn btn-primary" type="button" onclick="submitForm(<?= $item->id ?>)">
+                        <?= $item->value ?>
+                    </button>
+                <?php endforeach; ?>
+                <input type="hidden" id="selectedId" name="id" value="">
+            </form>
+
+            <script>
+                function submitForm(id) {
+                    document.getElementById('selectedId').value = id;
+                    document.getElementById('myForm').submit();
+
+                }
+            </script>
         </section>
         <section class="content">
             <a style="text-decoration: none; color: #333;" href="list/list-teacher">

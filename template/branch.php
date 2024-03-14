@@ -2,7 +2,6 @@
 require_once('../secure.php');
 
 $branch = (new UserMap())->arrBranchs();
-
 ?>
 
 <!DOCTYPE html>

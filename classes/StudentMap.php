@@ -8,7 +8,7 @@ class StudentMap extends BaseMap
         CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) AS value, branch.id AS branch FROM student
         INNER JOIN user ON user.user_id = student.user_id
         INNER JOIN branch ON branch.id = user.branch_id
-        WHERE user.role_id = 5 and student.deleted = 0");
+        WHERE user.role_id = 5 and student.deleted = 0 and user.branch_id = {$_SESSION['branch']}");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 

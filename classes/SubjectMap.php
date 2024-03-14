@@ -104,8 +104,9 @@ class SubjectMap extends BaseMap
 
     public function listSubject()
     {
-        $query = "SELECT subject.subject_id FROM subject
-        WHERE subject.deleted = 0";
+        $query = "SELECT subject.subject_id, subject.name, branch.id as branch_id FROM subject
+        INNER JOIN branch ON subject.branch = branch.id
+                WHERE subject.deleted = 0";
         $res = $this->db->prepare($query);
         $res->execute();
         return $res->fetchAll(PDO::FETCH_OBJ);

@@ -141,4 +141,24 @@ if (isset($_POST['user_id'])) {
         }
         exit();
     }
+
+    if (isset($_POST['saveManager'])) {
+        $manager = new Manager();
+        $manager->branch_id = Helper::clearInt($_SESSION['branch']);
+        $manager->user_id = $user->user_id;
+        $user->role_id = Helper::clearInt(3);
+        if ((new ManagerMap())->save($user, $manager)) {
+            header('Location: ../profile/profile-manager?id=' . $manager->user_id);
+
+        } else {
+            if ($manager->user_id) {
+
+                header('Location: ../profile/profile-manager?id=' . $manager->user_id);
+
+            } else {
+                header('Location: ../profile/profile-manager');
+            }
+        }
+        exit();
+    }
 }
