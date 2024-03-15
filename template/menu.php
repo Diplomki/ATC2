@@ -81,18 +81,6 @@
 
                     <a href="../list/list-manager"><i class="fa fa-users"></i><span>Менеджеры</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-teacher.php') ? 'class="active"' : ''; ?>>
-
-                    <a href="../list/list-teacher"><i class="fa fa-users"></i><span>Преподаватели</span></a>
-
-                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-student.php') ? 'class="active"' : ''; ?>>
-
-                    <a href="../list/list-student"><i class="fa fa-users"></i><span>Студенты</span></a>
-                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-parent.php') ? 'class="active"' : ''; ?>>
-
-                    <a href="../list/list-parent"><i class="fa fa-users"></i><span>Родители</span></a>
-
-
                 <li class="header">Справочники</li>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/list/list-gruppa.php') ? 'class="active"' : ''; ?>>

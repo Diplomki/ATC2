@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher'))
     exit();
 }
 $size = 10;
-if (isset($_GET['page'])) {
+if (isset ($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 
 } else {
@@ -22,7 +22,7 @@ require_once '../template/header.php';
         <div class="box">
             <section class="content-header">
                 <h3><b>
-                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список учеников'; ?>
+                        <?= $header = isset ($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список учеников'; ?>
                     </b></h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa
@@ -47,9 +47,7 @@ fa-dashboard"></i> Главная</a></li>
                                 <th>Ф.И.О</th>
                                 <th>Дата рождения</th>
                                 <th>Группа</th>
-                                <?php if (Helper::can('manager')) { ?>
-                                    <th>Филиал</th>
-                                <?php } ?>
+                                <th>Предмет</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -59,10 +57,7 @@ fa-dashboard"></i> Главная</a></li>
                                 echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-student?id=' . $student->user_id . '"><i class="fa fa-times"></i></a></td>';
                                 echo '<td>' . $student->birthday . '</td>';
                                 echo '<td>' . $student->gruppa . '</td>';
-                                if (Helper::can('manager'))
-                                    echo '<td>' . $student->branch_name . '</td>';
-                                echo '</tr>';
-
+                                echo '<td>' . $student->subject . '</td>';
                             }
                             ?>
                         </tbody>

@@ -4,7 +4,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
     header('Location: 404');
     exit();
 }
-if (isset($_GET['id'])) {
+if (isset ($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 } else {
     header('Location: 404');
@@ -82,9 +82,15 @@ fa-dashboard"></i> Главная</a></li>
 
                 </table>
             </div>
-            <div class="box-body">
-                <a href="../add/add-avatar?id=<?= $id ?>" class="btn btn-primary">Изменить фото</a>
-            </div>
+            <?php
+            if (Helper::can('procreator')) {
+                ?>
+                <div class="box-body">
+                    <a href="../add/add-avatar?id=<?= $id ?>" class="btn btn-primary">Изменить фото</a>
+                </div>
+                <?php
+            }
+            ?>
         </div>
     </div>
 </div>

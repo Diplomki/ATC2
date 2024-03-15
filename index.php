@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 require_once 'template/header.php';
-if (isset($_GET['id'])) {
+if (isset ($_GET['id'])) {
     $_SESSION['branch'] = (int) $_GET['id'];
 }
 
@@ -58,7 +58,7 @@ $branchWithoutCurrent = (new UserMap())->arrBranchWithoutCurrent();
 
 <body>
     <?php if (Helper::can('manager')) {
-        $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch->name;
+        $header = isset ($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch->name;
         ?>
 
         <section class="content-header">
@@ -121,7 +121,7 @@ $branchWithoutCurrent = (new UserMap())->arrBranchWithoutCurrent();
 
 
     <?php if (Helper::can('admin')) {
-        $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch->name;
+        $header = isset ($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch->name;
         ?>
 
         <section class="content-header">
@@ -340,7 +340,7 @@ if (Helper::can('procreator')) {
         exit();
     }
     $size = 10;
-    if (isset($_GET['page'])) {
+    if (isset ($_GET['page'])) {
         $page = Helper::clearInt($_GET['page']);
 
     } else {
@@ -349,7 +349,7 @@ if (Helper::can('procreator')) {
     $studentMap = new StudentMap();
     $count = $studentMap->count();
     $student = $studentMap->findStudentsFromParent($page * $size - $size, $size);
-    $header = isset($_GET['message']) ? '<span style="color: red;">Ошибка</span>' : 'Главная';
+    $header = isset ($_GET['message']) ? '<span style="color: red;">Ошибка</span>' : 'Главная';
     require_once 'template/header.php';
     ?>
     <div class="row">

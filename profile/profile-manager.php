@@ -4,7 +4,7 @@ if (!Helper::can('admin')) {
     header('Location: 404');
     exit();
 }
-if (isset($_GET['id'])) {
+if (isset ($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 }
 $header = 'Профиль менеджера';
@@ -45,6 +45,9 @@ hover">
                         </td>
                     </tr>
                 </table>
+            </div>
+            <div class="box-body">
+                <a href="../add/add-avatar?id=<?= $id ?>" class="btn btn-primary">Изменить фото</a>
             </div>
         </div>
     </div>
