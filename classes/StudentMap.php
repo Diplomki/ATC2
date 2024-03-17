@@ -181,13 +181,15 @@ class StudentMap extends BaseMap
     }
     public function findAll($ofset = 0, $limit = 30)
     {
-        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, role.name AS role, branch.id AS branch, branch.branch AS branch_name FROM user 
-            INNER JOIN student ON user.user_id=student.user_id 
-            INNER JOIN gender ON user.gender_id=gender.gender_id 
-            INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
-            INNER JOIN role ON user.role_id=role.role_id
-            INNER JOIN branch ON user.branch_id = branch.id
-            WHERE student.deleted = 0 AND user.branch_id = {$_SESSION['branch']}
+        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, 
+        role.name AS role, branch.id AS branch, branch.branch AS branch_name FROM user 
+        INNER JOIN student ON user.user_id=student.user_id 
+        INNER JOIN gender ON user.gender_id=gender.gender_id 
+        INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
+        INNER JOIN role ON user.role_id=role.role_id
+        INNER JOIN branch ON user.branch_id = branch.id
+        
+        WHERE student.deleted = 0 AND user.branch_id = {$_SESSION['branch']}
             LIMIT $ofset, $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
@@ -449,4 +451,33 @@ class StudentMap extends BaseMap
         return $res->fetchColumn();
     }
 
+    public function saveSubjectForStudent(Student $student)
+    {
+        $query = "INSERT INTO student_subjects(user_id, subject_id) VALUES(:user_id, :subject_id)";
+        $res = $this->db->prepare($query);
+        if (
+            $res->execute([
+                'user_id' => $student->user_id,
+                'subject_id' => $student->subject_id,
+            ])
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    public function findStudentSubjectsByUserId($id)
+    {
+        $query = "SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio,  subject.name FROM user 
+        INNER JOIN student ON user.user_id=student.user_id 
+        LEFT JOIN student_subjects ON user.user_id=student_subjects.user_id 
+        LEFT JOIN subject ON subject.subject_id=student_subjects.subject_id
+        WHERE student.deleted = 0 AND user.branch_id = :branch AND user.user_id = :id";
+        $res = $this->db->prepare($query);
+        $res->execute([
+            'branch' => $_SESSION['branch'],
+            'id' => $id,
+        ]);
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
 }

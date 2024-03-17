@@ -15,6 +15,8 @@ $studentMap = new StudentMap();
 $count = $studentMap->count();
 $student = $studentMap->findAll($page * $size - $size, $size);
 
+
+
 require_once '../template/header.php';
 ?>
 <div class="row">
@@ -33,6 +35,7 @@ fa-dashboard"></i> Главная</a></li>
             </section>
             <div class="box-body">
                 <a class="btn btn-success" href="../add/add-student">Добавить ученика</a>
+                <a class="btn btn-success" href="../add/add-subjectForStudent">Добавить предмет к ученику</a>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -47,7 +50,7 @@ fa-dashboard"></i> Главная</a></li>
                                 <th>Ф.И.О</th>
                                 <th>Дата рождения</th>
                                 <th>Группа</th>
-                                <th>Предмет</th>
+                                <th>Предмет(ы)</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -57,7 +60,16 @@ fa-dashboard"></i> Главная</a></li>
                                 echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-student?id=' . $student->user_id . '"><i class="fa fa-times"></i></a></td>';
                                 echo '<td>' . $student->birthday . '</td>';
                                 echo '<td>' . $student->gruppa . '</td>';
-                                echo '<td>' . $student->subject . '</td>';
+                                echo '<td>';
+                                $subjects = (new StudentMap())->findStudentSubjectsByUserId($student->user_id);
+                                $subject_names = array();
+                                foreach ($subjects as $item) {
+                                    $subject_names[] = trim($item->name);
+                                }
+                                $subject = implode(', ', $subject_names);
+                                echo $subject;
+                                echo '</td>';
+                                echo '</tr>';
                             }
                             ?>
                         </tbody>
@@ -66,6 +78,7 @@ fa-dashboard"></i> Главная</a></li>
                     echo 'Ни одного ученика не найдено';
                 } ?>
             </div>
+
             <div class="box-body">
                 <?php Helper::paginator($count, $page, $size); ?>
             </div>
