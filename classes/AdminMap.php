@@ -128,6 +128,7 @@ class AdminMap extends BaseMap
         CONCAT(child.lastname, ' ', child.firstname, ' ', child.patronymic) as child,
         subject.name as subject,
         payment.count as subject_count,
+        payment.price as subject_price,
         payment.tab as tab,
         payment.link as link,
         payment.date as date,

@@ -40,16 +40,20 @@ require_once '../template/header.php';
                                     <th>Кол-во предметов</th>
                                     <th>Цена</th>
                                     <th>Дата</th>
-                                    <th>Я ПИДОРАС</th>
+                                    <th>Филиал</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <?php
                                 foreach ($payment as $item) {
                                     echo '<tr>';
-                                    echo '<td>' . $item->fio . '</td>';
-                                    echo '<td>' . $grade->subject . '</td>';
-                                    echo '<td>' . $grade->date . '</td>';
+                                    echo '<td>' . $item->parent . '</td>';
+                                    echo '<td>' . $item->child . '</td>';
+                                    echo '<td>' . $item->subject . '</td>';
+                                    echo '<td>' . $item->subject_count . '</td>';
+                                    echo '<td>' . $item->subject_price . '</td>';
+                                    echo '<td>' . $item->date . '</td>';
+                                    echo '<td>' . $item->branch_name . '</td>';
                                 }
                                 ?>
                             </tbody>
