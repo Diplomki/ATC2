@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher'))
     exit();
 }
 $size = 10;
-if (isset($_GET['page'])) {
+if (isset ($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 
 } else {
@@ -22,7 +22,7 @@ require_once '../template/header.php';
             <section class="content-header">
                 <h3><b>
                         <?=
-                            $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список родителей';
+                            $header = isset ($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список родителей';
                         ?>
                     </b></h3>
                 <ol class="breadcrumb">
@@ -52,7 +52,6 @@ fa-dashboard"></i> Главная</a></li>
                                 <th>Ф.И.О</th>
                                 <th>Дата рождения</th>
                                 <th>Ученик</th>
-                                <th>Филиал</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -61,11 +60,12 @@ fa-dashboard"></i> Главная</a></li>
                                 echo '<tr>';
                                 echo '<td><a href="../profile/profile-parent?id=' . $parent->user_id . '">' . $parent->parent_fio . '</a> ' . '<a href="../add/add-parent?id=' . $parent->user_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-parent?id=' . $parent->user_id . '"><i class="fa fa-times"></i></a></td>';
                                 echo '<td>' . $parent->birthday . '</td>';
-                                echo '<td>' . $parent->child_fio . '</td>';
-                                if (Helper::can('manager'))
-                                    echo '<td>' . $parent->branch . '</td>';
+                                echo '<td>';
+                                foreach ((new ProcreatorMap())->findStudentFromParentId($parent->user_id) as $item) {
+                                    echo $item->child . '<br>';
+                                }
+                                echo '</td>';
                                 echo '</tr>';
-
                             }
                             ?>
                         </tbody>

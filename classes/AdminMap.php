@@ -105,4 +105,46 @@ class AdminMap extends BaseMap
             'id' => $id
         ]);
     }
+
+    public function saveBranch(Admin $admin)
+    {
+        $query = "INSERT INTO `branch` (`branch`, `date_founding`, `deleted`) 
+        VALUES (:text, NOW(), '0')";
+        $res = $this->db->prepare($query);
+        if (
+            $res->execute([
+                'text' => $admin->text
+            ])
+        ) {
+            return true;
+        }
+        return false;
+    }
+
+    public function findPaymentByDate($date)
+    {
+        $query = "SELECT payment.id, 
+        CONCAT(parent.lastname, ' ', parent.firstname, ' ', parent.patronymic) as parent,
+        CONCAT(child.lastname, ' ', child.firstname, ' ', child.patronymic) as child,
+        subject.name as subject,
+        payment.count as subject_count,
+        payment.tab as tab,
+        payment.link as link,
+        payment.date as date,
+        branch.id as branch_id,
+        branch.branch as branch_name
+        FROM `payment`
+        INNER JOIN user as parent ON payment.parent_id = parent.user_id
+        INNER JOIN user as child ON payment.child_id = child.user_id
+        INNER JOIN subject ON subject.subject_id = payment.subject_id
+        INNER JOIN branch ON branch.id = payment.branch_id
+        WHERE payment.date = :date";
+
+        $res = $this->db->prepare($query);
+
+        $res->execute([
+            'date' => $date
+        ]);
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
 }

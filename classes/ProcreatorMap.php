@@ -103,20 +103,30 @@ class ProcreatorMap extends BaseMap
     public function findAll($ofset = 0, $limit = 30)
     {
         $res = $this->db->query("SELECT DISTINCT
-            user.user_id,
-            CONCAT(procreator.lastname,' ', procreator.firstname, ' ', procreator.patronymic) AS parent_fio, 
-            CONCAT(child.lastname,' ', child.firstname, ' ', child.patronymic) AS child_fio, 
-            gender.name as gender, 
-            user.birthday as birthday,
-            branch.branch as branch
-            FROM parent
-            INNER JOIN user as procreator on procreator.user_id = parent.user_id
-            INNER JOIN user as child on child.user_id = parent.child_id
-            INNER JOIN user on user.user_id = parent.user_id
-            INNER JOIN branch on user.branch_id = branch.id
-            INNER JOIN gender ON user.gender_id = gender.gender_id
-            WHERE user.branch_id = {$_SESSION['branch']} and parent.deleted = 0
+        user.user_id,
+        CONCAT(procreator.lastname,' ', procreator.firstname, ' ', procreator.patronymic) AS parent_fio, 
+        gender.name as gender, 
+        user.birthday as birthday,
+        branch.branch as branch
+        FROM parent
+        INNER JOIN user as procreator on procreator.user_id = parent.user_id
+        INNER JOIN user on user.user_id = parent.user_id
+        INNER JOIN branch on user.branch_id = branch.id
+        INNER JOIN gender ON user.gender_id = gender.gender_id
+        WHERE user.branch_id = {$_SESSION['branch']} and parent.deleted = 0
             LIMIT $ofset, $limit");
+
+        return $res->fetchAll(PDO::FETCH_OBJ);
+    }
+
+    public function findStudentFromParentId($id)
+    {
+        $res = $this->db->query("SELECT DISTINCT
+        user.user_id,
+        CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS child
+        FROM parent
+        INNER JOIN user ON user.user_id = parent.child_id
+        WHERE user.branch_id = {$_SESSION['branch']} and parent.deleted = 0 AND parent.user_id = $id");
 
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
@@ -293,9 +303,11 @@ class ProcreatorMap extends BaseMap
 
     public function listParentAndChild()
     {
-        $query = "SELECT user.user_id, parent.child_id, branch.id as branch_id FROM parent
+        $query = "SELECT user.user_id, parent.child_id, branch.id as branch_id, subject.subject_id, subject.name, subject.branch as branch_id FROM parent
         INNER JOIN user ON user.user_id = parent.user_id
         INNER JOIN branch ON user.branch_id = branch.id
+        INNER JOIN student_subjects ON student_subjects.user_id = parent.child_id
+        INNER JOIN subject ON student_subjects.subject_id = subject.subject_id
         WHERE parent.deleted = 0 AND parent.child_id IS NOT NULL";
         $res = $this->db->prepare($query);
         $res->execute();

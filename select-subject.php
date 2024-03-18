@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
     exit();
 }
 $id = 0;
-if (isset($_GET['id'])) {
+if (isset ($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 }
 
@@ -42,7 +42,7 @@ require_once 'template/header.php';
         <form method="GET" action="list/list-students-grades">
             <div class="form-group">
                 <label>Дата</label>
-                <input class="form-control" type="date" name="date">
+                <input class="form-control" type="date" name="date" required>
             </div>
             <div class="form-group">
                 <label>Предмет</label>

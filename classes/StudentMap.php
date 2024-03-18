@@ -61,9 +61,9 @@ class StudentMap extends BaseMap
     private function insertPayment($student = Student)
     {
         if (
-            $this->db->exec("INSERT INTO payment(parent_id, child_id, subject_id, count, tab, price, link) 
+            $this->db->exec("INSERT INTO payment(parent_id, child_id, subject_id, count, tab, price, link, date, branch_id) 
             VALUES($student->parent_id, $student->user_id, 
-            $student->subject_id, $student->subject_count, '$student->tab', $student->subject_price, '$student->link')") == 1
+            $student->subject_id, $student->subject_count, '$student->tab', $student->subject_price, '$student->link', NOW(), {$_SESSION['branch']})") == 1
         ) {
             return true;
         }

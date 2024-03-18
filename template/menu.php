@@ -83,6 +83,10 @@
 
                 <li class="header">Справочники</li>
 
+                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-branch.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="../list/list-branch"><i class="fa fa-code-fork"></i><span>Филиалы</span></a>
+
                 <li <?= ($_SERVER['PHP_SELF'] == '/list/list-gruppa.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../list/list-gruppa"><i class="fa fa-object-group"></i><span>Группы</span></a>
@@ -102,6 +106,10 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/list/list-classroom.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../list/list-classroom"><i class="fa fa-graduation-cap"></i><span>Кабинеты</span></a>
+
+                <li <?= ($_SERVER['PHP_SELF'] == '/view/view-payment.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="../view/view-payment"><i class="fa fa-dollar"></i><span>Сверка оплаты</span></a>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/list/list-teacher-schedule.php') ? 'class="active"' : ''; ?>>
 

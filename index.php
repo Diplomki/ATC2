@@ -18,7 +18,6 @@ $branchWithoutCurrent = (new UserMap())->arrBranchWithoutCurrent();
 
 
 
-
 ?>
 <script>
 
