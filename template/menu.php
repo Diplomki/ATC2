@@ -48,6 +48,10 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/check/check-payment.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../check/check-payment"><i class="fa fa-dollar"></i><span>Подтверждение оплаты</span></a>
+
+                <li <?= ($_SERVER['PHP_SELF'] == '/view/view-payment.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="../view/view-payment"><i class="fa fa-dollar"></i><span>Сверка оплаты</span></a>
                 </li>
             <?php } ?>
             <?php if (Helper::can('teacher')) { ?>
@@ -107,9 +111,7 @@
 
                     <a href="../list/list-classroom"><i class="fa fa-graduation-cap"></i><span>Кабинеты</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/view/view-payment.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../view/view-payment"><i class="fa fa-dollar"></i><span>Сверка оплаты</span></a>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/list/list-teacher-schedule.php') ? 'class="active"' : ''; ?>>
 
@@ -124,7 +126,9 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/select-subject.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../select-subject"><i class="fa fa-address-book"></i><span>Оценки</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '/view/view-payment.php') ? 'class="active"' : ''; ?>>
 
+                    <a href="../view/view-payment"><i class="fa fa-dollar"></i><span>Сверка оплаты</span></a>
 
                 <?php } ?>
 
