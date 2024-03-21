@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher'))
     exit();
 }
 $size = 5;
-if (isset($_GET['page'])) {
+if (isset ($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 } else {
     $page = 1;
@@ -22,7 +22,7 @@ require_once '../template/header.php';
             <section class="content-header">
                 <h3>
                     <b>
-                        <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список групп' ?>
+                        <?= $message = isset ($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список групп' ?>
                     </b>
                 </h3>
                 <ol class="breadcrumb">
@@ -49,9 +49,8 @@ fa-dashboard"></i> Главная</a></li>
                         <thead>
                             <tr>
                                 <th>Название</th>
-                                <th>Специальность</th>
-                                <th>Дата образова-ния</th>
-                                <th>Дата оконча-ния</th>
+                                <th>Дата образования</th>
+                                <th>Дата окончания</th>
                                 <?php if (Helper::can('manager')) { ?>
                                     <th>Филиал</th>
                                 <?php } ?>
@@ -62,7 +61,6 @@ fa-dashboard"></i> Главная</a></li>
                             foreach ($gruppas as $gruppa) {
                                 echo '<tr>';
                                 echo '<td><a href="../view/view-gruppa?id=' . $gruppa->gruppa_id . '">' . $gruppa->name . '</a> ' . '<a href="../add/add-gruppa?id=' . $gruppa->gruppa_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-gruppa?id=' . $gruppa->gruppa_id . '"><i class="fa fa-times"></i></a></td>';
-                                echo '<td>' . $gruppa->special . '</td>';
 
                                 echo '<td>' . date(
                                     "d.m.Y",
