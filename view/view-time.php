@@ -4,10 +4,10 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
     header('Location: 404');
     exit();
 }
-if (isset($_GET['id'])) {
+if (isset ($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
     $special = (new SpecialMap())->findViewById($id);
-    $header = 'Просмотр специальностей';
+    $header = 'Просмотр времени';
     require_once '../template/header.php';
     ?>
     <div class="row">
@@ -24,7 +24,7 @@ if (isset($_GET['id'])) {
 fa-dashboard"></i> Главная</a></li>
 
                         <li><a href="../list/list-
-special">Группы</a></li>
+time">Время</a></li>
 
                         <li class="active">
                             <?= $header; ?>
@@ -33,7 +33,7 @@ special">Группы</a></li>
                 </section>
                 <div class="box-body">
                     <?php if (Helper::can('admin')) { ?>
-                        <a class="btn btn-success" href="../add/add-special?id=<?= $id; ?>">Изменить</a>
+                        <a class="btn btn-success" href="../add/add-time?id=<?= $id; ?>">Изменить</a>
                     <?php }
                     ; ?>
                 </div>
@@ -43,24 +43,32 @@ special">Группы</a></li>
 hover">
 
                         <tr>
-                            <th>Название</th>
+                            <th>Предмет</th>
 
                             <td>
-                                <?= $special->name; ?>
+                                <?= $special->subject; ?>
                             </td>
 
                         </tr>
                         <tr>
 
-                            <th>Отдел</th>
+                            <th>Начало занятия</th>
 
                             <td>
-                                <?= $special->otdel; ?>
+                                <?= $special->time_begin; ?>
                             </td>
 
                         </tr>
                         <tr>
+                        <tr>
 
+                            <th>Конец занятия</th>
+
+                            <td>
+                                <?= $special->time_end; ?>
+                            </td>
+
+                        </tr>
                         </tr>
                     </table>
                 </div>

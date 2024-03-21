@@ -28,8 +28,8 @@ class LessonPlanMap extends BaseMap
         if ($id) {
             $res = $this->db->query("SELECT
         lesson_plan.lesson_plan_id, gruppa.name AS gruppa,
-        subject.name AS subject, "
-                . "subject.hours FROM lesson_plan
+        subject.name AS subject "
+                . " FROM lesson_plan
         INNER JOIN gruppa ON
         lesson_plan.gruppa_id=gruppa.gruppa_id "
                 . "INNER JOIN subject ON
@@ -52,7 +52,7 @@ class LessonPlanMap extends BaseMap
 
     public function findTeachers($ofset = 0, $limit = 30)
     {
-        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio,otdel.name AS otdel, COUNT(lesson_plan.subject_id) AS count_plan, SUM(subject.hours) AS sum_hours, branch.id AS branch FROM user 
+        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio,otdel.name AS otdel, COUNT(lesson_plan.subject_id) AS count_plan, branch.id AS branch FROM user 
         INNER JOIN teacher ON user.user_id=teacher.user_id 
         INNER JOIN otdel ON teacher.otdel_id=otdel.otdel_id
         INNER JOIN branch ON branch.id=user.branch_id

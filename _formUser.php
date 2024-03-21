@@ -29,7 +29,7 @@ $user = $userMap->findById($id);
 </div>
 <div class="form-group">
     <label>Логин</label>
-    <input type="text" class="form-control" name="login" required="required" value="<?= $user->login; ?>">
+    <input type="email" class="form-control" name="login" required="required" value="<?= $user->login; ?>">
 </div>
 <div class="form-group">
     <label>Пароль</label>

@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
         exit();
 }
 $size = 5;
-if (isset($_GET['page'])) {
+if (isset ($_GET['page'])) {
         $page = Helper::clearInt($_GET['page']);
 } else {
         $page = 1;
@@ -13,7 +13,7 @@ if (isset($_GET['page'])) {
 $specialMap = new SpecialMap();
 $count = $specialMap->count();
 $specials = $specialMap->findAll($page * $size - $size, $size);
-$header = 'Список специальностей';
+$header = 'Список времени';
 require_once '../template/header.php';
 ?>
 <div class="row">
@@ -34,8 +34,8 @@ fa-dashboard"></i> Главная</a></li>
                                 </ol>
                         </section>
                         <div class="box-body">
-                                <?php if (Helper::can('admin')) { ?>
-                                        <a class="btn btn-success" href="../add/add-special">Добавить специальность</a>
+                                <?php if (Helper::can('admin') || Helper::can('manager')) { ?>
+                                        <a class="btn btn-success" href="../add/add-time">Добавить время</a>
                                 <?php }
                                 ; ?>
                         </div>
@@ -48,21 +48,19 @@ fa-dashboard"></i> Главная</a></li>
 
                                                 <thead>
                                                         <tr>
-                                                                <th>Название</th>
-                                                                <th>Отдел</th>
-
-
-
+                                                                <th>Предмет</th>
+                                                                <th>Начало занятия</th>
+                                                                <th>Конец занятия</th>
                                                         </tr>
                                                 </thead>
                                                 <tbody>
                                                         <?php
                                                         foreach ($specials as $special) {
                                                                 echo '<tr>';
-                                                                echo '<td><a href="../view/view-special?id=' . $special->special_id . '">' . $special->name . '</a> '
-                                                                        . '<a href="../add/add-special?id=' . $special->special_id . '"><i class="fa fa-pencil"></i></a></td>';
-                                                                echo '<td>' . $special->otdel . '</td>';
-
+                                                                echo '<td><a href="../view/view-time?id=' . $special->special_id . '">' . $special->subject . '</a> '
+                                                                        . '<a href="../add/add-time?id=' . $special->special_id . '"><i class="fa fa-pencil"></i></a></td>';
+                                                                echo '<td>' . $special->time_begin . '</td>';
+                                                                echo '<td>' . $special->time_end . '</td>';
 
                                                                 echo '</tr>';
                                                         }
@@ -70,7 +68,7 @@ fa-dashboard"></i> Главная</a></li>
                                                 </tbody>
                                         </table>
                                 <?php } else {
-                                        echo 'Ни одной группы не найдено';
+                                        echo 'Ни одной записи не найдено';
                                 } ?>
                         </div>
                         <div class="box-body">

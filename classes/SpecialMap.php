@@ -1,18 +1,13 @@
 <?php
 class SpecialMap extends BaseMap
 {
-    public function arrSpecials()
-    {
-        $res = $this->db->query("SELECT special_id AS id, name AS
-            value FROM special");
-        return $res->fetchAll(PDO::FETCH_ASSOC);
-    }
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT special_id, name,
-        otdel_id, active "
-                . "FROM special WHERE special_id = $id");
+            $res = $this->db->query("SELECT special_id, subject.name as subject, subject.subject_id as subject_id, 
+            time_begin, time_end FROM special 
+            LEFT JOIN subject on special.subject_id = subject.subject_id
+            WHERE special_id = $id");
             return $res->fetchObject("Special");
         }
         return new Special();
@@ -30,9 +25,10 @@ class SpecialMap extends BaseMap
     }
     private function insert($special = Special)
     {
-        $name = $this->db->quote($special->name);
-        $active = $this->db->quote($special->active);
-        if ($this->db->exec("INSERT INTO special(name, otdel_id, active) VALUES($name, $special->otdel_id, $active)") == 1) {
+        $subject_id = $this->db->quote($special->subject_id);
+        $time_begin = $this->db->quote($special->time_begin);
+        $time_end = $this->db->quote($special->time_end);
+        if ($this->db->exec("INSERT INTO special(subject_id, time_begin, time_end) VALUES($subject_id, $time_begin, $time_end)") == 1) {
             $special->special_id = $this->db->lastInsertId();
             return true;
         }
@@ -41,10 +37,12 @@ class SpecialMap extends BaseMap
 
     private function update($special = Special)
     {
-        $name = $this->db->quote($special->name);
+        $subject_id = $this->db->quote($special->subject_id);
+        $time_begin = $this->db->quote($special->time_begin);
+        $time_end = $this->db->quote($special->time_end);
         if (
-            $this->db->exec("UPDATE special SET name = $name,
-        otdel_id = $special->otdel_id WHERE special_id = " . $special->special_id) == 1
+            $this->db->exec("UPDATE special SET subject_id = $subject_id,
+        time_begin = $time_begin, time_end = $time_end WHERE special_id = " . $special->special_id) == 1
         ) {
             return true;
         }
@@ -52,27 +50,25 @@ class SpecialMap extends BaseMap
     }
     public function findAll($ofset = 0, $limit = 30)
     {
-        $res = $this->db->query("SELECT special.special_id,
-        special.name, special.name AS special, otdel.name AS otdel"
-            . " FROM special LEFT JOIN otdel ON
-        special.otdel_id=otdel.otdel_id LIMIT $ofset,
+        $res = $this->db->query("SELECT special_id,
+        subject.name as subject, time_begin, time_end FROM special 
+        LEFT JOIN subject ON special.subject_id = subject.subject_id 
+        LIMIT $ofset,
         $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
     public function count()
     {
         $res = $this->db->query("SELECT COUNT(*) AS cnt FROM
-        special ");
+        special");
         return $res->fetch(PDO::FETCH_OBJ)->cnt;
     }
     public function findViewById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT special.special_id,
-        special.name, otdel.name AS otdel"
-                . " FROM special INNER JOIN otdel ON
-        special.otdel_id=otdel.otdel_id WHERE special_id =
-        $id");
+            $res = $this->db->query("SELECT special.special_id, subject.name as subject, special.time_begin, special.time_end
+            FROM special 
+            LEFT JOIN subject ON special.subject_id=subject.subject_id WHERE special_id = $id");
             return $res->fetch(PDO::FETCH_OBJ);
         }
         return false;

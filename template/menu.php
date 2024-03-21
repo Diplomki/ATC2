@@ -25,9 +25,9 @@
 
                     <a href="../list/list-otdel"><i class="fa fa-building"></i><span>Отделы</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-special.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-time.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../list/list-special"><i class="fa fa-code-fork"></i><span>Специальности</span></a>
+                    <a href="../list/list-time"><i class="fa fa-clock-o"></i><span>Время</span></a>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/list/list-subject.php') ? 'class="active"' : ''; ?>>
 
@@ -39,7 +39,7 @@
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/select-subject.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../select-subject"><i class="fa fa-address-book"></i><span>Журнал</span></a>
+                    <a href="../select-subject"><i class="fa fa-book"></i><span>Журнал</span></a>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/add/add-payment.php') ? 'class="active"' : ''; ?>>
 
@@ -70,7 +70,7 @@
                     <a href="../list/list-gruppa"><i class="fa fa-object-group"></i><span>Группы</span></a>
                 <li <?= ($_SERVER['PHP_SELF'] == '/list/list-grades.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../list/list-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
+                    <a href="../list/list-grades"><i class="fa fa-book"></i><span>Журнал</span></a>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/check/check-homework.php') ? 'class="active"' : ''; ?>>
 
@@ -99,9 +99,9 @@
 
                     <a href="../list/list-otdel"><i class="fa fa-building"></i><span>Отделы</span></a>
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-special.php') ? 'class="active"' : ''; ?>>
+                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-time.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../list/list-special"><i class="fa fa-code-fork"></i><span>Специальности</span></a>
+                    <a href="../list/list-time"><i class="fa fa-clock-o"></i><span>Время</span></a>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/list/list-subject.php') ? 'class="active"' : ''; ?>>
 
@@ -121,7 +121,7 @@
                 </li>
                 <li <?= ($_SERVER['PHP_SELF'] == '/check/check-grades.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../check/check-grades"><i class="fa fa-address-book"></i><span>Журнал</span></a>
+                    <a href="../check/check-grades"><i class="fa fa-book"></i><span>Журнал</span></a>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/select-subject.php') ? 'class="active"' : ''; ?>>
 

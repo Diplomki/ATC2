@@ -17,7 +17,7 @@ class SubjectMap extends BaseMap
     {
         if ($id) {
             $res = $this->db->query("SELECT subject_id, name,
-        otdel_id, hours, active "
+        otdel_id,  active "
                 . "FROM subject WHERE subject_id = $id");
             return $res->fetchObject("Subject");
         }
@@ -36,12 +36,11 @@ class SubjectMap extends BaseMap
     }
     private function insert($subject = Subject)
     {
-        $sql = "INSERT INTO subject(name, otdel_id, hours, active) VALUES(:name, :otdel_id, :hours, 1)";
+        $sql = "INSERT INTO subject(name, otdel_id,  active) VALUES(:name, :otdel_id, 1)";
         $stmt = $this->db->prepare($sql);
 
         $stmt->bindParam(':name', $subject->name);
         $stmt->bindParam(':otdel_id', $subject->otdel_id);
-        $stmt->bindParam(':hours', $subject->hours);
 
         if ($stmt->execute()) {
             $subject->subject_id = $this->db->lastInsertId();
@@ -53,10 +52,9 @@ class SubjectMap extends BaseMap
     private function update($subject = Subject)
     {
         $name = $this->db->quote($subject->name);
-        $hours = $this->db->quote($subject->hours);
         if (
             $this->db->exec("UPDATE subject SET name = $name,
-        otdel_id = $subject->otdel_id, hours = $hours WHERE subject_id = " . $subject->subject_id) == 1
+        otdel_id = $subject->otdel_id WHERE subject_id = " . $subject->subject_id) == 1
         ) {
             return true;
         }
@@ -65,7 +63,7 @@ class SubjectMap extends BaseMap
     public function findAll($ofset = 0, $limit = 30)
     {
         $res = $this->db->query("SELECT subject.subject_id,
-        subject.name, subject.name AS special, subject.hours AS hours, otdel.name AS otdel FROM subject LEFT JOIN otdel ON
+        subject.name, subject.name AS special, otdel.name AS otdel FROM subject LEFT JOIN otdel ON
         subject.otdel_id=otdel.otdel_id WHERE subject.deleted = 0 AND subject.branch = {$_SESSION['branch']} LIMIT $ofset,
         $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
@@ -80,7 +78,7 @@ class SubjectMap extends BaseMap
     {
         if ($id) {
             $res = $this->db->query("SELECT subject.subject_id,
-        subject.name, subject.name AS special, subject.hours AS hours, otdel.name AS otdel FROM subject INNER JOIN otdel ON
+        subject.name, subject.name AS special, otdel.name AS otdel FROM subject INNER JOIN otdel ON
         subject.otdel_id=subject.otdel_id WHERE subject_id =
         $id");
             return $res->fetch(PDO::FETCH_OBJ);

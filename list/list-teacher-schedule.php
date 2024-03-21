@@ -7,7 +7,7 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
 }
 require_once '../template/header.php';
 $size = 5;
-if (isset($_GET['page'])) {
+if (isset ($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 } else {
     $page = 1;
@@ -45,8 +45,6 @@ $teachers = (new LessonPlanMap())->findTeachers($page * $size - $size, $size);
 
                                 <th>Количество пунктов в
                                     плане</th>
-                                <th>Общее количество
-                                    часов</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -64,9 +62,7 @@ $teachers = (new LessonPlanMap())->findTeachers($page * $size - $size, $size);
                                     <td>
                                         <?= $teacher->count_plan; ?>
                                     </td>
-                                    <td>
-                                        <?= ($teacher->sum_hours) ? $teacher->sum_hours : 0; ?>
-                                    </td>
+
                                     <td>
 
                                         <a href="list-plan?id=<?= $teacher->user_id; ?>" title="План
