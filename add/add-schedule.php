@@ -57,10 +57,12 @@ require_once '../template/header.php';
             </select>
         </div>
         <div class="form-group">
-            <label>Пара</label>
-            <select class="form-control" name="lesson_num_id">
-                <?= Helper::printSelectOptions(0, $schedule->arrLessonNums()); ?>
-            </select>
+            <label>Начало занятия</label>
+            <input type="time" class="form-control" name="time_begin">
+        </div>
+        <div class="form-group">
+            <label>Конец занятия</label>
+            <input type="time" class="form-control" name="time_end">
         </div>
         <div class="form-group">
             <label>Аудитория</label>

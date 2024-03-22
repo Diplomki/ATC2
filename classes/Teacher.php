@@ -16,9 +16,6 @@ class Teacher extends Table
   public $award = NULL;
   function validate()
   {
-    if (!empty($this->otdel_id)) {
-      return true;
-    }
-    return false;
+    return true;
   }
 }

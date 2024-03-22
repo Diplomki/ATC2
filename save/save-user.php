@@ -62,7 +62,6 @@ if (isset ($_POST['user_id'])) {
 
     if (isset ($_POST['saveTeacher'])) {
         $teacher = new Teacher();
-        $teacher->otdel_id = Helper::clearInt($_POST['otdel_id']);
         $teacher->user_id = $user->user_id;
         if ($_POST['award'] != NULL) {
             $teacher->award_subject_id = Helper::clearInt($_POST['subject_id']);

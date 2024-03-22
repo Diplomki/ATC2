@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher'))
     exit();
 }
 $size = 10;
-if (isset($_GET['page'])) {
+if (isset ($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 
 } else {
@@ -22,7 +22,7 @@ require_once '../template/header.php';
         <div class="box">
             <section class="content-header">
                 <h3><b>
-                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список учителей' ?>
+                        <?= $header = isset ($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список учителей' ?>
                     </b></h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa
@@ -46,7 +46,6 @@ fa-dashboard"></i> Главная</a></li>
                             <tr>
                                 <th>Ф.И.О</th>
                                 <th>Дата рождения</th>
-                                <th>Отделение</th>
                                 <th>Дисциплина</th>
                                 <th>Достижение</th>
 
@@ -58,7 +57,6 @@ fa-dashboard"></i> Главная</a></li>
                                 echo '<tr>';
                                 echo '<td><a href="../profile/profile-teacher?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="../add/add-teacher?id=' . $teacher->user_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-teacher?id=' . $teacher->user_id . '"><i class="fa fa-times"></i></a></td>';
                                 echo '<td>' . $teacher->birthday . '</td>';
-                                echo '<td>' . $teacher->otdel . '</td>';
                                 echo '<td>' . $teacher->subject . '</td>';
                                 echo '<td>' . $teacher->award . '</td>';
                                 echo '</tr>';

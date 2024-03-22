@@ -113,10 +113,7 @@
 
 
 
-                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-teacher-schedule.php') ? 'class="active"' : ''; ?>>
 
-                    <a href="../list/list-teacher-schedule"><i class="fa fa-table"></i><span>Управление
-                            расписанием</span></a>
 
                 </li>
                 <li <?= ($_SERVER['PHP_SELF'] == '/check/check-grades.php') ? 'class="active"' : ''; ?>>
@@ -129,6 +126,11 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/view/view-payment.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../view/view-payment"><i class="fa fa-dollar"></i><span>Сверка оплаты</span></a>
+
+                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-teacher-schedule.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="../list/list-teacher-schedule"><i class="fa fa-table"></i><span>Управление
+                            расписанием</span></a>
 
                 <?php } ?>
 

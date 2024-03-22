@@ -38,13 +38,8 @@ $teachers = (new LessonPlanMap())->findTeachers($page * $size - $size, $size);
 
                         <thead>
                             <tr>
-
                                 <th>Ф.И.О. преподавателя</th>
-
-                                <th>Отделение</th>
-
-                                <th>Количество пунктов в
-                                    плане</th>
+                                <th>Предмет</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -56,9 +51,6 @@ $teachers = (new LessonPlanMap())->findTeachers($page * $size - $size, $size);
                                         <?= $teacher->fio; ?>
                                     </td>
 
-                                    <td>
-                                        <?= $teacher->otdel; ?>
-                                    </td>
                                     <td>
                                         <?= $teacher->count_plan; ?>
                                     </td>

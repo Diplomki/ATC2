@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
     exit();
 }
 $id = 0;
-if (isset($_GET['id'])) {
+if (isset ($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 }
 $teacher = (new TeacherMap())->findById($id);
@@ -35,24 +35,6 @@ teacher">Преподаватели</a></li>
 <div class="box-body">
     <form action="../save/save-user" method="POST" enctype="multipart/form-data">
         <?php require_once '../_formUser.php'; ?>
-        <div class="form-group">
-            <label>Отделение</label>
-            <?php
-            if ($teacher->otdel_id == NULL) {
-                ?>
-                <select class="form-control" name="otdel_id">
-                    <?= Helper::printSelectOptions(0, (new OtdelMap())->arrOtdels()); ?>
-                </select>
-                <?php
-            } else {
-                ?>
-                <select class="form-control" name="otdel_id">
-                    <?= Helper::printSelectOptions($teacher->otdel_id, (new OtdelMap())->arrOtdels()); ?>
-                </select>
-                <?php
-            }
-            ?>
-        </div>
         <div class="form-group">
             <label>Дисциплина</label>
             <select class="form-control" name="subject_id">

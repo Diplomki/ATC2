@@ -4,7 +4,7 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
     header('Location: 404');
     exit();
 }
-if (isset($_GET['id'])) {
+if (isset ($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 } else {
     header('Location: 404');
@@ -40,15 +40,6 @@ hover">
 
                     <?php require_once '../_profile.php'; ?>
 
-                    <tr>
-
-                        <th>Отделение</th>
-
-                        <td>
-                            <?= $teacher->otdel; ?>
-                        </td>
-
-                    </tr>
                     <?php if (Helper::can('manager')) { ?>
                         <tr>
 
