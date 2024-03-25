@@ -73,4 +73,16 @@ class SpecialMap extends BaseMap
         }
         return false;
     }
+
+    public function arrSubjectsTime()
+    {
+
+        $res = $this->db->query("SELECT special.special_id AS id, 
+        CONCAT(subject.name, ' -> ',special.time_begin,' -> ',special.time_end) as value 
+        FROM special
+        INNER JOIN subject ON subject.subject_id = special.subject_id
+        WHERE subject.deleted = 0 AND subject.branch = {$_SESSION['branch']}
+        ");
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

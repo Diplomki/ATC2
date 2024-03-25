@@ -26,15 +26,12 @@ class LessonPlanMap extends BaseMap
     public function findByTeacherId($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT
-        lesson_plan.lesson_plan_id, gruppa.name AS gruppa,
-        subject.name AS subject "
-                . " FROM lesson_plan
-        INNER JOIN gruppa ON
-        lesson_plan.gruppa_id=gruppa.gruppa_id "
-                . "INNER JOIN subject ON
-        lesson_plan.subject_id=subject.subject_id WHERE
-        lesson_plan.user_id=$id");
+            $res = $this->db->query("SELECT special.special_id, gruppa.name as gruppa, subject.name 
+            as subject, special.time_begin, special.time_end, lesson_plan.user_id, lesson_plan.lesson_plan_id FROM special
+            INNER JOIN subject ON subject.subject_id = special.subject_id
+            INNER JOIN lesson_plan ON lesson_plan.subject_id=special.special_id
+            INNER JOIN gruppa ON gruppa.gruppa_id = lesson_plan.gruppa_id
+            WHERE lesson_plan.user_id=$id");
             return $res->fetchAll(PDO::FETCH_OBJ);
         }
         return false;
@@ -65,13 +62,12 @@ class LessonPlanMap extends BaseMap
     {
         if ($id) {
             $res = $this->db->query("SELECT
-        lesson_plan.lesson_plan_id AS id, CONCAT(gruppa.name,' -> ',subject.name) AS value"
-                . " FROM lesson_plan INNER JOIN
-        gruppa ON lesson_plan.gruppa_id=gruppa.gruppa_id "
-                . "INNER JOIN subject ON
-        lesson_plan.subject_id=subject.subject_id "
-                . "WHERE lesson_plan.user_id=$id
-        ORDER BY gruppa.name, subject.name");
+            lesson_plan.lesson_plan_id AS id, CONCAT(gruppa.name,' -> ', subject.name, ' -> ' ,special.time_begin, ' -> ', special.time_end) AS value FROM lesson_plan 
+            INNER JOIN gruppa ON lesson_plan.gruppa_id=gruppa.gruppa_id 
+            INNER JOIN subject ON lesson_plan.subject_id=subject.subject_id 
+            INNER JOIN special ON special.special_id=lesson_plan.subject_id 
+            WHERE lesson_plan.user_id=$id
+            ORDER BY gruppa.name, subject.name");
             return $res->fetchAll(PDO::FETCH_ASSOC);
         }
         return [];

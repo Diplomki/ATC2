@@ -57,14 +57,6 @@ require_once '../template/header.php';
             </select>
         </div>
         <div class="form-group">
-            <label>Начало занятия</label>
-            <input type="time" class="form-control" name="time_begin">
-        </div>
-        <div class="form-group">
-            <label>Конец занятия</label>
-            <input type="time" class="form-control" name="time_end">
-        </div>
-        <div class="form-group">
             <label>Аудитория</label>
             <select class="form-control" name="classroom_id">
                 <?= Helper::printSelectOptions(0, (new ClassroomMap())->arrClassrooms()); ?>

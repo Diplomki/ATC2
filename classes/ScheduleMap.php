@@ -19,12 +19,7 @@ class ScheduleMap extends BaseMap
         }
         return false;
     }
-    public function arrLessonNums()
-    {
-        $res = $this->db->query("SELECT lesson_num_id AS id, name
-        AS value FROM lesson_num");
-        return $res->fetchAll(PDO::FETCH_ASSOC);
-    }
+
     public function existsScheduleTeacherAndGruppa($schedule = Schedule)
     {
         $plan = (new LessonPlanMap())->findById($schedule->lesson_plan_id);
@@ -33,8 +28,7 @@ class ScheduleMap extends BaseMap
             . "ON
         lesson_plan.lesson_plan_id=schedule.lesson_plan_id "
             . "WHERE (lesson_plan.gruppa_id=$plan->gruppa_id OR lesson_plan.user_id=$plan->user_id) AND "
-            . "(schedule.day_id=$schedule->day_id AND
-        schedule.lesson_num_id=$schedule->lesson_num_id)");
+            . "(schedule.day_id=$schedule->day_id)");
         if ($res->fetchColumn() > 0) {
             return true;
         }
@@ -44,8 +38,8 @@ class ScheduleMap extends BaseMap
     {
         if (
             $this->db->exec("INSERT INTO schedule(lesson_plan_id,
-        day_id, lesson_num_id, classroom_id)"
-                . " VALUES($schedule->lesson_plan_id,$schedule->day_id, $schedule->lesson_num_id, $schedule->classroom_id)") == 1
+        day_id,  classroom_id)"
+                . " VALUES($schedule->lesson_plan_id,$schedule->day_id,  $schedule->classroom_id)") == 1
         ) {
             return true;
         }
@@ -95,16 +89,14 @@ class ScheduleMap extends BaseMap
     public function findByGruppaDayStudent($dayId, $gruppaId)
     {
         $res = $this->db->query("SELECT
-        schedule.schedule_id,lesson_num.name AS
-        lesson_num,subject.name AS subject, gruppa.name AS gruppa, classroom.name AS classroom FROM lesson_plan 
+        schedule.schedule_id,subject.name AS subject, gruppa.name AS gruppa, classroom.name AS classroom FROM lesson_plan 
         INNER JOIN schedule ON
         lesson_plan.lesson_plan_id=schedule.lesson_plan_id INNER JOIN subject ON
-        lesson_plan.subject_id=subject.subject_id INNER JOIN lesson_num ON
-        schedule.lesson_num_id=lesson_num.lesson_num_id INNER JOIN gruppa ON gruppa.gruppa_id=lesson_plan.gruppa_id INNER JOIN classroom ON
+        lesson_plan.subject_id=subject.subject_id  INNER JOIN gruppa ON gruppa.gruppa_id=lesson_plan.gruppa_id INNER JOIN classroom ON
         schedule.classroom_id=classroom.classroom_id 
         WHERE schedule.day_id=$dayId AND lesson_plan.gruppa_id = $gruppaId
         
-        ORDER BY schedule.lesson_num_id");
+        ");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
     public function findGruppaByStudentId($id)
@@ -140,23 +132,19 @@ class ScheduleMap extends BaseMap
 
     public function findByGruppasDayTeacher($teacherId, $dayId, $gruppaId)
     {
-        $res = $this->db->query("SELECT
-        schedule.schedule_id,lesson_num.name AS
-        lesson_num,subject.name AS subject,classroom.name AS
-        classroom FROM lesson_plan "
-            . "INNER JOIN schedule ON
-        lesson_plan.lesson_plan_id=schedule.lesson_plan_id "
-            . "INNER JOIN subject ON
-        lesson_plan.subject_id=subject.subject_id INNER JOIN "
-            . "lesson_num ON
-        schedule.lesson_num_id=lesson_num.lesson_num_id INNER
-        JOIN "
-            . "classroom ON
-        schedule.classroom_id=classroom.classroom_id WHERE "
-            . "lesson_plan.user_id=$teacherId AND
+        $res = $this->db->query(
+            "SELECT
+        schedule.schedule_id, CONCAT(special.time_begin, ' — ' ,special.time_end) as time, subject.name 
+        AS subject,classroom.name AS
+        classroom FROM lesson_plan INNER JOIN schedule ON
+        lesson_plan.lesson_plan_id=schedule.lesson_plan_id INNER JOIN subject ON
+        lesson_plan.subject_id=subject.subject_id INNER JOIN classroom ON
+        schedule.classroom_id=classroom.classroom_id
+        INNER JOIN special ON special.special_id = lesson_plan.subject_id
+        WHERE lesson_plan.user_id=$teacherId AND
         schedule.day_id=$dayId AND
         lesson_plan.gruppa_id=$gruppaId"
-            . " ORDER BY schedule.lesson_num_id");
+        );
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 

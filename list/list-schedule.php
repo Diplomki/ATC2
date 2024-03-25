@@ -64,7 +64,7 @@ fa-dashboard"></i> Главная</a></li>
                                     <?php foreach ($gruppa['schedule'] as $schedule): ?>
                                         <tr>
                                             <td>
-                                                <?= $schedule['lesson_num']; ?>
+                                                <?= $schedule['time']; ?>
                                             </td>
                                             <td>
                                                 <?= $schedule['subject']; ?>
@@ -73,7 +73,7 @@ fa-dashboard"></i> Главная</a></li>
                                                 <?= $schedule['classroom']; ?>
                                             </td>
 
-                                            <td><a href="delete-schedule?id=<?= $schedule['schedule_id']; ?>&idTeacher=
+                                            <td><a href="../delete/delete-schedule?id=<?= $schedule['schedule_id']; ?>&idTeacher=
 
 <?= $id; ?>"><i class="fa fa-trash"></i></a></td>
                                         </tr>

@@ -56,7 +56,7 @@ require_once '../template/header.php';
         <div class="form-group">
             <label>Предмет</label>
             <select class="form-control" name="subject_id">
-                <?= Helper::printSelectOptions(0, (new SubjectMap())->arrSubjects()); ?>
+                <?= Helper::printSelectOptions(0, (new SpecialMap())->arrSubjectsTime()); ?>
             </select>
         </div>
         <input type="hidden" name="user_id" value="<?= $id; ?>" />

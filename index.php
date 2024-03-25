@@ -255,7 +255,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
                                             <?php foreach ($gruppa['schedule'] as $schedule): ?>
                                                 <tr>
                                                     <td>
-                                                        <?= $schedule['lesson_num']; ?>
+                                                        <?= $schedule['time']; ?>
                                                     </td>
                                                     <td>
                                                         <?= $schedule['subject']; ?>

@@ -59,7 +59,8 @@ fa-dashboard"></i> Главная</a></li>
                                 <th>No</th>
                                 <th>Группа</th>
                                 <th>Предмет</th>
-
+                                <th>Начало занятия</th>
+                                <th>Конец занятия</th>
                                 <th></th>
 
                             </tr>
@@ -75,9 +76,9 @@ fa-dashboard"></i> Главная</a></li>
 
                                     <td><?= $plan->gruppa; ?></td>
                                     <td><?= $plan->subject; ?></td>
-                                    <td><?= $plan->hours; ?></td>
-
-                                    <td><a href="delete-plan?id=<?= $plan->lesson_plan_id; ?>&idplan=<?= $id; ?>"><i
+                                    <td><?= $plan->time_begin; ?></td>
+                                    <td><?= $plan->time_end; ?></td>
+                                    <td><a href="../delete/delete-plan?id=<?= $plan->lesson_plan_id; ?>&idplan=<?= $id; ?>"><i
                                                 class="fa fa-trash"></i></a></td>
 
                                 </tr>

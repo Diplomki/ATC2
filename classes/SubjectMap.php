@@ -13,6 +13,17 @@ class SubjectMap extends BaseMap
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function arrSubjectsTime()
+    {
+
+        $res = $this->db->query("SELECT subject.subject_id AS id, 
+        subject.name AS value, otdel.name as otdel_name FROM subject
+        INNER JOIN otdel ON otdel.otdel_id = subject.otdel_id
+        WHERE subject.deleted = 0 AND subject.branch = {$_SESSION['branch']}
+        ");
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
+
     public function findById($id = null)
     {
         if ($id) {

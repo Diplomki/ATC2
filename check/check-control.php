@@ -1,11 +1,11 @@
 <?php
 require_once '../secure.php';
-if (!Helper::can('manager')) {
+if (Helper::can('teacher')) {
     header('Location: 404');
     exit();
 }
 $size = 10;
-if (isset($_GET['page'])) {
+if (isset ($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 
 } else {

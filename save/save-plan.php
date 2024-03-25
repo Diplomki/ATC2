@@ -4,7 +4,7 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
     header('Location: 404');
     exit();
 }
-if (isset($_POST['gruppa_id'])) {
+if (isset ($_POST['gruppa_id'])) {
     $plan = new LessonPlan();
     $plan->user_id = Helper::clearInt($_POST['user_id']);
     $plan->gruppa_id = Helper::clearInt($_POST['gruppa_id']);
