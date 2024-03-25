@@ -6,8 +6,8 @@ session_start();
 
 $message = 'Войдите для просмотра расписания занятий';
 if (
-    isset($_POST['login']) &&
-    isset($_POST['password'])
+    isset ($_POST['login']) &&
+    isset ($_POST['password'])
 ) {
     $login = Helper::clearString($_POST['login']);
     $password = Helper::clearString($_POST['password']);
@@ -29,7 +29,7 @@ if (
     }
 }
 
-if (isset($_POST['branch'])) {
+if (isset ($_POST['branch'])) {
 
     $res = explode(',', $_POST['branch']);
     $branch_id = $res[0];
@@ -50,5 +50,5 @@ if (isset($_POST['branch'])) {
 
 }
 
-require_once('template/login.php');
+require_once ('template/login.php');
 ?>

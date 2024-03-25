@@ -29,16 +29,21 @@
   <link rel="stylesheet"
     href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
+  <link rel="stylesheet" href="../css/AdminLTE.css">
+
 </head>
 
 <body class="hold-transition login-page">
   <div class="auth-background">
     <div class="login-box">
       <div class="login-logo">
-        <b style="color:white;">IQ STUDY</b>
+        <img src="../img/logo.png" alt="">
       </div>
+
       <!-- /.login-logo -->
       <div class="login-box-body">
+        <h2>Добро пожаловать в</h2>
+        <h3><b>IQ Study</b></h3>
         <p class="login-box-msg">
           <?= $message; ?>
         </p>
