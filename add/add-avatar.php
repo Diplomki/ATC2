@@ -10,12 +10,6 @@ $student = (new StudentMap())->findById($id);
 $userMap = new UserMap();
 $user = $userMap->findById($id);
 
-if (!Helper::can('procreator') && !Helper::can('admin')) {
-    header('Location: 404');
-    exit();
-}
-
-
 require_once '../template/header.php';
 ?>
 <section class="content-header">

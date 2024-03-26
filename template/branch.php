@@ -1,5 +1,5 @@
 <?php
-require_once('../secure.php');
+require_once ('../secure.php');
 
 $branch = (new UserMap())->arrBranchs();
 ?>
@@ -41,11 +41,12 @@ $branch = (new UserMap())->arrBranchs();
     <div class="auth-background">
         <div class="login-box">
             <div class="login-logo">
-                <b style="color:white;">IQ STUDY</b>
+                <img src="../img/logo.png" alt="">
             </div>
             <div class="login-box-body">
+
                 <p class="login-box-msg">
-                    <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Выберите филиал'; ?>
+                    <?= $message = isset ($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Выберите филиал'; ?>
                 </p>
                 <form action="../auth" method="post">
                     <div class="form-group has-feedback">
@@ -64,8 +65,6 @@ $branch = (new UserMap())->arrBranchs();
             </div>
             <script src="template/js/jquery.min.js"></script>
             <script src="template/js/bootstrap.min.js"></script>
-
-            </script>
         </div>
 </body>
 

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Мар 21 2024 г., 07:35
+-- Время создания: Мар 25 2024 г., 11:55
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -84,7 +84,8 @@ INSERT INTO `awards` (`id`, `user_id`, `subject_id`, `award`) VALUES
 (16, 6, 3, '4'),
 (17, 100, 73, '123'),
 (18, 102, NULL, NULL),
-(19, 104, NULL, NULL);
+(19, 104, NULL, NULL),
+(20, 107, 17, '123');
 
 -- --------------------------------------------------------
 
@@ -367,8 +368,12 @@ CREATE TABLE `lesson_plan` (
 --
 
 INSERT INTO `lesson_plan` (`lesson_plan_id`, `gruppa_id`, `subject_id`, `user_id`, `deleted`) VALUES
-(1, 1, NULL, 6, 0),
-(2, 2, 16, 6, 0);
+(12, 2, 16, 6, 0),
+(13, 3, 18, 6, 0),
+(14, 2, 17, 14, 0),
+(15, 1, 17, 6, 0),
+(16, 2, 18, 6, 0),
+(17, 3, 17, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -423,7 +428,7 @@ CREATE TABLE `notice` (
 INSERT INTO `notice` (`id`, `text`, `subject_id`, `user_id`, `child_id`, `subject_count`, `subject_price`, `link`, `date`, `deleted`, `canceled`) VALUES
 (2200, 'Оплатите сумму указанную в приложении', 16, 10, 7, 8, 15000, 'https://example.com', '2024-04-01', 0, 0),
 (2201, 'Оплатите сумму указанную в приложении', 5, 10, 7, 12, 15000, 'https://example.com', '2024-04-01', 1, 0),
-(2202, 'Оплатите сумму указанную в приложении', 20, 10, 7, 8, 12000, 'https://example.com', '2024-04-01', 0, 0),
+(2202, 'Оплатите сумму указанную в приложении', 20, 10, 7, 8, 12000, 'https://example.com', '2024-04-01', 1, 0),
 (2203, 'Оплатите сумму указанную в приложении', 20, 10, 8, 8, 12000, 'https://example.com', '2024-04-01', 1, 0),
 (2204, 'Оплатите сумму указанную в приложении', 3, 10, 9, 20, 30000, 'https://example.com', '2024-04-01', 1, 0),
 (2205, 'Оплатите сумму указанную в приложении', 22, 10, 18, 8, 15000, 'https://example.com', '2024-04-01', 1, 0),
@@ -448,11 +453,10 @@ CREATE TABLE `otdel` (
 --
 
 INSERT INTO `otdel` (`otdel_id`, `name`, `active`, `deleted`) VALUES
-(2, 'Гуманитарный', 1, 0),
+(2, 'Образование', 1, 0),
 (6, 'for delete', 1, 1),
-(7, 'Математический', 1, 0),
-(8, 'Естественные науки', 1, 0),
-(9, 'test', 1, 0);
+(7, 'Творчество', 1, 0),
+(8, 'Спорт', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -512,9 +516,10 @@ CREATE TABLE `payment` (
 --
 
 INSERT INTO `payment` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `tab`, `price`, `link`, `date`, `branch_id`, `deleted`) VALUES
-(154, 10, 9, 3, 20, '1710749243message.txt', 30000, 'https://example.com', '2024-03-18', 1, 0),
-(155, 10, 8, 20, 8, '1710749251message.txt', 12000, 'https://example.com', '2024-03-18', 1, 0),
-(156, 85, 86, 35, 12, '1710816526message.txt', 12000, 'https://example.com', '2024-03-19', 2, 0);
+(154, 10, 9, 3, 20, '1710749243message.txt', 30000, 'https://example.com', '2024-03-18', 1, 1),
+(155, 10, 8, 20, 8, '1710749251message.txt', 12000, 'https://example.com', '2024-03-18', 1, 1),
+(156, 85, 86, 35, 12, '1710816526message.txt', 12000, 'https://example.com', '2024-03-19', 2, 1),
+(157, 10, 7, 20, 8, '1711333494message.txt', 12000, 'https://example.com', '2024-03-25', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -533,6 +538,16 @@ CREATE TABLE `payment_archive` (
   `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `attend` tinyint DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `payment_archive`
+--
+
+INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `tab`, `price`, `link`, `attend`) VALUES
+(109, 10, 9, 3, 20, '1710749243message.txt', 30000, NULL, 1),
+(110, 10, 8, 20, 8, '1710749251message.txt', 12000, NULL, 1),
+(111, 85, 86, 35, 12, '1710816526message.txt', 12000, NULL, 1),
+(112, 10, 7, 20, 8, '1711333494message.txt', 12000, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -595,7 +610,6 @@ CREATE TABLE `schedule` (
   `schedule_id` int NOT NULL,
   `lesson_plan_id` int NOT NULL,
   `day_id` tinyint NOT NULL,
-  `lesson_num_id` int NOT NULL,
   `classroom_id` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -603,12 +617,13 @@ CREATE TABLE `schedule` (
 -- Дамп данных таблицы `schedule`
 --
 
-INSERT INTO `schedule` (`schedule_id`, `lesson_plan_id`, `day_id`, `lesson_num_id`, `classroom_id`) VALUES
-(1, 1, 2, 1, 1),
-(2, 1, 2, 2, 5),
-(3, 1, 2, 3, 5),
-(4, 2, 1, 3, 5),
-(5, 2, 1, 4, 5);
+INSERT INTO `schedule` (`schedule_id`, `lesson_plan_id`, `day_id`, `classroom_id`) VALUES
+(14, 15, 1, 5),
+(16, 12, 1, 5),
+(17, 17, 1, 5),
+(18, 13, 1, 1),
+(19, 16, 3, 5),
+(20, 12, 3, 1);
 
 -- --------------------------------------------------------
 
@@ -629,7 +644,8 @@ CREATE TABLE `special` (
 
 INSERT INTO `special` (`special_id`, `subject_id`, `time_begin`, `time_end`) VALUES
 (16, 3, '12:10:00', '13:10:00'),
-(17, 22, '10:20:00', '11:20:00');
+(17, 22, '10:20:00', '11:20:00'),
+(18, 20, '20:00:00', '21:00:00');
 
 -- --------------------------------------------------------
 
@@ -709,65 +725,65 @@ CREATE TABLE `subject` (
 
 INSERT INTO `subject` (`subject_id`, `name`, `otdel_id`, `branch`, `deleted`) VALUES
 (3, 'МАД', 2, 1, 0),
-(5, 'Ағылшын', 8, 1, 0),
-(16, 'Математика', 7, 1, 0),
-(17, 'Изо ', 8, 1, 0),
+(5, 'Ағылшын', 2, 1, 0),
+(16, 'Математика', 2, 1, 0),
+(17, 'Изо ', 7, 1, 0),
 (18, 'Хореография', 7, 1, 0),
-(20, 'Домбыра ', 9, 1, 0),
-(21, 'Фортепиано ', 9, 1, 0),
-(22, 'Вокал', 9, 1, 0),
-(23, 'Шахмат', 9, 1, 0),
-(24, 'МАД', 9, 2, 0),
-(25, 'Математика ', 9, 2, 0),
-(26, 'Ағылшын ', 9, 2, 0),
-(27, 'Изо ', 9, 2, 0),
-(28, 'Хореография ', 9, 2, 0),
-(29, 'Домбыра ', 9, 2, 0),
-(30, 'Фортепиано ', 9, 2, 0),
-(31, 'Вокал ', 9, 2, 0),
-(32, 'Шахмат ', 9, 2, 0),
-(33, 'Тхэквандо ', 9, 2, 0),
-(34, 'Дзюдо ', 9, 2, 0),
-(35, 'Еркін күрес', 9, 2, 0),
-(36, 'Хореография', 9, 3, 0),
-(37, 'Домбыра ', 9, 3, 0),
-(38, 'Вокал ', 9, 3, 0),
-(39, 'Фортепиано ', 9, 3, 0),
-(40, 'ИЗО ', 9, 3, 0),
-(41, 'Шахмат ', 9, 3, 0),
-(42, 'Тхэквондо ', 9, 3, 0),
-(43, 'Дзюдо ', 9, 3, 0),
-(44, 'Ағылшын ', 9, 3, 0),
-(45, 'МАД ', 9, 4, 0),
-(46, 'Ағылшын ', 9, 4, 0),
-(47, 'Домбыра', 9, 4, 0),
-(48, 'Хореография ', 9, 4, 0),
-(49, 'Шахмат ', 9, 4, 0),
-(50, 'Изо', 9, 4, 0),
-(51, 'Вокал ', 9, 4, 0),
-(52, 'Фортепиано ', 9, 4, 0),
-(53, 'Хореография ', 9, 5, 0),
-(54, 'Домбыра ', 9, 5, 0),
-(55, 'Вокал ', 9, 5, 0),
-(56, 'Фортепиано', 9, 5, 0),
-(57, 'Изо', 9, 5, 0),
-(58, 'Шахмат ', 9, 5, 0),
-(59, 'Тхэквондо ', 9, 5, 0),
-(60, 'Дзюдо ', 9, 5, 0),
-(61, 'Бокс ', 9, 5, 0),
-(62, 'МАД', 9, 6, 0),
-(63, 'Продленка ', 9, 6, 0),
-(64, 'Математика ', 9, 6, 0),
-(65, 'Ағылшын ', 9, 6, 0),
-(66, 'Изо ', 9, 6, 0),
-(67, 'Хореография ', 9, 6, 0),
-(68, 'Домбыра ', 9, 6, 0),
-(69, 'Фортепиано ', 9, 6, 0),
-(70, 'Вокал ', 9, 6, 0),
-(71, 'Шахмат ', 9, 6, 0),
-(72, 'Тхэквандо ', 9, 6, 0),
-(73, 'Дзюдо ', 9, 6, 0),
-(74, 'Еркін күрес', 9, 6, 0);
+(20, 'Домбыра ', 7, 1, 0),
+(21, 'Фортепиано ', 7, 1, 0),
+(22, 'Вокал', 7, 1, 0),
+(23, 'Шахмат', 8, 1, 0),
+(24, 'МАД', 2, 2, 0),
+(25, 'Математика ', 2, 2, 0),
+(26, 'Ағылшын ', 2, 2, 0),
+(27, 'Изо ', 7, 2, 0),
+(28, 'Хореография ', 7, 2, 0),
+(29, 'Домбыра ', 7, 2, 0),
+(30, 'Фортепиано ', 7, 2, 0),
+(31, 'Вокал ', 7, 2, 0),
+(32, 'Шахмат ', 8, 2, 0),
+(33, 'Тхэквандо ', 8, 2, 0),
+(34, 'Дзюдо ', 8, 2, 0),
+(35, 'Еркін күрес', 8, 2, 0),
+(36, 'Хореография', 7, 3, 0),
+(37, 'Домбыра ', 7, 3, 0),
+(38, 'Вокал ', 7, 3, 0),
+(39, 'Фортепиано ', 7, 3, 0),
+(40, 'ИЗО ', 7, 3, 0),
+(41, 'Шахмат ', 8, 3, 0),
+(42, 'Тхэквондо ', 8, 3, 0),
+(43, 'Дзюдо ', 8, 3, 0),
+(44, 'Ағылшын ', 2, 3, 0),
+(45, 'МАД ', 2, 4, 0),
+(46, 'Ағылшын ', 2, 4, 0),
+(47, 'Домбыра', 7, 4, 0),
+(48, 'Хореография ', 7, 4, 0),
+(49, 'Шахмат ', 8, 4, 0),
+(50, 'Изо', 7, 4, 0),
+(51, 'Вокал ', 7, 4, 0),
+(52, 'Фортепиано ', 7, 4, 0),
+(53, 'Хореография ', 7, 5, 0),
+(54, 'Домбыра ', 7, 5, 0),
+(55, 'Вокал ', 7, 5, 0),
+(56, 'Фортепиано', 7, 5, 0),
+(57, 'Изо', 7, 5, 0),
+(58, 'Шахмат ', 8, 5, 0),
+(59, 'Тхэквондо ', 8, 5, 0),
+(60, 'Дзюдо ', 8, 5, 0),
+(61, 'Бокс ', 8, 5, 0),
+(62, 'МАД', 2, 6, 0),
+(63, 'Продленка ', 2, 6, 0),
+(64, 'Математика ', 2, 6, 0),
+(65, 'Ағылшын ', 2, 6, 0),
+(66, 'Изо ', 7, 6, 0),
+(67, 'Хореография ', 7, 6, 0),
+(68, 'Домбыра ', 7, 6, 0),
+(69, 'Фортепиано ', 7, 6, 0),
+(70, 'Вокал ', 7, 6, 0),
+(71, 'Шахмат ', 8, 6, 0),
+(72, 'Тхэквандо ', 8, 6, 0),
+(73, 'Дзюдо ', 8, 6, 0),
+(74, 'Еркін күрес', 8, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -777,7 +793,6 @@ INSERT INTO `subject` (`subject_id`, `name`, `otdel_id`, `branch`, `deleted`) VA
 
 CREATE TABLE `teacher` (
   `user_id` bigint NOT NULL,
-  `otdel_id` int DEFAULT NULL,
   `deleted` tinyint DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -785,18 +800,19 @@ CREATE TABLE `teacher` (
 -- Дамп данных таблицы `teacher`
 --
 
-INSERT INTO `teacher` (`user_id`, `otdel_id`, `deleted`) VALUES
-(6, 2, 0),
-(12, 2, 0),
-(14, 7, 0),
-(17, NULL, 1),
-(22, NULL, 1),
-(25, NULL, 1),
-(48, NULL, 1),
-(59, NULL, 1),
-(100, 8, 0),
-(102, 8, 0),
-(104, 8, 0);
+INSERT INTO `teacher` (`user_id`, `deleted`) VALUES
+(6, 0),
+(12, 0),
+(14, 0),
+(17, 1),
+(22, 1),
+(25, 1),
+(48, 1),
+(59, 1),
+(100, 0),
+(102, 0),
+(104, 0),
+(107, 0);
 
 -- --------------------------------------------------------
 
@@ -869,7 +885,8 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (103, 'testBranch2', 'testBranch2', 'testBranch2', 'testBranch2', '$2y$10$RslJe6gGJMog..z/1JrauOi5Z4LE0Lcoc3J3IIatMJ1f.fLopmzWG', 1, '2024-03-10', 5, 2, 'default.png', 1),
 (104, 'testTest', 'testTest', 'testTest', 'testTest', '$2y$10$HgWytxz7hqd.Sf5q0Fq25e8T3jfYU7icOHLUkvDivmaVkClfS6wLW', 1, '2024-03-17', 4, 1001, 'default.png', 1),
 (105, 'testForParent', 'testForParent', 'testForParent', 'testForParent', '$2y$10$yGnM/7XnEPuY0ff1UY/TKe6uw3jfJxk.fBG9b0rDiPKTg5yPzcFsu', 1, '2024-03-18', 5, 1, 'default.png', 1),
-(106, 'testParent', 'testParent', 'testParent', 'testParent', '$2y$10$nLRpiucgxHoMzpCy/HFxkOBwHK8GVvxClg.2THndRavqK1khyPAKq', 1, '2024-03-18', 6, 1, 'default.png', 1);
+(106, 'testParent', 'testParent', 'testParent', 'testParent', '$2y$10$nLRpiucgxHoMzpCy/HFxkOBwHK8GVvxClg.2THndRavqK1khyPAKq', 1, '2024-03-18', 6, 1, 'default.png', 1),
+(107, 'testTeacher3', 'testTeacher3', 'testTeacher3', 'testTeacher3@local.kz', '$2y$10$1OuBcnykWI.vUZ5eeEZaauGRaUL5ahI2aBb.7n8qwyxndn5VMebxq', 1, '2024-03-22', 4, 1, 'default.png', 1);
 
 --
 -- Индексы сохранённых таблиц
@@ -1051,8 +1068,7 @@ ALTER TABLE `schedule`
   ADD PRIMARY KEY (`schedule_id`),
   ADD KEY `classroom_id` (`classroom_id`),
   ADD KEY `day_id` (`day_id`),
-  ADD KEY `lesson_plan_id` (`lesson_plan_id`),
-  ADD KEY `lesson_plan_num` (`lesson_num_id`);
+  ADD KEY `lesson_plan_id` (`lesson_plan_id`);
 
 --
 -- Индексы таблицы `special`
@@ -1088,8 +1104,7 @@ ALTER TABLE `subject`
 -- Индексы таблицы `teacher`
 --
 ALTER TABLE `teacher`
-  ADD PRIMARY KEY (`user_id`),
-  ADD KEY `otdel_id` (`otdel_id`);
+  ADD PRIMARY KEY (`user_id`);
 
 --
 -- Индексы таблицы `user`
@@ -1108,7 +1123,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `awards`
 --
 ALTER TABLE `awards`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT для таблицы `branch`
@@ -1174,7 +1189,7 @@ ALTER TABLE `lesson_num`
 -- AUTO_INCREMENT для таблицы `lesson_plan`
 --
 ALTER TABLE `lesson_plan`
-  MODIFY `lesson_plan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `lesson_plan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `notice`
@@ -1198,13 +1213,13 @@ ALTER TABLE `parent`
 -- AUTO_INCREMENT для таблицы `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
 
 --
 -- AUTO_INCREMENT для таблицы `payment_archive`
 --
 ALTER TABLE `payment_archive`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=109;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
 
 --
 -- AUTO_INCREMENT для таблицы `reference`
@@ -1222,13 +1237,13 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT для таблицы `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT для таблицы `special`
 --
 ALTER TABLE `special`
-  MODIFY `special_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `special_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT для таблицы `student_subjects`
@@ -1246,7 +1261,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=107;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -1316,8 +1331,8 @@ ALTER TABLE `homework_teacher`
 --
 ALTER TABLE `lesson_plan`
   ADD CONSTRAINT `lesson_plan_ibfk_1` FOREIGN KEY (`gruppa_id`) REFERENCES `gruppa` (`gruppa_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `lesson_plan_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `lesson_plan_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `teacher` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `lesson_plan_ibfk_3` FOREIGN KEY (`user_id`) REFERENCES `teacher` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `lesson_plan_ibfk_4` FOREIGN KEY (`subject_id`) REFERENCES `special` (`special_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `manager`
@@ -1368,8 +1383,7 @@ ALTER TABLE `reference`
 ALTER TABLE `schedule`
   ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`classroom_id`) REFERENCES `classroom` (`classroom_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `schedule_ibfk_2` FOREIGN KEY (`day_id`) REFERENCES `day` (`day_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `schedule_ibfk_3` FOREIGN KEY (`lesson_plan_id`) REFERENCES `lesson_plan` (`lesson_plan_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `schedule_ibfk_4` FOREIGN KEY (`lesson_num_id`) REFERENCES `lesson_num` (`lesson_num_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `schedule_ibfk_3` FOREIGN KEY (`lesson_plan_id`) REFERENCES `lesson_plan` (`lesson_plan_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `special`

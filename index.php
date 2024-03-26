@@ -209,10 +209,11 @@ $branchWithoutCurrent = (new UserMap())->arrBranchWithoutCurrent();
 </body>
 
 <?php
-if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator')) {
+if (Helper::can('teacher')) {
     $header = 'Главная: расписание занятий.';
 
     $userIdentity = (new UserMap())->identity($_SESSION['id']);
+    $user = ((new TeacherMap())->findById($_SESSION['id']));
     if ($userIdentity == UserMap::TEACHER) {
         $schedules = (new ScheduleMap())->findByTeacherId($_SESSION['id']);
     } elseif ($userIdentity == UserMap::STUDENT) {
@@ -222,13 +223,59 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
     }
     require_once 'template/header.php';
     ?>
+
     <div class="row">
         <div class="col-xs-12">
             <div class="box">
-                <section class="box-body">
-                    <h3>
-                        <?= $header; ?>
-                    </h3>
+                <section class="content-header">
+                    <h3><b>
+                            Добро пожаловать:
+                            <?= $user->fio ?>
+                        </b></h3>
+                </section>
+                <section class="content-header">
+                    <h3><b>
+                            <img style="width: 150px; height: 150px;" src=" /avatars/<?= $user->photo ?>">
+                        </b></h3>
+                </section>
+                <section class="content-header">
+                    <form action="add/add-avatar" method="get">
+                        <h3><b>
+                                <input type="hidden" name="id" value="<?= $user->user_id ?>">
+                                <input class="btn btn-primary" type="submit" value="Изменить фото">
+                            </b></h3>
+                    </form>
+
+                </section>
+                <section class="content-header">
+                    <form action="add/add-avatar" method="get">
+                        <h3><b>
+                                <input class="btn btn-primary" type="submit" value="Журнал">
+                            </b></h3>
+                    </form>
+                </section><br>
+                <form action="index" method="get">
+                    <section class="content-header">
+                        <select style="width: 250px;" class="form-control" name="branch">
+                            <?= Helper::printSelectOptions(0, (new UserMap())->arrBranchs()) ?>
+                        </select>
+                    </section>
+                    <section class="content-header">
+                        <input class="btn btn-primary" type="submit" value="Узнать расписание">
+                    </section>
+                </form>
+                <br>
+                <section class="content-header">
+                    <form action="index" method="get">
+                        <h3><b>
+                                <input class="btn btn-primary" type="submit" value="Замена">
+                            </b></h3>
+                    </form>
+                </section>
+                <section class="content-header">
+                    <h3><b>
+                            <?= $header ?>
+                        </b></h3>
                 </section>
                 <div class="box-body">
                     <?php if ($schedules): ?>

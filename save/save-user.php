@@ -1,9 +1,5 @@
 <?php
 require_once '../secure.php';
-if (!Helper::can('manager') && !Helper::can('admin') && !Helper::can('procreator')) {
-    header('Location: 404');
-    exit();
-}
 
 if (isset ($_POST['saveAvatarStudent'])) {
     $user = new User();
@@ -29,6 +25,7 @@ if (isset ($_POST['saveAvatarStudent'])) {
     move_uploaded_file($fileTmpName, "../avatars/" . $user->photo);
     if ($_SESSION['role'] == 'procreator') {
         if ((new UserMap())->updatePhoto($user)) {
+            $_SESSION['photo'] = $user->photo;
             header('Location: ../profile/profile-student?id=' . $user->user_id);
             exit;
         }
@@ -36,7 +33,16 @@ if (isset ($_POST['saveAvatarStudent'])) {
 
     if ($_SESSION['role'] == 'admin') {
         if ((new UserMap())->updatePhoto($user)) {
+            $_SESSION['photo'] = $user->photo;
             header('Location: ../profile/profile-manager?id=' . $user->user_id);
+            exit;
+        }
+    }
+
+    if ($_SESSION['role'] == 'teacher') {
+        if ((new UserMap())->updatePhoto($user)) {
+            $_SESSION['photo'] = $user->photo;
+            header('Location: ../profile/profile-teacher?id=' . $user->user_id);
             exit;
         }
     }

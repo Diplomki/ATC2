@@ -5,10 +5,12 @@ class TeacherMap extends BaseMap
     public function findById($id = null)
     {
         if ($id) {
-            $res = $this->db->query("SELECT CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, teacher.user_id,  awards.subject_id, awards.award FROM teacher
+            $res = $this->db->query("SELECT CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as fio, 
+            teacher.user_id, user.photo, 
+            awards.subject_id, awards.award FROM teacher
 
             LEFT JOIN awards ON teacher.user_id = awards.user_id
-            INNER JOIN user ON teacher.user_id = user.user_id 
+            INNER JOIN user ON teacher.user_id = user.user_id
             
             WHERE teacher.user_id = $id");
             $teacher = $res->fetchObject("Teacher");
