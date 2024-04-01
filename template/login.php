@@ -16,8 +16,6 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="template/css/AdminLTE.min.css">
 
-
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -42,8 +40,8 @@
 
       <!-- /.login-logo -->
       <div class="login-box-body">
-        <h2>Добро пожаловать в</h2>
-        <h3><b>IQ Study</b></h3>
+        <h2>Добро пожаловать</h2>
+        <h3><b>ATTENDANCE ONLINE</b></h3>
         <p class="login-box-msg">
           <?= $message; ?>
         </p>

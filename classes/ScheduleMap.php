@@ -45,6 +45,7 @@ class ScheduleMap extends BaseMap
         }
         return false;
     }
+
     public function findByTeacherId($id = null)
     {
         $days = $this->findDays();
@@ -158,5 +159,32 @@ class ScheduleMap extends BaseMap
             return true;
         }
         return false;
+    }
+
+    public function arrDays()
+    {
+        $query = "SELECT day_id as id, name as value FROM day";
+        $res = $this->db->prepare($query);
+        $res->execute();
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function findByDayTeacher($teacherId, $dayId)
+    {
+        $res = $this->db->query(
+            "SELECT
+            schedule.schedule_id, CONCAT(special.time_begin, ' — ' ,special.time_end) as time, subject.name 
+            AS subject, classroom.name AS
+            classroom, gruppa.name as gruppa, day.name as day, day.day_id FROM lesson_plan INNER JOIN schedule ON
+            lesson_plan.lesson_plan_id=schedule.lesson_plan_id INNER JOIN subject ON
+            lesson_plan.subject_id=subject.subject_id INNER JOIN classroom ON
+            schedule.classroom_id=classroom.classroom_id
+            INNER JOIN special ON special.special_id = lesson_plan.subject_id
+            INNER JOIN gruppa ON gruppa.gruppa_id = lesson_plan.gruppa_id
+            INNER JOIN day ON day.day_id = schedule.day_id
+            WHERE lesson_plan.user_id=$teacherId AND
+            schedule.day_id=$dayId"
+        );
+        return $res->fetchAll(PDO::FETCH_OBJ);
     }
 }

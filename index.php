@@ -1,7 +1,7 @@
 <?php
 require_once 'secure.php';
 require_once 'template/header.php';
-if (isset ($_GET['id'])) {
+if (isset($_GET['id'])) {
     $_SESSION['branch'] = (int) $_GET['id'];
 }
 
@@ -57,7 +57,7 @@ $branchWithoutCurrent = (new UserMap())->arrBranchWithoutCurrent();
 
 <body>
     <?php if (Helper::can('manager')) {
-        $header = isset ($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch->name;
+        $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch->name;
         ?>
 
         <section class="content-header">
@@ -120,7 +120,7 @@ $branchWithoutCurrent = (new UserMap())->arrBranchWithoutCurrent();
 
 
     <?php if (Helper::can('admin')) {
-        $header = isset ($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch->name;
+        $header = isset($_GET['message']) ? '<span style="color: red;">Неверный формат файла</span>' : $branch->name;
         ?>
 
         <section class="content-header">
@@ -210,7 +210,7 @@ $branchWithoutCurrent = (new UserMap())->arrBranchWithoutCurrent();
 
 <?php
 if (Helper::can('teacher')) {
-    $header = 'Главная: расписание занятий.';
+    
 
     $userIdentity = (new UserMap())->identity($_SESSION['id']);
     $user = ((new TeacherMap())->findById($_SESSION['id']));
@@ -248,23 +248,10 @@ if (Helper::can('teacher')) {
 
                 </section>
                 <section class="content-header">
-                    <form action="add/add-avatar" method="get">
-                        <h3><b>
-                                <input class="btn btn-primary" type="submit" value="Журнал">
-                            </b></h3>
-                    </form>
-                </section><br>
-                <form action="index" method="get">
-                    <section class="content-header">
-                        <select style="width: 250px;" class="form-control" name="branch">
-                            <?= Helper::printSelectOptions(0, (new UserMap())->arrBranchs()) ?>
-                        </select>
-                    </section>
-                    <section class="content-header">
-                        <input class="btn btn-primary" type="submit" value="Узнать расписание">
-                    </section>
-                </form>
-                <br>
+                    <h3><b>
+                            <a class="btn btn-primary" href="check/check-classes">Журнал</a>
+                        </b></h3>
+                </section>
                 <section class="content-header">
                     <form action="index" method="get">
                         <h3><b>
@@ -277,103 +264,6 @@ if (Helper::can('teacher')) {
                             <?= $header ?>
                         </b></h3>
                 </section>
-                <div class="box-body">
-                    <?php if ($schedules): ?>
-                        <?php if ($userIdentity == UserMap::TEACHER): ?>
-                            <table class="table table-bordered table-hover">
-                                <?php foreach ($schedules as $day):
-                                    ?>
-                                    <tr>
-                                        <th colspan="3">
-                                            <h4 class="center-block">
-                                                <?= $day['name']; ?>
-                                            </h4>
-                                        </th>
-                                    </tr>
-
-                                    <?php if ($day['gruppa']): ?>
-                                        <?php foreach ($day['gruppa'] as $gruppa): ?>
-                                            <tr>
-                                                <th colspan="3">
-                                                    <?= $gruppa['name']; ?>
-                                                </th>
-                                            </tr>
-
-                                            <?php foreach ($gruppa['schedule'] as $schedule): ?>
-                                                <tr>
-                                                    <td>
-                                                        <?= $schedule['time']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $schedule['subject']; ?>
-                                                    </td>
-                                                    <td>
-                                                        <?= $schedule['classroom']; ?>
-                                                    </td>
-
-                                                </tr>
-
-                                            <?php endforeach; ?>
-                                        <?php endforeach; ?>
-
-                                    <?php else: ?>
-                                        <tr>
-                                            <td colspan="3">Отутствует расписание на этот день</td>
-                                        </tr>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-
-                            </table>
-                        <?php else: ?>
-                            <p>Ваша группа:
-                                <?= $schedules['gruppa']; ?>
-                            </p>
-                            <table class="table table-bordered table-hover">
-
-                                <?php foreach ($schedules['allSchedule'] as $day):
-                                    ?>
-                                    <tr>
-                                        <th colspan="3">
-                                            <h4 class="center-block">
-                                                <?= $day['name']; ?>
-                                            </h4>
-                                        </th>
-                                    </tr>
-
-                                    <?php if ($day['schedule']): ?>
-                                        <?php foreach ($day['schedule'] as $gruppa): ?>
-
-
-
-                                            <tr>
-                                                <td>
-                                                    <?= $gruppa['lesson_num']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $gruppa['subject']; ?>
-                                                </td>
-                                                <td>
-                                                    <?= $gruppa['classroom']; ?>
-                                                </td>
-
-                                            </tr>
-
-                                        <?php endforeach; ?>
-
-
-                                    <?php else: ?>
-                                        <tr>
-                                            <td colspan="3">Отутствует расписание на этот день</td>
-                                        </tr>
-                                    <?php endif; ?>
-                                <?php endforeach; ?>
-
-                            </table>
-                        <?php endif; ?>
-                    <?php else: ?>
-                        <p>Для Вас расписание отутствует</p>
-                    <?php endif; ?>
-                </div>
             </div>
         </div>
     </div>
@@ -386,7 +276,7 @@ if (Helper::can('procreator')) {
         exit();
     }
     $size = 10;
-    if (isset ($_GET['page'])) {
+    if (isset($_GET['page'])) {
         $page = Helper::clearInt($_GET['page']);
 
     } else {
@@ -395,7 +285,7 @@ if (Helper::can('procreator')) {
     $studentMap = new StudentMap();
     $count = $studentMap->count();
     $student = $studentMap->findStudentsFromParent($page * $size - $size, $size);
-    $header = isset ($_GET['message']) ? '<span style="color: red;">Ошибка</span>' : 'Главная';
+    $header = isset($_GET['message']) ? '<span style="color: red;">Ошибка</span>' : 'Главная';
     require_once 'template/header.php';
     ?>
     <div class="row">
