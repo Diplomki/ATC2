@@ -56,7 +56,6 @@ $days = [
                 </td>
             </tr>
         <?php endforeach; ?>
-
     <?php else: ?>
         </table>
         <form action="check-classes" method="get">
