@@ -2661,14 +2661,14 @@ a:focus {
 }
 
 .btn-success {
-    background-color: #00a65a;
-    border-color: #008d4c
+    background-color: #9b6aa9;
+    border-color: #80568b;
 }
 
 .btn-success:hover,
 .btn-success:active,
 .btn-success.hover {
-    background-color: #008d4c
+    background-color: #9b6aa9;
 }
 
 .btn-info {
@@ -3794,82 +3794,55 @@ table.text-center th {
 }
 
 
+.login-box {
+    width: 360px;
+    margin: 7% auto;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
 .login-logo {
-    margin-bottom: 0px;
     text-align: center;
+    margin-bottom: 20px;
+}
+
+.login-logo img {
+    width: 200px;
+    height: auto;
 }
 
 .login-box-body h2 {
-    color: black;
-    size: 50px;
-    margin-bottom: -10px;
+    color: #333;
+    font-size: 24px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
 .login-box-body h3 {
     color: orange;
-    size: 40px;
+    font-size: 20px;
     text-align: center;
+    margin-bottom: 30px;
 }
 
-.login-logo img {
-    width: 300px;
-
-    height: auto;
-
+.form-group {
     margin-bottom: 20px;
 }
 
-.login-logo,
-.register-logo {
-    text-align: center;
-    margin-bottom: 25px;
-    font-weight: 300
+.form-group .input-group-addon {
+    background-color: #f4f4f4;
 }
 
-.login-logo a,
-.register-logo a {
-    color: #444
+.form-control {
+    border-radius: 3px;
 }
 
-.login-page,
-.register-page {
-    background: #d2d6de
-}
-
-.login-box,
-.register-box {
-    width: 360px;
-    margin: 7% auto
-}
-
-@media (max-width:768px) {
-
-    .login-box,
-    .register-box {
-        width: 90%;
-        margin-top: 20px
-    }
-}
-
-.login-box-body,
-.register-box-body {
-    background: #fff;
-    padding: 20px;
-    border-top: 0;
-    color: #666
-}
-
-.login-box-body .form-control-feedback,
-.register-box-body .form-control-feedback {
-    color: #777
-}
-
-.login-box-msg,
-.register-box-msg {
+.login-box-msg {
     margin: 0;
     text-align: center;
-    padding: 0 20px 20px 20px
+    padding: 0 20px 20px 20px;
 }
 
 .social-auth-links {
@@ -5886,7 +5859,7 @@ table.text-center th {
 }
 
 .auth-background {
-    background-image: url('/img/bl.png');
+    background: #f8f6f6;
     /* Замените на путь к вашему изображению */
     background-size: cover;
     background-position: center;

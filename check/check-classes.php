@@ -1,7 +1,7 @@
 <?php
 require_once '../secure.php';
 require_once '../template/header.php';
-if (isset($_GET['day'])) {
+if (isset ($_GET['day'])) {
     $day = $_GET['day'];
     $schedules = (new ScheduleMap())->findByDayTeacher($_SESSION['id'], $day);
 }
@@ -16,7 +16,7 @@ $days = [
     '6' => 'Суббота',
 ];
 ?>
-<?php if (isset($_GET['day'])): ?>
+<?php if (isset ($_GET['day'])): ?>
     <section class="content-header">
         <h3><b>
                 <?= $header ?>
@@ -33,29 +33,52 @@ $days = [
                 </th>
             </tr>
         </table>
-        <?php if (empty($schedules)): ?>
+        <?php if (empty ($schedules)): ?>
             <tr>
                 <td colspan="3">Отутствует расписание на этот день</td>
             </tr>
         <?php endif; ?>
-        <?php foreach ($schedules as $classes): ?>
-            <tr>
-                <th colspan="3">
-                    <?= $classes->gruppa; ?>
-                </th>
-            </tr>
-            <tr>
-                <td>
-                    <?= $classes->time; ?>
-                </td>
-                <td>
-                    <?= $classes->subject; ?>
-                </td>
-                <td>
-                    <?= $classes->classroom; ?>
-                </td>
-            </tr>
-        <?php endforeach; ?>
+        <table class="table table-bordered table-hover">
+
+            <thead>
+                <tr>
+                    <th>Группа</th>
+                    <th>Предмет</th>
+                    <th>Время</th>
+                    <th>Дни обучения</th>
+                    <th>Дата урока</th>
+                    <th>Кол-во учеников</th>
+                    <th>Общее кол-во учеников</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($schedules as $classes): ?>
+                    <tr>
+                        <td>
+                            <?= $classes->gruppa; ?>
+                        </td>
+                        <td>
+                            <?= $classes->subject; ?>
+                        </td>
+                        <td>
+                            <?= $classes->time; ?>
+                        </td>
+                        <td>
+                            <?= $classes->days_of_study; ?>
+                        </td>
+                        <td>
+                            <?= $classes->lesson_date; ?>
+                        </td>
+                        <td>
+                            <?= $classes->num_of_students; ?>
+                        </td>
+                        <td>
+                            <?= $classes->total_students; ?>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     <?php else: ?>
         </table>
         <form action="check-classes" method="get">

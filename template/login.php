@@ -35,54 +35,36 @@
   <div class="auth-background">
     <div class="login-box">
       <div class="login-logo">
-        <img src="../img/logo.png" alt="">
+        <img src="../img/logo.png" alt="Company Logo">
       </div>
-
-      <!-- /.login-logo -->
       <div class="login-box-body">
         <h2>Добро пожаловать</h2>
         <h3><b>ATTENDANCE ONLINE</b></h3>
         <p class="login-box-msg">
           <?= $message; ?>
         </p>
-
         <form action="auth" method="post">
-          <div class="form-group has-feedback">
+          <div class="form-group">
             <div class="input-group">
-              <span class="input-group-addon">
-                <i class="fa fa-user"></i>
-              </span>
+              <span class="input-group-addon"><i class="fa fa-user"></i></span>
               <input type="text" class="form-control" placeholder="Логин" name="login">
             </div>
           </div>
-          <div class="form-group has-feedback" style="margin-top: 10px;">
+          <div class="form-group">
             <div class="input-group">
-              <span class="input-group-addon">
-                <i class="fa fa-lock"></i>
-              </span>
+              <span class="input-group-addon"><i class="fa fa-lock"></i></span>
               <input type="password" class="form-control" placeholder="Пароль" name="password">
             </div>
           </div>
-          <div class="row">
-            <div class="col-xs-12">
-              <button type="submit" class="btn btn-primary btn-block">Войти</button>
-            </div>
+          <div class="form-group">
+            <button type="submit" class="btn btn-primary btn-block">Войти</button>
           </div>
         </form>
-
-        <!-- /.social-auth-links -->
-
-        <!-- /.login-box-body -->
       </div>
-      <!-- /.login-box -->
-
-      <!-- jQuery 3 -->
-      <script src="template/js/jquery.min.js"></script>
-      <!-- Bootstrap 3.3.7 -->
-      <script src="template/js/bootstrap.min.js"></script>
-
-      </script>
     </div>
+    <!-- jQuery and Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
