@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 02 2024 г., 06:10
+-- Время создания: Апр 04 2024 г., 13:47
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -193,10 +193,52 @@ CREATE TABLE `grades` (
   `subject_id` int NOT NULL,
   `grade` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date DEFAULT NULL,
-  `attend` tinyint DEFAULT NULL,
+  `attend` tinyint DEFAULT '0',
   `comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `homework` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Дамп данных таблицы `grades`
+--
+
+INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `attend`, `comment`, `homework`) VALUES
+(343, 7, 16, '80', '2024-04-04', 1, '', NULL),
+(344, 8, 16, '90', '2024-04-04', 1, '', NULL),
+(345, 7, 16, '', '2024-04-04', 0, '', NULL),
+(346, 8, 16, '80', '2024-04-04', 1, '', NULL),
+(347, 7, 16, '', '2024-04-04', 0, '', NULL),
+(348, 8, 16, '80', '2024-04-04', 1, '', NULL),
+(349, 7, 16, '90', '2024-04-04', 1, '123', NULL),
+(350, 8, 16, '', '2024-04-04', 0, '', NULL),
+(351, 18, 17, '90', '2024-04-04', 1, '123', NULL),
+(352, 105, 17, '', '2024-04-04', 0, '', NULL),
+(353, 18, 17, '90', '2024-04-04', 1, '6', NULL),
+(354, 105, 17, '', '2024-04-04', 0, '', NULL),
+(355, 18, 17, '90', '2024-04-04', 1, '', NULL),
+(356, 105, 17, '', '2024-04-04', 0, '', NULL),
+(357, 7, 16, ' 90', '2024-04-04', 1, '123', NULL),
+(358, 8, 16, '', '2024-04-04', 0, '', NULL),
+(359, 7, 16, '75', '2024-04-04', 1, '123', NULL),
+(360, 8, 16, '60', '2024-04-04', 1, '123', NULL),
+(361, 18, 17, '77', '2024-04-04', 1, '65', NULL),
+(362, 105, 17, '567', '2024-04-04', 1, '7', NULL),
+(363, 9, 18, '90', '2024-04-04', 1, '', NULL),
+(364, 7, 16, '40', '2024-04-04', 1, '6', NULL),
+(366, 7, 16, '70', '2024-04-04', 1, '6', NULL),
+(368, 7, 16, '77', '2024-04-04', 0, '67', NULL),
+(369, 8, 16, '77', '2024-04-04', 0, '87', NULL),
+(370, 7, 16, '', '2024-04-04', 0, '', NULL),
+(371, 8, 16, '', '2024-04-04', 0, '', NULL),
+(372, 7, 16, '', '2024-04-04', 0, '', NULL),
+(373, 8, 16, '', '2024-04-04', 0, '', NULL),
+(374, 7, 16, '', '2024-04-04', 0, '', NULL),
+(375, 8, 16, '', '2024-04-04', 0, '', NULL),
+(376, 9, 17, '80', '2024-04-04', 1, '123', NULL),
+(377, 18, 18, '77', '2024-04-04', 1, '6', NULL),
+(378, 105, 18, '56', '2024-04-04', 1, '4', NULL),
+(379, 7, 16, '55', '2024-04-04', 1, '', NULL),
+(380, 8, 16, '60', '2024-04-04', 1, '', NULL);
 
 -- --------------------------------------------------------
 
@@ -368,12 +410,10 @@ CREATE TABLE `lesson_plan` (
 --
 
 INSERT INTO `lesson_plan` (`lesson_plan_id`, `gruppa_id`, `subject_id`, `user_id`, `deleted`) VALUES
-(12, 2, 16, 6, 0),
-(13, 3, 18, 6, 0),
-(14, 2, 17, 14, 0),
-(15, 1, 17, 6, 0),
-(16, 2, 18, 6, 0),
-(17, 3, 17, 6, 0);
+(19, 2, 17, 6, 0),
+(20, 2, 16, 6, 0),
+(21, 3, 18, 6, 0),
+(22, 1, 18, 6, 0);
 
 -- --------------------------------------------------------
 
@@ -609,21 +649,20 @@ INSERT INTO `role` (`role_id`, `sys_name`, `name`, `active`) VALUES
 CREATE TABLE `schedule` (
   `schedule_id` int NOT NULL,
   `lesson_plan_id` int NOT NULL,
-  `day_id` tinyint NOT NULL,
-  `classroom_id` int NOT NULL
+  `date` date DEFAULT NULL,
+  `classroom_id` int NOT NULL,
+  `allowed` tinyint DEFAULT '0',
+  `deleted` tinyint DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `schedule`
 --
 
-INSERT INTO `schedule` (`schedule_id`, `lesson_plan_id`, `day_id`, `classroom_id`) VALUES
-(14, 15, 1, 5),
-(16, 12, 1, 5),
-(17, 17, 1, 5),
-(18, 13, 1, 1),
-(19, 16, 3, 5),
-(20, 12, 3, 1);
+INSERT INTO `schedule` (`schedule_id`, `lesson_plan_id`, `date`, `classroom_id`, `allowed`, `deleted`) VALUES
+(38, 22, '2024-04-11', 5, 1, 1),
+(39, 19, '2024-04-11', 5, 1, 0),
+(40, 20, '2024-04-12', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1067,7 +1106,7 @@ ALTER TABLE `role`
 ALTER TABLE `schedule`
   ADD PRIMARY KEY (`schedule_id`),
   ADD KEY `classroom_id` (`classroom_id`),
-  ADD KEY `day_id` (`day_id`),
+  ADD KEY `day_id` (`date`),
   ADD KEY `lesson_plan_id` (`lesson_plan_id`);
 
 --
@@ -1153,7 +1192,7 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=343;
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=381;
 
 --
 -- AUTO_INCREMENT для таблицы `grade_accept`
@@ -1189,7 +1228,7 @@ ALTER TABLE `lesson_num`
 -- AUTO_INCREMENT для таблицы `lesson_plan`
 --
 ALTER TABLE `lesson_plan`
-  MODIFY `lesson_plan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `lesson_plan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT для таблицы `notice`
@@ -1237,7 +1276,7 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT для таблицы `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
 
 --
 -- AUTO_INCREMENT для таблицы `special`
@@ -1382,7 +1421,6 @@ ALTER TABLE `reference`
 --
 ALTER TABLE `schedule`
   ADD CONSTRAINT `schedule_ibfk_1` FOREIGN KEY (`classroom_id`) REFERENCES `classroom` (`classroom_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `schedule_ibfk_2` FOREIGN KEY (`day_id`) REFERENCES `day` (`day_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `schedule_ibfk_3` FOREIGN KEY (`lesson_plan_id`) REFERENCES `lesson_plan` (`lesson_plan_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
