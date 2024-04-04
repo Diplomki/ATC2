@@ -202,4 +202,14 @@ class TeacherMap extends BaseMap
             'id' => $id
         ]);
     }
+
+    public function arrTeachers()
+    {
+        $query = "SELECT teacher.user_id as id, CONCAT(user.lastname, ' ', user.firstname, ' ', user.patronymic) as value 
+        FROM `teacher`
+        INNER JOIN user ON teacher.user_id = user.user_id WHERE user.branch_id = {$_SESSION['branch']}";
+        $res = $this->db->prepare($query);
+        $res->execute();
+        return $res->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

@@ -210,15 +210,13 @@ $branchWithoutCurrent = (new UserMap())->arrBranchWithoutCurrent();
 
 <?php
 if (Helper::can('teacher')) {
-    
+
 
     $userIdentity = (new UserMap())->identity($_SESSION['id']);
     $user = ((new TeacherMap())->findById($_SESSION['id']));
     if ($userIdentity == UserMap::TEACHER) {
         $schedules = (new ScheduleMap())->findByTeacherId($_SESSION['id']);
     } elseif ($userIdentity == UserMap::STUDENT) {
-        $schedules = (new ScheduleMap())->findByStudentId($_SESSION['id']);
-    } else {
         $schedules = null;
     }
     require_once 'template/header.php';
@@ -253,9 +251,9 @@ if (Helper::can('teacher')) {
                         </b></h3>
                 </section>
                 <section class="content-header">
-                    <form action="index" method="get">
+                    <form action="/check/check-replacement">
                         <h3><b>
-                                <input class="btn btn-primary" type="submit" value="Замена">
+                                <a class="btn btn-primary" href="check/check-replacement">Замена</a>
                             </b></h3>
                     </form>
                 </section>

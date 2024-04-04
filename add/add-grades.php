@@ -104,6 +104,38 @@ require_once '../template/header.php';
         require: ['ru']
     };
 </script>
+<script>
+    // Функция для обработки изменения состояния чекбокса
+    function toggleElements(studentId, isChecked) {
+        var inputElements = document.getElementsByName('grade_id[' + studentId + ']');
+        var textInput = inputElements[0];
+        var commentInput = document.getElementsByName('comment[' + studentId + ']')[0];
+
+        // Если чекбокс активен, делаем элементы видимыми, иначе - скрываем
+        if (isChecked) {
+            textInput.style.display = 'block';
+            commentInput.style.display = 'block';
+        } else {
+            textInput.style.display = 'none';
+            commentInput.style.display = 'none';
+        }
+    }
+
+    // Находим все чекбоксы и добавляем обработчик для изменения состояния
+    var checkboxes = document.querySelectorAll('input[type="checkbox"][name^="attend"]');
+    checkboxes.forEach(function (checkbox) {
+        checkbox.addEventListener('change', function () {
+            var studentId = this.getAttribute('name').match(/\[(\d+)\]/)[1];
+            toggleElements(studentId, this.checked);
+        });
+    });
+
+    // Вызываем toggleElements для всех чекбоксов, чтобы настройки отображения были актуальными при загрузке страницы
+    checkboxes.forEach(function (checkbox) {
+        var studentId = checkbox.getAttribute('name').match(/\[(\d+)\]/)[1];
+        toggleElements(studentId, checkbox.checked);
+    });
+</script>
 <script src="https://cdn.jsdelivr.net/npm/hyphenopoly@2.8.0/dist/configurator.js"></script>
 <?php
 require_once '../template/footer.php';
