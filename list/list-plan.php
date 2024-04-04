@@ -89,7 +89,7 @@ fa-dashboard"></i> Главная</a></li>
                     </table>
                 <?php else: ?>
 
-                    <p>План отутствует</p>
+                    <p>План отсутствует</p>
                 <?php endif; ?>
             </div>
         </div>

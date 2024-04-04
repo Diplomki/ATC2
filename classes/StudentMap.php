@@ -193,19 +193,17 @@ class StudentMap extends BaseMap
             LIMIT $ofset, $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
-    public function findStudentsFromGroup($id = null, $ofset = 0, $limit = 30)
+    public function findStudentsFromGroup($id)
     {
-        if ($id) {
-            $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, 
+        $res = $this->db->query("SELECT user.user_id, CONCAT(user.lastname,' ', user.firstname, ' ', user.patronymic) AS fio, user.birthday, gender.name AS gender, gruppa.name AS gruppa, 
             role.name AS role, branch.id as branch FROM user 
             INNER JOIN student ON user.user_id=student.user_id 
             INNER JOIN gender ON user.gender_id=gender.gender_id 
             INNER JOIN gruppa ON student.gruppa_id=gruppa.gruppa_id 
             INNER JOIN role ON user.role_id=role.role_id 
             INNER JOIN branch ON user.branch_id = branch.id 
-            WHERE gruppa.gruppa_id = $id AND branch.id = {$_SESSION['branch']} and student.deleted = 0 LIMIT $ofset, $limit");
-            return $res->fetchAll(PDO::FETCH_OBJ);
-        }
+            WHERE gruppa.gruppa_id = $id AND branch.id = {$_SESSION['branch']} and student.deleted = 0");
+        return $res->fetchAll(PDO::FETCH_OBJ);
     }
 
     public function findStudentsFromGrades($id = null, $ofset = 0, $limit = 30)
@@ -480,4 +478,6 @@ class StudentMap extends BaseMap
         ]);
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
+
+
 }

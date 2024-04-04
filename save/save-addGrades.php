@@ -9,6 +9,8 @@ if (isset($_POST['formSubmit'])) {
     $flag = false;
     foreach ($_POST['grade_id'] as $user_id => $grade) {
         $student = new Student();
+        $schedule_id = $_POST['schedule_id'];
+        $lesson_plan_id = $_POST['lesson_plan_id'];
         $student->subject_id = $_POST['subject_id'][$user_id];
         $student->user_id = $user_id;
         $student->attend = $_POST['attend'][$user_id];
@@ -18,10 +20,15 @@ if (isset($_POST['formSubmit'])) {
         $flag = true;
     }
     if ($flag) {
-        header('Location: ../list/list-grades?message=ok');
-        exit();
+        if ((new ScheduleMap())->updatePlan($schedule_id, $lesson_plan_id)) {
+            header('Location: ../check/check-classes?message=ok');
+            exit();
+        } else {
+            header('Location: ../check/check-classes?message=err');
+            exit();
+        }
     } else {
-        header('Location: ../list/list-grades?message=err');
+        header('Location: ../check/check-classes?message=err');
         exit();
     }
 

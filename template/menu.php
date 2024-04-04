@@ -68,9 +68,6 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/list/list-gruppa.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../list/list-gruppa"><i class="fa fa-object-group"></i><span>Группы</span></a>
-                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-grades.php') ? 'class="active"' : ''; ?>>
-
-                    <a href="../list/list-grades"><i class="fa fa-book"></i><span>Журнал</span></a>
 
                 <li <?= ($_SERVER['PHP_SELF'] == '/check/check-homework.php') ? 'class="active"' : ''; ?>>
 

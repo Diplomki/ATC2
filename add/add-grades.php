@@ -6,30 +6,20 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher'))
     exit();
 }
 
-$size = 10;
-
-if (isset($_GET['page'])) {
-    $page = Helper::clearInt($_GET['page']);
-} else {
-    $page = 1;
-}
-
-if (isset($_GET['id'])) {
-    $id = Helper::clearInt($_GET['id']);
+if (isset($_GET['group'])) {
+    $id = Helper::clearInt($_GET['group']);
+    $subject_id = $_GET['subject'];
+    $schedule_id = $_GET['schedule'];
 } else {
     $id = 1;
 }
 
 $studentMap = new StudentMap();
-$count = $studentMap->count();
-$students = $studentMap->findStudentsFromGroup($id, $page * $size - $size, $size);
+$students = $studentMap->findStudentsFromGroup($id);
+$subject = (new SubjectMap())->findById($subject_id);
 $header = 'Список студентов';
 require_once '../template/header.php';
-
-
 ?>
-
-
 
 <div class="row">
     <div class="col-xs-12">
@@ -74,21 +64,18 @@ require_once '../template/header.php';
                                             ?>
                                         </td>
                                         <td>
-                                            <select name="subject_id[<?php echo $student->user_id; ?>]">
-                                                <?php
-                                                Helper::printSelectOptions($student->subject_id, (new StudentMap())->arrSubjectFromBranch());
-                                                ?>
-                                            </select>
+                                            <?= $subject->name; ?>
+                                            <input type="hidden" name="subject_id[<?php echo $student->user_id; ?>]"
+                                                value="<?= $subject_id ?>">
+
                                         </td>
                                         <td>
                                             <input type="text" name="grade_id[<?php echo $student->user_id; ?>]">
                                         </td>
                                         <td>
-                                            <select name="attend[<?php echo $student->user_id; ?>]">
-                                                <?php
-                                                Helper::printSelectOptions($student->attend, (new StudentMap())->arrAttends());
-                                                ?>
-                                            </select>
+                                            <input type="hidden" name="attend[<?php echo $student->user_id; ?>]" value="0">
+                                            <input type="checkbox" name="attend[<?php echo $student->user_id; ?>]" value="1"
+                                                <?php echo ($student->attend == 1) ? 'checked' : ''; ?>>
                                         </td>
                                         <td>
                                             <input type="text" name="comment[<?php echo $student->user_id; ?>]">
@@ -97,6 +84,8 @@ require_once '../template/header.php';
                                 <?php } ?>
                             </tbody>
                         </table>
+                        <input name="schedule_id" type="hidden" value="<?= $schedule_id ?>">
+                        <input name="lesson_plan_id" type="hidden" value="<?= $lesson_plan_id ?>">
                         <input class="btn btn-success" type="submit" name="formSubmit">
                     </form>
                 <?php } else {

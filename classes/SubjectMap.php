@@ -28,7 +28,7 @@ class SubjectMap extends BaseMap
     {
         if ($id) {
             $res = $this->db->query("SELECT subject_id, name,
-        otdel_id,  active "
+        otdel_id "
                 . "FROM subject WHERE subject_id = $id");
             return $res->fetchObject("Subject");
         }

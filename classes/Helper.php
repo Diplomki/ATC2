@@ -31,6 +31,17 @@ class Helper
         }
     }
 
+    static function printSelectOptionsDate($options = array())
+    {
+        if ($options) {
+            foreach ($options as $option) { ?>
+                <option value="<?= $option['date']; ?>">
+                    <?= $option['date']; ?>
+                </option>
+            <?php }
+        }
+    }
+
     public static function paginator($count = 1, $current = 1, $size = 30)
     {
         $numPages = ceil($count / $size);
@@ -57,7 +68,7 @@ class Helper
     }
     public static function hasFlash()
     {
-        return (!empty ($_SESSION['flash'])) ? true : false;
+        return (!empty($_SESSION['flash'])) ? true : false;
     }
     public static function can($role)
     {

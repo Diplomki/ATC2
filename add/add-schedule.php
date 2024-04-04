@@ -12,9 +12,7 @@ if ((new TeacherMap())->findById($idUser)->validate()) {
     header('Location: 404');
 }
 $schedule = new ScheduleMap();
-$day = $schedule->findDayById($idDay);
-$header = 'Добавить расписание. День: ' . $day->name . '.
-Преподаватель: ' . $teacher->fio;
+$header = 'Добавить расписание. Преподаватель: ' . $teacher->fio;
 require_once '../template/header.php';
 ?>
 <section class="content-header">
@@ -51,6 +49,10 @@ require_once '../template/header.php';
     <?php endif; ?>
     <form action="../save/save-schedule" method="POST">
         <div class="form-group">
+            <label>Дата</label>
+            <input class="form-control" type="date" name="date" required>
+        </div>
+        <div class="form-group">
             <label>Группа и предмет</label>
             <select class="form-control" name="lesson_plan_id">
                 <?= Helper::printSelectOptions(0, (new LessonPlanMap())->arrPlanByTeacherId($idUser)); ?>
@@ -62,7 +64,6 @@ require_once '../template/header.php';
                 <?= Helper::printSelectOptions(0, (new ClassroomMap())->arrClassrooms()); ?>
             </select>
         </div>
-        <input type="hidden" name="day_id" value="<?= $idDay; ?>" />
         <input type="hidden" name="user_id" value="<?= $idUser; ?>" />
         <div class="form-group">
             <button type="submit" name="saveSchedule" class="btn btn-primary">Сохранить</button>

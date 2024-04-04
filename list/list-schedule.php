@@ -1,5 +1,6 @@
 <?php
 require_once '../secure.php';
+ob_start();
 if (!Helper::can('admin') && !Helper::can('manager')) {
     header('Location: 404');
     exit();
@@ -10,8 +11,9 @@ if ((new TeacherMap())->findById($id)->validate()) {
 } else {
     header('Location: 404');
 }
+$schedules = (new ScheduleMap())->findByTeacher($id);
 $header = 'Расписание преподавателя: ' . $teacher->fio;
-$daysSchedules = (new ScheduleMap())->findByTeacherId($id);
+
 require_once '../template/header.php';
 ?>
 <div class="row">
@@ -19,16 +21,23 @@ require_once '../template/header.php';
         <div class="box">
             <section class="content-header">
                 <ol class="breadcrumb">
-                    <li><a href="../index"><i class="fa
-fa-dashboard"></i> Главная</a></li>
+                    <li><a href="../index"><i class="fa fa-dashboard"></i> Главная</a></li>
 
                     <li><a href="list-teacher-schedule">Расписание</a></li>
-
                     <li class="active">
                         <?= $header; ?>
                     </li>
                 </ol>
             </section>
+            <?php if (isset($_GET['message'])): ?>
+                <section class="box-body">
+                    <h3>
+                        <b>
+                            <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : '' ?>
+                        </b>
+                    </h3>
+                </section>
+            <?php endif; ?>
             <section class="box-body">
                 <h3>
                     <b>
@@ -37,65 +46,89 @@ fa-dashboard"></i> Главная</a></li>
                 </h3>
             </section>
             <div class="box-body">
-                <?php if ($daysSchedules): ?>
-
-                    <table class="table table-bordered table-hover">
-
-                        <?php foreach ($daysSchedules as $day): ?>
-                            <tr>
-                                <th colspan="4">
-                                    <h4 class="center-block">
-                                        <?= $day['name']; ?>
-
-                                        <a href="../add/add-schedule?idUser=<?= $id; ?>&idDay=<?= $day['id']; ?>"><i
-                                                class="fa fa-plus"></i></a>
-                                    </h4>
-                                </th>
-                            </tr>
-
-                            <?php if ($day['gruppa']): ?>
-                                <?php foreach ($day['gruppa'] as $gruppa): ?>
-                                    <tr>
-                                        <th colspan="4">
-                                            <?= $gruppa['name']; ?>
-                                        </th>
-                                    </tr>
-
-                                    <?php foreach ($gruppa['schedule'] as $schedule): ?>
-                                        <tr>
-                                            <td>
-                                                <?= $schedule['time']; ?>
-                                            </td>
-                                            <td>
-                                                <?= $schedule['subject']; ?>
-                                            </td>
-                                            <td>
-                                                <?= $schedule['classroom']; ?>
-                                            </td>
-
-                                            <td><a href="../delete/delete-schedule?id=<?= $schedule['schedule_id']; ?>&idTeacher=
-
-<?= $id; ?>"><i class="fa fa-trash"></i></a></td>
-                                        </tr>
-
-                                    <?php endforeach; ?>
-                                <?php endforeach; ?>
-
-                            <?php else: ?>
-                                <tr>
-
-                                    <td colspan="4">Отутствует расписание на этот день</td>
-                                </tr>
-                            <?php endif; ?>
-                        <?php endforeach; ?>
-                    </table>
-                <?php else: ?>
-                    <p>Расписание отутствует</p>
-                <?php endif; ?>
+                <form action="../add/add-schedule" method="get">
+                    <input class="btn btn-primary" value="Добавить расписание" type="submit">
+                    <input name="idUser" type="hidden" value="<?= $teacher->user_id ?>">
+                </form>
             </div>
+            <?php if ($schedules): ?>
+                <table class="table table-bordered table-hover">
+
+                    <thead>
+                        <tr>
+                            <th>Группа</th>
+                            <th>Предмет</th>
+                            <th>Время</th>
+                            <th>Дата урока</th>
+                            <th>Кол-во учеников</th>
+                            <th>Кабинет</th>
+                            <th>Разрешен</th>
+                            <th>Разрешение</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($schedules as $classes): ?>
+                            <tr>
+                                <td>
+                                    <?= $classes->gruppa; ?>
+                                </td>
+                                <td>
+                                    <?= $classes->subject; ?>
+                                </td>
+                                <td>
+                                    <?= $classes->time; ?>
+                                </td>
+                                <td>
+                                    <?= $classes->date; ?>
+                                </td>
+                                <td>
+                                    <?= $classes->count; ?>
+                                </td>
+                                <td>
+                                    <?= $classes->classroom; ?>
+                                </td>
+                                <td>
+                                    <?php if ($classes->allowed == 1): ?>
+                                        <?= 'Да' ?>
+                                    <?php else: ?>
+                                        <?= 'Нет' ?>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php if ($classes->allowed == 0): ?>
+                                        <form action="list-schedule" method="post">
+                                            <input class="btn btn-primary" type="submit" value="Разрешить">
+                                            <input type="hidden" name="schedule_id" value="<?= $classes->schedule_id ?>">
+                                            <input name="id" type="hidden" value="<?= $teacher->user_id ?>">
+                                        </form>
+                                    <?php else: ?>
+                                        <?= '' ?>
+                                    <?php endif; ?>
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            <?php else:
+                echo "Расписания для этого преподавателя отсутствует";
+                ?>
+
+            <?php endif; ?>
         </div>
     </div>
 </div>
 <?php
+if (isset($_POST['schedule_id'])) {
+    $schedule_id = $_POST['schedule_id'];
+    $id = $_POST['id'];
+    if ((new ScheduleMap())->allowed($schedule_id)) {
+        header("Location: list-schedule?id=$id&message=ok");
+        ob_end_flush();
+        exit;
+    } else {
+        header("Location: list-schedule?id=$id&message=err");
+        exit;
+    }
+}
 require_once '../template/footer.php';
 ?>
