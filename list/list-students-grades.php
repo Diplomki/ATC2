@@ -50,7 +50,6 @@ require_once '../template/header.php';
                                     <th>Предмет</th>
                                     <th>Оценка</th>
                                     <th>Дата</th>
-                                    <th>Для пропуска</th>
                                 </tr>
                             </thead>
                             <tbody>

@@ -266,7 +266,7 @@ class UserMap extends BaseMap
 
         $current_date = date("Y-m-d");
 
-        if (date('d', strtotime($current_date)) == 17) {
+        if (date('d', strtotime($current_date)) == 27) {
             foreach ($listParentAndChild as $item) {
                 $query = "SELECT * FROM notice WHERE subject_id = :subject_id AND user_id = :user_id AND child_id = :child_id 
                     AND date = :date";
