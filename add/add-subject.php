@@ -43,10 +43,6 @@ require_once '../template/header.php';
             </select>
         </div>
         <div class="form-group">
-            <label>Кол-во часов</label>
-            <input type="text" class="form-control" name="hours" required="required" value="<?= $subject->hours; ?>">
-        </div>
-        <div class="form-group">
             <button type="submit" name="saveSubject" class="btn btn-primary">Сохранить</button>
         </div>
         <input type="hidden" name="subject_id" value="<?= $id; ?>" />

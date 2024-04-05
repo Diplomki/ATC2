@@ -33,10 +33,7 @@ require_once '../template/header.php';
                 </ol>
             </section>
             <div class="box-body">
-                <?php if (Helper::can('admin')) { ?>
-                    <a class="btn btn-success" href="../add/add-otdel">Добавить отдел</a>
-                <?php }
-                ; ?>
+                <a class="btn btn-success" href="../add/add-otdel">Добавить отдел</a>
             </div>
             <div class="box-body">
                 <?php

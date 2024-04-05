@@ -9,11 +9,6 @@
 
             </li>
             <?php if (Helper::can('manager')) { ?>
-                <li class="header">Пользователи</li>
-
-                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-admin.php') ? 'class="active"' : ''; ?>>
-
-                    <a href="../list/list-admin"><i class="fa fa-users"></i><span>Администраторы</span></a>
 
                 <li class="header">Справочники</li>
 
@@ -52,6 +47,14 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/view/view-payment.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../view/view-payment"><i class="fa fa-dollar"></i><span>Сверка оплаты</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '/check/check-grades.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="../check/check-grades"><i class="fa fa-table"></i><span>Подтверждение оценок</span></a>
+                <li <?= ($_SERVER['PHP_SELF'] == '/list/list-teacher-schedule.php') ? 'class="active"' : ''; ?>>
+
+                    <a href="../list/list-teacher-schedule"><i class="fa fa-table"></i><span>Управление
+                            расписанием</span></a>
+
                 </li>
             <?php } ?>
             <?php if (Helper::can('teacher')) { ?>
@@ -107,10 +110,6 @@
                 <li <?= ($_SERVER['PHP_SELF'] == '/list/list-classroom.php') ? 'class="active"' : ''; ?>>
 
                     <a href="../list/list-classroom"><i class="fa fa-graduation-cap"></i><span>Кабинеты</span></a>
-
-
-
-
 
                 </li>
                 <li <?= ($_SERVER['PHP_SELF'] == '/check/check-grades.php') ? 'class="active"' : ''; ?>>

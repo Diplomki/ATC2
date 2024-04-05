@@ -47,8 +47,8 @@ require_once '../template/header.php';
                                 <tr>
                                     <th>Ф.И.О</th>
                                     <th>Предмет</th>
-                                    <th>Оценка</th>
                                     <th>Посещаемость</th>
+                                    <th>Оценка</th>
                                     <th>Комментарий</th>
                                 </tr>
 
@@ -70,12 +70,12 @@ require_once '../template/header.php';
 
                                         </td>
                                         <td>
-                                            <input type="text" name="grade_id[<?php echo $student->user_id; ?>]">
-                                        </td>
-                                        <td>
                                             <input type="hidden" name="attend[<?php echo $student->user_id; ?>]" value="0">
                                             <input type="checkbox" name="attend[<?php echo $student->user_id; ?>]" value="1"
                                                 <?php echo ($student->attend == 1) ? 'checked' : ''; ?>>
+                                        </td>
+                                        <td>
+                                            <input type="text" name="grade_id[<?php echo $student->user_id; ?>]">
                                         </td>
                                         <td>
                                             <input type="text" name="comment[<?php echo $student->user_id; ?>]">

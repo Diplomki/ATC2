@@ -228,7 +228,7 @@ class StudentMap extends BaseMap
         INNER JOIN subject on subject.subject_id=grades.subject_id
         LEFT JOIN attend on attend.id = grades.attend
         INNER JOIN branch on branch.id = user.branch_id
-        WHERE branch.id = {$_SESSION['branch']}");
+        WHERE grades.branch_id = {$_SESSION['branch']}");
         return $res->fetchAll(PDO::FETCH_OBJ);
     }
 
@@ -414,13 +414,14 @@ class StudentMap extends BaseMap
             return false;
         }
 
-        $query = "INSERT INTO grades (user_id, subject_id, grade, date, attend, comment) VALUES (:user_id, :subject_id, :grade, NOW(), :attend, :comment)";
+        $query = "INSERT INTO grades (user_id, subject_id, grade, date, attend, branch_id, comment) VALUES (:user_id, :subject_id, :grade, NOW(), :attend, :branch_id, :comment)";
 
         $stmt = $this->db->prepare($query);
         $stmt->bindParam(':user_id', $student->user_id, PDO::PARAM_INT);
         $stmt->bindParam(':subject_id', $student->subject_id, PDO::PARAM_INT);
         $stmt->bindParam(':grade', $student->grade);
         $stmt->bindParam(':attend', $student->attend, PDO::PARAM_INT);
+        $stmt->bindParam(':branch_id', $_SESSION['branch']);
         $stmt->bindParam(':comment', $student->comment);
         return $stmt->execute();
     }

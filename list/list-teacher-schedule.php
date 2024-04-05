@@ -7,7 +7,7 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
 }
 require_once '../template/header.php';
 $size = 5;
-if (isset ($_GET['page'])) {
+if (isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 } else {
     $page = 1;

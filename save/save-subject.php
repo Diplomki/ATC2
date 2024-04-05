@@ -9,8 +9,6 @@ if (isset($_POST['name'])) {
     $subject->subject_id = Helper::clearInt($_POST['subject_id']);
     $subject->name = Helper::clearString($_POST['name']);
     $subject->otdel_id = Helper::clearInt($_POST['otdel_id']);
-    $subject->hours = Helper::clearString($_POST['hours']);
-
     if ((new SubjectMap())->save($subject)) {
         header('Location: ../view/view-subject?id=' . $subject->subject_id);
     } else {

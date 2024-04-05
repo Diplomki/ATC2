@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
     exit();
 }
 $size = 5;
-if (isset ($_GET['page'])) {
+if (isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 } else {
     $page = 1;
@@ -22,7 +22,7 @@ require_once '../template/header.php';
             <section class="content-header">
                 <h3>
                     <b>
-                        <?= $header = isset ($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список предметов' ?>
+                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список предметов' ?>
                     </b>
                 </h3>
                 <ol class="breadcrumb">
@@ -35,10 +35,7 @@ fa-dashboard"></i> Главная</a></li>
                 </ol>
             </section>
             <div class="box-body">
-                <?php if (Helper::can('admin')) { ?>
-                    <a class="btn btn-success" href="../add/add-subject">Добавить предмет</a>
-                <?php }
-                ; ?>
+                <a class="btn btn-success" href="../add/add-subject">Добавить предмет</a>
             </div>
             <div class="box-body">
                 <?php

@@ -47,12 +47,12 @@ class SubjectMap extends BaseMap
     }
     private function insert($subject = Subject)
     {
-        $sql = "INSERT INTO subject(name, otdel_id,  active) VALUES(:name, :otdel_id, 1)";
+        $sql = "INSERT INTO subject(name, otdel_id, branch) VALUES(:name, :otdel_id, :branch)";
         $stmt = $this->db->prepare($sql);
 
         $stmt->bindParam(':name', $subject->name);
         $stmt->bindParam(':otdel_id', $subject->otdel_id);
-
+        $stmt->bindParam(':branch', $_SESSION['branch']);
         if ($stmt->execute()) {
             $subject->subject_id = $this->db->lastInsertId();
             return true;

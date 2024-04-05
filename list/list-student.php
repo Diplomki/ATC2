@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher'))
     exit();
 }
 $size = 10;
-if (isset ($_GET['page'])) {
+if (isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 
 } else {
@@ -24,7 +24,7 @@ require_once '../template/header.php';
         <div class="box">
             <section class="content-header">
                 <h3><b>
-                        <?= $header = isset ($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список учеников'; ?>
+                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список учеников'; ?>
                     </b></h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa
@@ -34,8 +34,10 @@ fa-dashboard"></i> Главная</a></li>
                 </ol>
             </section>
             <div class="box-body">
-                <a class="btn btn-success" href="../add/add-student">Добавить ученика</a>
-                <a class="btn btn-success" href="../add/add-subjectForStudent">Добавить предмет к ученику</a>
+                <?php if (!Helper::can('teacher')): ?>
+                    <a class="btn btn-success" href="../add/add-student">Добавить ученика</a>
+                    <a class="btn btn-success" href="../add/add-subjectForStudent">Добавить предмет к ученику</a>
+                <?php endif; ?>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -57,7 +59,11 @@ fa-dashboard"></i> Главная</a></li>
                             <?php
                             foreach ($student as $student) {
                                 echo '<tr>';
-                                echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-student?id=' . $student->user_id . '"><i class="fa fa-times"></i></a></td>';
+                                if (!Helper::can('teacher')):
+                                    echo '<td><a href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</a> ' . '<a href="../add/add-student?id=' . $student->user_id . '"><i class="fa fa-pencil"></i></a>  <a href="../delete/delete-student?id=' . $student->user_id . '"><i class="fa fa-times"></i></a></td>';
+                                else:
+                                    echo '<td><p href="../profile/profile-student?id=' . $student->user_id . '">' . $student->fio . '</p> ' . '</i></a></td>';
+                                endif;
                                 echo '<td>' . $student->birthday . '</td>';
                                 echo '<td>' . $student->gruppa . '</td>';
                                 echo '<td>';

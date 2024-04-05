@@ -33,10 +33,7 @@ require_once '../template/header.php';
                 </ol>
             </section>
             <div class="box-body">
-                <?php if (Helper::can('admin')) { ?>
-                    <a class="btn btn-success" href="../add/add-classroom">Добавить кабинет</a>
-                <?php }
-                ; ?>
+                <a class="btn btn-success" href="../add/add-classroom">Добавить кабинет</a>
             </div>
             <div class="box-body">
                 <?php
@@ -46,9 +43,6 @@ require_once '../template/header.php';
                         <thead>
                             <tr>
                                 <th>Название</th>
-                                <?php if (Helper::can('manager')) { ?>
-                                    <th>Филиал</th>
-                                <?php } ?>
                             </tr>
                         </thead>
                         <tbody>

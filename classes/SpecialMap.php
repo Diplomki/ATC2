@@ -28,7 +28,7 @@ class SpecialMap extends BaseMap
         $subject_id = $this->db->quote($special->subject_id);
         $time_begin = $this->db->quote($special->time_begin);
         $time_end = $this->db->quote($special->time_end);
-        if ($this->db->exec("INSERT INTO special(subject_id, time_begin, time_end) VALUES($subject_id, $time_begin, $time_end)") == 1) {
+        if ($this->db->exec("INSERT INTO special(subject_id, time_begin, time_end, branch_id) VALUES($subject_id, $time_begin, $time_end, {$_SESSION['branch']})") == 1) {
             $special->special_id = $this->db->lastInsertId();
             return true;
         }
@@ -53,6 +53,7 @@ class SpecialMap extends BaseMap
         $res = $this->db->query("SELECT special_id,
         subject.name as subject, time_begin, time_end FROM special 
         LEFT JOIN subject ON special.subject_id = subject.subject_id 
+        WHERE special.branch_id = {$_SESSION['branch']}
         LIMIT $ofset,
         $limit");
         return $res->fetchAll(PDO::FETCH_OBJ);

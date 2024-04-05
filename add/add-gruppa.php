@@ -35,12 +35,6 @@ require_once '../template/header.php';
             <input type="text" class="form-control" name="name" required="required" value="<?= $gruppa->name; ?>">
         </div>
         <div class="form-group">
-            <label>Специальность</label>
-            <select class="form-control" name="special_id">
-                <?= Helper::printSelectOptions($gruppa->special_id, (new SpecialMap())->arrSpecials()); ?>
-            </select>
-        </div>
-        <div class="form-group">
             <label>Дата образования</label>
             <input type="date" class="form-control" name="date_begin" required="required"
                 value="<?= $gruppa->date_begin; ?>">

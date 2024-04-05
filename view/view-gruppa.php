@@ -50,15 +50,7 @@ hover">
                             </td>
 
                         </tr>
-                        <tr>
 
-                            <th>Специальность</th>
-
-                            <td>
-                                <?= $gruppa->special; ?>
-                            </td>
-
-                        </tr>
                         <tr>
 
                             <th>Дата образования</th>

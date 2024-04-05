@@ -11,7 +11,6 @@ if (isset($_GET['page'])) {
 } else {
     $page = 1;
 }
-
 $subject_id = 0;
 $date = '';
 $gruppa_id = 0;

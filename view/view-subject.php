@@ -59,12 +59,7 @@ hover">
                             </td>
 
                         </tr>
-                        <tr>
-                            <th>Часы</th>
-                            <td>
-                                <?= $subject->hours; ?>
-                            </td>
-                        </tr>
+
                     </table>
                 </div>
             </div>

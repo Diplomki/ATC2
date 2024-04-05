@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('teacher'))
     exit();
 }
 $size = 10;
-if (isset ($_GET['page'])) {
+if (isset($_GET['page'])) {
     $page = Helper::clearInt($_GET['page']);
 
 } else {
@@ -22,7 +22,7 @@ require_once '../template/header.php';
         <div class="box">
             <section class="content-header">
                 <h3><b>
-                        <?= $header = isset ($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список учителей' ?>
+                        <?= $header = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : 'Список учителей' ?>
                     </b></h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa
@@ -32,7 +32,9 @@ fa-dashboard"></i> Главная</a></li>
                 </ol>
             </section>
             <div class="box-body">
-                <a class="btn btn-success" href="../add/add-teacher">Добавить преподавателя</a>
+                <?php if (!Helper::can('teacher')): ?>
+                    <a class="btn btn-success" href="../add/add-teacher">Добавить преподавателя</a>
+                <?php endif; ?>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
@@ -55,7 +57,11 @@ fa-dashboard"></i> Главная</a></li>
                             <?php
                             foreach ($teachers as $teacher) {
                                 echo '<tr>';
-                                echo '<td><a href="../profile/profile-teacher?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="../add/add-teacher?id=' . $teacher->user_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-teacher?id=' . $teacher->user_id . '"><i class="fa fa-times"></i></a></td>';
+                                if (!Helper::can('teacher')):
+                                    echo '<td><a href="../profile/profile-teacher?id=' . $teacher->user_id . '">' . $teacher->fio . '</a> ' . '<a href="../add/add-teacher?id=' . $teacher->user_id . '"><i class="fa fa-pencil"></i></a> <a href="../delete/delete-teacher?id=' . $teacher->user_id . '"><i class="fa fa-times"></i></a></td>';
+                                else:
+                                    echo '<td><p href="../profile/profile-teacher?id=' . $teacher->user_id . '">' . $teacher->fio . '</p> ' . ' </td>';
+                                endif;
                                 echo '<td>' . $teacher->birthday . '</td>';
                                 echo '<td>' . $teacher->subject . '</td>';
                                 echo '<td>' . $teacher->award . '</td>';

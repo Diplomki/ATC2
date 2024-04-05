@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
     exit();
 }
 $id = 0;
-if (isset ($_GET['id'])) {
+if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 }
 

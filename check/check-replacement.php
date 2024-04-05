@@ -8,6 +8,12 @@ if (isset($_GET['date'])) {
 }
 $header = 'Расписание занятий.';
 
+if (isset($_GET['date']) && isset($_GET['id'])) {
+    $replaceable = (new TeacherMap())->findById($_GET['id']);
+    $replacing = (new TeacherMap())->findById($_SESSION['id']);
+    $header = 'Расписание занятий. ' . $replaceable->fio;
+    $temp = 'Заменяющий: ' . $replacing->fio;
+}
 ?>
 
 <?php if (isset($_GET['message'])): ?>
@@ -24,6 +30,13 @@ $header = 'Расписание занятий.';
                 <?= $header ?>
             </b></h3>
     </section>
+    <?php if (isset($_GET['date']) && isset($_GET['id'])): ?>
+        <section class="content-header">
+            <h3><b>
+                    <?= $temp ?>
+                </b></h3>
+        </section>
+    <?php endif; ?>
     <div class="box-body">
 
 
@@ -99,7 +112,6 @@ $header = 'Расписание занятий.';
                 </select>
                 <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
                 <br>
-
                 <input class="btn btn-primary" type="submit" value="Узнать расписание">
             </form>
         <?php endif; ?>
