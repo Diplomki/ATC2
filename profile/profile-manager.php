@@ -1,10 +1,10 @@
 <?php
 require_once '../secure.php';
-if (!Helper::can('admin')) {
+if (!Helper::can('admin') && !Helper::can('manager')) {
     header('Location: 404');
     exit();
 }
-if (isset ($_GET['id'])) {
+if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 }
 $header = 'Профиль менеджера';

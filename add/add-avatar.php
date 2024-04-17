@@ -2,13 +2,17 @@
 require_once '../secure.php';
 
 $id = 0;
-if (isset ($_GET['id'])) {
+$userMap = new UserMap();
+if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
+    $user = $userMap->findById($id);
+} else {
+    $user = $userMap->findById($_SESSION['id']);
 }
 
 $student = (new StudentMap())->findById($id);
-$userMap = new UserMap();
-$user = $userMap->findById($id);
+
+
 
 require_once '../template/header.php';
 ?>
@@ -22,8 +26,6 @@ require_once '../template/header.php';
 
         <li><a href="../index"><i class="fa fa-
 dashboard"></i> Главная</a></li>
-
-
         <li class="active">
             Редактировать фото
         </li>
@@ -37,10 +39,12 @@ dashboard"></i> Главная</a></li>
             <label for="fileInput" class="btn btn-primary">Выберите файл</label>
             <span id="fileName"></span>
         </div>
+
         <div class="form-group">
             <button type="submit" class="btn btn-primary">Сохранить</button>
         </div>
         <input type="hidden" name="saveAvatarStudent" value="<?= $user->user_id ?>">
+
     </form>
 </div>
 

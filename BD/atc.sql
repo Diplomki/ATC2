@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 04 2024 г., 13:47
+-- Время создания: Апр 05 2024 г., 09:20
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -137,7 +137,8 @@ INSERT INTO `classroom` (`classroom_id`, `name`, `branch`, `active`, `deleted`) 
 (2, '3/515', 2, 1, 0),
 (3, '3/520', 2, 1, 0),
 (4, '3/519', 2, 1, 0),
-(5, '3/516', 1, 1, 0);
+(5, '3/516', 1, 1, 0),
+(6, 'test', 1, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -194,6 +195,7 @@ CREATE TABLE `grades` (
   `grade` varchar(3) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `date` date DEFAULT NULL,
   `attend` tinyint DEFAULT '0',
+  `branch_id` int DEFAULT NULL,
   `comment` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `homework` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -202,43 +204,40 @@ CREATE TABLE `grades` (
 -- Дамп данных таблицы `grades`
 --
 
-INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `attend`, `comment`, `homework`) VALUES
-(343, 7, 16, '80', '2024-04-04', 1, '', NULL),
-(344, 8, 16, '90', '2024-04-04', 1, '', NULL),
-(345, 7, 16, '', '2024-04-04', 0, '', NULL),
-(346, 8, 16, '80', '2024-04-04', 1, '', NULL),
-(347, 7, 16, '', '2024-04-04', 0, '', NULL),
-(348, 8, 16, '80', '2024-04-04', 1, '', NULL),
-(349, 7, 16, '90', '2024-04-04', 1, '123', NULL),
-(350, 8, 16, '', '2024-04-04', 0, '', NULL),
-(351, 18, 17, '90', '2024-04-04', 1, '123', NULL),
-(352, 105, 17, '', '2024-04-04', 0, '', NULL),
-(353, 18, 17, '90', '2024-04-04', 1, '6', NULL),
-(354, 105, 17, '', '2024-04-04', 0, '', NULL),
-(355, 18, 17, '90', '2024-04-04', 1, '', NULL),
-(356, 105, 17, '', '2024-04-04', 0, '', NULL),
-(357, 7, 16, ' 90', '2024-04-04', 1, '123', NULL),
-(358, 8, 16, '', '2024-04-04', 0, '', NULL),
-(359, 7, 16, '75', '2024-04-04', 1, '123', NULL),
-(360, 8, 16, '60', '2024-04-04', 1, '123', NULL),
-(361, 18, 17, '77', '2024-04-04', 1, '65', NULL),
-(362, 105, 17, '567', '2024-04-04', 1, '7', NULL),
-(363, 9, 18, '90', '2024-04-04', 1, '', NULL),
-(364, 7, 16, '40', '2024-04-04', 1, '6', NULL),
-(366, 7, 16, '70', '2024-04-04', 1, '6', NULL),
-(368, 7, 16, '77', '2024-04-04', 0, '67', NULL),
-(369, 8, 16, '77', '2024-04-04', 0, '87', NULL),
-(370, 7, 16, '', '2024-04-04', 0, '', NULL),
-(371, 8, 16, '', '2024-04-04', 0, '', NULL),
-(372, 7, 16, '', '2024-04-04', 0, '', NULL),
-(373, 8, 16, '', '2024-04-04', 0, '', NULL),
-(374, 7, 16, '', '2024-04-04', 0, '', NULL),
-(375, 8, 16, '', '2024-04-04', 0, '', NULL),
-(376, 9, 17, '80', '2024-04-04', 1, '123', NULL),
-(377, 18, 18, '77', '2024-04-04', 1, '6', NULL),
-(378, 105, 18, '56', '2024-04-04', 1, '4', NULL),
-(379, 7, 16, '55', '2024-04-04', 1, '', NULL),
-(380, 8, 16, '60', '2024-04-04', 1, '', NULL);
+INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `attend`, `branch_id`, `comment`, `homework`) VALUES
+(344, 8, 16, '90', '2024-04-04', 1, 1, '', NULL),
+(346, 8, 16, '80', '2024-04-04', 1, 1, '', NULL),
+(348, 8, 16, '80', '2024-04-04', 1, 1, '', NULL),
+(351, 18, 17, '90', '2024-04-04', 1, 1, '123', NULL),
+(355, 18, 17, '90', '2024-04-04', 1, 1, '', NULL),
+(357, 7, 16, ' 90', '2024-04-04', 1, 1, '123', NULL),
+(359, 7, 16, '75', '2024-04-04', 1, 1, '123', NULL),
+(360, 8, 16, '60', '2024-04-04', 1, 1, '123', NULL),
+(361, 18, 17, '77', '2024-04-04', 1, 1, '65', NULL),
+(362, 105, 17, '567', '2024-04-04', 1, 1, '7', NULL),
+(363, 9, 18, '90', '2024-04-04', 1, 1, '', NULL),
+(364, 7, 16, '40', '2024-04-04', 1, 1, '6', NULL),
+(366, 7, 16, '70', '2024-04-04', 1, NULL, '6', NULL),
+(370, 7, 16, '', '2024-04-04', 0, NULL, '', NULL),
+(371, 8, 16, '', '2024-04-04', 0, NULL, '', NULL),
+(372, 7, 16, '', '2024-04-04', 0, NULL, '', NULL),
+(373, 8, 16, '', '2024-04-04', 0, NULL, '', NULL),
+(374, 7, 16, '', '2024-04-04', 0, NULL, '', NULL),
+(375, 8, 16, '', '2024-04-04', 0, NULL, '', NULL),
+(376, 9, 17, '80', '2024-04-04', 1, NULL, '123', NULL),
+(377, 18, 18, '77', '2024-04-04', 1, NULL, '6', NULL),
+(378, 105, 18, '56', '2024-04-04', 1, NULL, '4', NULL),
+(379, 7, 16, '55', '2024-04-04', 1, NULL, '', NULL),
+(380, 8, 16, '60', '2024-04-04', 1, NULL, '', NULL),
+(381, 7, 17, '70', '2024-04-04', 1, NULL, 'sad', NULL),
+(382, 7, 16, '70', '2024-04-04', 1, NULL, '', NULL),
+(383, 8, 16, '', '2024-04-04', 0, NULL, '', NULL),
+(384, 7, 17, '', '2024-04-04', 0, NULL, '', NULL),
+(385, 8, 17, '', '2024-04-04', 0, NULL, '', NULL),
+(389, 8, 16, '', '2024-04-05', 0, 1, '', NULL),
+(390, 7, 17, '', '2024-04-05', 0, 1, '', NULL),
+(391, 8, 17, '', '2024-04-05', 0, 1, '', NULL),
+(393, 8, 16, '', '2024-04-05', 0, 1, '', NULL);
 
 -- --------------------------------------------------------
 
@@ -287,7 +286,12 @@ INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `att
 (319, 7, 3, 0, '2024-03-03', 0, '', '', 1, 0),
 (320, 8, 3, 90, '2024-03-03', 1, '5676', '', 1, NULL),
 (321, 7, 3, 55, '2024-03-03', 1, '123', '', 1, NULL),
-(322, 8, 3, 100, '2024-03-03', 1, '', '', 1, NULL);
+(322, 8, 3, 100, '2024-03-03', 1, '', '', 1, NULL),
+(323, 7, 16, 90, '2024-04-04', 1, '123', '', 1, NULL),
+(324, 9, 18, 0, '2024-04-05', 0, '', '', 1, 1),
+(325, 7, 16, 60, '2024-04-05', 1, 'asd', '', 1, NULL),
+(326, 7, 16, 80, '2024-04-04', 1, '', '', 1, NULL),
+(327, 7, 16, 0, '2024-04-05', 0, '', '', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -314,7 +318,8 @@ INSERT INTO `gruppa` (`gruppa_id`, `name`, `date_begin`, `date_end`, `branch`, `
 (3, '8В', '2023-09-01', '2025-06-10', 1, 0),
 (4, '7А', '2020-01-31', '2026-10-24', 2, 0),
 (5, '9А', '2023-11-01', '2023-11-30', 2, 0),
-(7, 'deleted', '2024-03-01', '2024-03-31', 1, 1);
+(7, 'deleted', '2024-03-01', '2024-03-31', 1, 1),
+(8, 'asd', '2024-04-10', '2024-04-17', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -425,7 +430,7 @@ CREATE TABLE `manager` (
   `user_id` bigint NOT NULL,
   `branch_id` int NOT NULL,
   `deleted` tinyint NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `manager`
@@ -466,14 +471,25 @@ CREATE TABLE `notice` (
 --
 
 INSERT INTO `notice` (`id`, `text`, `subject_id`, `user_id`, `child_id`, `subject_count`, `subject_price`, `link`, `date`, `deleted`, `canceled`) VALUES
-(2200, 'Оплатите сумму указанную в приложении', 16, 10, 7, 8, 15000, 'https://example.com', '2024-04-01', 0, 0),
+(2200, 'Оплатите сумму указанную в приложении', 16, 10, 7, 8, 15000, 'https://example.com', '2024-04-01', 1, 0),
 (2201, 'Оплатите сумму указанную в приложении', 5, 10, 7, 12, 15000, 'https://example.com', '2024-04-01', 1, 0),
 (2202, 'Оплатите сумму указанную в приложении', 20, 10, 7, 8, 12000, 'https://example.com', '2024-04-01', 1, 0),
 (2203, 'Оплатите сумму указанную в приложении', 20, 10, 8, 8, 12000, 'https://example.com', '2024-04-01', 1, 0),
 (2204, 'Оплатите сумму указанную в приложении', 3, 10, 9, 20, 30000, 'https://example.com', '2024-04-01', 1, 0),
 (2205, 'Оплатите сумму указанную в приложении', 22, 10, 18, 8, 15000, 'https://example.com', '2024-04-01', 1, 0),
 (2206, 'Оплатите сумму указанную в приложении', 21, 10, 18, 8, 15000, 'https://example.com', '2024-04-01', 1, 0),
-(2207, 'Оплатите сумму указанную в приложении', 35, 85, 86, 12, 12000, 'https://example.com', '2024-04-01', 1, 0);
+(2207, 'Оплатите сумму указанную в приложении', 35, 85, 86, 12, 12000, 'https://example.com', '2024-04-01', 1, 0),
+(2208, 'Оплатите сумму указанную в приложении', 16, 10, 7, 8, 15000, 'https://example.com', '2024-05-01', 1, 0),
+(2209, 'Оплатите сумму указанную в приложении', 5, 10, 7, 12, 15000, 'https://example.com', '2024-05-01', 1, 0),
+(2210, 'Оплатите сумму указанную в приложении', 20, 10, 7, 8, 12000, 'https://example.com', '2024-05-01', 1, 0),
+(2211, 'Оплатите сумму указанную в приложении', 3, 10, 9, 20, 30000, 'https://example.com', '2024-05-01', 1, 0),
+(2212, 'Оплатите сумму указанную в приложении', 22, 10, 18, 8, 15000, 'https://example.com', '2024-05-01', 1, 0),
+(2213, 'Оплатите сумму указанную в приложении', 21, 10, 18, 8, 15000, 'https://example.com', '2024-05-01', 1, 0),
+(2214, 'Оплатите сумму указанную в приложении', 20, 10, 8, 8, 12000, 'https://example.com', '2024-05-01', 1, 0),
+(2215, 'Оплатите сумму указанную в приложении', 35, 85, 86, 12, 12000, 'https://example.com', '2024-05-01', 0, 0),
+(2216, 'Оплатите сумму указанную в приложении', 3, 106, 9, 20, 30000, 'https://example.com', '2024-05-01', 0, 0),
+(2217, 'Оплатите сумму указанную в приложении', 18, 10, 9, 12, 12000, 'https://example.com', '2024-05-01', 1, 0),
+(2218, 'Оплатите сумму указанную в приложении', 18, 106, 9, 12, 12000, 'https://example.com', '2024-05-01', 0, 0);
 
 -- --------------------------------------------------------
 
@@ -496,7 +512,8 @@ INSERT INTO `otdel` (`otdel_id`, `name`, `active`, `deleted`) VALUES
 (2, 'Образование', 1, 0),
 (6, 'for delete', 1, 1),
 (7, 'Творчество', 1, 0),
-(8, 'Спорт', 1, 0);
+(8, 'Спорт', 1, 0),
+(10, 'asd', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -559,7 +576,16 @@ INSERT INTO `payment` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `ta
 (154, 10, 9, 3, 20, '1710749243message.txt', 30000, 'https://example.com', '2024-03-18', 1, 1),
 (155, 10, 8, 20, 8, '1710749251message.txt', 12000, 'https://example.com', '2024-03-18', 1, 1),
 (156, 85, 86, 35, 12, '1710816526message.txt', 12000, 'https://example.com', '2024-03-19', 2, 1),
-(157, 10, 7, 20, 8, '1711333494message.txt', 12000, 'https://example.com', '2024-03-25', 1, 1);
+(157, 10, 7, 20, 8, '1711333494message.txt', 12000, 'https://example.com', '2024-03-25', 1, 1),
+(158, 10, 7, 16, 8, '1712287541asd.txt', 15000, 'https://example.com', '2024-04-05', 1, 1),
+(159, 10, 8, 20, 8, '1712288454asd.txt', 12000, 'https://example.com', '2024-04-05', 1, 1),
+(160, 10, 18, 21, 8, '1712288458asd.txt', 15000, 'https://example.com', '2024-04-05', 1, 1),
+(161, 10, 18, 22, 8, '1712288462asd.txt', 15000, 'https://example.com', '2024-04-05', 1, 1),
+(162, 10, 9, 3, 20, '1712288466asd.txt', 30000, 'https://example.com', '2024-04-05', 1, 1),
+(163, 10, 7, 20, 8, '1712288470asd.txt', 12000, 'https://example.com', '2024-04-05', 1, 1),
+(164, 10, 7, 5, 12, '1712288473asd.txt', 15000, 'https://example.com', '2024-04-05', 1, 1),
+(165, 10, 7, 16, 8, '1712288477asd.txt', 15000, 'https://example.com', '2024-04-05', 1, 1),
+(166, 10, 9, 18, 12, '1712288603asd.txt', 12000, 'https://example.com', '2024-04-05', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -584,10 +610,15 @@ CREATE TABLE `payment_archive` (
 --
 
 INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `tab`, `price`, `link`, `attend`) VALUES
-(109, 10, 9, 3, 20, '1710749243message.txt', 30000, NULL, 1),
-(110, 10, 8, 20, 8, '1710749251message.txt', 12000, NULL, 1),
+(109, 10, 9, 3, 40, '1710749243message.txt', 30000, NULL, 1),
+(110, 10, 8, 20, 16, '1710749251message.txt', 12000, NULL, 1),
 (111, 85, 86, 35, 12, '1710816526message.txt', 12000, NULL, 1),
-(112, 10, 7, 20, 8, '1711333494message.txt', 12000, NULL, 1);
+(112, 10, 7, 20, 16, '1711333494message.txt', 12000, NULL, 1),
+(113, 10, 7, 16, 12, '1712287541asd.txt', 15000, NULL, 1),
+(114, 10, 18, 21, 8, '1712288458asd.txt', 15000, NULL, 1),
+(115, 10, 18, 22, 8, '1712288462asd.txt', 15000, NULL, 1),
+(116, 10, 7, 5, 12, '1712288473asd.txt', 15000, NULL, 1),
+(117, 10, 9, 18, 11, '1712288603asd.txt', 12000, NULL, 1);
 
 -- --------------------------------------------------------
 
@@ -661,8 +692,16 @@ CREATE TABLE `schedule` (
 
 INSERT INTO `schedule` (`schedule_id`, `lesson_plan_id`, `date`, `classroom_id`, `allowed`, `deleted`) VALUES
 (38, 22, '2024-04-11', 5, 1, 1),
-(39, 19, '2024-04-11', 5, 1, 0),
-(40, 20, '2024-04-12', 1, 1, 1);
+(39, 19, '2024-04-11', 5, 1, 1),
+(40, 20, '2024-04-12', 1, 1, 1),
+(41, 21, '2024-04-18', 5, 1, 1),
+(42, 21, '2024-04-16', 5, 1, 1),
+(43, 19, '2024-04-25', 1, 1, 1),
+(44, 20, '2024-04-21', 5, 1, 1),
+(45, 20, '2024-04-11', 5, 1, 1),
+(46, 22, '2024-04-05', 5, 1, 0),
+(47, 19, '2024-04-10', 1, 1, 1),
+(48, 20, '2024-04-12', 5, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -674,17 +713,19 @@ CREATE TABLE `special` (
   `special_id` int NOT NULL,
   `subject_id` int DEFAULT NULL,
   `time_begin` time DEFAULT NULL,
-  `time_end` time DEFAULT NULL
+  `time_end` time DEFAULT NULL,
+  `branch_id` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `special`
 --
 
-INSERT INTO `special` (`special_id`, `subject_id`, `time_begin`, `time_end`) VALUES
-(16, 3, '12:10:00', '13:10:00'),
-(17, 22, '10:20:00', '11:20:00'),
-(18, 20, '20:00:00', '21:00:00');
+INSERT INTO `special` (`special_id`, `subject_id`, `time_begin`, `time_end`, `branch_id`) VALUES
+(16, 3, '12:10:00', '13:10:00', 1),
+(17, 22, '10:20:00', '11:20:00', 1),
+(18, 20, '20:00:00', '21:00:00', 1),
+(19, 33, '08:00:00', '09:00:00', 2);
 
 -- --------------------------------------------------------
 
@@ -726,7 +767,7 @@ CREATE TABLE `student_subjects` (
   `id` int NOT NULL,
   `user_id` bigint NOT NULL,
   `subject_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `student_subjects`
@@ -742,7 +783,8 @@ INSERT INTO `student_subjects` (`id`, `user_id`, `subject_id`) VALUES
 (7, 18, 21),
 (8, 86, 35),
 (9, 103, 33),
-(10, 103, 29);
+(10, 103, 29),
+(11, 9, 18);
 
 -- --------------------------------------------------------
 
@@ -822,7 +864,8 @@ INSERT INTO `subject` (`subject_id`, `name`, `otdel_id`, `branch`, `deleted`) VA
 (71, 'Шахмат ', 8, 6, 0),
 (72, 'Тхэквандо ', 8, 6, 0),
 (73, 'Дзюдо ', 8, 6, 0),
-(74, 'Еркін күрес', 8, 6, 0);
+(74, 'Еркін күрес', 8, 6, 0),
+(76, 'assd', 2, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -984,7 +1027,8 @@ ALTER TABLE `grades`
   ADD PRIMARY KEY (`grade_id`),
   ADD KEY `student_id` (`user_id`),
   ADD KEY `subject_id` (`subject_id`),
-  ADD KEY `attend` (`attend`);
+  ADD KEY `attend` (`attend`),
+  ADD KEY `branch_id` (`branch_id`);
 
 --
 -- Индексы таблицы `grade_accept`
@@ -1114,7 +1158,8 @@ ALTER TABLE `schedule`
 --
 ALTER TABLE `special`
   ADD PRIMARY KEY (`special_id`),
-  ADD KEY `subject_id` (`subject_id`);
+  ADD KEY `subject_id` (`subject_id`),
+  ADD KEY `branch` (`branch_id`);
 
 --
 -- Индексы таблицы `student`
@@ -1174,7 +1219,7 @@ ALTER TABLE `branch`
 -- AUTO_INCREMENT для таблицы `classroom`
 --
 ALTER TABLE `classroom`
-  MODIFY `classroom_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `classroom_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT для таблицы `day`
@@ -1192,19 +1237,19 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=381;
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=394;
 
 --
 -- AUTO_INCREMENT для таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=323;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
 --
 ALTER TABLE `gruppa`
-  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT для таблицы `homework_parent`
@@ -1234,13 +1279,13 @@ ALTER TABLE `lesson_plan`
 -- AUTO_INCREMENT для таблицы `notice`
 --
 ALTER TABLE `notice`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2208;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2219;
 
 --
 -- AUTO_INCREMENT для таблицы `otdel`
 --
 ALTER TABLE `otdel`
-  MODIFY `otdel_id` smallint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `otdel_id` smallint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT для таблицы `parent`
@@ -1252,13 +1297,13 @@ ALTER TABLE `parent`
 -- AUTO_INCREMENT для таблицы `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=158;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
 
 --
 -- AUTO_INCREMENT для таблицы `payment_archive`
 --
 ALTER TABLE `payment_archive`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=113;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
 
 --
 -- AUTO_INCREMENT для таблицы `reference`
@@ -1276,25 +1321,25 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT для таблицы `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=41;
+  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT для таблицы `special`
 --
 ALTER TABLE `special`
-  MODIFY `special_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `special_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT для таблицы `student_subjects`
 --
 ALTER TABLE `student_subjects`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT для таблицы `subject`
 --
 ALTER TABLE `subject`
-  MODIFY `subject_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=75;
+  MODIFY `subject_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=77;
 
 --
 -- AUTO_INCREMENT для таблицы `user`
@@ -1331,7 +1376,8 @@ ALTER TABLE `classroom`
 ALTER TABLE `grades`
   ADD CONSTRAINT `grades_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `student` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `grades_ibfk_2` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `grades_ibfk_3` FOREIGN KEY (`attend`) REFERENCES `attend` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `grades_ibfk_3` FOREIGN KEY (`attend`) REFERENCES `attend` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `grades_ibfk_4` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `grade_accept`
@@ -1339,7 +1385,8 @@ ALTER TABLE `grades`
 ALTER TABLE `grade_accept`
   ADD CONSTRAINT `grade_accept_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   ADD CONSTRAINT `grade_accept_ibfk_3` FOREIGN KEY (`attend`) REFERENCES `attend` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `grade_accept_ibfk_4` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `grade_accept_ibfk_4` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `grade_accept_ibfk_5` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `gruppa`
@@ -1427,7 +1474,8 @@ ALTER TABLE `schedule`
 -- Ограничения внешнего ключа таблицы `special`
 --
 ALTER TABLE `special`
-  ADD CONSTRAINT `special_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `special_ibfk_1` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `special_ibfk_2` FOREIGN KEY (`branch_id`) REFERENCES `branch` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `student`

@@ -10,7 +10,7 @@ $notices = $procreatorMap->notice();
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>
-    <?= ($header) ? $header : 'Расписание занятий колледжа'; ?>
+    <?= ($header) ? $header : 'Расписание занятий'; ?>
   </title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
@@ -173,7 +173,7 @@ desired effect
                 <!-- The user image in the navbar-->
                 <!-- hidden-xs hides the username on small devices so only the image appears. -->
                 <?php ?>
-                <span class="hidden-xs">Здраствуйте,
+                <span class="hidden-xs">Здравствуйте,
                   <?= $_SESSION["fio"] ?>
 
                 </span>
@@ -198,6 +198,9 @@ desired effect
                 <form method="POST">
                   <button type="submit" class="btn btn-default btn-flat" name="out">Выход</button>
                 </form>
+              </div>
+              <div class="pull-left">
+                <a href="../add/add-avatar" class="btn btn-default btn-flat">Изменить фото</a>
               </div>
             </li>
           </ul>

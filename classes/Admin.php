@@ -17,5 +17,6 @@ class Admin extends Table
             return true;
         }
         return false;
-    }
+      }
+
 }
