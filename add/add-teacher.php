@@ -5,7 +5,7 @@ if (!Helper::can('admin') && !Helper::can('manager')) {
     exit();
 }
 $id = 0;
-if (isset ($_GET['id'])) {
+if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 }
 $teacher = (new TeacherMap())->findById($id);
@@ -44,17 +44,6 @@ teacher">Преподаватели</a></li>
         <div class="form-group">
             <label>Достижение</label>
             <input type="text" class="form-control" name="award" value="<?= $teacher->award ?>">
-        </div>
-        <div class="form-group">
-            <label>Заблокировать</label>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="active" value="1" class="input-radio" <?= ($user->active) ? 'checked' : ''; ?>> Нет
-                </label> &nbsp;
-                <label>
-                    <input type="radio" name="active" value="0" class="input-radio" <?= (!$user->active) ? 'checked' : ''; ?>> Да
-                </label>
-            </div>
         </div>
 
         <div class="form-group">

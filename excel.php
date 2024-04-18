@@ -15,7 +15,7 @@ $excel = new PHPExcel();
 $excel->setActiveSheetIndex(0);
 $sheet = $excel->getActiveSheet();
 
-$fields = array('fio', 'subject', 'grade', 'date');
+$fields = array('fio', 'subject', 'grade', 'date', 'attend');
 
 // Записываем заголовки столбцов
 $col = 'A';
@@ -50,7 +50,7 @@ if ($grades) {
         $row++;
     }
 } else {
-    $sheet->setCellValue('A2', "no records found...");
+    $sheet->setCellValue('A2', "Записи не найден...");
 }
 
 // Устанавливаем заголовки для файла Excel

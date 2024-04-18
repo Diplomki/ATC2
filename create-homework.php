@@ -24,7 +24,7 @@ require_once 'template/header.php';
     </ol>
 </section>
 <br>
-<form action="save-homework-teacher" method="post" enctype="multipart/form-data">
+<form action="save/save-homework-teacher" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label>Тема задания</label>
         <input class="form-control" type="text" name="name">

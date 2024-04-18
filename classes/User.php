@@ -19,8 +19,6 @@ class User extends Table
         if (
             !empty($this->lastname) &&
             !empty($this->firstname) &&
-            !empty($this->login) &&
-            !empty($this->pass) &&
             !empty($this->role_id) &&
             !empty($this->branch_id) &&
             !empty($this->gender_id)

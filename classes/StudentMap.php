@@ -20,10 +20,8 @@ class StudentMap extends BaseMap
 
     public function arrSubjectFromBranch()
     {
-        $teacherMap = new TeacherMap();
-        $teacher = $teacherMap->findOtdel();
         $res = $this->db->query("SELECT subject.subject_id as id, 
-        subject.name as value FROM subject WHERE subject.otdel_id = $teacher->otdel_id and subject.deleted = 0");
+        subject.name as value FROM subject WHERE subject.deleted = 0 and subject.branch = {$_SESSION['branch']}");
         return $res->fetchAll(PDO::FETCH_ASSOC);
     }
 
@@ -55,11 +53,6 @@ class StudentMap extends BaseMap
     }
     public function savePayment($student = Student)
     {
-        return $this->insertPayment($student);
-    }
-
-    private function insertPayment($student = Student)
-    {
         if (
             $this->db->exec("INSERT INTO payment(parent_id, child_id, subject_id, count, tab, price, link, date, branch_id) 
             VALUES($student->parent_id, $student->user_id, 
@@ -68,6 +61,11 @@ class StudentMap extends BaseMap
             return true;
         }
         return false;
+    }
+
+    private function insertPayment($student = Student)
+    {
+
     }
 
     public function deleteNoticeById($id)
@@ -144,9 +142,9 @@ class StudentMap extends BaseMap
     {
         if (
             $this->db->exec("INSERT INTO 
-            payment_archive (parent_id, child_id, subject_id, count, tab, price, attend) 
+            payment_archive (parent_id, child_id, subject_id, count, tab, price, attend, payment_method) 
             VALUES($student->parent_id, $student->user_id, 
-            $student->subject_id, $student->count, '$student->tab', $student->price, $student->attend)
+            $student->subject_id, $student->count, '$student->tab', $student->price, $student->attend, '$student->payment_method')
             ") == 1
         ) {
             $res = $this->db->query("UPDATE payment SET deleted = 1 WHERE id = $student->id");
@@ -290,15 +288,19 @@ class StudentMap extends BaseMap
 
     public function updateGrades($student = Student)
     {
-        if (
-            $this->db->exec("UPDATE payment_archive SET count = count - 1
+        $count = $this->db->query("SELECT count FROM payment_archive WHERE child_id = $student->user_id AND subject_id = $student->subject_id")->fetchColumn();
+
+        if ($count > 0) {
+            if (
+                $this->db->exec("UPDATE payment_archive SET count = count - 1
             WHERE child_id=" . $student->user_id . " and subject_id=" . $student->subject_id) == 1
-        ) {
-            $this->db->exec("INSERT INTO grade_accept (user_id, subject_id, grade, date, attend, comment, homework, branch_id) 
+            ) {
+                $this->db->exec("INSERT INTO grade_accept (user_id, subject_id, grade, date, attend, comment, homework, branch_id) 
             VALUES ($student->user_id, $student->subject_id, '$student->grade', '$student->date', $student->attend, 
             '$student->comment', '$student->file', {$_SESSION['branch']})");
-            $this->db->exec("DELETE FROM grades WHERE grade_id = '$student->grade_id'");
-            return true;
+                $this->db->exec("DELETE FROM grades WHERE grade_id = '$student->grade_id'");
+                return true;
+            }
         }
         return false;
     }

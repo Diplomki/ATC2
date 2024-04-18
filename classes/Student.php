@@ -21,6 +21,7 @@ class Student extends Table
     public $comment = '';
     public $file = '';
     public $link = '';
+    public $payment_method = 'Ссылка';
     function validate()
     {
         if (!empty($this->gruppa_id)) {

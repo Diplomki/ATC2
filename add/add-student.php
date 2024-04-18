@@ -12,6 +12,7 @@ $student = (new StudentMap())->findById($id);
 $header = (($id) ? 'Редактировать данные' : 'Добавить') . '
 Студента';
 require_once '../template/header.php';
+$_SESSION['temp'] = "student";
 ?>
 <section class="content-header">
     <h3>
@@ -39,17 +40,6 @@ dashboard"></i> Главная</a></li>
             <select class="form-control" name="gruppa_id">
                 <?= Helper::printSelectOptions($student->gruppa_id, (new GruppaMap())->arrGruppas()); ?>
             </select>
-        </div>
-        <div class="form-group">
-            <label>Заблокировать</label>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="active" value="1" <?= ($user->active) ? 'checked' : ''; ?>> Нет
-                </label> &nbsp;
-                <label>
-                    <input type="radio" name="active" value="0" <?= (!$user->active) ? 'checked' : ''; ?>> Да
-                </label>
-            </div>
         </div>
         <div class="form-group">
             <button type="submit" name="saveStudent" class="btn btn-primary">Сохранить</button>

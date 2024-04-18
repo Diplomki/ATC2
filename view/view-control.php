@@ -29,10 +29,10 @@ require_once '../template/header.php';
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
-                <h3><b>Список студентов</b></h3>
+                <h3><b>Количество занятий</b></h3>
                 <ol class="breadcrumb">
                     <li><a href="../index"><i class="fa fa-dashboard"></i> Главная</a></li>
-                    <li class="active">Список студентов</li>
+                    <li class="active">Количество занятий</li>
                 </ol>
             </section>
             <div class="box-body">
@@ -61,7 +61,7 @@ require_once '../template/header.php';
                         </tbody>
                     </table>
                 <?php } else {
-                    echo 'Cтудент не найден';
+                    echo 'Отсутвуют занятия для этого ученика';
                 } ?>
             </div>
 

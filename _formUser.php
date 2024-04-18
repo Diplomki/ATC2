@@ -1,6 +1,7 @@
 <?php
 $userMap = new UserMap();
 $user = $userMap->findById($id);
+
 ?>
 <div class="form-group">
     <label>Фамилия</label>
@@ -25,16 +26,26 @@ $user = $userMap->findById($id);
 </div>
 <div class="form-group">
     <label>Дата рождения</label>
-    <input type="date" class="form-control" name="birthday" value="<?= $user->birthday; ?>">
+    <input type="date" class="form-control" name="birthday" value="<?= $user->birthday; ?>" required>
 </div>
-<div class="form-group">
-    <label>Логин</label>
-    <input type="email" class="form-control" name="login" required="required" value="<?= $user->login; ?>">
-</div>
-<div class="form-group">
-    <label>Пароль</label>
-    <input type="password" class="form-control" name="password" required="required">
-</div>
+<?php if ($_SESSION['temp'] !== 'student') {
 
+
+    ?>
+
+    <div class="form-group">
+        <label>Логин</label>
+        <input type="email" class="form-control" name="login" required="required" value="<?= $user->login; ?>">
+    </div>
+    <div class="form-group">
+        <label>Пароль</label>
+        <input type="password" class="form-control" name="password" required="required">
+    </div>
+
+    <?php
+
+}
+$_SESSION['temp'] = 'asd';
+?>
 
 <input type="hidden" name="user_id" value="<?= $id; ?>" />

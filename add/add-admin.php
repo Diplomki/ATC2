@@ -33,24 +33,13 @@ require_once '../template/header.php';
 <div class="box-body">
     <form action="../save/save-user" method="POST">
         <?php require_once '../_formUser.php'; ?>
-
         <div class="form-group">
             <label>Филиал</label>
             <select class="form-control" name="branch_id">
                 <?= Helper::printSelectOptions($user->branch_id, $userMap->arrBranchs()); ?>
             </select>
         </div>
-        <div class="form-group">
-            <label>Заблокировать</label>
-            <div class="radio">
-                <label>
-                    <input type="radio" name="active" value="1" <?= ($user->active) ? 'checked' : ''; ?>> Нет
-                </label> &nbsp;
-                <label>
-                    <input type="radio" name="active" value="0" <?= (!$user->active) ? 'checked' : ''; ?>> Да
-                </label>
-            </div>
-        </div>
+
         <div class="form-group">
             <button type="submit" name="saveAdmin" class="btn btn-primary">Сохранить</button>
         </div>

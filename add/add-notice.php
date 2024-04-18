@@ -74,11 +74,13 @@ require_once '../template/header.php';
                 <label>Кол-во пропусков по ув. причине</label>
                 <input class="form-control" type="number" name="reason" id="input2" oninput="calculateSum()">
             </div>
+
             <div class="form-group">
                 <label>Ссылка</label>
                 <input class="form-control" type="text" name="link" value="https://pay.kaspi.kz/pay/wndzlf4x">
                 <input type="hidden" name="link" value="https://pay.kaspi.kz/pay/wndzlf4x">
             </div>
+
             <div class="form-group">
                 <label>Сумма</label>
                 <input type="hidden" name="subject_price">
@@ -89,6 +91,7 @@ require_once '../template/header.php';
                 <label>Оплатить до</label>
                 <input class="form-control" type="date" class="form-control" name="date" required>
             </div>
+
             <input type="hidden" name="user_id" value=<?= $_POST['user_id']; ?>>
             <input type="hidden" name="child_id" value=<?= $_POST['child_id']; ?>>
             <div class="form-group">
@@ -122,14 +125,22 @@ require_once '../template/header.php';
                 <label>Кол-во пропусков по ув. причине</label>
                 <input class="form-control" type="number" name="reason" id="input2" oninput="calculateSum()">
             </div>
-            <div class="form-group">
-                <label>Ссылка</label>
-                <input class="form-control" type="text" name="link" value="https://pay.kaspi.kz/pay/wndzlf4x">
-                <input type="hidden" name="link" value="https://pay.kaspi.kz/pay/wndzlf4x">
-            </div>
+
             <div class="form-group">
                 <label>Сумма</label>
                 <input type="hidden" name="subject_price">
+                <span id="sum"></span>
+            </div>
+            <div class="form-group">
+                <label>Способ оплаты</label>
+            </div>
+            <div class="form-group">
+                <input type="radio" name="payment_method" value="Наличные">
+                <label>Наличные</label>
+
+                <input type="radio" name="payment_method" value="QR">
+                <label>QR</label>
+
                 <span id="sum"></span>
             </div>
 

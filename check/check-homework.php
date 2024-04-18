@@ -12,8 +12,14 @@ require_once '../template/header.php';
     <div class="col-xs-12">
         <div class="box">
             <section class="content-header">
+                <h3>
+                    <b>
+                        <?= $message = isset($_GET['message']) ? Helper::getQuery($_GET['message']) : ''; ?>
+                    </b>
+                </h3>
                 <ol class="breadcrumb">
-                    <li><i class="fa fa-dashboard"></i> Главная</li>
+                    <li><a href="/index"><i class="fa fa-dashboard"></i> Главная</a></li>
+                    <li>Домашнее задание</li>
                 </ol>
             </section>
             <div class="box-body">

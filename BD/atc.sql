@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1:3306
--- Время создания: Апр 05 2024 г., 09:20
+-- Время создания: Апр 18 2024 г., 18:31
 -- Версия сервера: 8.0.19
 -- Версия PHP: 7.1.33
 
@@ -85,7 +85,10 @@ INSERT INTO `awards` (`id`, `user_id`, `subject_id`, `award`) VALUES
 (17, 100, 73, '123'),
 (18, 102, NULL, NULL),
 (19, 104, NULL, NULL),
-(20, 107, 17, '123');
+(20, 107, 17, '123'),
+(21, 108, NULL, NULL),
+(22, 110, NULL, NULL),
+(23, 111, 17, 'asdasd');
 
 -- --------------------------------------------------------
 
@@ -205,18 +208,7 @@ CREATE TABLE `grades` (
 --
 
 INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `attend`, `branch_id`, `comment`, `homework`) VALUES
-(344, 8, 16, '90', '2024-04-04', 1, 1, '', NULL),
-(346, 8, 16, '80', '2024-04-04', 1, 1, '', NULL),
-(348, 8, 16, '80', '2024-04-04', 1, 1, '', NULL),
-(351, 18, 17, '90', '2024-04-04', 1, 1, '123', NULL),
-(355, 18, 17, '90', '2024-04-04', 1, 1, '', NULL),
-(357, 7, 16, ' 90', '2024-04-04', 1, 1, '123', NULL),
-(359, 7, 16, '75', '2024-04-04', 1, 1, '123', NULL),
-(360, 8, 16, '60', '2024-04-04', 1, 1, '123', NULL),
-(361, 18, 17, '77', '2024-04-04', 1, 1, '65', NULL),
 (362, 105, 17, '567', '2024-04-04', 1, 1, '7', NULL),
-(363, 9, 18, '90', '2024-04-04', 1, 1, '', NULL),
-(364, 7, 16, '40', '2024-04-04', 1, 1, '6', NULL),
 (366, 7, 16, '70', '2024-04-04', 1, NULL, '6', NULL),
 (370, 7, 16, '', '2024-04-04', 0, NULL, '', NULL),
 (371, 8, 16, '', '2024-04-04', 0, NULL, '', NULL),
@@ -234,10 +226,11 @@ INSERT INTO `grades` (`grade_id`, `user_id`, `subject_id`, `grade`, `date`, `att
 (383, 8, 16, '', '2024-04-04', 0, NULL, '', NULL),
 (384, 7, 17, '', '2024-04-04', 0, NULL, '', NULL),
 (385, 8, 17, '', '2024-04-04', 0, NULL, '', NULL),
-(389, 8, 16, '', '2024-04-05', 0, 1, '', NULL),
 (390, 7, 17, '', '2024-04-05', 0, 1, '', NULL),
 (391, 8, 17, '', '2024-04-05', 0, 1, '', NULL),
-(393, 8, 16, '', '2024-04-05', 0, 1, '', NULL);
+(394, 8, 5, '100', '2024-04-17', 0, NULL, '100', '1703641317_Оценки_1702869853.xlsx'),
+(395, 8, 5, '100', '2024-04-17', 0, NULL, 'adasd', '1703641356_Оценки_1702869853.xlsx'),
+(397, 109, 18, '', '2024-04-17', 0, 1, '', NULL);
 
 -- --------------------------------------------------------
 
@@ -291,7 +284,22 @@ INSERT INTO `grade_accept` (`id`, `user_id`, `subject_id`, `grade`, `date`, `att
 (324, 9, 18, 0, '2024-04-05', 0, '', '', 1, 1),
 (325, 7, 16, 60, '2024-04-05', 1, 'asd', '', 1, NULL),
 (326, 7, 16, 80, '2024-04-04', 1, '', '', 1, NULL),
-(327, 7, 16, 0, '2024-04-05', 0, '', '', 1, 0);
+(327, 7, 16, 0, '2024-04-05', 0, '', '', 1, 0),
+(328, 8, 16, 80, '2024-04-04', 1, '', '', 1, NULL),
+(329, 8, 16, 90, '2024-04-04', 1, '', '', 1, NULL),
+(330, 8, 16, 80, '2024-04-04', 1, '', '', 1, NULL),
+(331, 8, 16, 0, '2024-04-05', 0, '', '', 1, NULL),
+(332, 8, 16, 60, '2024-04-04', 1, '123', '', 1, NULL),
+(333, 7, 16, 75, '2024-04-04', 1, '123', '', 1, NULL),
+(334, 7, 16, 90, '2024-04-04', 1, '123', '', 1, NULL),
+(335, 8, 16, 0, '2024-04-05', 0, '', '', 1, NULL),
+(336, 9, 18, 90, '2024-04-04', 1, '', '', 1, NULL),
+(337, 7, 16, 40, '2024-04-04', 1, '6', '', 1, NULL),
+(338, 18, 17, 90, '2024-04-04', 1, '123', '', 1, NULL),
+(339, 18, 17, 90, '2024-04-04', 1, '', '', 1, NULL),
+(340, 18, 17, 90, '2024-04-04', 1, '', '', 1, NULL),
+(341, 18, 17, 77, '2024-04-04', 1, '65', '', 1, NULL),
+(342, 18, 18, 60, '2024-04-17', 1, 'asd', '', 1, NULL);
 
 -- --------------------------------------------------------
 
@@ -319,7 +327,8 @@ INSERT INTO `gruppa` (`gruppa_id`, `name`, `date_begin`, `date_end`, `branch`, `
 (4, '7А', '2020-01-31', '2026-10-24', 2, 0),
 (5, '9А', '2023-11-01', '2023-11-30', 2, 0),
 (7, 'deleted', '2024-03-01', '2024-03-31', 1, 1),
-(8, 'asd', '2024-04-10', '2024-04-17', 1, 1);
+(8, 'asd', '2024-04-10', '2024-04-17', 1, 1),
+(9, '7T', '2024-04-17', '2024-04-20', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -346,8 +355,7 @@ CREATE TABLE `homework_parent` (
 --
 
 INSERT INTO `homework_parent` (`id`, `homework_teacher_id`, `name`, `teacher_id`, `gruppa_id`, `student_id`, `date_begin`, `date_end`, `subject_id`, `file`, `file_prepared`) VALUES
-(7, 13, 'asd', 6, 2, 8, '2023-12-21', '2023-12-31', 5, '1703641302_Оценки_1702869853.xlsx', '1703641317_Оценки_1702869853.xlsx'),
-(8, 13, 'asd', 6, 2, 8, '2023-12-21', '2023-12-31', 5, '1703641302_Оценки_1702869853.xlsx', '1703641356_Оценки_1702869853.xlsx');
+(13, 13, 'asd', 6, 2, 8, '2023-12-21', '2023-12-31', 5, '1703641302_Оценки_1702869853.xlsx', '1713357362_тз.docx');
 
 -- --------------------------------------------------------
 
@@ -371,7 +379,10 @@ CREATE TABLE `homework_teacher` (
 --
 
 INSERT INTO `homework_teacher` (`id`, `name`, `user_id`, `gruppa_id`, `date_begin`, `date_end`, `subject_id`, `file`) VALUES
-(13, 'asd', 6, 2, '2023-12-21', '2023-12-31', 5, '1703641302_Оценки_1702869853.xlsx');
+(13, 'asd', 6, 2, '2023-12-21', '2023-12-31', 5, '1703641302_Оценки_1702869853.xlsx'),
+(15, 'adasdasds', 6, 1, '2024-04-17', '2024-04-24', 3, '1713362303_тз.docx'),
+(16, 'тестовое домашнее задание', 6, 9, '2024-04-16', '2024-04-24', 3, '1713362520_тз.docx'),
+(17, '123', 6, 9, '2024-04-17', '2024-04-24', 3, '1713362721_тз.docx');
 
 -- --------------------------------------------------------
 
@@ -418,7 +429,11 @@ INSERT INTO `lesson_plan` (`lesson_plan_id`, `gruppa_id`, `subject_id`, `user_id
 (19, 2, 17, 6, 0),
 (20, 2, 16, 6, 0),
 (21, 3, 18, 6, 0),
-(22, 1, 18, 6, 0);
+(22, 1, 18, 6, 0),
+(23, 2, 17, 14, 0),
+(24, 2, 17, 108, 0),
+(25, 3, 20, 108, 0),
+(26, 9, 17, 108, 0);
 
 -- --------------------------------------------------------
 
@@ -430,7 +445,7 @@ CREATE TABLE `manager` (
   `user_id` bigint NOT NULL,
   `branch_id` int NOT NULL,
   `deleted` tinyint NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `manager`
@@ -489,7 +504,16 @@ INSERT INTO `notice` (`id`, `text`, `subject_id`, `user_id`, `child_id`, `subjec
 (2215, 'Оплатите сумму указанную в приложении', 35, 85, 86, 12, 12000, 'https://example.com', '2024-05-01', 0, 0),
 (2216, 'Оплатите сумму указанную в приложении', 3, 106, 9, 20, 30000, 'https://example.com', '2024-05-01', 0, 0),
 (2217, 'Оплатите сумму указанную в приложении', 18, 10, 9, 12, 12000, 'https://example.com', '2024-05-01', 1, 0),
-(2218, 'Оплатите сумму указанную в приложении', 18, 106, 9, 12, 12000, 'https://example.com', '2024-05-01', 0, 0);
+(2218, 'Оплатите сумму указанную в приложении', 18, 106, 9, 12, 12000, 'https://example.com', '2024-05-01', 0, 0),
+(2219, 'Оплатите сумму указанную в приложении', 3, 10, 7, 12, 11900, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-17', 1, 0),
+(2220, 'Оплатите сумму указанную в приложении', 3, 10, 7, 10, 7000, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-17', 0, 0),
+(2228, 'Оплатите сумму указанную в приложении', 3, 10, 7, 1, 7500, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-17', 1, 0),
+(2229, 'Оплатите сумму указанную в приложении', 3, 10, 7, 1, 7500, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-17', 1, 0),
+(2230, 'Оплатите сумму указанную в приложении', 3, 10, 7, 1, 7500, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-18', 1, 0),
+(2231, 'Оплатите сумму указанную в приложении', 16, 10, 7, 5, 5000, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-17', 1, 0),
+(2232, 'Оплатите сумму указанную в приложении', 16, 10, 8, 5, 50000, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-25', 1, 0),
+(2233, 'Оплатите сумму указанную в приложении', 18, 10, 9, 10, 10750, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-18', 1, 0),
+(2234, 'Оплатите сумму указанную в приложении', 17, 10, 7, 12, 11900, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-05-01', 1, 0);
 
 -- --------------------------------------------------------
 
@@ -585,7 +609,15 @@ INSERT INTO `payment` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `ta
 (163, 10, 7, 20, 8, '1712288470asd.txt', 12000, 'https://example.com', '2024-04-05', 1, 1),
 (164, 10, 7, 5, 12, '1712288473asd.txt', 15000, 'https://example.com', '2024-04-05', 1, 1),
 (165, 10, 7, 16, 8, '1712288477asd.txt', 15000, 'https://example.com', '2024-04-05', 1, 1),
-(166, 10, 9, 18, 12, '1712288603asd.txt', 12000, 'https://example.com', '2024-04-05', 1, 1);
+(166, 10, 9, 18, 12, '1712288603asd.txt', 12000, 'https://example.com', '2024-04-05', 1, 1),
+(167, 10, 7, 3, 12, '1713344934тз.docx', 11900, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-17', 1, 1),
+(168, 10, 7, 16, 5, '1713372560тз.docx', 5000, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-17', 1, 1),
+(169, 10, 8, 16, 5, '1713372659тз.docx', 50000, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-17', 1, 1),
+(170, 10, 7, 3, 1, '1713372892тз.docx', 7500, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-17', 1, 1),
+(171, 10, 7, 3, 1, '1713372948тз.docx', 7500, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-17', 1, 1),
+(172, 10, 7, 3, 1, '1713373078тз.docx', 7500, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-17', 1, 1),
+(173, 10, 9, 18, 10, '1713447115тз.docx', 10750, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-18', 1, 0),
+(174, 10, 7, 17, 12, '1713449919тз.docx', 11900, 'https://pay.kaspi.kz/pay/wndzlf4x', '2024-04-18', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -602,23 +634,23 @@ CREATE TABLE `payment_archive` (
   `tab` varchar(64) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `price` int DEFAULT NULL,
   `link` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `attend` tinyint DEFAULT NULL
+  `attend` tinyint DEFAULT NULL,
+  `payment_method` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'Ссылка'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- Дамп данных таблицы `payment_archive`
 --
 
-INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `tab`, `price`, `link`, `attend`) VALUES
-(109, 10, 9, 3, 40, '1710749243message.txt', 30000, NULL, 1),
-(110, 10, 8, 20, 16, '1710749251message.txt', 12000, NULL, 1),
-(111, 85, 86, 35, 12, '1710816526message.txt', 12000, NULL, 1),
-(112, 10, 7, 20, 16, '1711333494message.txt', 12000, NULL, 1),
-(113, 10, 7, 16, 12, '1712287541asd.txt', 15000, NULL, 1),
-(114, 10, 18, 21, 8, '1712288458asd.txt', 15000, NULL, 1),
-(115, 10, 18, 22, 8, '1712288462asd.txt', 15000, NULL, 1),
-(116, 10, 7, 5, 12, '1712288473asd.txt', 15000, NULL, 1),
-(117, 10, 9, 18, 11, '1712288603asd.txt', 12000, NULL, 1);
+INSERT INTO `payment_archive` (`id`, `parent_id`, `child_id`, `subject_id`, `count`, `tab`, `price`, `link`, `attend`, `payment_method`) VALUES
+(123, 10, 7, 16, 22, '1713372560тз.docx', 5000, NULL, 1, 'Ссылка'),
+(124, 10, 8, 16, 5, '1713372659тз.docx', 50000, NULL, 1, 'Ссылка'),
+(125, 10, 7, 3, 32, '1713372892тз.docx', 7500, NULL, 1, 'Ссылка'),
+(126, 10, 18, 17, 2, '', 7200, NULL, 1, 'Ссылка'),
+(127, 10, 18, 18, 4, '', 6000, NULL, 1, 'Ссылка'),
+(128, 85, 86, 18, 2, '', -13000, NULL, 1, 'QR'),
+(129, 85, 86, 23, 2, '', 24000, NULL, 1, 'Наличные'),
+(130, 10, 7, 17, 24, '1713449919тз.docx', 11900, NULL, 1, 'Ссылка');
 
 -- --------------------------------------------------------
 
@@ -699,9 +731,13 @@ INSERT INTO `schedule` (`schedule_id`, `lesson_plan_id`, `date`, `classroom_id`,
 (43, 19, '2024-04-25', 1, 1, 1),
 (44, 20, '2024-04-21', 5, 1, 1),
 (45, 20, '2024-04-11', 5, 1, 1),
-(46, 22, '2024-04-05', 5, 1, 0),
+(46, 22, '2024-04-05', 5, 1, 1),
 (47, 19, '2024-04-10', 1, 1, 1),
-(48, 20, '2024-04-12', 5, 1, 1);
+(48, 20, '2024-04-12', 5, 1, 1),
+(49, 23, '2024-04-18', 1, 0, 0),
+(50, 24, '2024-04-03', 5, 0, 0),
+(51, 25, '2024-04-24', 1, 1, 0),
+(52, 26, '2024-04-09', 5, 0, 0);
 
 -- --------------------------------------------------------
 
@@ -725,7 +761,8 @@ INSERT INTO `special` (`special_id`, `subject_id`, `time_begin`, `time_end`, `br
 (16, 3, '12:10:00', '13:10:00', 1),
 (17, 22, '10:20:00', '11:20:00', 1),
 (18, 20, '20:00:00', '21:00:00', 1),
-(19, 33, '08:00:00', '09:00:00', 2);
+(19, 33, '08:00:00', '09:00:00', 2),
+(20, 17, '20:35:00', '21:38:00', 1);
 
 -- --------------------------------------------------------
 
@@ -755,7 +792,8 @@ INSERT INTO `student` (`user_id`, `gruppa_id`, `reference`, `num_zach`, `deleted
 (84, 3, NULL, '0', 1),
 (86, 4, NULL, '0', 0),
 (103, 4, NULL, '0', 0),
-(105, 1, NULL, '0', 0);
+(105, 9, NULL, '0', 0),
+(109, 1, NULL, '0', 0);
 
 -- --------------------------------------------------------
 
@@ -767,7 +805,7 @@ CREATE TABLE `student_subjects` (
   `id` int NOT NULL,
   `user_id` bigint NOT NULL,
   `subject_id` int NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Дамп данных таблицы `student_subjects`
@@ -784,7 +822,9 @@ INSERT INTO `student_subjects` (`id`, `user_id`, `subject_id`) VALUES
 (8, 86, 35),
 (9, 103, 33),
 (10, 103, 29),
-(11, 9, 18);
+(11, 9, 18),
+(12, 109, 16),
+(13, 109, 20);
 
 -- --------------------------------------------------------
 
@@ -894,7 +934,10 @@ INSERT INTO `teacher` (`user_id`, `deleted`) VALUES
 (100, 0),
 (102, 0),
 (104, 0),
-(107, 0);
+(107, 0),
+(108, 1),
+(110, 1),
+(111, 1);
 
 -- --------------------------------------------------------
 
@@ -922,8 +965,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `pass`, `gender_id`, `birthday`, `role_id`, `branch_id`, `photo`, `active`) VALUES
-(2, 'Смит', 'Джон', 'Тимофеевич', 'admin', '$2y$10$kkAc3Z1kd7baFhhpVj98feshP7nhhY8IeT7L04xY9I4PuuhKT3Aii', 1, '2023-11-01', 2, 1, NULL, 1),
-(6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$XenEZZklP4BgHomgpZxBgeYT/xOy3KMg3MN8syJI28x8ygg5bJbRO', 1, '2000-03-12', 4, 1, '1711421157_pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg', 1),
+(2, 'Смит', 'Джон', 'Тимофеевич', 'admin', '$2y$10$kkAc3Z1kd7baFhhpVj98feshP7nhhY8IeT7L04xY9I4PuuhKT3Aii', 1, '2023-11-01', 2, 1, '1713332745_images.jpg', 1),
+(6, 'Ершов', 'Максимилиан', 'Иосифович', 'ershov', '$2y$10$XenEZZklP4BgHomgpZxBgeYT/xOy3KMg3MN8syJI28x8ygg5bJbRO', 1, '2000-03-12', 4, 1, '1713332763_images.jpg', 1),
 (7, 'Носов', 'Клим', 'Алексеевич', 'nosov', '$2y$10$nxM0K958xhTYCpJekKAVzOLLTIkYiZs.R/VbUQ8VcX2dels8mEn5i', 1, '2007-05-25', 5, 1, '1710507751_drivetest-avatar-m.png', 1),
 (8, 'Шаров', 'Корней', 'Ростиславович', 'sharov', '$2y$10$hosMfj/tIw48P0tYCaQ1IuBwj6UYV9klgDsaVh/t5SxDcgPjAb7WS', 1, '2023-10-01', 5, 1, '1708791335_wallpaper.png', 1),
 (9, 'Антонова', 'Асида', 'Игнатьевна', 'asida', '$2y$10$TE2o./47eSpX8WaCSQ.O2uzlks.vLNjIjE6tv5qtcg7eavAYMqO0q', 2, '2003-02-20', 5, 1, '1708400431_asd.jpg', 1),
@@ -935,7 +978,7 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (16, 'Лебедев', 'Альфред ', 'Викторович', 'admin3', '$2y$10$mFlJsQgNvDQ27XfADrMh8O9OQA47f2gLmqYdwGeg8SpsvdoRUX95S', 1, '1997-07-12', 2, 3, NULL, 1),
 (17, 'Соловьёв', 'Бронислав', 'Федотович', 'soloviev', '$2y$10$hwoeqR.h7cOSrs8mPHnbm.bmDXUd/2i4Xg968skfMTFQ.gQystHdC', 1, '1999-05-14', 4, 2, NULL, 1),
 (18, 'Кошелев', 'Эрнест', 'Лаврентьевич', 'koshelev', '$2y$10$mlU3F7DiiEWPXzdfjPiHseYtchL0YITkhg9XOGz72xF.klefiTgnO', 1, '2005-12-15', 5, 1, NULL, 1),
-(19, 'Дроздов ', 'Арсений', 'Михайлович', 'manager', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1997-07-12', 3, 1, '1711419500_pngtree-cartoon-color-simple-male-avatar-png-image_1934459.jpg', 1),
+(19, 'Дроздов ', 'Арсений', 'Михайлович', 'manager', '$2y$10$b2rzVJlTsd5hthE.zcAeVuAiFRilDqXrCWGTpn3p6DXxZQNX6v1Di', 1, '1997-07-12', 3, 1, '1713332735_images.jpg', 1),
 (22, 'Гурьев', 'Артур', 'Протасьевич', 'gurevvv', '$2y$10$n8AMg5CxgaCH2ujt2WII1e5UNDR3p4ocRRXiYiu/A6UwmBuvgTD.O', 1, '2023-10-01', 4, 1, '1708318625_asdasd.jpg', 1),
 (25, 'Буров', 'Георгий', 'Матвеевич', 'burov', '$2y$10$xKG6mPSXSLVK/6/wWNtbfuE1WA4RLCUe80syL0eTja5J09EMaHh1.', 1, '1999-05-15', 4, 1, NULL, 1),
 (38, 'Соловьёва', 'Лея', 'Георгьевна', 'solovieva', '$2y$10$iH5wNehSfohUxfUTwKSNB.F01vhtYuddPbxUNZADQqgf5weDX7is2', 2, '2000-05-18', 6, 1, NULL, 1),
@@ -966,9 +1009,13 @@ INSERT INTO `user` (`user_id`, `lastname`, `firstname`, `patronymic`, `login`, `
 (102, 'testTeacher2', 'testTeacher2', 'testTeacher2', 'testTeacher2', '$2y$10$FGx5IGBtsUmWHKYubJPJyOVG5D3RYIPvxy1X1jBpvLBmZlfseLh4G', 1, '2024-03-14', 4, 2, 'default.png', 1),
 (103, 'testBranch2', 'testBranch2', 'testBranch2', 'testBranch2', '$2y$10$RslJe6gGJMog..z/1JrauOi5Z4LE0Lcoc3J3IIatMJ1f.fLopmzWG', 1, '2024-03-10', 5, 2, 'default.png', 1),
 (104, 'testTest', 'testTest', 'testTest', 'testTest', '$2y$10$HgWytxz7hqd.Sf5q0Fq25e8T3jfYU7icOHLUkvDivmaVkClfS6wLW', 1, '2024-03-17', 4, 1001, 'default.png', 1),
-(105, 'testForParent', 'testForParent', 'testForParent', 'testForParent', '$2y$10$yGnM/7XnEPuY0ff1UY/TKe6uw3jfJxk.fBG9b0rDiPKTg5yPzcFsu', 1, '2024-03-18', 5, 1, 'default.png', 1),
+(105, 'testForParent', 'testForParent', 'testForParent', 'testForParent@mail.ru', '$2y$10$TMCYMjQESbQdgyyi1swx7OOoiwPQhNQBEUbO7JseElLnyXu6tPpte', 1, '2024-03-18', 5, 1, 'default.png', 1),
 (106, 'testParent', 'testParent', 'testParent', 'testParent', '$2y$10$nLRpiucgxHoMzpCy/HFxkOBwHK8GVvxClg.2THndRavqK1khyPAKq', 1, '2024-03-18', 6, 1, 'default.png', 1),
-(107, 'testTeacher3', 'testTeacher3', 'testTeacher3', 'testTeacher3@local.kz', '$2y$10$1OuBcnykWI.vUZ5eeEZaauGRaUL5ahI2aBb.7n8qwyxndn5VMebxq', 1, '2024-03-22', 4, 1, 'default.png', 1);
+(107, 'testTeacher3', 'testTeacher3', 'testTeacher3', 'testTeacher3@local.kz', '$2y$10$1OuBcnykWI.vUZ5eeEZaauGRaUL5ahI2aBb.7n8qwyxndn5VMebxq', 1, '2024-03-22', 4, 1, 'default.png', 1),
+(108, 'test44', 'test44', 'test44', 'asdasdasd@mail.ru', '$2y$10$5dpIwy0a5P.NcYrRNMYFPOT9P4c81t9dknYK4p1606wHhPmpPtW1e', 2, '2024-04-02', 4, 1, 'default.png', 1),
+(109, 'asda', 'sdasdasd', 'adasd', '', '$2y$10$6Xe79cJ/VddJmpIRTv7c5.9NYfrntha7Xr7VjR6ZUG6KeHjD4Y7O2', 1, '2024-04-17', 5, 1, 'default.png', 1),
+(110, 'фывфыв', 'фывфывфы', 'вфывфывфывфы', 'asdasd@mail.ru', '$2y$10$x0/Ld8Zfg2w9X0COurGJIuFa21WNXsqL9E.n2oW4AOTjErRMABeHe', 2, '2024-04-18', 4, 1, 'default.png', 0),
+(111, 'asdasd', 'asdasd', 'asdasd', 'asdas@mail.ru', '$2y$10$dS5gefxKH.91gaCWTTdvL.Q.NOHfN8esKmk7HmyWls6pWPnPh.PA2', 1, '2024-04-16', 4, 1, 'default.png', 0);
 
 --
 -- Индексы сохранённых таблиц
@@ -1207,7 +1254,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT для таблицы `awards`
 --
 ALTER TABLE `awards`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT для таблицы `branch`
@@ -1237,31 +1284,31 @@ ALTER TABLE `gender`
 -- AUTO_INCREMENT для таблицы `grades`
 --
 ALTER TABLE `grades`
-  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=394;
+  MODIFY `grade_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=398;
 
 --
 -- AUTO_INCREMENT для таблицы `grade_accept`
 --
 ALTER TABLE `grade_accept`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=328;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=343;
 
 --
 -- AUTO_INCREMENT для таблицы `gruppa`
 --
 ALTER TABLE `gruppa`
-  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `gruppa_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT для таблицы `homework_parent`
 --
 ALTER TABLE `homework_parent`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `homework_teacher`
 --
 ALTER TABLE `homework_teacher`
-  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT для таблицы `lesson_num`
@@ -1273,13 +1320,13 @@ ALTER TABLE `lesson_num`
 -- AUTO_INCREMENT для таблицы `lesson_plan`
 --
 ALTER TABLE `lesson_plan`
-  MODIFY `lesson_plan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
+  MODIFY `lesson_plan_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT для таблицы `notice`
 --
 ALTER TABLE `notice`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2219;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2235;
 
 --
 -- AUTO_INCREMENT для таблицы `otdel`
@@ -1297,13 +1344,13 @@ ALTER TABLE `parent`
 -- AUTO_INCREMENT для таблицы `payment`
 --
 ALTER TABLE `payment`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=167;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=175;
 
 --
 -- AUTO_INCREMENT для таблицы `payment_archive`
 --
 ALTER TABLE `payment_archive`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=118;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=131;
 
 --
 -- AUTO_INCREMENT для таблицы `reference`
@@ -1321,19 +1368,19 @@ ALTER TABLE `role`
 -- AUTO_INCREMENT для таблицы `schedule`
 --
 ALTER TABLE `schedule`
-  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
+  MODIFY `schedule_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=53;
 
 --
 -- AUTO_INCREMENT для таблицы `special`
 --
 ALTER TABLE `special`
-  MODIFY `special_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `special_id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT для таблицы `student_subjects`
 --
 ALTER TABLE `student_subjects`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT для таблицы `subject`
@@ -1345,7 +1392,7 @@ ALTER TABLE `subject`
 -- AUTO_INCREMENT для таблицы `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=108;
+  MODIFY `user_id` bigint NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=112;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
@@ -1455,7 +1502,9 @@ ALTER TABLE `payment`
 -- Ограничения внешнего ключа таблицы `payment_archive`
 --
 ALTER TABLE `payment_archive`
-  ADD CONSTRAINT `payment_archive_ibfk_3` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
+  ADD CONSTRAINT `payment_archive_ibfk_3` FOREIGN KEY (`subject_id`) REFERENCES `subject` (`subject_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `payment_archive_ibfk_4` FOREIGN KEY (`child_id`) REFERENCES `student` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
+  ADD CONSTRAINT `payment_archive_ibfk_5` FOREIGN KEY (`parent_id`) REFERENCES `parent` (`user_id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Ограничения внешнего ключа таблицы `reference`

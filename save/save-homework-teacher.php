@@ -17,9 +17,9 @@ if (isset($_POST['saveHomeworkTeacher'])) {
     move_uploaded_file($fileTmpName, "../homework-teacher/" . $teacher->file);
 
     if ((new TeacherMap())->createHomework($teacher)) {
-        header('Location: ../create-homework?message=ok');
+        header('Location: ../check/check-homework?message=ok');
     } else {
-        header('Location: ../create-homework?message=err');
+        header('Location: ../check/check-homework?message=err');
     }
 }
 

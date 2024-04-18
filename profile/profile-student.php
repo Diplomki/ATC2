@@ -4,7 +4,7 @@ if (!Helper::can('admin') && !Helper::can('manager') && !Helper::can('procreator
     header('Location: 404');
     exit();
 }
-if (isset ($_GET['id'])) {
+if (isset($_GET['id'])) {
     $id = Helper::clearInt($_GET['id']);
 } else {
     header('Location: 404');
